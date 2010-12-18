@@ -4,10 +4,6 @@
 
 define('BASE_DIR', dirname(__FILE__));
 
-print_r($_COOKIE);
-echo $_COOKIE['SignOnDefault'];
-
-
 $username = $_COOKIE['SignOnDefault'];
 if(!$username) $username = 'zhoud';
 $username = strtolower($username);
