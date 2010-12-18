@@ -6,7 +6,7 @@ define('BASE_DIR', dirname(__FILE__));
 define('USERNAME', 'zhoud');
 define('CLASSNAME', 'cs106x');
 define('SUBMISSIONS_DIR', 'submissions');
-define('ROOT_URL', 'http://localhost:8888/paperless2/');
+define('ROOT_URL', 'http://localhost:8888/paperless/');
 
 /*
 * Third-party libraries
