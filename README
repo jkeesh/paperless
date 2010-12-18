@@ -6,17 +6,20 @@ Configuration Info
 To avoid changes with git commits, the configuration information
 is not tracked by the git repository. To get this to run locally,
 create a file called config.php in the main paperless director
-with the following contents. The commented out lines are what run 
-on the web side.
+with the following contents. 
+
+<?php
+//This is a configuration file that is not tracked by git. The difference is that
+//there is a different configuration file locally and on the web.
 
 define('BASE_DIR', dirname(__FILE__));
+define('DUMMYDIR', '2_ADTS');
 define('USERNAME', 'zhoud');
 define('CLASSNAME', 'cs106x');
 define('SUBMISSIONS_DIR', 'submissions');
-define('ROOT_URL', 'http://localhost:8888/paperless/'); 
+define('ROOT_URL', 'http://localhost:8888/paperless/');
 
-//define('SUBMISSIONS_DIR', '/afs/ir/class/cs106x/submissions');
-//define('ROOT_URL', 'http://stanford.edu/class/cs198/cgi-bin/paperless/'); 
+?>
 
 Then create a file called env.js in the static/js/ directory so it knows where
 the different themes are. The commented out line is what runs on the web
