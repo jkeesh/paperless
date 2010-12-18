@@ -320,7 +320,7 @@ CodeFile.mousePressed = function(event) {
 	}
 
 	var line_no = code_file.getLineNumber(this);
-	if (code_file.isLineSelected(line_no)) {
+	if (current_dialog != null || code_file.isLineSelected(line_no)) {
 		return false;
 	}
 
