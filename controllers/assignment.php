@@ -6,7 +6,7 @@ class AssignmentHandler extends ToroHandler {
     //$dirname="/afs/ir.stanford.edu/class/cs106x/submissions/".$sl."/";
     $dirname = SUBMISSIONS_DIR . "/" . USERNAME . "/";
     $students = $this->getDirEntries($dirname . $assignment);
-    print_r($students);
+    //print_r($students);
     $this->smarty->assign("students", $students);
     $this->smarty->assign("assignment", $assignment);
 
