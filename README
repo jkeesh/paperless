@@ -18,14 +18,10 @@ the different themes are. The commented out line is what runs on the web
 root_url = 'http://localhost:8888/paperless/';
 // root_url = 'http://stanford.edu/class/cs198/cgi-bin/paperless/'
 
-Finally, create an .htaccess file in the main paperless directory with
-the following contents:
 
-<IfModule mod_rewrite.c>
-  DirectoryIndex index.php
-  RewriteEngine on
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule ^(.*)$ index.php?path=/$1 [L,QSA]
-</IfModule>
+There are two .htaccess files, one for local and one for web.
+
+cp .htaccess_local .htaccess 
+
+to use the local version of the .htaccess file.
 
