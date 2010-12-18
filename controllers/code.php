@@ -24,7 +24,7 @@ class CodeHandler extends ToroHandler {
         while($file = readdir($dir)) {
            if($this->isCodeFile($file, CLASSNAME)) {
              $files[] = $file;
-             $file_contents[] = file_get_contents($dirname . $file);
+             $file_contents[] = htmlentities(file_get_contents($dirname . $file));
            }
         }
         return array($files, $file_contents);
