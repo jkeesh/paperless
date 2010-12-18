@@ -12,13 +12,6 @@ into a file called config.php
 
 cp config_local.php config.php
 
-Then create a file called env.js in the static/js/ directory so it knows where
-the different themes are. The commented out line is what runs on the web
-
-root_url = 'http://localhost:8888/paperless/';
-// root_url = 'http://stanford.edu/class/cs198/cgi-bin/paperless/'
-
-
 There are two .htaccess files, one for local and one for web.
 
 cp .htaccess_local .htaccess 
