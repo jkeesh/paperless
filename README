@@ -5,7 +5,7 @@ easy, and to avoid paper submission copies. It's almost 2011!
 Configuration Info
 To avoid changes with git commits, the configuration information
 is not tracked by the git repository. To get this to run locally,
-create a file called config.php in the main paperless director
+create a file called config.php in the main paperless directory
 with the following contents. 
 
 <?php
@@ -27,5 +27,14 @@ the different themes are. The commented out line is what runs on the web
 root_url = 'http://localhost:8888/paperless/';
 // root_url = 'http://stanford.edu/class/cs198/cgi-bin/paperless/'
 
+Finally, create an .htaccess file in the main paperless directory with
+the following contents:
 
+<IfModule mod_rewrite.c>
+  DirectoryIndex index.php
+  RewriteEngine on
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.*)$ index.php?path=/$1 [L,QSA]
+</IfModule>
 
