@@ -1,6 +1,7 @@
 <?php
 require_once("../config.php");
 require_once("Model.php");
+require_once("AssignmentFile.php");
 
 class AssignmentComment extends Model {
   
@@ -23,7 +24,14 @@ class AssignmentComment extends Model {
               mysql_real_escape_string($this->AssignmentFile) . ", " . 
               mysql_real_escape_string($this->LineNumber) . ", '" . 
               mysql_real_escape_string($this->CommentText) . "');";
-    $this->conn->exec($query);
+    try {
+      $this->conn->exec($query);
+      if(!$this->ID) {
+        $this->ID = $this->conn->lastInsertId();
+      }
+    } catch(PDOException $e) {
+      echo $e->getMessage();
+    }
   }
   
   public static function create($AssignmentFile, $LineNumber, $CommentText) {
@@ -64,7 +72,7 @@ class AssignmentComment extends Model {
   public function getID() { return $this->ID; }
   
   public function setAssignmentFile($AssignmentFile) { $this->AssignmentFile = $AssignmentFile; }
-  public function getAssignmentFile() { return $AssignmentFile; }
+  public function getAssignmentFile() { return AssignmentFile::load($this->AssignmentFile); }
   
   public function setLineNumber($LineNumber) { $this->LineNumber = $LineNumber; }
   public function getLineNumber() { return $this->LineNumber; }
@@ -72,12 +80,4 @@ class AssignmentComment extends Model {
   public function setCommentText($CommentText) { $this->CommentText = $CommentText; }
   public function getCommentText() { return $CommentText; }
 }
-
-$ac = AssignmentComment::create(12, 23, "test test");
-$ac->save();
-print_r($ac);
-echo "<br><br>";
-$ac = AssignmentComment::load(1);
-print_r($ac);
-
 ?>
