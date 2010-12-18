@@ -3,7 +3,7 @@
 <IfModule mod_rewrite.c>
   DirectoryIndex index.php
   RewriteEngine on
-  #RewriteBase /class/cs198/cgi-bin/paperless1/  UNCOMMENT FOR THIS TO WORK on cgi-bin
+  #RewriteBase /class/cs198/cgi-bin/paperless/  UNCOMMENT FOR THIS TO WORK on cgi-bin
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^(.*)$ index.php?path=/$1 [L,QSA]
