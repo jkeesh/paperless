@@ -47,6 +47,7 @@ class ToroHandler {
       }
       return $entries;
   }
+
 }
 
 /*
