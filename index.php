@@ -6,7 +6,8 @@ define('BASE_DIR', dirname(__FILE__));
 define('USERNAME', 'zhoud');
 define('CLASSNAME', 'cs106x');
 define('SUBMISSIONS_DIR', 'submissions');
-define('ROOT_URL', 'http://localhost:8888/paperless/');
+//define('ROOT_URL', 'http://stanford.edu/class/cs198/cgi-bin/paperless/'); //comment in for web
+define('ROOT_URL', 'http://localhost:8888/paperless/'); //comment in for local
 
 /*
 * Third-party libraries
