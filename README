@@ -5,8 +5,9 @@ easy, and to avoid paper submission copies. It's almost 2011!
 Configuration Info
 To avoid changes with git commits, the configuration information
 is not tracked by the git repository. To get this to run locally,
-create a file called config.php with the following contents. The
-commented out lines are what run on the web side.
+create a file called config.php in the main paperless director
+with the following contents. The commented out lines are what run 
+on the web side.
 
 define('BASE_DIR', dirname(__FILE__));
 define('USERNAME', 'zhoud');
@@ -15,10 +16,13 @@ define('SUBMISSIONS_DIR', 'submissions');
 define('ROOT_URL', 'http://localhost:8888/paperless/'); 
 
 //define('SUBMISSIONS_DIR', '/afs/ir/class/cs106x/submissions');
-//define('ROOT_URL', 'http://stanford.edu/class/cs198/cgi-bin/paperless/'); //comment in for web
+//define('ROOT_URL', 'http://stanford.edu/class/cs198/cgi-bin/paperless/'); 
 
+Then create a file called env.js in the static/js/ directory so it knows where
+the different themes are. The commented out line is what runs on the web
 
-
+root_url = 'http://localhost:8888/paperless/';
+// root_url = 'http://stanford.edu/class/cs198/cgi-bin/paperless/'
 
 
 
