@@ -54,7 +54,8 @@ function /* class */ CodeFile(filename, prefix) {
 		//console.log(self.themID);
 		var themeIndex = self.themeID % self.themes.length; 
 		//console.log(self.themeIndex);
-		var newTheme = root_url + '/static/js/syntaxhighlighter/styles/' + self.themes[themeIndex];
+		//alert(document.location.pathname);
+		var newTheme = '/paperless/static/js/syntaxhighlighter/styles/' + self.themes[themeIndex];
 		
 		$('#syntaxStylesheet').attr('href', newTheme);
 	});
