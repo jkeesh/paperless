@@ -29,9 +29,9 @@ function /* class */ CodeFile(filename, prefix) {
 	});
 	
 	shortcut.add("ctrl+z", function(){
-		if(self.last_comment_range === undefined || self.last_comment_range == null) return;
-                self.last_comment_range = null;
+		if(self.last_comment_range == null) return;
 		self.editComment(self.last_comment_range, self.fileID);
+		self.last_comment_range = null;
 	});
 	
    	this.themes = new Array('shCoreDefault.css', 'shCoreMDUltra.css' ,'shThemeEmacs.css','shCoreMidnight.css',  'shThemeFadeToGrey.css','shCoreDjango.css', 'shCoreRDark.css', 'shThemeMDUltra.css','shCoreEclipse.css', 'shThemeDefault.css','shThemeMidnight.css', 'shCoreEmacs.css', 'shThemeDjango.css', 'shThemeRDark.css', 'shCoreFadeToGrey.css', 'shThemeEclipse.css');
