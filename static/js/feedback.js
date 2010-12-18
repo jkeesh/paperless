@@ -30,6 +30,7 @@ function /* class */ CodeFile(filename, prefix) {
 	
 	shortcut.add("ctrl+z", function(){
 		if(self.last_comment_range === undefined || self.last_comment_range == null) return;
+                self.last_comment_range = null;
 		self.editComment(self.last_comment_range, self.fileID);
 	});
 	
