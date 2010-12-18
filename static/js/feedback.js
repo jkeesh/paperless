@@ -181,6 +181,17 @@ function /* class */ CodeFile(filename, prefix) {
 		this.addCommentDiv(commentText, range);
 	}
 	
+        this.cancelComment = function(range){
+	    for (var i = range.lower; i <= range.higher; i++) {
+                this.unhiliteLineNo(i);
+            }
+            $('textarea').remove();
+            current_dialog.dialog("close");
+            current_dialog.dialog("destroy");
+            current_dialog = null;
+        }
+
+
 	this.removeAndSubmitComment = function(range){
 		var elem = "#e"+this.rangeToString(range);
 		if(elem) $("#e"+this.rangeToString(range)).remove(); // remove the comment
@@ -212,19 +223,26 @@ function /* class */ CodeFile(filename, prefix) {
 		var comment = this;
 
 		current_dialog = $('<div></div>')
-			.html('<textarea></textarea>')
-			.dialog({
-				autoOpen: true,
-				title: 'Enter Comment',
+                        .html('<textarea></textarea>')
+                        .dialog({
+                                autoOpen: true,
+	                        title: 'Enter Comment',
 				width: 350,
-				height: 250,
-				focus: true,
-				buttons: { "Submit": 
-						function() { 
-							comment.submitComment(range); //because 'this' now refers to the dialog
-						} 
-						}, 
-		});
+                                height: 250,
+		                focus: true,
+	                        open: function(event, ui) { $(".ui-dialog-titlebar-close").hide();},
+                                closeOnEscape: false,
+		                buttons: { "Submit":
+                                           function() {
+                                        comment.submitComment(range); //because 'this' now refers to the dialog                                                                                        
+                                    },
+                                           "Cancel":
+                                        function() {
+	                                       comment.cancelComment(range);
+                                           },
+                                },
+	        });
+
 		$("textarea").focus();
 	}
 	
