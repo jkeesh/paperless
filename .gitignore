@@ -1,0 +1,16 @@
+# Ignore 
+.DS_Store
+
+# With wildcards
+*~
+
+# Ignore configuration file and htaccess
+.htaccess
+config.php
+static/js/env.js
+
+#ignore submissions
+submissions/*
+
+#ignore those cached things
+templates/templates_c/*
