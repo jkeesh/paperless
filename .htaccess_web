@@ -1,0 +1,12 @@
+AuthType WebAuth
+Require valid-user
+
+<IfModule mod_rewrite.c>
+  DirectoryIndex index.php
+  RewriteEngine on
+  RewriteBase /class/cs198/cgi-bin/paperless/
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.*)$ index.php?path=/$1 [L,QSA]
+</IfModule>
+
