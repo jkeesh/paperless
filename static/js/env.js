@@ -1,0 +1,1 @@
+root_url = "http://localhost:8888/paperless2/"

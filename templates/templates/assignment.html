@@ -1,0 +1,11 @@
+{include file="header.html"}
+
+<h2>Assignment: {$assignment}</h2>
+
+{foreach from=$students item=student}
+<div class="link">
+    <a href="{$root_url}code/{$student}/{$assignment}">{$assignment} by {$student}</a>
+</div>
+{/foreach}
+
+{include file="footer.html"}

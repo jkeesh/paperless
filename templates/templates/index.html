@@ -1,0 +1,19 @@
+{include file="header.html"}
+
+<div class="list">
+    <div class="header">Students</div>
+        {foreach from=$users item=user}
+        <div class="link"><a href="{$root_url}student/{$user}">{$user}</a></div>
+        {/foreach}
+    </div>
+</div>
+
+<div class="list">
+    <div class="header">Assignments</div>
+        {foreach from=$assignments item=assignment}
+        <div class="link"><a href="{$root_url}assignment/{$assignment}">{$assignment}</a></div>
+        {/foreach}
+    </div>
+</div>
+
+{include file="footer.html"}

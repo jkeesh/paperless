@@ -1,0 +1,99 @@
+{include file="header.html"}
+
+<script type="text/javascript" src="{$root_url}static/js/jquery-1.4.1.min.js"></script>
+<script type="text/javascript" src="{$root_url}static/js/jquery-1.4.2.js"></script>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/jquery-ui.min.js"></script> 
+<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css"> 
+	
+<script type="text/javascript" src="{$root_url}static/js/env.js"></script>
+<script type="text/javascript" src="{$root_url}static/js/feedback.js"></script>
+<script type="text/javascript" src="{$root_url}static/js/shortcut.js"></script>
+
+<script type="text/javascript" src="{$root_url}static/js/syntaxhighlighter/scripts/shCore.js"></script>
+<script type="text/javascript" src="{$root_url}static/js/syntaxhighlighter/scripts/shBrushCpp.js"></script>
+<link type="text/css" rel="stylesheet" href="{$root_url}static/js/syntaxhighlighter/styles/shCoreDefault.css" id="syntaxStylesheet" />
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+
+<h2>
+<span class="link"><a href="{$root_url}assignment/{$assignment}">{$assignment}</a></span>
+by 
+<span class="link"><a href="{$root_url}student/{$student}">{$student}</a></span> 
+</h2>
+
+<script type="text/javascript">
+
+    var files = new Array();
+    {foreach from=$files item=file key=i}
+    files[{$i}] = '{$file}';
+    {/foreach}
+    
+    // we need to wait for the syntax highlighter to finish before we access the modified dom
+    $(document).ready(function(){
+       setTimeout("setupCodeFiles()", 1000); 
+    });
+    
+    function setupCodeFiles(){
+        {foreach from=$files item=file key=i}
+    	code_files.push(new CodeFile('{$file}', {$i}));
+    	{/foreach}
+    }
+    
+    function hideall(){
+    	 for(var i = 0; i < files.length; i++){	 
+    		 document.getElementById("file" + i).className = "hidden";
+    		 document.getElementById("comments" + i).className = "hidden";
+    	 }
+    }
+
+    function display(fileNum){
+    	 hideall();
+    	 document.getElementById("file" + fileNum).className = "visible codeposition";	 
+    	 document.getElementById("comments" + fileNum).className = "visible";
+    }
+    
+    function getRangeFromComment(commentID){
+    	///the commentID is of the form: cLOWER-HIGHER
+    	var pattern = /c(\d+)-(\d+)/;
+    	var result = pattern.exec(commentID);
+    	if(result == null){
+    		result = /c(\d+)/.exec(commentID);
+    		var range = new LineRange(parseInt(result[1]), parseInt(result[1]));
+    	}else{
+    		var range = new LineRange(parseInt(result[1]), parseInt(result[2]));		
+    	}
+    	return range;
+    }
+
+    function edit(fileID, commentID){
+    	var file = code_files[fileID];
+    	var range = getRangeFromComment(commentID);
+    	file.editComment(range, fileID); 
+    }
+</script>
+
+{foreach from=$files item=file key=i}
+<div id="comments{$i}"></div>
+{/foreach}
+
+<div id="filelist">
+    {foreach from=$files item=file key=i}
+    <div class="link"><a href="javascript:display('{$i}')">{$file}</a></div>
+    {/foreach}
+</div>
+
+{foreach from=$files item=file key=i}
+<div id="file{$i}" class="hidden">
+    <pre class="brush: cpp;">
+{$file_contents[$i]}
+    </pre>
+</div>
+{/foreach}
+
+<script>
+display(0);
+</script>
+
+<!-- <a href="http://alexgorbatchev.com/SyntaxHighlighter/">Syntax Highlighter Credit</a> -->
+
+{include file="footer.html"}

@@ -1,0 +1,18 @@
+<html>
+<head>
+<title>Paperless</title>
+
+<link rel="stylesheet" type="text/css" href="{$root_url}static/css/style.css">
+</head>
+<body>
+{if isset($code)}
+<div id="code_wrapper">
+{else}
+<div id="wrapper">
+{/if}
+    <div class="title link">
+        <a href="{$root_url}">paperless</a>
+    </div>
+    
+    <div id="username">Hi {$username}!</div>
+

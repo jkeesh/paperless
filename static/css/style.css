@@ -1,0 +1,178 @@
+textarea{
+	height: 100;
+	width: 300;
+	font-family: Georgia;
+	font-size: 16px;
+	border: 2px solid black;
+}
+
+.keyboardShortcuts{
+	color: yellow;
+	width: 140px;
+	float: left;
+	font-family: courier new;
+}
+
+.keyboardTitle{
+	font-size: 18px;
+	padding-bottom: 10px;
+}
+
+.codeposition{
+	position: absolute;
+	top: 200px;
+	width: 880px; 
+	z-index: -5; /* go in the back */
+	border: 1px solid black;  
+}
+
+.commentbox{
+	width: 300px;
+	background-color: #A9C5EB;
+	padding: 7px;
+	border: 2px solid white;
+}
+
+.commentbox:hover{
+	border: 2px solid black;
+}
+
+/* CSS For Syntax Highlighting */
+
+.keyword{
+	color: blue;
+}
+
+.keyword.type{
+	color: purple;
+	/*font-weight: bold;*/
+}
+
+.keyword.operator{
+	font-weight: bold;
+}
+
+.keyword.literal{
+	font-weight: bold;
+}
+
+.comment{
+	color: green;
+}
+
+.string{
+	color: red;	
+}
+
+.identifier{
+
+}
+
+/* End syntax css */
+
+.hidden{
+	display:none;
+}
+
+.visible{
+	display:block;
+}
+
+body{
+	font-family: Trebuchet MS, Verdana;   
+	height: 10px;
+	background-image:url('../images/paper.jpg');
+}
+
+.link{
+	padding: 5px;
+	margin: 0px;
+}
+
+.link a{
+	margin: 0px;
+	color: black;
+	padding: 5px;
+}
+
+.link a:hover{
+	color: white;
+	background-color: gray;
+	padding: 5px;
+}
+
+#wrapper{
+	width: 800px;
+	margin: auto;
+	padding-top: 10px;
+}
+
+#code_wrapper{
+	margin: auto;
+	padding-top: 10px;
+}
+
+
+#footer{
+	position: absolute;
+	left: 0px;
+	bottom: 0px;
+}
+
+#studentList{
+	background-color: red;
+	width: 200px;
+	height: 200px;
+	float: left;
+}
+
+.list{
+	width: 300px;
+	padding: 20px;
+	float: left;	
+}
+
+#assignmentList{
+	height: 200px;
+	width: 200px;
+	float: left;
+}
+
+.header{
+	font-size: 20px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+#username{
+	position: absolute;
+	top: 20px;
+	right: 20px;
+}
+
+.title{
+	font-size: 35px;
+}
+
+.smallTitle{
+	font-size: 20px;
+}
+
+.title a, .smallTitle a{
+	text-decoration: none;
+	color: black;
+	font-family: Trebuchet MS, Verdana;   
+}
+
+
+#filelist{
+	position: absolute;
+	top: 100px;
+	right: 10px;
+	z-index: 100;
+}
+
+a{
+	text-decoration: none;
+	color: black;
+}
