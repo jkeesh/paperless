@@ -3,7 +3,8 @@ class IndexHandler extends ToroHandler {
   
     public function get() {
         // for now this is hard coded .. need to setup DB access
-        $studentdir = "2_ADTS";
+	
+        $studentdir = DUMMYDIR;
         //$dirname="/afs/ir.stanford.edu/class/".$classname."/submissions/".$sl."/";
         $dirname = SUBMISSIONS_DIR . "/" . USERNAME ."/";
         
