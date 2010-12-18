@@ -2,12 +2,11 @@
 #AuthType WebAuth
 #Require valid-user
 
-# Wordpress htaccess style.. thanks Wordpress!
-# wooh this was a pain in the ass to figrure out
+# You must remove the ReWriteBase line for the cgi-bin directory
 <IfModule mod_rewrite.c>
   DirectoryIndex index.php
   RewriteEngine on
-  #RewriteBase /class/cs198/cgi-bin/paperless/  #UNCOMMENT FOR THIS TO WORK on cgi-bin
+  #RewriteBase /class/cs198/cgi-bin/paperless/
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^(.*)$ index.php?path=/$1 [L,QSA]
