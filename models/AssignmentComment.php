@@ -8,6 +8,7 @@ class AssignmentComment extends Model {
   private $ID;
   private $AssignmentFile;
   private $LineNumber;
+  private $CommentLength;
   private $CommentText;
   
   public function __construct() {
@@ -22,7 +23,8 @@ class AssignmentComment extends Model {
     $query = "REPLACE INTO " . ASSIGNMENT_COMMENT_TABLE . 
               " VALUES(" . mysql_real_escape_string($this->ID) . ", " . 
               mysql_real_escape_string($this->AssignmentFile) . ", " . 
-              mysql_real_escape_string($this->LineNumber) . ", '" . 
+              mysql_real_escape_string($this->LineNumber) . ", " . 
+              mysql_real_escape_string($this->CommentLength) . ", '" . 
               mysql_real_escape_string($this->CommentText) . "');";
     try {
       $this->conn->exec($query);
@@ -34,9 +36,9 @@ class AssignmentComment extends Model {
     }
   }
   
-  public static function create($AssignmentFile, $LineNumber, $CommentText) {
+  public static function create($AssignmentFile, $LineNumber, $CommentLength, $CommentText) {
     $instance = new self();
-    $instance->fill(array(0, $AssignmentFile, $LineNumber, $CommentText));
+    $instance->fill(array(0, $AssignmentFile, $LineNumber, $CommentLength, $CommentText));
     return $instance;
   }
   
@@ -65,7 +67,8 @@ class AssignmentComment extends Model {
     $this->setID($row[0]);
     $this->setAssignmentFile($row[1]);
     $this->setLineNumber($row[2]);
-    $this->setCommentText($row[3]);
+    $this->setCommentLength($row[3]);
+    $this->setCommentText($row[4]);
   }
   
   public function setID($ID) { $this->ID = $ID; }
@@ -76,6 +79,9 @@ class AssignmentComment extends Model {
   
   public function setLineNumber($LineNumber) { $this->LineNumber = $LineNumber; }
   public function getLineNumber() { return $this->LineNumber; }
+  
+  public function setCommentLength($CommentLength) { $this->CommentLength = $CommentLength; }
+  public function getCommentLength() { return $this->CommentLength; }
   
   public function setCommentText($CommentText) { $this->CommentText = $CommentText; }
   public function getCommentText() { return $CommentText; }

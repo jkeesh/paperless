@@ -23,9 +23,10 @@ CREATE TABLE IF NOT EXISTS `AssignmentComments` (
   `ID` int(11) NOT NULL auto_increment,
   `AssignmentFile` int(11) NOT NULL,
   `LineNumber` int(11) NOT NULL,
+  `CommentLength` int(11) NOT NULL,
   `CommentText` text,
   PRIMARY KEY  (`ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `AssignmentComments`
