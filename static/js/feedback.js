@@ -274,12 +274,17 @@ function /* class */ CodeFile(filename, prefix) {
 			}
 		}
 		
+                $('textArea').remove();
+
 		current_dialog.dialog("close");
 		current_dialog.dialog("destroy");
 		current_dialog = null;
 	}
 	
 	this.editComment = function(range, fileID) {
+                if (current_dialog != null){
+                        return;
+                }
 		var text = $('#ctext' + this.rangeToString(range)).html();
 		current_dialog = $('<div></div>')
 			.html('<textarea>' + text +'</textarea>')
