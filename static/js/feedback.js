@@ -271,6 +271,8 @@ function /* class */ CodeFile(filename, prefix) {
 				width: 350,
 				height: 250,
 				focus: true,
+                                open: function(event, ui) { $(".ui-dialog-titlebar-close").hide();},
+                                closeOnEscape: false,
 				buttons: { "Submit": 
 						function() {
 							comment = code_files[fileID];
@@ -281,6 +283,7 @@ function /* class */ CodeFile(filename, prefix) {
 							comment.removeComment(range);
 						}
 						}, 
+
 		});
 		$("textarea").focus();
 	}
