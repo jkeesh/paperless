@@ -13,6 +13,23 @@ function removeDialog(){
 	current_dialog = null;
 }
 
+/* Creates a safe function that cannot be called more than once in
+ * a period of 100 milliseconds. */
+function SafeFunction(func){
+	this.time = null;
+	return function(){
+		if(this.time != null){
+			var now = new Date();
+			var diff = now.getTime() - this.time.getTime();
+			if( diff < 100) {
+				return;
+			}
+		}
+		this.time = new Date();
+		func();
+	}
+}
+
 
 function /* class */ CodeFile(filename, prefix) {
 	this.filename = filename;
@@ -44,45 +61,18 @@ function /* class */ CodeFile(filename, prefix) {
 		self.last_comment_range = null;
 	});
 	
-   	this.themes = new Array('shCoreDefault.css', 'shCoreMDUltra.css' ,'shThemeEmacs.css','shCoreMidnight.css',  'shThemeFadeToGrey.css','shCoreDjango.css', 'shCoreRDark.css', 'shThemeMDUltra.css','shCoreEclipse.css', 'shThemeDefault.css','shThemeMidnight.css', 'shCoreEmacs.css', 'shThemeDjango.css', 'shThemeRDark.css', 'shCoreFadeToGrey.css', 'shThemeEclipse.css');
-	
-	
-	this.timeTheme = null
+   	this.themes = new Array('shCoreDefault.css', 'shCoreMDUltra.css' ,'shThemeEmacs.css','shCoreMidnight.css',  'shThemeFadeToGrey.css','shCoreDjango.css', 'shCoreRDark.css', 'shThemeMDUltra.css','shCoreEclipse.css', 'shThemeDefault.css','shThemeMidnight.css', 'shCoreEmacs.css', 'shThemeDjango.css', 'shThemeRDark.css', 'shCoreFadeToGrey.css', 'shThemeEclipse.css');	
 	this.themeID = 0;
-	/// this is all complicated because chrome registered about 10 events on this listener so we need a buffer
-	shortcut.add("ctrl+2", function(){
-		if(this.timeTheme != null){
-			var now = new Date();
-			var diff = now.getTime() - this.timeTheme.getTime();
-			//console.log(diff);
-			if( diff < 100) {
-				return;
-			}
-		}
-		this.timeTheme = new Date();
-		//console.log('theme switch');
+	shortcut.add("ctrl+2", new SafeFunction ( function(){
 		self.themeID++;
-		//console.log(self.themID);
 		var themeIndex = self.themeID % self.themes.length; 
-		//console.log(self.themeIndex);
-		//alert(document.location.pathname);
 		var newTheme = root_url +'/static/js/syntaxhighlighter/styles/' + self.themes[themeIndex];
-		
 		$('#syntaxStylesheet').attr('href', newTheme);
-	});
+	} )
+	);
 	
-	this.time = null
-	/// this is all complicated because chrome registered about 10 events on this listener so we need a buffer
-	shortcut.add("ctrl+1", function(){
-		if(this.time != null){
-			var now = new Date();
-			var diff = now.getTime() - this.time.getTime();
-			if( diff < 100) {
-				return;
-			}
-		}
-		this.time = new Date();
-		
+
+	shortcut.add("ctrl+1", new SafeFunction ( function(){
 		if($("#shortcuts").html() != null){
 			$("#shortcuts").remove();
 		}else{
@@ -96,7 +86,8 @@ function /* class */ CodeFile(filename, prefix) {
 					+   "<div><span class='keyboardShortcuts'>&lt;Ctrl&gt;+2: </span><span class='keyboardAction'>Change Theme</span></div>"
 					+	"</div>");
 		}
-	});
+	} )
+	);
 
 	this.isLineSelected = function(line_no) {
 		for (var i = 0; i < this.selected_ranges.length; i++) {
