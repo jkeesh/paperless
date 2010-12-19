@@ -171,6 +171,7 @@ function /* class */ CodeFile(filename, prefix) {
 	this.submitComment = function(range){
 		this.last_comment_range = range;
 		var commentText = $("textarea").val();
+		//console.log(commentText.length);
 		//console.log(commentText);
 		$('textarea').remove();
 		//console.log(commentText);
@@ -179,10 +180,14 @@ function /* class */ CodeFile(filename, prefix) {
 		current_dialog = null;
 		var highlight_length = range.higher - range.lower + 1;
 		//console.log("Comment " + commentText + " for line " + range.lower + " highlight length " + highlight_length);
-		this.addCommentDiv(commentText, range);
+		if(commentText.length == 0){
+			this.unhighlightRange(range);
+		}else{
+			this.addCommentDiv(commentText, range);
+		}
 	}
 	
-        this.cancelComment = function(range){
+       this.cancelComment = function(range){
 	    for (var i = range.lower; i <= range.higher; i++) {
                 this.unhiliteLineNo(i);
             }
@@ -254,6 +259,13 @@ function /* class */ CodeFile(filename, prefix) {
 		var range_text = range.lower + "-" + range.higher;
 		if(range.lower == range.higher) range_text = range.lower;
 		return range_text;
+	}
+	
+	this.unhighlightRange = function(range){
+		//unhighlight the lines
+		for (var i = range.lower; i <= range.higher; i++) {
+			this.unhiliteLineNo(i);
+		}	
 	}
 
 	
