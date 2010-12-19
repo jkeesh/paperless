@@ -152,6 +152,19 @@ function /* class */ CodeFile(filename, prefix) {
 		if(commentText.length == 0){
 			this.unhighlightRange(range);
 		}else{
+		  
+		  $.ajax({
+        type: 'POST',
+        url: window.location.pathname, // post to current location url
+        data: "text=" + commentText + "&rangeLower=" + range.lower + "&rangeHigher=" + range.higher + "&filename=" + self.filename,
+        success: function(data) {
+          console.log(data);
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+          // TODO
+        }
+      });
+		  
 			this.addCommentDiv(commentText, range);
 		}
 	}
@@ -173,7 +186,7 @@ function /* class */ CodeFile(filename, prefix) {
 		var element_id = "e" + this.rangeToString(range);
 		var top_offset = 17.6 * (range.lower) + 200; //200 is codeposition offset in style.css , 17 is line height;
 		var style_position = "position:absolute; top:"+ top_offset +"px; right: 100px;";
-		
+    
 
 		$('#comments' + this.fileID).append("<div id='"+ element_id +"'><a href=\"javascript:edit("+ this.fileID + ",'" + comment_id + "')\"> <div id='" + comment_id
 											+"' style='" + style_position +"' class='commentbox'>"
@@ -332,7 +345,7 @@ CodeFile.mouseEntered = function(event) {
 	});
 
 	for (var i = old_range.lower; i < range.lower; i++) {
-		code_file.unhiliteLineNo(i);
+		code_file.unfLineNo(i);
 	}
 	for (var i = old_range.higher; i > range.higher; i--) {
 		code_file.unhiliteLineNo(i);

@@ -33,8 +33,21 @@ by
     });
     
     function setupCodeFiles(){
+        
         {foreach from=$files item=file key=i}
-    	code_files.push(new CodeFile('{$file}', {$i}));
+        var cur_file = new CodeFile('{$file}', {$i});
+        
+        {foreach from=$assignment_files item=afile}
+            {foreach from=$afile->getAssignmentComments() item=comment}
+                for(var i = {$comment->getStartLine()}; i < {$comment->getEndLine()}; i++)
+                    cur_file.hiliteLineNo(i);
+                    
+                var curRange = new LineRange({$comment->getStartLine()}, {$comment->getEndLine()});
+                cur_file.addCommentDiv('{$comment->getCommentText()}', curRange);
+            {/foreach}
+        {/foreach}
+        
+    	code_files.push(cur_file);
     	{/foreach}
     }
     

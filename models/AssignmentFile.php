@@ -1,13 +1,13 @@
 <?php
-require_once("../config.php");
-require_once("Model.php");
+require_once(dirname(dirname(__FILE__)) . "/config.php");
+require_once(dirname(dirname(__FILE__)) . "/models/Model.php");
 
 class AssignmentFile extends Model {
   
-  private $ID;
-  private $GradedAssignment;
-  private $FilePath;
-  private $AssignmentComments;
+  public $ID;
+  public $GradedAssignment;
+  public $FilePath;
+  public $AssignmentComments;
   
   public function __construct() {
     parent::__construct();
@@ -114,5 +114,7 @@ class AssignmentFile extends Model {
   
   public function setFilePath($FilePath) { $this->FilePath = $FilePath; }
   public function getFilePath() { return $this->FilePath; }
+  
+  public function getAssignmentComments() { return $this->AssignmentComments; }
 }
 ?>
