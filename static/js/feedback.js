@@ -4,6 +4,16 @@ current_dialog = null; // we will only have one dialog at a time
 current_range = null;
 globalSubmitComment = null;
 
+
+function removeDialog(){
+	if( $('textarea')) $('textarea').remove();
+	if(current_dialog == null) return;
+	current_dialog.dialog("close");
+	current_dialog.dialog("destroy");
+	current_dialog = null;
+}
+
+
 function /* class */ CodeFile(filename, prefix) {
 	this.filename = filename;
 	this.prefix = prefix;
@@ -142,44 +152,12 @@ function /* class */ CodeFile(filename, prefix) {
 	this.unhiliteLine = function (line) {
 		$(line).removeClass("highlighted");
 	}
-
-	// Generate IDs for elements. Decomposing this out helps keep things consistent.
-	this.commentTrId = function(range) {
-		theid =  this.prefix + "comment_" + range.lower; //+ "-" + range.higher;
-		//console.log(theid);
-		return theid;
-	}
-
-	this.commentTdId = function(range) {
-		theid=  this.prefix + "comment_" + range.lower;// + "-" + range.higher;
-		//console.log(theid);
-		return theid;
-	}
-
-	this.commentTextAreaId = function(range) {
-		theid= this.prefix + "comment_textarea_" + range.lower; // + "-" + range.higher;
-		//console.log(theid);
-		return theid;
-	}
-
-	this.commentTextId = function(range) {
-		theid= this.prefix + "comment_text_" + range.lower; // + "-" + range.higher;
-	//	console.log(theid);
-		return theid;
-	}
 	
 	this.submitComment = function(range){
 		this.last_comment_range = range;
 		var commentText = $("textarea").val();
-		//console.log(commentText.length);
-		//console.log(commentText);
 		$('textarea').remove();
-		//console.log(commentText);
-		current_dialog.dialog("close");
-		current_dialog.dialog("destroy");
-		current_dialog = null;
-		var highlight_length = range.higher - range.lower + 1;
-		//console.log("Comment " + commentText + " for line " + range.lower + " highlight length " + highlight_length);
+		removeDialog();
 		if(commentText.length == 0){
 			this.unhighlightRange(range);
 		}else{
@@ -187,16 +165,10 @@ function /* class */ CodeFile(filename, prefix) {
 		}
 	}
 	
-       this.cancelComment = function(range){
-	    for (var i = range.lower; i <= range.higher; i++) {
-                this.unhiliteLineNo(i);
-            }
-            $('textarea').remove();
-            current_dialog.dialog("close");
-            current_dialog.dialog("destroy");
-            current_dialog = null;
-        }
-
+    this.cancelComment = function(range){
+		this.unhighlightRange(range);
+		removeDialog();
+    }
 
 	this.removeAndSubmitComment = function(range){
 		var elem = "#e"+this.rangeToString(range);
@@ -231,22 +203,20 @@ function /* class */ CodeFile(filename, prefix) {
 		current_dialog = $('<div></div>')
                         .html('<textarea></textarea>')
                         .dialog({
-                                autoOpen: true,
+                            autoOpen: true,
 	                        title: 'Enter Comment',
-				width: 350,
-                                height: 250,
-		                focus: true,
-	                        open: function(event, ui) { $(".ui-dialog-titlebar-close").hide();},
-                                closeOnEscape: false,
-		                buttons: { "Submit":
+				            width: 350,
+                            height: 250,
+		                    focus: true,
+		                    buttons: { "Submit":
                                            function() {
-                                        comment.submitComment(range); //because 'this' now refers to the dialog                                                                                        
-                                    },
-                                           "Cancel":
-                                        function() {
-	                                       comment.cancelComment(range);
-                                           },
-                                },
+                                              comment.submitComment(range); //because 'this' now refers to the dialog                                                                                        
+                                            },
+                                       "Cancel":
+                                           function() {
+	                                          comment.cancelComment(range);
+                                            },
+                                      },
 	        });
 
 		$("textarea").focus();
@@ -261,8 +231,8 @@ function /* class */ CodeFile(filename, prefix) {
 		return range_text;
 	}
 	
+	/* Unhighlights the range passed in as a parameter */
 	this.unhighlightRange = function(range){
-		//unhighlight the lines
 		for (var i = range.lower; i <= range.higher; i++) {
 			this.unhiliteLineNo(i);
 		}	
@@ -273,10 +243,7 @@ function /* class */ CodeFile(filename, prefix) {
 		var elem = "#e"+this.rangeToString(range);
 		$("#e"+this.rangeToString(range)).remove(); // remove the comment
 		
-		//unhighlight the lines
-		for (var i = range.lower; i <= range.higher; i++) {
-			this.unhiliteLineNo(i);
-		}
+		this.unhighlightRange(range);
 
 		//remove it from selected ranges
 		for (i = 0; i < this.selected_ranges.length; i++) {
@@ -285,12 +252,8 @@ function /* class */ CodeFile(filename, prefix) {
 				this.selected_ranges.splice(i, 1);
 			}
 		}
-		
-                $('textArea').remove();
-
-		current_dialog.dialog("close");
-		current_dialog.dialog("destroy");
-		current_dialog = null;
+        $('textArea').remove();
+		removeDialog();
 	}
 	
 	this.editComment = function(range, fileID) {
