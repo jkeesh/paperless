@@ -3,8 +3,8 @@
 //there is a different configuration file locally and on the web.
 
 define('BASE_DIR', dirname(__FILE__));
-
-$username = $_COOKIE['SignOnDefault'];
+$sunetid = $_ENV['WEBAUTH_USER'];
+$username = $sunetid;
 if(!$username) $username = 'zhoud';
 $username = strtolower($username);
 
