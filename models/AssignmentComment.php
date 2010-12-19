@@ -5,11 +5,11 @@ require_once(dirname(dirname(__FILE__)) . "/models/AssignmentFile.php");
 
 class AssignmentComment extends Model {
   
-  public $ID;
-  public $AssignmentFile;
-  public $StartLine;
-  public $EndLine;
-  public $CommentText;
+  private $ID;
+  private $AssignmentFile;
+  private $StartLine;
+  private $EndLine;
+  private $CommentText;
   
   public function __construct() {
     parent::__construct();
@@ -21,17 +21,15 @@ class AssignmentComment extends Model {
   */
   public function save() {
     $query = "REPLACE INTO " . ASSIGNMENT_COMMENT_TABLE . 
-              " VALUES(" . mysql_real_escape_string($this->ID) . ", " . 
-              mysql_real_escape_string($this->AssignmentFile) . ", " . 
-              mysql_real_escape_string($this->StartLine) . ", " . 
-              mysql_real_escape_string($this->EndLine) . ", '" . 
-              mysql_real_escape_string($this->CommentText) . "');";
+              " VALUES(:ID, :AssignmentFile, :StartLine, :EndLine, :CommentText);";
     try {
-      $rows = $this->conn->exec($query);
-      if($rows <= 0) {
-        echo "FAILED TO SAVE!"; // TODO log this error instead of echo
-        return;
-      }
+      $sth = $this->conn->prepare($query);
+      $rows = $sth->execute(array(":ID" => $this->ID,
+                                  ":AssignmentFile" => $this->AssignmentFile,
+                                  ":StartLine" => $this->StartLine,
+                                  ":EndLine" => $this->EndLine,
+                                  ":CommentText" => $this->CommentText));
+      
       if(!$this->ID) {
         $this->ID = $this->conn->lastInsertId();
       }
@@ -42,12 +40,11 @@ class AssignmentComment extends Model {
   
   public function delete() {
     $query = "DELETE FROM " . ASSIGNMENT_COMMENT_TABLE .
-              " WHERE ID = " . mysql_real_escape_string($this->ID) . ";";
+              " WHERE ID = :ID;";
     try {
-      $rows = $this->conn->exec($query);
-      if($rows <= 0) {
-        echo "RECORD NOT FOUND IN DATABASE!"; // TODO log this error instead of echo
-      }
+      $sth = $this->conn->prepare($query);
+      $rows = $sth->execute(array(":ID" => $this->ID));
+      // TODO test if query successful
     } catch(PDOException $e) {
       echo $e->getMessage(); // TODO log this error instead of echo
     }
@@ -65,10 +62,12 @@ class AssignmentComment extends Model {
   public static function load($ID) {
     
     $query = "SELECT * FROM " . ASSIGNMENT_COMMENT_TABLE .
-              " WHERE ID=" . mysql_real_escape_string($ID);
+              " WHERE ID = :ID;";
     $instance = new self();
-    $sth = $instance->conn->query($query);
-
+    
+    $sth = $instance->conn->prepare($query);
+    $sth->execute(array(":ID" => $ID));
+    
     $sth->setFetchMode(PDO::FETCH_NUM);
     if($row = $sth->fetch()) {
       $instance->fill($row);
