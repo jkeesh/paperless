@@ -22,7 +22,7 @@ class ConnectionFactory
       try {
         $this->db = new PDO('mysql:host=' . MYSQL_HOST . ';dbname=' . MYSQL_DATABASE, MYSQL_USERNAME, MYSQL_PASSWORD);
       } catch(PDOException $e) {
-        echo $e->getMessage();
+        echo $e->getMessage(); // TODO log this error instead of echoing
         return null;
       }
     }

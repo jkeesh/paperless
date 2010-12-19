@@ -28,7 +28,7 @@ class AssignmentFile extends Model {
         $this->ID = $this->conn->lastInsertId();
       }
     } catch(PDOException $e) {
-      echo $e->getMessage();
+      echo $e->getMessage(); // TODO log this error instead of echo
     }
   }
   
