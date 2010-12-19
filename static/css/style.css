@@ -31,6 +31,8 @@ textarea{
 	background-color: #A9C5EB;
 	padding: 7px;
 	border: 2px solid white;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
 }
 
 .commentbox:hover{
