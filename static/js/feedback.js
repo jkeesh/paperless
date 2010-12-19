@@ -208,6 +208,8 @@ function /* class */ CodeFile(filename, prefix) {
 				            width: 350,
                             height: 250,
 		                    focus: true,
+                                    open: function(event, ui) { $(".ui-dialog-titlebar-close").hide();},
+                                    closeOnEscape: false,
 		                    buttons: { "Submit":
                                            function() {
                                               comment.submitComment(range); //because 'this' now refers to the dialog                                                                                        
