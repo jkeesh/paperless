@@ -62,9 +62,10 @@ class AssignmentComment extends Model {
   /*
   * Load from an id
   */
-  public static function load() {
+  public static function load($ID) {
+    
     $query = "SELECT * FROM " . ASSIGNMENT_COMMENT_TABLE .
-              " WHERE ID = " . mysql_real_escape_string($ID) . ";";
+              " WHERE ID=" . mysql_real_escape_string($ID);
     $instance = new self();
     $sth = $instance->conn->query($query);
 

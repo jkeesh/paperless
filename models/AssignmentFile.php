@@ -7,9 +7,11 @@ class AssignmentFile extends Model {
   private $ID;
   private $GradedAssignment;
   private $FilePath;
+  private $AssignmentComments;
   
   public function __construct() {
     parent::__construct();
+    $AssignmentComments = array( );
   }
   
   /*
@@ -33,13 +35,19 @@ class AssignmentFile extends Model {
   }
   
   public function delete() {
+    // delete the file object
     $query = "DELETE FROM " . ASSIGNMENT_FILE_TABLE .
               " WHERE ID = " . mysql_real_escape_string($this->ID) . ";";
+    // delete the comments associated with this object
+    $queryComments = "DELETE FROM " . ASSIGNMENT_COMMENT_TABLE . 
+                      " WHERE AssignmentFile=" . mysql_real_escape_string($this->ID) . ";";
     try {
       $rows = $this->conn->exec($query);
       if($rows <= 0) {
         echo "RECORD NOT FOUND IN DATABASE!"; // TODO log this error instead of echo
+        return;
       }
+      $rows = $this->conn->exec($queryComments);
     } catch(PDOException $e) {
       echo $e->getMessage(); // TODO log this error instead of echo
     }
@@ -51,19 +59,38 @@ class AssignmentFile extends Model {
     return $instance;
   }
   
+  public function loadComments() {
+    $query = "SELECT * FROM " . ASSIGNMENT_COMMENT_TABLE . " WHERE AssignmentFile=" . $this->ID;
+    $sth = $this->conn->query($query);
+    $sth->setFetchMode(PDO::FETCH_ASSOC);
+    $ids = array();
+    while($row = $sth->fetch()) {
+      $curComment = AssignmentComment::create($row['AssignmentFile'], $row['StartLine'], $row['EndLine'], $row['CommentText']);
+      $curComment->setID($row['ID']);
+      $this->AssignmentComments[] = $curComment;
+    }
+  }
+  
   
   /*
   * Load from an id
   */
-  public static function load($ID) {
-    $query = "SELECT * FROM " . ASSIGNMENT_FILE_TABLE .
-              " WHERE ID = " . mysql_real_escape_string($ID) . ";";
+  public static function load($args) {
+    extract($args);
+    
+    $where = null;
+    if(isset($ID)) $where = "ID=".mysql_real_escape_string($ID);
+    if(isset($FilePath)) $where = "File='".mysql_real_escape_string($FilePath)."'";
+    if($where == null) return null;
+    
+    $query = "SELECT * FROM " . ASSIGNMENT_FILE_TABLE . " WHERE $where;";
     $instance = new self();
     $sth = $instance->conn->query($query);
 
     $sth->setFetchMode(PDO::FETCH_NUM);
     if($row = $sth->fetch()) {
       $instance->fill($row);
+      $instance->loadComments();
       return $instance;
     }
     return null;
