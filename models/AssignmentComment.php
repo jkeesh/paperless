@@ -27,9 +27,26 @@ class AssignmentComment extends Model {
               mysql_real_escape_string($this->EndLine) . ", '" . 
               mysql_real_escape_string($this->CommentText) . "');";
     try {
-      $this->conn->exec($query);
+      $rows = $this->conn->exec($query);
+      if($rows <= 0) {
+        echo "FAILED TO SAVE!"; // TODO log this error instead of echo
+        return;
+      }
       if(!$this->ID) {
         $this->ID = $this->conn->lastInsertId();
+      }
+    } catch(PDOException $e) {
+      echo $e->getMessage(); // TODO log this error instead of echo
+    }
+  }
+  
+  public function delete() {
+    $query = "DELETE FROM " . ASSIGNMENT_COMMENT_TABLE .
+              " WHERE ID = " . mysql_real_escape_string($this->ID) . ";";
+    try {
+      $rows = $this->conn->exec($query);
+      if($rows <= 0) {
+        echo "RECORD NOT FOUND IN DATABASE!"; // TODO log this error instead of echo
       }
     } catch(PDOException $e) {
       echo $e->getMessage(); // TODO log this error instead of echo
@@ -45,7 +62,7 @@ class AssignmentComment extends Model {
   /*
   * Load from an id
   */
-  public static function load($ID) {
+  public static function load() {
     $query = "SELECT * FROM " . ASSIGNMENT_COMMENT_TABLE .
               " WHERE ID = " . mysql_real_escape_string($ID) . ";";
     $instance = new self();

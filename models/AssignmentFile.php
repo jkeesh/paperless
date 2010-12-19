@@ -32,6 +32,19 @@ class AssignmentFile extends Model {
     }
   }
   
+  public function delete() {
+    $query = "DELETE FROM " . ASSIGNMENT_FILE_TABLE .
+              " WHERE ID = " . mysql_real_escape_string($this->ID) . ";";
+    try {
+      $rows = $this->conn->exec($query);
+      if($rows <= 0) {
+        echo "RECORD NOT FOUND IN DATABASE!"; // TODO log this error instead of echo
+      }
+    } catch(PDOException $e) {
+      echo $e->getMessage(); // TODO log this error instead of echo
+    }
+  }
+  
   public static function create($GradedAssignment, $FilePath) {
     $instance = new self();
     $instance->fill(array(0, $GradedAssignment, $FilePath));

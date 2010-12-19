@@ -19,10 +19,10 @@ class ToroHandler {
   public function __construct() {
       $this->smarty = new Smarty();
 
-      $this->smarty->template_dir = BASE_DIR . '/templates/templates/';
-      $this->smarty->compile_dir  = BASE_DIR . '/templates/templates_c/';
-      $this->smarty->config_dir   = BASE_DIR . '/templates/configs/';
-      $this->smarty->cache_dir    = BASE_DIR . '/templates/cache/';
+      $this->smarty->template_dir = BASE_DIR . '/views/templates/';
+      $this->smarty->compile_dir  = BASE_DIR . '/views/templates_c/';
+      $this->smarty->config_dir   = BASE_DIR . '/views/configs/';
+      $this->smarty->cache_dir    = BASE_DIR . '/views/cache/';
       
       // assign vars we need on every page
       $this->smarty->assign("username", USERNAME);
