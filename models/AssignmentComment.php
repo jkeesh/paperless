@@ -1,15 +1,15 @@
 <?php
-require_once("../config.php");
-require_once("Model.php");
-require_once("AssignmentFile.php");
+require_once(dirname(dirname(__FILE__)) . "/config.php");
+require_once(dirname(dirname(__FILE__)) . "/models/Model.php");
+require_once(dirname(dirname(__FILE__)) . "/models/AssignmentFile.php");
 
 class AssignmentComment extends Model {
   
-  private $ID;
-  private $AssignmentFile;
-  private $StartLine;
-  private $EndLine;
-  private $CommentText;
+  public $ID;
+  public $AssignmentFile;
+  public $StartLine;
+  public $EndLine;
+  public $CommentText;
   
   public function __construct() {
     parent::__construct();
@@ -62,9 +62,10 @@ class AssignmentComment extends Model {
   /*
   * Load from an id
   */
-  public static function load() {
+  public static function load($ID) {
+    
     $query = "SELECT * FROM " . ASSIGNMENT_COMMENT_TABLE .
-              " WHERE ID = " . mysql_real_escape_string($ID) . ";";
+              " WHERE ID=" . mysql_real_escape_string($ID);
     $instance = new self();
     $sth = $instance->conn->query($query);
 
@@ -101,6 +102,6 @@ class AssignmentComment extends Model {
   public function getEndLine() { return $this->EndLine; }
   
   public function setCommentText($CommentText) { $this->CommentText = $CommentText; }
-  public function getCommentText() { return $CommentText; }
+  public function getCommentText() { return $this->CommentText; }
 }
 ?>
