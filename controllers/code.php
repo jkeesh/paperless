@@ -2,12 +2,16 @@
 require_once("models/AssignmentFile.php");
 require_once("models/AssignmentComment.php");
 
+/*
+* Controller that handles the syntax highlighted code view
+* for a student, assignment pair and other ajax actions.
+*/
 class CodeHandler extends ToroHandler {
-    // shouldn't be hardcoded
     
-    
-    // Given a filename, tests if this is a good file type for the class
-    // i.e cs106a only gets java files and 106bx gets cpp/h
+    /*
+    * Given a filename, tests if this is a good file type for the class
+    * i.e cs106a only gets java files and 106bx gets cpp/h
+    */
     private function isCodeFile($filename, $class){
        $ext = pathinfo($filename, PATHINFO_EXTENSION);
        if($class == "cs106a") {
@@ -17,9 +21,16 @@ class CodeHandler extends ToroHandler {
        }
     }
     
+    /*
+    * Gets the file contents, file names, and appropriate AssignmentFile model objects
+    * corresponding to a given student, assignment pair.
+    * TODO: Associate the AssignmentFile with an actual GradedAssignment object / row
+    * TODO: Don't use a hardcoded path / we need to allow multiple base search paths
+    * TODO: Handle error when a pathname is not found
+    */
     private function getAssignmentFiles($student, $assignment) {
         $dirname = SUBMISSIONS_DIR . "/" . USERNAME . "/". $assignment . "/" . $student . "/"; 
-        if(!is_dir($dirname)) return null;
+        if(!is_dir($dirname)) return null; // TODO handle error
         
         $dir = opendir($dirname);
         $files = array();
@@ -41,7 +52,10 @@ class CodeHandler extends ToroHandler {
         }
         return array($files, $file_contents, $assignment_files);
     }
-
+    
+    /*
+    * Displays the syntax highlighted code for a student, assignment pair
+    */
     public function get($student, $assignment) {
         
         list($files, $file_contents, $assignment_files) = $this->getAssignmentFiles($student, $assignment);
@@ -58,7 +72,14 @@ class CodeHandler extends ToroHandler {
         $this->smarty->display("code.html");
     }
     
-    // response for posting ajax, must output a valid json string
+   /*
+    * Handles adding and deleting comments.  Note: when a comment is edited it is
+    * first deleted and then re-added to the database.
+    * TODO: Log / handle an error when we don't have a valid path
+    * TODO: We probably need to filter user input somehow
+    * TODO: This should output (via echo or whatever) some valid JSON that is used
+    *       to confirm the request succeeded
+    */
     public function post_xhr($student, $assignment) {
       // TODO this shouldn't be hard coded
       $dirname = SUBMISSIONS_DIR . "/" . USERNAME . "/". $assignment . "/" . $student . "/";
@@ -66,7 +87,7 @@ class CodeHandler extends ToroHandler {
       if(!isset($_POST['action'])) return;
       
       $curFile = AssignmentFile::load(array("FilePath" => $dirname . $_POST['filename']));
-      if(!$curFile) return; // TODO LOG AN ERROR HERE.. we should have a valid path here
+      if(!$curFile) return; // TODO handle error
       
       if($_POST['action'] == "create") {
         $newComment = AssignmentComment::create($curFile->getID(), $_POST['rangeLower'], $_POST['rangeHigher'], $_POST['text']);
