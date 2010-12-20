@@ -62,11 +62,24 @@ class CodeHandler extends ToroHandler {
     public function post_xhr($student, $assignment) {
       // TODO this shouldn't be hard coded
       $dirname = SUBMISSIONS_DIR . "/" . USERNAME . "/". $assignment . "/" . $student . "/";
+      
+      if(!isset($_POST['action'])) return;
+      
       $curFile = AssignmentFile::load(array("FilePath" => $dirname . $_POST['filename']));
       if(!$curFile) return; // TODO LOG AN ERROR HERE.. we should have a valid path here
       
-      $newComment = AssignmentComment::create($curFile->getID(), $_POST['rangeLower'], $_POST['rangeHigher'], $_POST['text']);
-      $newComment->save();
+      if($_POST['action'] == "create") {
+        $newComment = AssignmentComment::create($curFile->getID(), $_POST['rangeLower'], $_POST['rangeHigher'], $_POST['text']);
+        $newComment->save();
+      } else if($_POST['action'] == "delete") {
+        // find the comment to delete
+        foreach($curFile->getAssignmentComments() as $comment) {
+          if($comment->getStartLine() == $_POST['rangeLower'] && $comment->getEndLine() == $_POST['rangeHigher']) {
+            $comment->delete();
+            break;
+          }
+        }
+      }
     }
 }
 ?>

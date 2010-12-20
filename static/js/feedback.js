@@ -156,9 +156,9 @@ function /* class */ CodeFile(filename, prefix) {
 		  $.ajax({
         type: 'POST',
         url: window.location.pathname, // post to current location url
-        data: "text=" + commentText + "&rangeLower=" + range.lower + "&rangeHigher=" + range.higher + "&filename=" + self.filename,
+        data: "action=create&text=" + commentText + "&rangeLower=" + range.lower + "&rangeHigher=" + range.higher + "&filename=" + self.filename,
         success: function(data) {
-          console.log(data);
+          // TODO
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
           // TODO
@@ -246,6 +246,19 @@ function /* class */ CodeFile(filename, prefix) {
 
 	
 	this.removeComment = function(range) {
+	  
+	  $.ajax({
+      type: 'POST',
+      url: window.location.pathname, // post to current location url
+      data: "action=delete&rangeLower=" + range.lower + "&rangeHigher=" + range.higher + "&filename=" + self.filename,
+      success: function(data) {
+        // TODO
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+        // TODO
+      }
+    });
+	  
 		var elem = "#e"+this.rangeToString(range);
 		$("#e"+this.rangeToString(range)).remove(); // remove the comment
 		
@@ -258,7 +271,8 @@ function /* class */ CodeFile(filename, prefix) {
 				this.selected_ranges.splice(i, 1);
 			}
 		}
-        $('textArea').remove();
+    
+    $('textArea').remove();
 		removeDialog();
 	}
 	

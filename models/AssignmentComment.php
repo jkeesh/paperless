@@ -65,13 +65,17 @@ class AssignmentComment extends Model {
               " WHERE ID = :ID;";
     $instance = new self();
     
-    $sth = $instance->conn->prepare($query);
-    $sth->execute(array(":ID" => $ID));
+    try {
+      $sth = $instance->conn->prepare($query);
+      $sth->execute(array(":ID" => $ID));
     
-    $sth->setFetchMode(PDO::FETCH_NUM);
-    if($row = $sth->fetch()) {
-      $instance->fill($row);
-      return $instance;
+      $sth->setFetchMode(PDO::FETCH_NUM);
+      if($row = $sth->fetch()) {
+        $instance->fill($row);
+        return $instance;
+      }
+    } catch(PDOException $e) {
+      echo $e->getMessage(); // TODO log this error instead of echo
     }
     return null;
   }

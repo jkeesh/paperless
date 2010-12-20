@@ -63,7 +63,7 @@ require_once('controllers/assignment.php'); // lists the assignments for a given
 */
 $site = new ToroApplication(Array(
   Array('/', 'string', 'IndexHandler'),
-  Array('^\/student\/([a-zA-Z0-9_ ]+)\/?$', 'regex', 'StudentHandler'),
+  Array('^\/student\/([a-zA-Z0-9_ \-]+)\/?$', 'regex', 'StudentHandler'),
   Array('^\/code\/([a-zA-Z0-9_ -]+)\/([a-zA-Z0-9_]+)\/?$', 'regex', 'CodeHandler'),
   Array('^\/assignment\/([a-zA-Z0-9_ ]+)\/?$', 'regex', 'AssignmentHandler')
 ));
