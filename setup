@@ -1,0 +1,2 @@
+cp .htaccess_local .htaccess
+cp config_local.php config.php
