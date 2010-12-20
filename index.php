@@ -27,6 +27,7 @@ class ToroHandler {
       // assign vars we need on every page
       $this->smarty->assign("username", USERNAME);
       $this->smarty->assign("root_url", ROOT_URL);
+	  $this->smarty->assign("display_name", Model::getDisplayName(USERNAME));
   }
 
   public function __call($name, $arguments) {

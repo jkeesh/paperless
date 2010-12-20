@@ -29,6 +29,21 @@ class Model {
   public function __construct() {
     $this->conn = Database::getConnection();
   }
+
+  public static function getDisplayName($sunetid){
+	$db = Database::getConnection();
+
+    $query = "SELECT DisplayName FROM People WHERE SUNetID = :sunetid";
+    try {
+      $sth = $db->prepare($query);
+      $sth->execute(array(":sunetid" => $sunetid));
+      if($row = $sth->fetch()) {
+        return $row['DisplayName']; // form NAME (SUID)
+      }
+    } catch(PDOException $e) {
+        echo $e->getMessage(); // TODO log this error instead of echoing
+    }
+  }
   
   /*
   * Tests whether given sunet id is a section leader
