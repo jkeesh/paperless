@@ -247,18 +247,6 @@ function /* class */ CodeFile(filename, prefix) {
 	
 	this.removeComment = function(range) {
 	  
-	  $.ajax({
-      type: 'POST',
-      url: window.location.pathname, // post to current location url
-      data: "action=delete&rangeLower=" + range.lower + "&rangeHigher=" + range.higher + "&filename=" + self.filename,
-      success: function(data) {
-        // TODO
-      },
-      error: function(XMLHttpRequest, textStatus, errorThrown) {
-        // TODO
-      }
-    });
-	  
 		var elem = "#e"+this.rangeToString(range);
 		$("#e"+this.rangeToString(range)).remove(); // remove the comment
 		
@@ -277,9 +265,23 @@ function /* class */ CodeFile(filename, prefix) {
 	}
 	
 	this.editComment = function(range, fileID) {
-                if (current_dialog != null){
-                        return;
-                }
+    if (current_dialog != null){
+            return;
+    }
+    
+    // remove the old comment     
+    $.ajax({
+      type: 'POST',
+      url: window.location.pathname, // post to current location url
+      data: "action=delete&rangeLower=" + range.lower + "&rangeHigher=" + range.higher + "&filename=" + self.filename,
+      success: function(data) {
+        // TODO
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+        // TODO
+      }
+    });
+    
 		var text = $('#ctext' + this.rangeToString(range)).html();
 		current_dialog = $('<div></div>')
 			.html('<textarea>' + text +'</textarea>')
