@@ -6,27 +6,19 @@ require_once(dirname(dirname(__FILE__)) . "/config.php");
 * Rationale behind this / credit here:
 * http://stackoverflow.com/questions/130878/global-or-singleton-for-database-connection
 */
-class ConnectionFactory
+class Database
 {
-  private static $factory;
-  public static function getFactory()
-  {
-    if (!self::$factory)
-      self::$factory = new ConnectionFactory();
-    return self::$factory;
-  }
-
-  private $db;
+  private static $db;
   public function getConnection() {
-    if (!$this->db) {
+    if (!self::$db) {
       try {
-        $this->db = new PDO('mysql:host=' . MYSQL_HOST . ';dbname=' . MYSQL_DATABASE, MYSQL_USERNAME, MYSQL_PASSWORD);
+        self::$db = new PDO('mysql:host=' . MYSQL_HOST . ';dbname=' . MYSQL_DATABASE, MYSQL_USERNAME, MYSQL_PASSWORD);
       } catch(PDOException $e) {
         echo $e->getMessage(); // TODO log this error instead of echoing
         return null;
       }
     }
-    return $this->db;
+    return self::$db;
   }
 }
 
@@ -35,6 +27,29 @@ class Model {
   public $conn;
   
   public function __construct() {
-    $this->conn = ConnectionFactory::getFactory()->getConnection();
+    $this->conn = Database::getConnection();
+  }
+  
+  /*
+  * Tests whether given sunet id is a section leader
+  * @param sunet id of user to test
+  * @return true if user is an SL, false otherwise
+  */
+  public static function isSectionLeader($sunetid) {
+    $db = Database::getConnection();
+    
+    $query = "SELECT (SELECT ID FROM People WHERE SUNetID = :sunetid) IN" .
+              "(SELECT SectionLeader FROM Sections" .
+              " WHERE Quarter = (SELECT DefaultQuarter FROM State)) AS IsSL;";
+    try {
+      $sth = $db->prepare($query);
+      $sth->execute(array(":sunetid" => $sunetid));
+      if($row = $sth->fetch()) {
+        if($row['IsSL']) return true;
+      }
+    } catch(PDOException $e) {
+        echo $e->getMessage(); // TODO log this error instead of echoing
+    }
+    return false;
   }
 }
