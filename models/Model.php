@@ -30,6 +30,85 @@ class Model {
     $this->conn = Database::getConnection();
   }
 
+
+  public static function getQuarterID(){
+	$db = Database::getConnection();
+
+    $query = "SELECT DefaultQuarter FROM State;";
+    try {
+      $sth = $db->prepare($query);
+      $sth->execute(array());
+      if($rows = $sth->fetch()) {
+        return $rows['DefaultQuarter'];      
+      }
+    } catch(PDOException $e) {
+        echo $e->getMessage(); // TODO log this error instead of echoing
+    }
+  }
+
+  public static function getUserID($sunetid){
+		$db = Database::getConnection();
+		$query = "SELECT ID FROM People WHERE SUNetID = :sunetid";
+		try {
+		    $sth = $db->prepare($query);
+			$sth->execute(array(":sunetid" => $sunetid));
+			if($rows = $sth->fetch()) {
+				return $rows['ID'];
+			}
+		} catch(PDOException $e) {
+			echo $e->getMessage(); // TODO log this error instead of echoing
+		}
+ }
+
+  public static function getQuarterName(){
+	 $db = Database::getConnection();
+	 $quarterID = Model::getQuarterID();
+	 $query = "SELECT CONCAT(SUBSTRING('WinterSpringSummerAutumn',(Quarter * 6 - 5),6), ' ', Year) AS Name FROM Quarters WHERE ID = :quarterID";
+				
+	try {
+		$sth = $db->prepare($query);
+		$sth->execute(array(":quarterID" => $quarterID));
+		if($rows = $sth->fetch()) {
+			return $rows['Name'];     
+		}
+	} catch(PDOException $e) {
+		echo $e->getMessage(); // TODO log this error instead of echoing
+	}
+  }
+
+  public static function getSectionIDForSectionLeader($sl_sunetid){
+	$db = Database::getConnection();
+	$quarterID = Model::getQuarterID();
+    $sl_db_ID = Model::getUserID($sl_sunetid);
+	$query = "SELECT ID FROM Sections WHERE Quarter = :quarterID AND SectionLeader = :sectionLeaderID";
+	try {
+		$sth = $db->prepare($query);
+		$sth->execute(array(":quarterID" => $quarterID, ":sectionLeaderID" => $sl_db_ID));
+		if($rows = $sth->fetch()) {
+			return $rows['ID'];   
+		}
+	} catch(PDOException $e) {
+		echo $e->getMessage(); // TODO log this error instead of echoing
+	}
+  }
+
+  public static function getStudentsForSectionLeader($sl_sunetid){
+	$db = Database::getConnection();
+	$section_db_id = Model::getSectionIDForSectionLeader($sl_sunetid);
+	
+	$query = "SELECT ID, DisplayName, SUNetID FROM People WHERE ID IN (SELECT Person FROM SectionAssignments WHERE Section = :sectionID)";
+
+	try {
+      $sth = $db->prepare($query);
+      $sth->execute(array(":sectionID" => $section_db_id));
+      if($rows = $sth->fetchAll()) {
+        return $rows;
+      }
+    } catch(PDOException $e) {
+        echo $e->getMessage(); // TODO log this error instead of echoing
+    }
+  }
+
   public static function getDisplayName($sunetid){
 	$db = Database::getConnection();
 

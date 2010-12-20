@@ -14,6 +14,16 @@ class IndexHandler extends ToroHandler {
         // assign template variables
         $this->smarty->assign("users", $users);
         $this->smarty->assign("assignments", $assns);
+
+ 		$student_suids = array();
+		$student_names = array();
+		foreach($students as $student){
+			$student_suids[] = $student['SUNetID'];
+			$student_names[] = $student['DisplayName'];
+		}
+		
+		$this->smarty->assign("student_suids", $student_suids);
+		$this->smarty->assign("student_names", $student_names);
         
         // display the template
         $this->smarty->display('index.html');

@@ -2,8 +2,8 @@
 
 <div class="list">
     <div class="header">Students</div>
-        {foreach from=$users item=user}
-        <div class="link"><a href="{$root_url}student/{$user}">{$user}</a></div>
+        {foreach from=$students item=student}
+        <div class="link"><a href="{$root_url}student/{$student.SUNetID}">{$student.DisplayName}</a></div>
         {/foreach}
     </div>
 </div>
