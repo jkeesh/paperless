@@ -29,9 +29,11 @@ class ToroHandler {
       $this->smarty->assign("root_url", ROOT_URL);
 	  $this->smarty->assign("quarter_name", Model::getQuarterName());
 	  $this->smarty->assign("display_name", Model::getDisplayName(USERNAME));
-	  $this->smarty->assign("is_section_leader", Model::isSectionLeader(USERNAME));
-	  $this->smarty->assign("students", Model::getStudentsForSectionLeader(USERNAME));
-	  //print_r(Model::getStudentsForSectionLeader(USERNAME));
+	  $is_sl = Model::isSectionLeader(USERNAME);
+	  $this->smarty->assign("is_section_leader", $is_sl);
+	
+	  if($is_sl)
+	  	$this->smarty->assign("students", Model::getStudentsForSectionLeader(USERNAME));
   }
 
   public function __call($name, $arguments) {
