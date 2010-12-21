@@ -17,6 +17,13 @@ class ToroHandler {
   protected $smarty;
   
   public function __construct() {
+	  $is_sl = Model::isSectionLeader(USERNAME);
+	  $is_student = Model::isStudent(USERNAME);
+	  $is_student_only = $is_student && !$is_sl;
+	  define(IS_STUDENT, $is_student);
+      define(IS_STUDENT_ONLY, $is_student_only);
+	  define(IS_SECTION_LEADER, $is_sl);
+
       $this->smarty = new Smarty();
 
       $this->smarty->template_dir = BASE_DIR . '/views/templates/';
@@ -29,17 +36,24 @@ class ToroHandler {
       $this->smarty->assign("root_url", ROOT_URL);
 	  $this->smarty->assign("quarter_name", Model::getQuarterName());
 	  $this->smarty->assign("display_name", Model::getDisplayName(USERNAME));
-	  $is_sl = Model::isSectionLeader(USERNAME);
-	  $is_student = Model::isStudent(USERNAME);
+
 	  $this->smarty->assign("is_section_leader", $is_sl);
 	  $this->smarty->assign("is_student", $is_student);
-	
 	  // if($is_sl && $is_student){
 	  // 		 echo "sl and student";
 	  // 		 return;
 	  //  	  }
-	  if($is_sl)
+	
+      if($is_sl) $sectionLeader = USERNAME;
+      else $sectionLeader = Model::getSectionLeaderForStudent(USERNAME);
+
+	  define(SECTION_LEADER, $sectionLeader);
+	  
+	  $this->smarty->assign("section_leader", $sectionLeader);
+	
+	 // if($is_sl){
 	  	$this->smarty->assign("students", Model::getStudentsForSectionLeader(USERNAME));
+	  //}
   }
 
   public function __call($name, $arguments) {

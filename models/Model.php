@@ -123,6 +123,64 @@ class Model {
         echo $e->getMessage(); // TODO log this error instead of echoing
     }
   }
+
+  public static function getSectionIDForUserID($user_id){
+//	echo $user_id;
+		$db = Database::getConnection();
+		$query = "SELECT Section FROM SectionAssignments WHERE Person = :userid";
+
+	try {
+      $sth = $db->prepare($query);
+      $sth->execute(array(":userid" => $user_id));
+      if($row = $sth->fetch()) {
+		return $row['Section'];
+      }
+    } catch(PDOException $e) {
+        echo $e->getMessage(); // TODO log this error instead of echoing
+    }
+  }
+
+  public static function getSectionLeaderForSectionID($section_id){
+		$db = Database::getConnection();
+		$query = "SELECT SectionLeader FROM Sections WHERE ID = :sectionid";
+
+	try {
+      $sth = $db->prepare($query);
+      $sth->execute(array(":sectionid" => $section_id));
+      if($row = $sth->fetch()) {
+		return $row['SectionLeader'];
+      }
+    } catch(PDOException $e) {
+        echo $e->getMessage(); // TODO log this error instead of echoing
+    }
+	}
+  
+  	public static function getSUID($user_db_id){
+		 $db = Database::getConnection();
+		 $query = "SELECT SUNetID FROM People WHERE ID = :dbid";
+		 try {
+	      $sth = $db->prepare($query);
+	      $sth->execute(array(":dbid" => $user_db_id));
+	      if($row = $sth->fetch()) {
+			return $row['SUNetID'];
+	      }
+	    } catch(PDOException $e) {
+	        echo $e->getMessage(); // TODO log this error instead of echoing
+	    }
+	}
+
+  public static function getSectionLeaderForStudent($student_suid){
+    	$db = Database::getConnection();
+		$userid = Model::getUserID($student_suid);
+		$sectionid = Model::getSectionIDForUserID($userid);
+		$sectionLeaderID = Model::getSectionLeaderForSectionID($sectionid);
+		$slsuid = Model::getSUID($sectionLeaderID);
+		return $slsuid;
+	// what was wrong with my original query?	
+	//	$query = "SELECT SUNetID FROM People WHERE ID IN 
+	//				( SELECT SectionLeader FROM Sections WHERE ID IN
+	//					( SELECT Section FROM SectionAssignments WHERE Person = :userid ))";
+  }
   
   /*
   * Tests whether given sunet id is a section leader

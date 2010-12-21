@@ -3,9 +3,12 @@ class IndexHandler extends ToroHandler {
   
     public function get() {
         // for now this is hard coded .. need to setup DB access
+		if(IS_STUDENT_ONLY){
+		   echo "<script type='text/javascript'> window.location = '". ROOT_URL ."student/" . USERNAME ."'</script>";
+		   return;
+		}
 	
         $studentdir = DUMMYDIR;
-        //$dirname="/afs/ir.stanford.edu/class/".$classname."/submissions/".$sl."/";
         $dirname = SUBMISSIONS_DIR . "/" . USERNAME ."/";
         
         $assns = $this->getDirEntries($dirname);

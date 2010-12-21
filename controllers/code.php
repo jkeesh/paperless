@@ -29,7 +29,7 @@ class CodeHandler extends ToroHandler {
     * TODO: Handle error when a pathname is not found
     */
     private function getAssignmentFiles($student, $assignment) {
-        $dirname = SUBMISSIONS_DIR . "/" . USERNAME . "/". $assignment . "/" . $student . "/"; 
+        $dirname = SUBMISSIONS_DIR . "/" . SECTION_LEADER . "/". $assignment . "/" . $student . "/"; 
         if(!is_dir($dirname)) return null; // TODO handle error
         
         $dir = opendir($dirname);
@@ -58,6 +58,16 @@ class CodeHandler extends ToroHandler {
     */
     public function get($assignment, $student) {
         //echo "student " . $student;
+		if(IS_STUDENT_ONLY){
+			$suid = explode("_", $student); // if it was student_1 just take student
+			$suid = $suid[0];
+			if($suid != USERNAME){
+				echo "You don't have permission to view this";
+				return;
+			}
+		}else{
+			echo 'is sl';
+		}
 
         list($files, $file_contents, $assignment_files) = $this->getAssignmentFiles($student, $assignment);
 
@@ -68,7 +78,8 @@ class CodeHandler extends ToroHandler {
         $this->smarty->assign("files", $files);
         $this->smarty->assign("file_contents", $file_contents);
         $this->smarty->assign("assignment_files", $assignment_files);
-      
+        echo IS_SECTION_LEADER;
+      	$this->smarty->assign("interactive", IS_SECTION_LEADER);
         // display the template
         $this->smarty->display("code.html");
     }
@@ -83,7 +94,7 @@ class CodeHandler extends ToroHandler {
     */
     public function post_xhr($assignment, $student) {
       // TODO this shouldn't be hard coded
-      $dirname = SUBMISSIONS_DIR . "/" . USERNAME . "/". $assignment . "/" . $student . "/";
+      $dirname = SUBMISSIONS_DIR . "/" . SECTION_LEADER . "/". $assignment . "/" . $student . "/";
       
       if(!isset($_POST['action'])) return;
       

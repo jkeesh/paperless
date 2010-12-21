@@ -5,9 +5,18 @@ class StudentHandler extends ToroHandler {
     public function get($student) {
 		$string = explode("_", $student); // if it was student_1 just take student
 		$student = $string[0];
+		
+		if(IS_STUDENT_ONLY){
+			if($student != USERNAME){
+				echo "You don't have permission to view this";
+				return;
+			}
+		}else{
+			//echo 'is sl';
+		}
 
         // for now hard coded .. need to setup DB access
-        $dirname = SUBMISSIONS_DIR . "/" . USERNAME ."/";
+        $dirname = SUBMISSIONS_DIR . "/" . SECTION_LEADER ."/";
 		
         $assns = $this->getDirEntries($dirname);
 
@@ -20,7 +29,7 @@ class StudentHandler extends ToroHandler {
 		//we will save the submission with the highest number.
 		
 		foreach($assns as $assn){
-		 	$dir = SUBMISSIONS_DIR ."/". USERNAME ."/" . $assn ."/";
+		 	$dir = SUBMISSIONS_DIR ."/". SECTION_LEADER ."/" . $assn ."/";
 			$student_submissions = $this->getDirEntries($dir);
 			//print_r($student_submissions);
 			$information[$i]['assignment'] = $assn;
