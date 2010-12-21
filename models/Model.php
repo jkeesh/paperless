@@ -233,12 +233,12 @@ class Model {
     try {
       $sth = $db->prepare($query);
       $sth->execute(array(":sunetid" => $sunetid));
-      echo $sunetid;
       if($row = $sth->fetch()) {
-        print_r($row);
+        return $row['Name'];
       }
     } catch(PDOException $e) {
       echo $e->getMessage(); // TODO log this error instead of echoing
     }
+    return null;
   }
 }

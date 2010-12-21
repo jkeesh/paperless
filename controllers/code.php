@@ -56,7 +56,7 @@ class CodeHandler extends ToroHandler {
     /*
     * Displays the syntax highlighted code for a student, assignment pair
     */
-    public function get($assignment, $student) {
+    public function get($class, $assignment, $student) {
         //echo "student " . $student;
 		if(IS_STUDENT_ONLY){
 			$suid = explode("_", $student); // if it was student_1 just take student

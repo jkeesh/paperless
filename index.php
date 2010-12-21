@@ -20,6 +20,7 @@ class ToroHandler {
 	  $is_sl = Model::isSectionLeader(USERNAME);
 	  $is_student = Model::isStudent(USERNAME);
 	  $is_student_only = $is_student && !$is_sl;
+	  
 	  define('IS_STUDENT', $is_student);
     define('IS_STUDENT_ONLY', $is_student_only);
 	  define('IS_SECTION_LEADER', $is_sl);
@@ -89,10 +90,10 @@ require_once('controllers/assignment.php'); // lists the assignments for a given
 * URL routes
 */
 $site = new ToroApplication(Array(
-  Array('/', 'string', 'IndexHandler'),
-  Array('^\/student\/([a-zA-Z0-9_ \-]+)\/?$', 'regex', 'StudentHandler'),
-  Array('^\/code\/([a-zA-Z0-9_ -]+)\/([a-zA-Z0-9_]+)\/?$', 'regex', 'CodeHandler'),
-  Array('^\/assignment\/([a-zA-Z0-9_ ]+)\/?$', 'regex', 'AssignmentHandler')
+  Array('^\/([a-zA-Z0-9_]*)\/?$', 'regex', 'IndexHandler'),
+  Array('^\/([a-zA-Z0-9_ \-]+)\/student\/([a-zA-Z0-9_ \-]+)\/?$', 'regex', 'StudentHandler'),
+  Array('^\/([a-zA-Z0-9_ \-]+)\/code\/([a-zA-Z0-9_ -]+)\/([a-zA-Z0-9_]+)\/?$', 'regex', 'CodeHandler'),
+  Array('^\/([a-zA-Z0-9_ \-]+)\/assignment\/([a-zA-Z0-9_ ]+)\/?$', 'regex', 'AssignmentHandler')
 ));
 
 if(isset($_REQUEST['path']))

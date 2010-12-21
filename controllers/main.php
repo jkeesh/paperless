@@ -1,12 +1,16 @@
 <?php
 class IndexHandler extends ToroHandler {
   
-    public function get() {
-        // for now this is hard coded .. need to setup DB access
-		if(IS_STUDENT_ONLY){
-		   echo "<script type='text/javascript'> window.location = '". ROOT_URL ."student/" . USERNAME ."'</script>";
-		   return;
-		}
+    public function get($class) {
+      
+        if(!$class) {
+          $class = Model::getClass(USERNAME);
+        }
+        
+    		if(IS_STUDENT_ONLY){
+    		   echo "<script type='text/javascript'> window.location = '". ROOT_URL ."$class/student/" . USERNAME ."'</script>";
+    		   return;
+    		}
 	
         $studentdir = DUMMYDIR;
         $dirname = SUBMISSIONS_DIR . "/" . USERNAME ."/";
@@ -15,6 +19,7 @@ class IndexHandler extends ToroHandler {
         
         // assign template variables
         $this->smarty->assign("assignments", $assns);
+        $this->smarty->assign("class", $class);
         
         // display the template
         $this->smarty->display('index.html');

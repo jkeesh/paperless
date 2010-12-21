@@ -3,7 +3,7 @@
 <div class="list">
     <div class="header">Students</div>
         {foreach from=$students item=student}
-        <div class="link"><a href="{$root_url}student/{$student.SUNetID}">{$student.DisplayName}</a></div>
+        <div class="link"><a href="{$root_url}{$class}/student/{$student.SUNetID}">{$student.DisplayName}</a></div>
         {/foreach}
     </div>
 </div>
@@ -11,7 +11,7 @@
 <div class="list">
     <div class="header">Assignments</div>
         {foreach from=$assignments item=assignment}
-        <div class="link"><a href="{$root_url}assignment/{$assignment}">{$assignment}</a></div>
+        <div class="link"><a href="{$root_url}{$class}/assignment/{$assignment}">{$assignment}</a></div>
         {/foreach}
     </div>
 </div>
