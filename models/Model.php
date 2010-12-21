@@ -125,7 +125,6 @@ class Model {
   }
 
   public static function getSectionIDForUserID($user_id){
-//	echo $user_id;
 		$db = Database::getConnection();
 		$query = "SELECT Section FROM SectionAssignments WHERE Person = :userid";
 
@@ -144,18 +143,18 @@ class Model {
 		$db = Database::getConnection();
 		$query = "SELECT SectionLeader FROM Sections WHERE ID = :sectionid";
 
-	try {
-      $sth = $db->prepare($query);
-      $sth->execute(array(":sectionid" => $section_id));
-      if($row = $sth->fetch()) {
-		return $row['SectionLeader'];
-      }
+	  try {
+        $sth = $db->prepare($query);
+        $sth->execute(array(":sectionid" => $section_id));
+        if($row = $sth->fetch()) {
+  		    return $row['SectionLeader'];
+        }
     } catch(PDOException $e) {
         echo $e->getMessage(); // TODO log this error instead of echoing
     }
 	}
   
-  	public static function getSUID($user_db_id){
+  public static function getSUID($user_db_id){
 		 $db = Database::getConnection();
 		 $query = "SELECT SUNetID FROM People WHERE ID = :dbid";
 		 try {
@@ -170,7 +169,7 @@ class Model {
 	}
 
   public static function getSectionLeaderForStudent($student_suid){
-    	$db = Database::getConnection();
+    $db = Database::getConnection();
 		$userid = Model::getUserID($student_suid);
 		$sectionid = Model::getSectionIDForUserID($userid);
 		$sectionLeaderID = Model::getSectionLeaderForSectionID($sectionid);
@@ -208,7 +207,6 @@ class Model {
 
   public static function isStudent($the_id) {
     $db = Database::getConnection();
- //	return $the_id;
     $query = "SELECT (SELECT ID FROM People WHERE SUNetID = :sunetid) IN
 			(SELECT Person FROM CourseRelations
 	 				WHERE Position = 1
@@ -223,5 +221,24 @@ class Model {
         echo $e->getMessage(); // TODO log this error instead of echoing
     }
     return false;
+  }
+  
+  public static function getClass($sunetid) {
+    $db = Database::getConnection();
+    $query = "SELECT Name FROM Courses WHERE ID = (SELECT Class FROM" .
+              " SectionAssignments WHERE Person = (SELECT ID FROM People" . 
+              " WHERE SUNetID = :sunetid)) OR ID = (SELECT Class FROM" .
+              " Sections WHERE SectionLeader = (SELECT ID FROM People" . 
+              " WHERE SUNetID = :sunetid))";
+    try {
+      $sth = $db->prepare($query);
+      $sth->execute(array(":sunetid" => $sunetid));
+      echo $sunetid;
+      if($row = $sth->fetch()) {
+        print_r($row);
+      }
+    } catch(PDOException $e) {
+      echo $e->getMessage(); // TODO log this error instead of echoing
+    }
   }
 }
