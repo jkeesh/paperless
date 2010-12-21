@@ -57,36 +57,35 @@ class CodeHandler extends ToroHandler {
     * Displays the syntax highlighted code for a student, assignment pair
     */
     public function get($class, $assignment, $student) {
-        //echo "student " . $student;
-		if(IS_STUDENT_ONLY){
-			$suid = explode("_", $student); // if it was student_1 just take student
-			$suid = $suid[0];
-			if($suid != USERNAME){
-				echo "You don't have permission to view this";
-				return;
-			}
-		}else{
-			echo 'is sl';
-		}
+      //echo "student " . $student;
+		  if(IS_STUDENT_ONLY) {
+  			$suid = explode("_", $student); // if it was student_1 just take student
+  			$suid = $suid[0];
+  			if($suid != USERNAME) {
+  				echo "You don't have permission to view this";
+  				return;
+  			}
+  		} else {
+  			echo 'is sl';
+  		}
 
-        list($files, $file_contents, $assignment_files) = $this->getAssignmentFiles($student, $assignment);
+      list($files, $file_contents, $assignment_files) = $this->getAssignmentFiles($student, $assignment);
 
-        // assign template vars
-        $this->smarty->assign("code", true);
+      // assign template vars
+      $this->smarty->assign("code", true);
+
+		  $string = explode("_", $student); // if it was student_1 just take student
+		  $student_suid = $string[0];
 		
-
-		$string = explode("_", $student); // if it was student_1 just take student
-		$student_suid = $string[0];
-		
-        $this->smarty->assign("student", htmlentities($student_suid));
-        $this->smarty->assign("assignment", htmlentities($assignment));
-        $this->smarty->assign("files", $files);
-        $this->smarty->assign("file_contents", $file_contents);
-        $this->smarty->assign("assignment_files", $assignment_files);
-        echo IS_SECTION_LEADER;
-      	$this->smarty->assign("interactive", IS_SECTION_LEADER);
-        // display the template
-        $this->smarty->display("code.html");
+      $this->smarty->assign("student", htmlentities($student_suid));
+      $this->smarty->assign("assignment", htmlentities($assignment));
+      $this->smarty->assign("files", $files);
+      $this->smarty->assign("file_contents", $file_contents);
+      $this->smarty->assign("assignment_files", $assignment_files);
+    	$this->smarty->assign("interactive", IS_SECTION_LEADER);
+    	
+      // display the template
+      $this->smarty->display("code.html");
     }
     
    /*
