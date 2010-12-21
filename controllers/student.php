@@ -14,6 +14,7 @@ class StudentHandler extends ToroHandler {
 		
 		$i = 0;
         //for every assignment, go find ones that belong to the student
+		//we will save the submission with the highest number.
 		foreach($assns as $assn){
 		 	$dir = SUBMISSIONS_DIR ."/". USERNAME ."/" . $assn ."/";
 			$student_submissions = $this->getDirEntries($dir);
