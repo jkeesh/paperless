@@ -97,7 +97,7 @@ class CodeHandler extends ToroHandler {
     * TODO: This should output (via echo or whatever) some valid JSON that is used
     *       to confirm the request succeeded
     */
-    public function post_xhr($assignment, $student) {
+    public function post_xhr($class, $assignment, $student) {
       // TODO this shouldn't be hard coded
       $dirname = SUBMISSIONS_DIR . "/" . SECTION_LEADER . "/". $assignment . "/" . $student . "/";
       
