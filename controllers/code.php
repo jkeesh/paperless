@@ -28,7 +28,7 @@ class CodeHandler extends ToroHandler {
     * TODO: Don't use a hardcoded path / we need to allow multiple base search paths
     * TODO: Handle error when a pathname is not found
     */
-    private function getAssignmentFiles($student, $assignment) {
+    private function getAssignmentFiles($assignment, $student) {
         $dirname = SUBMISSIONS_DIR . "/" . USERNAME . "/". $assignment . "/" . $student . "/"; 
         if(!is_dir($dirname)) return null; // TODO handle error
         
