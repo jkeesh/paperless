@@ -28,7 +28,7 @@ class CodeHandler extends ToroHandler {
     * TODO: Don't use a hardcoded path / we need to allow multiple base search paths
     * TODO: Handle error when a pathname is not found
     */
-    private function getAssignmentFiles($assignment, $student) {
+    private function getAssignmentFiles($student, $assignment) {
         $dirname = SUBMISSIONS_DIR . "/" . USERNAME . "/". $assignment . "/" . $student . "/"; 
         if(!is_dir($dirname)) return null; // TODO handle error
         
@@ -56,8 +56,9 @@ class CodeHandler extends ToroHandler {
     /*
     * Displays the syntax highlighted code for a student, assignment pair
     */
-    public function get($student, $assignment) {
-        
+    public function get($assignment, $student) {
+        //echo "student " . $student;
+
         list($files, $file_contents, $assignment_files) = $this->getAssignmentFiles($student, $assignment);
 
         // assign template vars
@@ -80,7 +81,7 @@ class CodeHandler extends ToroHandler {
     * TODO: This should output (via echo or whatever) some valid JSON that is used
     *       to confirm the request succeeded
     */
-    public function post_xhr($student, $assignment) {
+    public function post_xhr($assignment, $student) {
       // TODO this shouldn't be hard coded
       $dirname = SUBMISSIONS_DIR . "/" . USERNAME . "/". $assignment . "/" . $student . "/";
       
