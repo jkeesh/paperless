@@ -3,7 +3,7 @@
 <div class="list">
     <div class="header">Assignment List</div>
         {foreach from=$information item=assignment}
-        <div class="link"><a href="{$root_url}code/{$assignment.assignment}/{$assignment.studentdir}">{$assignment.assignment}</a></div>
+        <div class="link"><a href="{$root_url}{$class}/code/{$assignment.assignment}/{$assignment.studentdir}">{$assignment.assignment}</a></div>
         {/foreach}
     </div>
 </div>
