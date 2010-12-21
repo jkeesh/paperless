@@ -3,7 +3,7 @@ dragging_in_file = null;
 current_dialog = null; // we will only have one dialog at a time
 current_range = null;
 globalSubmitComment = null;
-
+current_file_id = 0;
 
 function removeDialog(){
 	if( $('textarea')) $('textarea').remove();
@@ -44,21 +44,22 @@ function /* class */ CodeFile(filename, prefix) {
 	var self = this;
 	
 	shortcut.add("tab", function(data) {
-		var code_file = code_files[self.fileID];
+		var code_file = code_files[current_file_id];
 		if(current_range && current_dialog)
 			code_file.removeAndSubmitComment(current_range);
 	});
 
 	shortcut.add("shift+0", function(){
-		var code_file = code_files[self.fileID];
+		var code_file = code_files[current_file_id];
 		if(current_range && current_dialog)
 			code_file.removeComment(current_range);
 	});
 	
 	shortcut.add("ctrl+z", function(){
-		if(self.last_comment_range == null) return;
-		self.editComment(self.last_comment_range, self.fileID);
-		self.last_comment_range = null;
+		var code_file = code_files[current_file_id];
+		if(code_file.last_comment_range == null) return;
+		code_file.editComment(code_file.last_comment_range, current_file_id);
+		code_file.last_comment_range = null;
 	});
 	
    	this.themes = new Array('shCoreDefault.css', 'shCoreMDUltra.css' ,'shThemeEmacs.css','shCoreMidnight.css',  'shThemeFadeToGrey.css','shCoreDjango.css', 'shCoreRDark.css', 'shThemeMDUltra.css','shCoreEclipse.css', 'shThemeDefault.css','shThemeMidnight.css', 'shCoreEmacs.css', 'shThemeDjango.css', 'shThemeRDark.css', 'shCoreFadeToGrey.css', 'shThemeEclipse.css');	

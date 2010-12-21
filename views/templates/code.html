@@ -57,6 +57,7 @@ by
     }
 
     function display(fileNum){
+		 current_file_id = fileNum; //so we know what is currently being viewed
     	 hideall();
     	 document.getElementById("file" + fileNum).className = "visible codeposition";	 
     	 document.getElementById("comments" + fileNum).className = "visible";
