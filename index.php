@@ -30,8 +30,14 @@ class ToroHandler {
 	  $this->smarty->assign("quarter_name", Model::getQuarterName());
 	  $this->smarty->assign("display_name", Model::getDisplayName(USERNAME));
 	  $is_sl = Model::isSectionLeader(USERNAME);
+	  $is_student = Model::isStudent(USERNAME);
 	  $this->smarty->assign("is_section_leader", $is_sl);
+	  $this->smarty->assign("is_student", $is_student);
 	
+	  if($is_sl && $is_student){
+		 echo "sl and student";
+		 return;
+ 	  }
 	  if($is_sl)
 	  	$this->smarty->assign("students", Model::getStudentsForSectionLeader(USERNAME));
   }
