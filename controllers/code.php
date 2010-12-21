@@ -77,6 +77,7 @@ class CodeHandler extends ToroHandler {
 		  $string = explode("_", $student); // if it was student_1 just take student
 		  $student_suid = $string[0];
 		
+		  $this->smarty->assign("class", htmlentities($class));
       $this->smarty->assign("student", htmlentities($student_suid));
       $this->smarty->assign("assignment", htmlentities($assignment));
       $this->smarty->assign("files", $files);

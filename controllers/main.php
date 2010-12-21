@@ -19,7 +19,7 @@ class IndexHandler extends ToroHandler {
         
         // assign template variables
         $this->smarty->assign("assignments", $assns);
-        $this->smarty->assign("class", $class);
+        $this->smarty->assign("class", htmlentities($class));
         
         // display the template
         $this->smarty->display('index.html');

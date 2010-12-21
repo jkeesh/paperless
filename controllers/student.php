@@ -40,7 +40,7 @@ class StudentHandler extends ToroHandler {
 
     // assign template vars
     $this->smarty->assign("information", $information);
-    $this->smarty->assign("class", $class);
+    $this->smarty->assign("class", htmlentities($class));
     
     // display the template
     $this->smarty->display("student.html");
