@@ -20,20 +20,20 @@ class ToroHandler {
 	  $is_sl = Model::isSectionLeader(USERNAME);
 	  $is_student = Model::isStudent(USERNAME);
 	  $is_student_only = $is_student && !$is_sl;
-	  define(IS_STUDENT, $is_student);
-      define(IS_STUDENT_ONLY, $is_student_only);
-	  define(IS_SECTION_LEADER, $is_sl);
+	  define('IS_STUDENT', $is_student);
+    define('IS_STUDENT_ONLY', $is_student_only);
+	  define('IS_SECTION_LEADER', $is_sl);
 
-      $this->smarty = new Smarty();
+    $this->smarty = new Smarty();
 
-      $this->smarty->template_dir = BASE_DIR . '/views/templates/';
-      $this->smarty->compile_dir  = BASE_DIR . '/views/templates_c/';
-      $this->smarty->config_dir   = BASE_DIR . '/views/configs/';
-      $this->smarty->cache_dir    = BASE_DIR . '/views/cache/';
-      
-      // assign vars we need on every page
-      $this->smarty->assign("username", USERNAME);
-      $this->smarty->assign("root_url", ROOT_URL);
+    $this->smarty->template_dir = BASE_DIR . '/views/templates/';
+    $this->smarty->compile_dir  = BASE_DIR . '/views/templates_c/';
+    $this->smarty->config_dir   = BASE_DIR . '/views/configs/';
+    $this->smarty->cache_dir    = BASE_DIR . '/views/cache/';
+    
+    // assign vars we need on every page
+    $this->smarty->assign("username", USERNAME);
+    $this->smarty->assign("root_url", ROOT_URL);
 	  $this->smarty->assign("quarter_name", Model::getQuarterName());
 	  $this->smarty->assign("display_name", Model::getDisplayName(USERNAME));
 
@@ -44,10 +44,10 @@ class ToroHandler {
 	  // 		 return;
 	  //  	  }
 	
-      if($is_sl) $sectionLeader = USERNAME;
-      else $sectionLeader = Model::getSectionLeaderForStudent(USERNAME);
+    if($is_sl) $sectionLeader = USERNAME;
+    else $sectionLeader = Model::getSectionLeaderForStudent(USERNAME);
 
-	  define(SECTION_LEADER, $sectionLeader);
+	  define('SECTION_LEADER', $sectionLeader);
 	  
 	  $this->smarty->assign("section_leader", $sectionLeader);
 	
