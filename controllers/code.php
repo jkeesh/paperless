@@ -98,6 +98,10 @@ class CodeHandler extends ToroHandler {
     *       to confirm the request succeeded
     */
     public function post_xhr($class, $assignment, $student) {
+      
+      if(IS_STUDENT_ONLY)
+        return; // students should not be able to add or delete comments
+        
       // TODO this shouldn't be hard coded
       $dirname = SUBMISSIONS_DIR . "/" . SECTION_LEADER . "/". $assignment . "/" . $student . "/";
       
