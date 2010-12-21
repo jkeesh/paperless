@@ -1,7 +1,7 @@
 {include file="header.html"}
 
 <div class="list">
-    <div class="header">Students</div>
+    <div class="header">Assignment List</div>
         {foreach from=$information item=assignment}
         <div class="link"><a href="{$root_url}code/{$assignment.studentdir}/{$assignment.assignment}">{$assignment.assignment}</a></div>
         {/foreach}
