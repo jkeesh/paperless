@@ -6,6 +6,12 @@ textarea{
 	border: 2px solid black;
 }
 
+#mylinks{
+	position: absolute;
+	top: 50px;
+	right: 20px;
+}
+
 .keyboardShortcuts{
 	color: yellow;
 	width: 140px;
