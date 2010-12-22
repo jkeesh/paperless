@@ -11,6 +11,11 @@
 				return;
     		}
 			
+			if(IS_SECTION_LEADER){
+				echo "<script type='text/javascript'> window.location = '". ROOT_URL ."$class/sectionleader/" . USERNAME ."'</script>";
+				return;
+			}
+			
 			$studentdir = DUMMYDIR;
 			$dirname = SUBMISSIONS_DIR . "/" . USERNAME ."/";
 			
