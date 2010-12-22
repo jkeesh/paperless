@@ -280,6 +280,7 @@
 			} catch(PDOException $e) {
 				echo $e->getMessage(); // TODO log this error instead of echoing
 			}
+			return 0; // no id found
 		}
 		
     /*
