@@ -1,19 +1,11 @@
 <?php
-	
 	require_once('models/Model.php');
 	
 	class AssignmentHandler extends ToroHandler {
 		
 		public function get($class, $sectionleader, $assignment) {
-			
-			$role = Model::getRoleForClass(USERNAME, $class);
-			echo $role;
-			
-			if($role < POSITION_SECTION_LEADER){
-				echo "No permission IN ASSIGNMENT";
-				return;
-			}
-			
+
+			Permissions::requireRole(POSITION_SECTION_LEADER, $class);
 			
 			$dirname = SUBMISSIONS_DIR . "/" . $sectionleader . "/";
 			
@@ -27,4 +19,4 @@
 			$this->smarty->display('assignment.html');
 		}
 	}
-	?>
+?>

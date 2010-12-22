@@ -6,17 +6,19 @@
 				$class = Model::getClass(USERNAME);
 			}
 			
-    		if(IS_STUDENT_ONLY){
+			$role = Model::getRoleForClass(USERNAME, $class);
+    	if($role <= POSITION_STUDENT) {
     		  Header("Location: " .  ROOT_URL ."$class/student/" . USERNAME);
 				  return;
-    		}
+    	}
 			
-			if(IS_SECTION_LEADER){
+			if($role == POSITION_SECTION_LEADER) {
 			  Header("Location: " .  ROOT_URL ."$class/sectionleader/" . USERNAME);
 			  return;
-			}else{
+			} else {
 				echo "what is your position?";
 			}
 		}
+		
 	}
 	?>

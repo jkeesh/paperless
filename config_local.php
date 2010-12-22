@@ -9,6 +9,14 @@ define('DUMMYDIR_106B', '2_ADTS');
 define('DUMMYDIR_106L', '2_ADTS');
 define('DUMMYDIR_106X', '2_ADTS');
 
+define('POSITION_STUDENT', 1);
+define('POSITION_APPLICANT', 2);
+define('POSITION_COURSE_HELPER', 3);
+define('POSITION_SECTION_LEADER', 4);
+define('POSITION_TEACHING_ASSISTANT', 5);
+define('POSITION_LECTURER', 6);
+define('POSITION_COORDINATOR', 7);
+
 	
 define('USERNAME', 'jkeeshin');
 

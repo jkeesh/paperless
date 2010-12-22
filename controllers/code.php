@@ -2,6 +2,7 @@
 	require_once("models/AssignmentFile.php");
 	require_once("models/AssignmentComment.php");
 	require_once("models/Model.php");
+	require_once("permissions.php");
 	
 	/*
 	 * Controller that handles the syntax highlighted code view
@@ -69,25 +70,13 @@
 			$suid = explode("_", $student); // if it was student_1 just take student
 			$suid = $suid[0];
 			
-			$role = Model::getRoleForClass(USERNAME, $class);
-			echo $role;
-			
-			if($role < POSITION_SECTION_LEADER && $suid != USERNAME){
-				echo "You don't have permission to view this buddy. IN CODE.PHP";
-				return;
+			// if the username is something other than the owner of these files, require
+			// it to be a SL
+			if($suid != USERNAME) {
+				Permissions::requireRole(POSITION_SECTION_LEADER, $class);
 			}
 			
-			
-//			if(IS_STUDENT_ONLY) {
-//				if($suid != USERNAME) {
-//					echo "You don't have permission to view this";
-//					return;
-//				}
-//			} else {
-//				//echo 'is sl';
-//			}
-//		
-		    $sl = Model::getSectionLeaderForStudent($suid);
+		  $sl = Model::getSectionLeaderForStudent($suid);
 			//echo $student . " ". $sl . "\n";
 			
 			list($files, $file_contents, $assignment_files) = $this->getAssignmentFiles($class, $student, $assignment, $sl);
@@ -121,8 +110,8 @@
 		 */
 		public function post_xhr($class, $assignment, $student) {
 			
-			if(IS_STUDENT_ONLY)
-				return; // students should not be able to add or delete comments
+			// only section leaders should be able to add comments
+			Permissions::requireRole(POSITION_SECTION_LEADER, $class);
 			
 			$suid = explode("_", $student); // if it was student_1 just take student
 			$suid = $suid[0];

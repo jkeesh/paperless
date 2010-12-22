@@ -1,6 +1,7 @@
 <?php
 	require_once('index.php');
 	require_once('models/Model.php');
+	require_once('permissions.php');
 	
 	class StudentHandler extends ToroHandler {
 		
@@ -9,15 +10,11 @@
 			$string = explode("_", $student); // if it was student_1 just take student
 			$student = $string[0];
 			
-			$role = Model::getRoleForClass(USERNAME, $class);
-			echo $role;
-			
-			if($role < POSITION_SECTION_LEADER && $student != USERNAME){
-				echo "You don't have permission to view this IN STUDENT.";
-				return;
+			if($student != USERNAME) {
+				Permissions::requireRole(POSITION_SECTION_LEADER, $class);
 			}
 						
-		    $sl = Model::getSectionLeaderForStudent($student);
+		  $sl = Model::getSectionLeaderForStudent($student);
 			
 			//TODO make sure submissions dir takes into account class
 			$dirname = SUBMISSIONS_DIR . "/" . $sl ."/";

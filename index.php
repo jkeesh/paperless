@@ -47,19 +47,13 @@
 			$this->smarty->assign("is_section_leader", $is_sl);
 			$this->smarty->assign("is_student", $is_student);
 			$this->smarty->assign("is_admin", $is_admin);
-			// if($is_sl && $is_student){
-			// 		 echo "sl and student";
-			// 		 return;
-			//  	  }
 			
 			if($is_sl) $sectionLeader = USERNAME;
 			else $sectionLeader = Model::getSectionLeaderForStudent(USERNAME);
 			
 			define('SECTION_LEADER', $sectionLeader);
 			
-			$this->smarty->assign("section_leader", $sectionLeader);
-			
-			//echo Model::getRoleForClass(USERNAME, CLASSNAME);
+			$this->smarty->assign("section_leader", $sectionLeader);			
 		}
 		
 		public function __call($name, $arguments) {

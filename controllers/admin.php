@@ -2,12 +2,9 @@
 	class AdminHandler extends ToroHandler {
 		
 		public function get($class) {
-			$role = Model::getRoleForClass(USERNAME, $class);
-			echo $role;
 			
-			if($role < POSITION_TEACHING_ASSISTANT && !(USERNAME == "jkeeshin" || USERNAME == "econner") ){
-				echo "No permission in ADMIN";
-				return;
+			if(!(USERNAME == "jkeeshin" || USERNAME == "econner") ){
+				Permissions::requireRole(POSITION_SECTION_LEADER, $class);
 			}
 			
 			echo "hello admin for ". $class;
