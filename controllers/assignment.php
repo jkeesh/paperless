@@ -1,14 +1,15 @@
 <?php
+	
+	require_once('models/Model.php');
+	
 	class AssignmentHandler extends ToroHandler {
 		
-		public function get($class, $assignment) {
-			//for now get users in a hacky way, because the database isn't hooked in
-			//$dirname="/afs/ir.stanford.edu/class/cs106x/submissions/".$sl."/";
-			//TODO replace username with sl from param?
-//			$dirname = SUBMISSIONS_DIR . "/" . $section_leader . "/";
-			$dirname = SUBMISSIONS_DIR . "/" . USERNAME . "/";
-
+		public function get($class, $sectionleader, $assignment) {
+			$dirname = SUBMISSIONS_DIR . "/" . $sectionleader . "/";
+			
 			$students = $this->getDirEntries($dirname . $assignment);
+			print_r($students);
+
 			
 			$this->smarty->assign("students", $students);
 			$this->smarty->assign("assignment", $assignment);

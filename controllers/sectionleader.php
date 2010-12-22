@@ -10,14 +10,15 @@
     		}
 			
 			$studentdir = DUMMYDIR;
-			$dirname = SUBMISSIONS_DIR . "/" . $sectionleader ."/";
-//			$dirname = SUBMISSIONS_DIR . "/" . USERNAME ."/";
-			
+			$dirname = SUBMISSIONS_DIR . "/" . $sectionleader ."/";			
 			$assns = $this->getDirEntries($dirname);
+			
+			$this->smarty->assign("students", Model::getStudentsForSectionLeader($sectionleader));
 			
 			// assign template variables
 			$this->smarty->assign("assignments", $assns);
 			$this->smarty->assign("class", htmlentities($class));
+			$this->smarty->assign("sl", $sectionleader);
 			
 			// display the template
 			$this->smarty->display('index.html');
