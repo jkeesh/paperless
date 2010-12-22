@@ -8,8 +8,6 @@
 			$dirname = SUBMISSIONS_DIR . "/" . $sectionleader . "/";
 			
 			$students = $this->getDirEntries($dirname . $assignment);
-			print_r($students);
-
 			
 			$this->smarty->assign("students", $students);
 			$this->smarty->assign("assignment", $assignment);
