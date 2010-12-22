@@ -13,7 +13,7 @@
 			echo $role;
 			
 			if($role < POSITION_SECTION_LEADER && $student != USERNAME){
-				echo "You don't have permission to view this buddy.";
+				echo "You don't have permission to view this IN STUDENT.";
 				return;
 			}
 						

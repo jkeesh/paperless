@@ -10,7 +10,7 @@
 			echo $role;
 			
 			if($role < POSITION_SECTION_LEADER){
-				echo "No permission";
+				echo "No permission IN ASSIGNMENT";
 				return;
 			}
 			

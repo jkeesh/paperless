@@ -73,7 +73,7 @@
 			echo $role;
 			
 			if($role < POSITION_SECTION_LEADER && $suid != USERNAME){
-				echo "You don't have permission to view this buddy.";
+				echo "You don't have permission to view this buddy. IN CODE.PHP";
 				return;
 			}
 			

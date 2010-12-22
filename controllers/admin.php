@@ -6,7 +6,7 @@
 			echo $role;
 			
 			if($role < POSITION_TEACHING_ASSISTANT && !(USERNAME == "jkeeshin" || USERNAME == "econner") ){
-				echo "No permission";
+				echo "No permission in ADMIN";
 				return;
 			}
 			
