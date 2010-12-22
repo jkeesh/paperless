@@ -74,10 +74,7 @@ class AssignmentFile extends Model {
     } catch(PDOException $e) {
       echo $e->getMessage(); // TODO log this error instead of echo
     }
-    
-    
   }
-  
   
   /*
   * Load from an id

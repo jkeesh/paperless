@@ -24,11 +24,10 @@
 		/*
 		 * Gets the file contents, file names, and appropriate AssignmentFile model objects
 		 * corresponding to a given student, assignment pair.
-		 * TODO: Associate the AssignmentFile with an actual GradedAssignment object / row
 		 * TODO: Don't use a hardcoded path / we need to allow multiple base search paths
 		 * TODO: Handle error when a pathname is not found
 		 */
-		private function getAssignmentFiles($student, $assignment) {
+		private function getAssignmentFiles($class, $student, $assignment) {
 			$dirname = SUBMISSIONS_DIR . "/" . SECTION_LEADER . "/". $assignment . "/" . $student . "/"; 
 			if(!is_dir($dirname)) return null; // TODO handle error
 			
@@ -41,7 +40,13 @@
 				if($this->isCodeFile($file, CLASSNAME)) {
 					$assignmentFile = AssignmentFile::load(array("FilePath" => $dirname . $file));
 					if(!$assignmentFile) {
-						$assignmentFile = AssignmentFile::create(0, $dirname . $file); // TODO associate this with an actual GradedAssignment
+					  $string = explode("_", $student); // if it was student_1 just take student
+      			$student_suid = $string[0];
+					  $gradedAssignID = Model::getGradedAssignID($class, $student_suid, $assignment);
+					  if(!$gradedAssignID) {
+					    echo "Couldn't find graded assignment $assignment for $student student in class $class!";
+					  }
+						$assignmentFile = AssignmentFile::create($gradedAssignID, $dirname . $file);
 						$assignmentFile->save();
 					}
 					
@@ -69,7 +74,7 @@
 				//echo 'is sl';
 			}
 			
-			list($files, $file_contents, $assignment_files) = $this->getAssignmentFiles($student, $assignment);
+			list($files, $file_contents, $assignment_files) = $this->getAssignmentFiles($class, $student, $assignment);
 			
 			// assign template vars
 			$this->smarty->assign("code", true);
