@@ -10,7 +10,8 @@
     		}
 			
 			$studentdir = DUMMYDIR;
-			$dirname = SUBMISSIONS_DIR . "/" . USERNAME ."/";
+			$dirname = SUBMISSIONS_DIR . "/" . $sectionleader ."/";
+//			$dirname = SUBMISSIONS_DIR . "/" . USERNAME ."/";
 			
 			$assns = $this->getDirEntries($dirname);
 			
