@@ -36,7 +36,7 @@ def main():
   for sectionLeader in sectionLeaders:
     os.chdir(submissionsRoot + '/' + sectionLeader)
     symbolicLinkPath = getSymLinkPath(submissions2Root, sectionLeader, assignmentName)
-    os.symlink(symbolicLinkPath, assignmentName + '-' + appendName)
+    os.symlink(symbolicLinkPath, assignmentName + appendName)
 
 if __name__ == '__main__':
   main()
