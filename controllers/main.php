@@ -7,13 +7,13 @@
 			}
 			
     		if(IS_STUDENT_ONLY){
-				echo "<script type='text/javascript'> window.location = '". ROOT_URL ."$class/student/" . USERNAME ."'</script>";
-				return;
+    		  Header("Location: " .  ROOT_URL ."$class/student/" . USERNAME);
+				  return;
     		}
 			
 			if(IS_SECTION_LEADER){
-				echo "<script type='text/javascript'> window.location = '". ROOT_URL ."$class/sectionleader/" . USERNAME ."'</script>";
-				return;
+			  Header("Location: " .  ROOT_URL ."$class/sectionleader/" . USERNAME);
+			  return;
 			}
 			
 			$studentdir = DUMMYDIR;
