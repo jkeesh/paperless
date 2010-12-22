@@ -66,7 +66,7 @@
 					return;
 				}
 			} else {
-				echo 'is sl';
+				//echo 'is sl';
 			}
 			
 			list($files, $file_contents, $assignment_files) = $this->getAssignmentFiles($student, $assignment);

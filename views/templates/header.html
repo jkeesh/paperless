@@ -22,10 +22,10 @@ root_url = '{$root_url}';
     <div id="username">Hi {$display_name}!</div>
 	<div id="mylinks">
 	{if $is_section_leader}
-		<div class="link"><a href="{$root_url}">View My Section</a></div>
+		<div class="link"><a href="{$root_url}{$class}/sectionleader/{$username}">View My Section</a></div>
 	{/if}
 	{if $is_student}
-		<div class="link"><a href="{$root_url}">View My Code</a></div>
+		<div class="link"><a href="{$root_url}{$class}/student/{$username}">View My Code</a></div>
 	{/if}
 	</div>
 
