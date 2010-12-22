@@ -3,13 +3,13 @@
 <div class="list">
     <div class="header">Section Leaders</div>
 	{counter start=1 print=false assign=x}
-	<table>
+	<table cellpadding="15">
 		<tr>
-		<td>
+		<td valign="top">
 			{foreach from=$sls item=sl}
 			<div class="link"><a href="{$root_url}{$class}/sectionleader/{$sl}">{$sl}</a></div>
 			{if $x is div by 10}
-			</td><td>
+			</td valign="top"><td>
 			{/if}
 			{counter}
 			
