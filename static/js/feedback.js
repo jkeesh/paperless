@@ -167,11 +167,10 @@ function /* class */ CodeFile(filename, prefix) {
 				   url: window.location.pathname, // post to current location url
 				   data: "action=create&text=" + commentText + "&rangeLower=" + range.lower + "&rangeHigher=" + range.higher + "&filename=" + self.filename,
 				   success: function(data) {
-				   // TODO
-				   console.log('submitted');
+				   //TODO
 				   },
 				   error: function(XMLHttpRequest, textStatus, errorThrown) {
-				   console.log('failed');
+				   //TODO
 				   }
 				   });
 			
