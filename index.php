@@ -20,7 +20,10 @@
 			$is_sl = Model::isSectionLeader(USERNAME);
 			$is_student = Model::isStudent(USERNAME);
 			$is_student_only = $is_student && !$is_sl;
+			//$is_admin = true;
+			$is_admin = USERNAME == "jkeeshin";
 			
+			define('IS_ADMIN', $is_admin);
 			define('IS_STUDENT', $is_student);
 			define('IS_STUDENT_ONLY', $is_student_only);
 			define('IS_SECTION_LEADER', $is_sl);
@@ -43,6 +46,7 @@
 			
 			$this->smarty->assign("is_section_leader", $is_sl);
 			$this->smarty->assign("is_student", $is_student);
+			$this->smarty->assign("is_admin", $is_admin);
 			// if($is_sl && $is_student){
 			// 		 echo "sl and student";
 			// 		 return;
@@ -86,6 +90,7 @@
 	require_once('controllers/code.php');       // shows the code view
 	require_once('controllers/assignment.php'); // lists the assignments for a given student
 	require_once('controllers/sectionleader.php'); // lists the assignments and students for a sectionleader
+	require_once('controllers/admin.php');
 	
 	/*
 	 * URL routes
@@ -96,6 +101,7 @@
 									  Array('^\/([a-zA-Z0-9_ \-]+)\/code\/([a-zA-Z0-9_ -]+)\/([a-zA-Z0-9_]+)\/?$', 'regex', 'CodeHandler'),
 									  Array('^\/([a-zA-Z0-9_ \-]+)\/assignment\/([a-zA-Z0-9_ ]+)\/?$', 'regex', 'AssignmentHandler'),
 									  Array('^\/([a-zA-Z0-9_ \-]+)\/sectionleader\/([a-zA-Z0-9_ \-]+)\/?$', 'regex', 'SectionLeaderHandler'),
+									  Array('^\/([a-zA-Z0-9_ \-]+)\/admin\/?$', 'regex', 'AdminHandler'),
 									  ));
 	
 	if(isset($_REQUEST['path']))
