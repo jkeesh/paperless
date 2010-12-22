@@ -15,7 +15,12 @@
 <script type="text/javascript">SyntaxHighlighter.all();</script>
 
 <h2>
-<span class="link"><a href="{$root_url}{$class}/assignment/{$assignment}">{$assignment}</a></span>
+{if $is_section_leader}
+<span class="link"><a href="{$root_url}{$class}/assignment/{$sl}/{$assignment}">{$assignment}</a></span>
+{else}
+{$assignment}
+{/if}
+
 by 
 <span class="link"><a href="{$root_url}{$class}/student/{$student}">{$student}</a></span> 
 </h2>

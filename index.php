@@ -99,7 +99,7 @@
 									  Array('^\/([a-zA-Z0-9_]*)\/?$', 'regex', 'IndexHandler'),
 									  Array('^\/([a-zA-Z0-9_ \-]+)\/student\/([a-zA-Z0-9_ \-]+)\/?$', 'regex', 'StudentHandler'),
 									  Array('^\/([a-zA-Z0-9_ \-]+)\/code\/([a-zA-Z0-9_ -]+)\/([a-zA-Z0-9_]+)\/?$', 'regex', 'CodeHandler'),
-									  Array('^\/([a-zA-Z0-9_ \-]+)\/assignment\/([a-zA-Z0-9_ ]+)\/?$', 'regex', 'AssignmentHandler'),
+									  Array('^\/([a-zA-Z0-9_ \-]+)\/assignment\/([a-zA-Z0-9_ -]+)\/([a-zA-Z0-9_ ]+)\/?$', 'regex', 'AssignmentHandler'),
 									  Array('^\/([a-zA-Z0-9_ \-]+)\/sectionleader\/([a-zA-Z0-9_ \-]+)\/?$', 'regex', 'SectionLeaderHandler'),
 									  Array('^\/([a-zA-Z0-9_ \-]+)\/admin\/?$', 'regex', 'AdminHandler'),
 									  ));

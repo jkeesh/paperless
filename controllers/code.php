@@ -1,6 +1,7 @@
 <?php
 	require_once("models/AssignmentFile.php");
 	require_once("models/AssignmentComment.php");
+	require_once("models/Model.php");
 	
 	/*
 	 * Controller that handles the syntax highlighted code view
@@ -28,8 +29,10 @@
 		 * TODO: Don't use a hardcoded path / we need to allow multiple base search paths
 		 * TODO: Handle error when a pathname is not found
 		 */
-		private function getAssignmentFiles($student, $assignment) {
-			$dirname = SUBMISSIONS_DIR . "/" . SECTION_LEADER . "/". $assignment . "/" . $student . "/"; 
+		private function getAssignmentFiles($student, $assignment, $sl) {
+			$dirname = SUBMISSIONS_DIR . "/" . $sl . "/". $assignment . "/" . $student . "/"; 
+
+//			$dirname = SUBMISSIONS_DIR . "/" . SECTION_LEADER . "/". $assignment . "/" . $student . "/"; 
 			if(!is_dir($dirname)) return null; // TODO handle error
 			
 			$dir = opendir($dirname);
@@ -58,9 +61,9 @@
 		 */
 		public function get($class, $assignment, $student) {
 			//echo "student " . $student;
+			$suid = explode("_", $student); // if it was student_1 just take student
+			$suid = $suid[0];
 			if(IS_STUDENT_ONLY) {
-				$suid = explode("_", $student); // if it was student_1 just take student
-				$suid = $suid[0];
 				if($suid != USERNAME) {
 					echo "You don't have permission to view this";
 					return;
@@ -69,7 +72,10 @@
 				//echo 'is sl';
 			}
 			
-			list($files, $file_contents, $assignment_files) = $this->getAssignmentFiles($student, $assignment);
+		    $sl = Model::getSectionLeaderForStudent($suid);
+			//echo $student . " ". $sl . "\n";
+			
+			list($files, $file_contents, $assignment_files) = $this->getAssignmentFiles($student, $assignment, $sl);
 			
 			// assign template vars
 			$this->smarty->assign("code", true);
@@ -84,6 +90,7 @@
 			$this->smarty->assign("file_contents", $file_contents);
 			$this->smarty->assign("assignment_files", $assignment_files);
 			$this->smarty->assign("interactive", IS_SECTION_LEADER);
+			$this->smarty->assign("sl", $sl);
 			
 			// display the template
 			$this->smarty->display("code.html");
