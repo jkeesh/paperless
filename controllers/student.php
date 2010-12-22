@@ -9,11 +9,12 @@
 			$string = explode("_", $student); // if it was student_1 just take student
 			$student = $string[0];
 			
-			if(IS_STUDENT_ONLY) {
-				if($student != USERNAME) {
-					echo "You don't have permission to view this";
-					return;
-				}
+			$role = Model::getRoleForClass(USERNAME, $class);
+			echo $role;
+			
+			if($role < POSITION_SECTION_LEADER && $student != USERNAME){
+				echo "You don't have permission to view this buddy.";
+				return;
 			}
 						
 		    $sl = Model::getSectionLeaderForStudent($student);

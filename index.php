@@ -58,7 +58,8 @@
 			define('SECTION_LEADER', $sectionLeader);
 			
 			$this->smarty->assign("section_leader", $sectionLeader);
-			$this->smarty->assign("students", Model::getStudentsForSectionLeader(USERNAME));
+			
+			//echo Model::getRoleForClass(USERNAME, CLASSNAME);
 		}
 		
 		public function __call($name, $arguments) {

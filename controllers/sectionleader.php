@@ -3,12 +3,15 @@
 		
 		public function get($class, $sectionleader) {
 				
-			//TODO replace with call to has permission 
-    		if(IS_STUDENT_ONLY){
-				echo "Redirect to error page";
-				return;
-    		}
+			//TODO bring this into permissions, and a wrapper possibly that gives a redirect url if they dont have permissions
+			$role = Model::getRoleForClass(USERNAME, $class);
+			echo $role;
 			
+			if($role < POSITION_SECTION_LEADER){
+				echo "No permission";
+				return;
+			}
+						
 			$studentdir = DUMMYDIR;
 			$dirname = SUBMISSIONS_DIR . "/" . $sectionleader ."/";			
 			$assns = $this->getDirEntries($dirname);

@@ -68,15 +68,25 @@
 			//echo "student " . $student;
 			$suid = explode("_", $student); // if it was student_1 just take student
 			$suid = $suid[0];
-			if(IS_STUDENT_ONLY) {
-				if($suid != USERNAME) {
-					echo "You don't have permission to view this";
-					return;
-				}
-			} else {
-				//echo 'is sl';
+			
+			$role = Model::getRoleForClass(USERNAME, $class);
+			echo $role;
+			
+			if($role < POSITION_SECTION_LEADER && $suid != USERNAME){
+				echo "You don't have permission to view this buddy.";
+				return;
 			}
-		
+			
+			
+//			if(IS_STUDENT_ONLY) {
+//				if($suid != USERNAME) {
+//					echo "You don't have permission to view this";
+//					return;
+//				}
+//			} else {
+//				//echo 'is sl';
+//			}
+//		
 		    $sl = Model::getSectionLeaderForStudent($suid);
 			//echo $student . " ". $sl . "\n";
 			

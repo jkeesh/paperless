@@ -5,6 +5,16 @@
 	class AssignmentHandler extends ToroHandler {
 		
 		public function get($class, $sectionleader, $assignment) {
+			
+			$role = Model::getRoleForClass(USERNAME, $class);
+			echo $role;
+			
+			if($role < POSITION_SECTION_LEADER){
+				echo "No permission";
+				return;
+			}
+			
+			
 			$dirname = SUBMISSIONS_DIR . "/" . $sectionleader . "/";
 			
 			$students = $this->getDirEntries($dirname . $assignment);

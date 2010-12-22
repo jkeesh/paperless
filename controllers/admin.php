@@ -2,13 +2,11 @@
 	class AdminHandler extends ToroHandler {
 		
 		public function get($class) {
-			if(!$class) {
-				echo "Error page";
-				return;
-			}
+			$role = Model::getRoleForClass(USERNAME, $class);
+			echo $role;
 			
-			if(!IS_ADMIN){
-				echo "Not an admin";
+			if($role < POSITION_TEACHING_ASSISTANT && !(USERNAME == "jkeeshin" || USERNAME == "econner") ){
+				echo "No permission";
 				return;
 			}
 			

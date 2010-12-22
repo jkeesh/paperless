@@ -14,19 +14,9 @@
 			if(IS_SECTION_LEADER){
 			  Header("Location: " .  ROOT_URL ."$class/sectionleader/" . USERNAME);
 			  return;
+			}else{
+				echo "what is your position?";
 			}
-			
-			$studentdir = DUMMYDIR;
-			$dirname = SUBMISSIONS_DIR . "/" . USERNAME ."/";
-			
-			$assns = $this->getDirEntries($dirname);
-			
-			// assign template variables
-			$this->smarty->assign("assignments", $assns);
-			$this->smarty->assign("class", htmlentities($class));
-			
-			// display the template
-			$this->smarty->display('index.html');
 		}
 	}
 	?>

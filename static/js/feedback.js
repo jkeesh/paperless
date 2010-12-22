@@ -5,6 +5,9 @@ current_range = null;
 globalSubmitComment = null;
 current_file_id = 0;
 shortcuts_added = false;
+themes = new Array('shCoreDefault.css', 'shCoreMDUltra.css' ,'shThemeEmacs.css','shCoreMidnight.css',  'shThemeFadeToGrey.css','shCoreDjango.css', 'shCoreRDark.css', 'shThemeMDUltra.css','shCoreEclipse.css', 'shThemeDefault.css','shThemeMidnight.css', 'shCoreEmacs.css', 'shThemeDjango.css', 'shThemeRDark.css', 'shCoreFadeToGrey.css', 'shThemeEclipse.css');	
+themeID = 0;
+
 
 function removeDialog(){
 	if( $('textarea')) $('textarea').remove();
@@ -52,12 +55,10 @@ function addShortcuts(){
 				 });
 	
 	
-	this.themes = new Array('shCoreDefault.css', 'shCoreMDUltra.css' ,'shThemeEmacs.css','shCoreMidnight.css',  'shThemeFadeToGrey.css','shCoreDjango.css', 'shCoreRDark.css', 'shThemeMDUltra.css','shCoreEclipse.css', 'shThemeDefault.css','shThemeMidnight.css', 'shCoreEmacs.css', 'shThemeDjango.css', 'shThemeRDark.css', 'shCoreFadeToGrey.css', 'shThemeEclipse.css');	
-	this.themeID = 0;
 	shortcut.add("ctrl+2", new SafeFunction ( function(){
-											 self.themeID++;
-											 var themeIndex = self.themeID % self.themes.length; 
-											 var newTheme = root_url +'/static/js/syntaxhighlighter/styles/' + self.themes[themeIndex];
+											 themeID++;
+											 var themeIndex = themeID % themes.length; 
+											 var newTheme = root_url +'/static/js/syntaxhighlighter/styles/' + themes[themeIndex];
 											 $('#syntaxStylesheet').attr('href', newTheme);
 											 } )
 				 );
@@ -82,11 +83,111 @@ function addShortcuts(){
 }
 
 
+function /* class */ Comment(range, code_file){
+	this.range = range;
+	this.code_file = code_file;
+	this.filename = code_file.filename;
+	
+	this.submit = function(){
+		this.code_file.last_comment_range = this.range;
+		var commentText = $("textarea").val();
+		removeDialog();
+		if(commentText.length == 0){
+			this.code_file.unhighlightRange(range);
+		}else{
+			$.ajax({
+				   type: 'POST',
+				   url: window.location.pathname, // post to current location url
+				   data: "action=create&text=" + commentText + "&rangeLower=" + this.range.lower + "&rangeHigher=" + this.range.higher + "&filename=" + this.filename,
+				   success: function(data) {
+				   //TODO
+				   },
+				   error: function(XMLHttpRequest, textStatus, errorThrown) {
+				   //TODO
+				   }
+				   });
+			
+			this.addCommentDiv(commentText, range);
+		}
+	}
+	
+	this.remove = function() {
+		
+		var elem = "#e"+range.toString();
+		$(elem).remove(); // remove the comment
+		code_file.unhighlightRange(range);
+		
+		//remove it from selected ranges
+		for (i = 0; i < code_file.selected_ranges.length; i++) {
+			var saved_range = code_file.selected_ranges[i];
+			if (saved_range.lower == range.lower && saved_range.higher == range.higher) {
+				code_file.selected_ranges.splice(i, 1);
+			}
+		}
+		
+		$('textArea').remove();
+		removeDialog();
+	}
+	
+	this.edit = function() {
+		if (current_dialog != null){
+            return;
+		}
+		
+		// remove the old comment     
+		$.ajax({
+			   type: 'POST',
+			   url: window.location.pathname, // post to current location url
+			   data: "action=delete&rangeLower=" + this.range.lower + "&rangeHigher=" + this.range.higher + "&filename=" + this.filename,
+			   success: function(data) {
+			   // TODO
+			   },
+			   error: function(XMLHttpRequest, textStatus, errorThrown) {
+			   // TODO
+			   }
+			   });
+		
+		var text = $('#ctext' + this.range.toString()).html();
+		current_dialog = $('<div></div>')
+		.html('<textarea>' + text +'</textarea>')
+		.dialog({
+				autoOpen: true,
+				title: 'Enter Comment',
+				width: 350,
+				height: 250,
+				focus: true,
+				open: function(event, ui) { $(".ui-dialog-titlebar-close").hide();},
+				closeOnEscape: false,
+				buttons: { "Submit": 
+				function() {
+				this.removeAndSubmit();
+				}, "Delete":
+				function() {
+				this.remove();
+				}
+				}, 
+				
+				});
+		$("textarea").focus();
+	}
+	
+	this.cancel = function(range){
+		this.code_file.unhighlightRange(this.range);
+		removeDialog();
+    }
+	
+	this.removeAndSubmit = function(){
+		this.remove();
+		this.submit();
+	}
+}
+
 
 function /* class */ CodeFile(filename, prefix) {
 	if(!shortcuts_added)
 		addShortcuts();
 	
+	this.comment_list = null; // TODO make this hold a list of Comment objects
 	this.filename = filename;
 	this.prefix = prefix;
 	this.fileID = this.prefix; // right now pass the filename, and file id
@@ -398,6 +499,12 @@ function /* class */ LineRange(a, b) {
 		for (var i = this.lower; i <= this.higher; i++) {
 			callback(i);
 		}
+	}
+	
+	this.toString = function(){
+		var range_text = this.lower + "-" + this.higher;
+		if(this.lower == this.higher) range_text = this.lower;
+		return range_text;
 	}
 }
 

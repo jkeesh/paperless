@@ -30,6 +30,23 @@
 			$this->conn = Database::getConnection();
 		}
 		
+		public static function getRoleForClass($user, $class){
+			$db = Database::getConnection();
+			$query = "SELECT Position FROM CourseRelations 
+						WHERE 
+							Person IN ( SELECT ID FROM People WHERE SUNetID = :sunetid )
+						AND
+							Class IN ( SELECT ID FROM Courses WHERE Name LIKE :classname )";
+			try {
+				$sth = $db->prepare($query);
+				$sth->execute(array(":sunetid" => $user, ":classname" => $class));
+				if($rows = $sth->fetch()) {
+					return $rows['Position'];      
+				}
+			} catch(PDOException $e) {
+				echo $e->getMessage(); // TODO log this error instead of echoing
+			}
+		}
 		
 		public static function getQuarterID() {
 			$db = Database::getConnection();
