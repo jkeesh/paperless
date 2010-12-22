@@ -114,8 +114,10 @@
 			if(IS_STUDENT_ONLY)
 				return; // students should not be able to add or delete comments
 			
-			// TODO this shouldn't be hard coded
-			$dirname = SUBMISSIONS_DIR . "/" . SECTION_LEADER . "/". $assignment . "/" . $student . "/";
+			$suid = explode("_", $student); // if it was student_1 just take student
+			$suid = $suid[0];
+			$sl = Model::getSectionLeaderForStudent($suid);
+			$dirname = SUBMISSIONS_DIR . "/" . $sl . "/". $assignment . "/" . $student . "/";
 			
 			if(!isset($_POST['action'])) return;
 			

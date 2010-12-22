@@ -168,9 +168,10 @@ function /* class */ CodeFile(filename, prefix) {
 				   data: "action=create&text=" + commentText + "&rangeLower=" + range.lower + "&rangeHigher=" + range.higher + "&filename=" + self.filename,
 				   success: function(data) {
 				   // TODO
+				   console.log('submitted');
 				   },
 				   error: function(XMLHttpRequest, textStatus, errorThrown) {
-				   // TODO
+				   console.log('failed');
 				   }
 				   });
 			
@@ -320,12 +321,6 @@ function /* class */ CodeFile(filename, prefix) {
 	this.addHandlers();
 }
 
-// CodeFile.closeButtonClicked = function(event) {
-// 	var range = event.data.range;
-// 	event.data.code_file.removeComment(range);
-// 
-// 	return false;
-// }
 
 CodeFile.mousePressed = function(event) {
 	code_file = event.data.code_file;
