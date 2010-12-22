@@ -2,10 +2,20 @@
 //This is a configuration file for running paperless locally
 
 define('BASE_DIR', dirname(__FILE__));
-define('DUMMYDIR', '2_ADTS');
-define('USERNAME', 'zhoud');
-define('CLASSNAME', 'cs106x');
+
+define('DUMMYDIR', 'karel');
+define('DUMMYDIR_106A', 'karel');
+define('DUMMYDIR_106B', '2_ADTS');
+define('DUMMYDIR_106L', '2_ADTS');
+define('DUMMYDIR_106X', '2_ADTS');
+
+	
+define('USERNAME', 'jkeeshin');
+
+//TODO remove classname and submissions directory from config file
+define('CLASSNAME', 'cs106a');
 define('SUBMISSIONS_DIR', 'submissions');
+
 define('ROOT_URL', 'http://localhost:8888/paperless/'); 
 define('MYSQL_HOST', 'localhost');
 define('MYSQL_USERNAME', 'root');

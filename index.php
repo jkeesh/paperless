@@ -25,6 +25,9 @@
 			define('IS_STUDENT_ONLY', $is_student_only);
 			define('IS_SECTION_LEADER', $is_sl);
 			
+			//$class = Model::getClass(USERNAME);
+			//define('CLASSNAME', $class); //we may need CLASSNAME_STUDENT and CLASSNAME_SL because they could be different ah!
+			
 			$this->smarty = new Smarty();
 			
 			$this->smarty->template_dir = BASE_DIR . '/views/templates/';
