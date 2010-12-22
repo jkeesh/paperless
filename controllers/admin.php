@@ -16,6 +16,7 @@
 			$dirname = SUBMISSIONS_DIR;
 			
 			$sls = $this->getDirEntries($dirname);
+			sort($sls);
 			
 			// assign template variables
 			$this->smarty->assign("sls", $sls);
