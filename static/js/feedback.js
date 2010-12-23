@@ -36,38 +36,38 @@ function SafeFunction(func){
 
 function addShortcuts(){
 	shortcut.add("tab", function(data) {
-		 var code_file = code_files[current_file_id];
-		 if(current_range && current_dialog) {
-		    var comment = code_file.getCommentFromID("c" + current_range.toString());
-		    code_file.comment_list.push(comment);
-		    comment.submit();
-		 }
-	});
+				 var code_file = code_files[current_file_id];
+				 if(current_range && current_dialog) {
+				 var comment = code_file.getCommentFromID("c" + current_range.toString());
+				 code_file.comment_list.push(comment);
+				 comment.submit();
+				 }
+				 });
 	
 	shortcut.add("shift+0", function(){
-	   var code_file = code_files[current_file_id];
-		if(current_range && current_dialog) {
-		    var comment = code_file.getCommentFromID("c" + current_range.toString());
-		    code_file.removeCommentFromID("c" + current_range.toString());
-		    comment.remove();
-		}
-	});
+				 var code_file = code_files[current_file_id];
+				 if(current_range && current_dialog) {
+				 var comment = code_file.getCommentFromID("c" + current_range.toString());
+				 code_file.removeCommentFromID("c" + current_range.toString());
+				 comment.remove();
+				 }
+				 });
 	
 	shortcut.add("ctrl+z", function(){
-		 var code_file = code_files[current_file_id];
-		 if(code_file.last_comment == null) return;
-		 code_file.last_comment.edit();
-		 code_file.last_comment = null;
-	});
+				 var code_file = code_files[current_file_id];
+				 if(code_file.last_comment == null) return;
+				 code_file.last_comment.edit();
+				 code_file.last_comment = null;
+				 });
 	
 	
 	shortcut.add("ctrl+2", new SafeFunction ( function(){
-		 themeID++;
-		 var themeIndex = themeID % themes.length; 
-		 var newTheme = root_url +'/static/js/syntaxhighlighter/styles/' + themes[themeIndex];
-		 $('#syntaxStylesheet').attr('href', newTheme);
-		 })
-    );
+											 themeID++;
+											 var themeIndex = themeID % themes.length; 
+											 var newTheme = root_url +'/static/js/syntaxhighlighter/styles/' + themes[themeIndex];
+											 $('#syntaxStylesheet').attr('href', newTheme);
+											 })
+				 );
 	
 	
 	shortcut.add("ctrl+1", new SafeFunction ( function(){
@@ -89,16 +89,16 @@ function addShortcuts(){
 }
 
 $(document).mouseup(function() {
-   if (dragging_in_file == null) {
-	   return;
-	}
-	
-   var range = new LineRange(dragging_in_file.selected_range_start, dragging_in_file.selected_range_end);
-   var comment = new Comment("", range, dragging_in_file);
-   comment.get();
-   
-   dragging_in_file.comment_list.push(comment);
-   dragging_in_file.selected_ranges.push(range);
-   
-   dragging_in_file = null;
-});
+					if (dragging_in_file == null) {
+					return;
+					}
+					
+					var range = new LineRange(dragging_in_file.selected_range_start, dragging_in_file.selected_range_end);
+					var comment = new Comment("", range, dragging_in_file);
+					comment.get();
+					
+					dragging_in_file.comment_list.push(comment);
+					dragging_in_file.selected_ranges.push(range);
+					
+					dragging_in_file = null;
+					});
