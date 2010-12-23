@@ -69,6 +69,12 @@ function /* class */ CodeFile(filename, prefix) {
       $(line).removeClass("highlighted");
    }
    
+   this.highlightRange = function(range){
+      for (var i = range.lower; i <= range.higher; i++) {
+         this.hiliteLineNo(i);
+      }  
+   }
+
    /* Unhighlights the range passed in as a parameter */
    this.unhighlightRange = function(range){
       for (var i = range.lower; i <= range.higher; i++) {
