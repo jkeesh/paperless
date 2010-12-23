@@ -7,7 +7,11 @@
 
 			Permissions::requireRole(POSITION_SECTION_LEADER, $class);
 			
-			$dirname = SUBMISSIONS_DIR . "/" . $sectionleader . "/";
+			
+			
+			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sectionleader . "/";
+			echo $dirname;
+//			$dirname = SUBMISSIONS_DIR . "/" . $sectionleader . "/";
 			
 			$students = $this->getDirEntries($dirname . $assignment);
 			

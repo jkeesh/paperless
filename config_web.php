@@ -1,11 +1,11 @@
 <?php
-	//This is a configuration file that is not tracked by git. The difference is that
-	//there is a different configuration file locally and on the web.
-	
-	define('BASE_DIR', dirname(__FILE__));
+	//This is a configuration file for running paperless locally
 	
 	//$sunetid = $_ENV['WEBAUTH_USER'];
 	//$username = strtolower($username);
+	define('USERNAME', 'jkeeshin');
+	
+	define('BASE_DIR', dirname(__FILE__));
 	
 	define('POSITION_STUDENT', 1);
 	define('POSITION_APPLICANT', 2);
@@ -15,17 +15,17 @@
 	define('POSITION_LECTURER', 6);
 	define('POSITION_COORDINATOR', 7);
 	
-	$username = "jkeeshin";
-	$classname = "cs106a";
-	$dummy = "karel";
+	define('DUMMYDIR', 'karel');
+	define('DUMMYDIR_106A', 'karel');
+	define('DUMMYDIR_106B', '2_ADTS');
+	define('DUMMYDIR_106L', '2_ADTS');
+	define('DUMMYDIR_106X', '2_ADTS');
 	
-	define('DUMMYDIR', $dummy);
-	define('USERNAME', $username);
-	define('CLASSNAME', $classname);
+	//we will look for submissions in directories like
+	// SUBMISSIONS_PREFIX/class/SUBMISSIONS_DIR/sl/student/codefiles
+	define('SUBMISSIONS_PREFIX', '/afs/ir/class');
+	define('SUBMISSIONS_DIR', 'submissions');
 	
-	$submissions = '/afs/ir/class/'.$classname.'/submissions';
-	
-	define('SUBMISSIONS_DIR', $submissions);
 	define('ROOT_URL', 'http://stanford.edu/class/cs198/cgi-bin/paperless/');
 	
 	define('MYSQL_HOST', 'mysql-user.stanford.edu');

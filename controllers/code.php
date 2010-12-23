@@ -31,7 +31,11 @@
 		 */
 
 		private function getAssignmentFiles($class, $student, $assignment, $sl) {
-			$dirname = SUBMISSIONS_DIR . "/" . $sl . "/". $assignment . "/" . $student . "/"; 
+			
+			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl . "/". $assignment . "/" . $student . "/"; 
+			echo $dirname;
+			
+			//$dirname = SUBMISSIONS_DIR . "/" . $sl . "/". $assignment . "/" . $student . "/"; 
 
 			if(!is_dir($dirname)) return null; // TODO handle error
 			
@@ -41,7 +45,7 @@
 			$assignment_files = array();
 			
 			while($file = readdir($dir)) {
-				if($this->isCodeFile($file, CLASSNAME)) {
+				if($this->isCodeFile($file, $class)) {
 					$assignmentFile = AssignmentFile::load(array("FilePath" => $dirname . $file));
 					if(!$assignmentFile) {
 					  $string = explode("_", $student); // if it was student_1 just take student
@@ -116,7 +120,10 @@
 			$suid = explode("_", $student); // if it was student_1 just take student
 			$suid = $suid[0];
 			$sl = Model::getSectionLeaderForStudent($suid);
-			$dirname = SUBMISSIONS_DIR . "/" . $sl . "/". $assignment . "/" . $student . "/";
+			
+			
+			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl . "/". $assignment . "/" . $student . "/"; 
+//			$dirname = SUBMISSIONS_DIR . "/" . $sl . "/". $assignment . "/" . $student . "/";
 			
 			if(!isset($_POST['action'])) return;
 			

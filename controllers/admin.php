@@ -7,10 +7,8 @@
 				Permissions::requireRole(POSITION_SECTION_LEADER, $class);
 			}
 			
-			echo "hello admin for ". $class;
-
 			$studentdir = DUMMYDIR;
-			$dirname = SUBMISSIONS_DIR;
+			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR;
 			
 			$sls = $this->getDirEntries($dirname);
 			sort($sls);

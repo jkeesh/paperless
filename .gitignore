@@ -10,6 +10,7 @@ config.php
 static/js/env.js
 
 #ignore submissions
+submission_files/*
 submissions/*
 
 #ignore those cached things

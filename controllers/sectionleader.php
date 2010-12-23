@@ -7,7 +7,11 @@ require_once("permissions.php");
 			Permissions::requireRole(POSITION_SECTION_LEADER, $class);
 						
 			$studentdir = DUMMYDIR;
-			$dirname = SUBMISSIONS_DIR . "/" . $sectionleader ."/";			
+			
+			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sectionleader . "/";
+			echo $dirname;
+			
+//			$dirname = SUBMISSIONS_DIR . "/" . $sectionleader ."/";			
 			$assns = $this->getDirEntries($dirname);
 			
 			$this->smarty->assign("students", Model::getStudentsForSectionLeader($sectionleader));

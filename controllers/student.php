@@ -17,7 +17,11 @@
 		  $sl = Model::getSectionLeaderForStudent($student);
 			
 			//TODO make sure submissions dir takes into account class
-			$dirname = SUBMISSIONS_DIR . "/" . $sl ."/";
+			
+			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl . "/";
+			echo $dirname;
+			
+//			$dirname = SUBMISSIONS_DIR . "/" . $sl ."/";
 			$assns = $this->getDirEntries($dirname);
 			
 			//information will be an associative array where index i holds
