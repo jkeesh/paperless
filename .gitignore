@@ -13,4 +13,4 @@ static/js/env.js
 submissions/*
 
 #ignore those cached things
-templates/templates_c/*
+views/templates_c/*
