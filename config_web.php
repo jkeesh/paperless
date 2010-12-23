@@ -26,7 +26,7 @@
 	define('SUBMISSIONS_PREFIX', '/afs/ir/class');
 	define('SUBMISSIONS_DIR', 'submissions');
 	
-	define('ROOT_URL', 'http://stanford.edu/class/cs198/cgi-bin/paperless/');
+	define('ROOT_URL', 'http://paperless.stanford.edu/');
 	
 	define('MYSQL_HOST', 'mysql-user.stanford.edu');
 	define('MYSQL_USERNAME', 'ccs198paperless');
