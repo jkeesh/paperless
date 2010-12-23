@@ -35,30 +35,34 @@ function SafeFunction(func){
 }
 
 function addShortcuts(){
-	shortcut.add("tab", function(data) {
-				 var code_file = code_files[current_file_id];
-				 if(current_range && current_dialog) {
-				 var comment = code_file.getCommentFromID("c" + current_range.toString());
-				 code_file.comment_list.push(comment);
-				 comment.submit();
-				 }
-				 });
+	shortcut.add("tab", new SafeFunction ( function() {
+										  console.log('hit tab');
+										  var code_file = code_files[current_file_id];
+										  //if(current_range && current_dialog) {
+										  var comment = code_file.getCommentFromID("c" + current_range.toString());
+										  code_file.comment_list.push(comment);
+										  comment.submit();
+										  //}
+										  })
+				 );
 	
-	shortcut.add("shift+0", function(){
-				 var code_file = code_files[current_file_id];
-				 if(current_range && current_dialog) {
-				 var comment = code_file.getCommentFromID("c" + current_range.toString());
-				 code_file.removeCommentFromID("c" + current_range.toString());
-				 comment.remove();
-				 }
-				 });
+	shortcut.add("shift+0", new SafeFunction ( function(){
+											  var code_file = code_files[current_file_id];
+											  if(current_range && current_dialog) {
+											  var comment = code_file.getCommentFromID("c" + current_range.toString());
+											  code_file.removeCommentFromID("c" + current_range.toString());
+											  comment.remove();
+											  }
+											  })
+				 );
 	
-	shortcut.add("ctrl+z", function(){
-				 var code_file = code_files[current_file_id];
-				 if(code_file.last_comment == null) return;
-				 code_file.last_comment.edit();
-				 code_file.last_comment = null;
-				 });
+	shortcut.add("ctrl+z", new SafeFunction ( function(){
+											 var code_file = code_files[current_file_id];
+											 if(code_file.last_comment == null) return;
+											 code_file.last_comment.edit();
+											 code_file.last_comment = null;
+											 })
+				 );
 	
 	
 	shortcut.add("ctrl+2", new SafeFunction ( function(){

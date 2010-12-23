@@ -12,6 +12,10 @@ function /* class */ Comment(ctext, crange, code_file) {
 		if(commentText.length == 0) {
 			this.code_file.unhighlightRange(range);
 		} else {
+			this.text = commentText;
+			this.code_file.addCommentDiv(commentText, self.range);
+			this.code_file.last_comment = self;
+			
 			$.ajax({
 				   type: 'POST',
 				   url: window.location.pathname, // post to current location url
@@ -23,11 +27,13 @@ function /* class */ Comment(ctext, crange, code_file) {
 				   //TODO
 				   }
 				   });
-			
-			this.text = commentText;
-			this.code_file.addCommentDiv(commentText, self.range);
-			this.code_file.last_comment = self;
+
 		}
+		
+		var elemname = '#ctext' + this.range.toString();
+		console.log("sumbit : " + elemname);
+		console.log( $(elemname) );
+		
 	}
 	
 	this.remove = function() {
@@ -79,9 +85,16 @@ function /* class */ Comment(ctext, crange, code_file) {
 	
 	this.edit = function() {
 		
+		current_range = this.range;
+		current_file_id = this.code_file.fileID;
+		
 		if (current_dialog != null){
 			return;
 		}
+		
+		var text = $('#ctext' + this.range.toString()).html();		
+		var elem = "#e"+self.range.toString();
+		$(elem).remove(); // remove the comment
 		
 		// remove the old comment     
 		$.ajax({
@@ -92,7 +105,6 @@ function /* class */ Comment(ctext, crange, code_file) {
 			   error: function(XMLHttpRequest, textStatus, errorThrown) { /* TODO */ }
 			   });
 		
-		var text = $('#ctext' + this.range.toString()).html();
 		current_dialog = $('<div></div>')
 		.html('<textarea>' + text +'</textarea>')
 		.dialog({
