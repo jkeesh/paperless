@@ -1,6 +1,6 @@
 function /* class */ CodeFile(filename, id_number, interactive) {
 	this.interactive = interactive;
-	alert("interactive: " + this.interactive);
+	//alert("interactive: " + this.interactive);
 	
 	if(!shortcuts_added)
 		addShortcuts();
@@ -16,9 +16,7 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 	
 	var self = this;
 	
-	this.isLineSelected = function(line_no) {
-		
-		
+	this.isLineSelected = function(line_no) {		
 		for (var i = 0; i < this.selected_ranges.length; i++) {
 			var range = this.selected_ranges[i];
 			if (line_no >= range.lower && line_no <= range.higher) {
@@ -30,6 +28,8 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 	}
 	
 	this.addHandlers = function() {
+		if(!this.interactive) return;
+		
 		var line_no = 1;
 		do {
 			var line = this.getLine(line_no);
