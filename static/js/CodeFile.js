@@ -91,25 +91,27 @@ function /* class */ CodeFile(filename, prefix) {
       }
    }
    
-   this.addComment = function(comment) {
+   this.addComment = function(comment, isEditable) {
+	  if(isEditable == undefined) isEditable = true;
       this.comment_list.push(comment);
-      this.addCommentDiv(comment.text, comment.range);
+      this.addCommentDiv(comment.text, comment.range, isEditable);
    }
    
-   this.addCommentDiv = function(text, range){
+   this.addCommentDiv = function(text, range, isEditable){
+	  if(isEditable == undefined) isEditable = true;
+	  console.log(text + ", editable: " + isEditable);
       var range_text = range.toString();
       var comment_id = "c" + range_text;
       var element_id = "e" + range_text;
       var top_offset = 17.6 * (range.lower) + 200; //200 is codeposition offset in style.css , 17 is line height;
       var style_position = "position:absolute; top:"+ top_offset +"px; right: 100px;";
 
-
-      $('#comments' + this.fileID).append("<div id='"+ element_id +"'><a href=\"javascript:edit("+ this.fileID + ",'" + comment_id + "')\"> <div id='" + comment_id
-      +"' style='" + style_position +"' class='commentbox'>"
-      // + " File: " + this.filename
-      // + " Line: "+ range_text + ": "
-      + "<span id='ctext" + range_text + "'>" + text + "</span>"
-      + "</div></a></div>");
+	  var toAdd = "<div id='"+ element_id +"'>";
+	  if(isEditable) toAdd += "<a href=\"javascript:edit("+ this.fileID + ",'" + comment_id + "')\">";
+	  toAdd += 	" <div id='" + comment_id +"' style='" + style_position +"' class='commentbox'><span id='ctext" + range_text + "'>" + text + "</span></div>";
+	  if(isEditable) toAdd += "</a>";
+	  toAdd += "</div>";
+      $('#comments' + this.fileID).append(toAdd);
    }
    
    this.addHandlers();
