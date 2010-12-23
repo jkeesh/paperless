@@ -36,6 +36,11 @@ notinteractive
 {/if}
 
 <script type="text/javascript">
+{if $interactive}
+var interactive = true;
+{else}
+var interactive = false;
+{/if}
 
     var files = new Array();
     {foreach from=$files item=file key=i}
@@ -50,7 +55,7 @@ notinteractive
     function setupCodeFiles(){
         
         {foreach from=$files item=file key=i}
-		var cur_file = new CodeFile('{$file}', {$i});
+		var cur_file = new CodeFile('{$file}', {$i}, interactive);
         
         {foreach from=$assignment_files[$i]->getAssignmentComments() item=comment}
 		var curRange = new LineRange({$comment->getStartLine()}, {$comment->getEndLine()});

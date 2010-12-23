@@ -1,11 +1,13 @@
-function /* class */ CodeFile(filename, prefix) {
+function /* class */ CodeFile(filename, id_number, interactive) {
+   this.interactive = interactive;
+   alert("interactive: " + this.interactive);
+	
    if(!shortcuts_added)
       addShortcuts();
    
    this.comment_list = new Array(); // TODO make this hold a list of Comment objects
    this.filename = filename;
-   this.prefix = prefix;
-   this.fileID = this.prefix; // right now pass the filename, and file id
+   this.fileID = id_number;
    
    this.selected_range_start;
    this.selected_range_end;
