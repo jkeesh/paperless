@@ -28,7 +28,7 @@
 	
 	define('ROOT_URL', 'http://localhost:8888/paperless/'); 
 	
-	define('ASSIGNMENTS_FILE_LIST',  ROOT_URL. "controllers/assignments.csv";
+	define('ASSIGNMENTS_FILE_LIST',  ROOT_URL. "controllers/assignments.csv");
 		   
 	define('MYSQL_HOST', 'localhost');
 	define('MYSQL_USERNAME', 'root');

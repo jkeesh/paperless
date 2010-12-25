@@ -24,7 +24,8 @@
 			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sectionleader . "/";
 			
 			//use the hardcoded assignments file for now
-			$assignments_file = ROOT_URL. "controllers/assignments.csv";
+			$assignments_file = ASSIGNMENTS_FILE_LIST;
+			echo $assignments_file;
 			$assns = $this->getAssns($assignments_file);
 
 			// assign template variables
