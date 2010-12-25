@@ -14,13 +14,7 @@
 	define('POSITION_TEACHING_ASSISTANT', 5);
 	define('POSITION_LECTURER', 6);
 	define('POSITION_COORDINATOR', 7);
-	
-	define('DUMMYDIR', 'karel');
-	define('DUMMYDIR_106A', 'karel');
-	define('DUMMYDIR_106B', '2_ADTS');
-	define('DUMMYDIR_106L', '2_ADTS');
-	define('DUMMYDIR_106X', '2_ADTS');
-	
+		
 	//we will look for submissions in directories like
 	// SUBMISSIONS_PREFIX/class/SUBMISSIONS_DIR/sl/student/codefiles
 	define('SUBMISSIONS_PREFIX', '/afs/ir/class');

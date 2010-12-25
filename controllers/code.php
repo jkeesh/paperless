@@ -3,6 +3,7 @@
 	require_once("models/AssignmentComment.php");
 	require_once("models/Model.php");
 	require_once("permissions.php");
+	require_once("utils.php");
 	
 	/*
 	 * Controller that handles the syntax highlighted code view
@@ -16,11 +17,9 @@
 		 */
 		private function isCodeFile($filename, $class){
 			$ext = pathinfo($filename, PATHINFO_EXTENSION);
-			if($class == "cs106a") {
-				return $ext == "java";
-			} else {
-				return $ext == "cpp" || $ext == "h";
-			}
+			
+			$filetypes = getFileTypesForClass($class);
+			return in_array($ext, $filetypes);
 		}
 		
 		/*

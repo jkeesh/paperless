@@ -1,5 +1,7 @@
 <?php
 	
+	require_once('utils.php');
+	
 	class UploadHandler extends ToroHandler {
 		
 		function unzip($filename) {
@@ -30,29 +32,9 @@
 			fwrite($file_handle, $data) . "\n";
         }
 		
-		private function getAssns($assignments_file) {
-			$assn_data = fopen($assignments_file, "r");
-			
-			$arr = array();
-			
-			while (! feof($assn_data)) {
-				$info = fgetcsv($assn_data);
-				if ($info == NULL) {
-					continue;
-				}
-				$arr[$info[0]] = array("Name" => $info[1], "DueDate" => date_create($info[2]));
-			}
-			return $arr;
-		}
-		
-		public function get(){
-			echo "get";
-		}
-		
 		public function post($class) {
 			$assn_dir = $_POST['assignment'];
-			$assignments_file = ASSIGNMENTS_FILE_LIST;
-			$assns = $this->getAssns($assignments_file);
+			$assns = getAssnsForClass($class);
 			//print_r($assns);
 			$assn_name = $assns[$assn_dir]["Name"];
 			$assn_date = $assns[$assn_dir]["DueDate"];
