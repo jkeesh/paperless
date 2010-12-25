@@ -67,6 +67,14 @@
 			return ctype_lower($chr);
 		}
 		
+		function isValidDirectory($entry){
+			///Note: this matches for assignment directories which start with lowercase
+			///and also for student submission directories of the form sunetid_# .... however
+			///it seems like a sunetid can have a '-' but I have never seen one. And I think dashes
+			///mess up the url.... 
+			return (preg_match("/^([a-z])([a-zA-z\d_\.]+)(_\d+)?$/", $entry) > 0) ? true : false;
+		}
+		
 		/*
 		 * Gets information from the directories found in a path.
 		 */
@@ -74,7 +82,7 @@
 			$entries = array();
 			$dir = opendir($dirname);
 			while($entry = readdir($dir)) {
-				if(strpos($entry, ".") === false && $this->starts_with_lower($entry))
+				if($this->isValidDirectory($entry))
 					$entries[] = $entry;
 			}
 			return $entries;
