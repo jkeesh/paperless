@@ -20,12 +20,16 @@
 	define('DUMMYDIR_106L', '2_ADTS');
 	define('DUMMYDIR_106X', '2_ADTS');
 	
+	
 	//we will look for submissions in directories like
 	// SUBMISSIONS_PREFIX/class/SUBMISSIONS_DIR/sl/student/codefiles
 	define('SUBMISSIONS_PREFIX', 'submission_files');
 	define('SUBMISSIONS_DIR', 'submissions');
 	
 	define('ROOT_URL', 'http://localhost:8888/paperless/'); 
+	
+	define('ASSIGNMENTS_FILE_LIST',  ROOT_URL. "controllers/assignments.csv";
+		   
 	define('MYSQL_HOST', 'localhost');
 	define('MYSQL_USERNAME', 'root');
 	define('MYSQL_PASSWORD', 'root');
