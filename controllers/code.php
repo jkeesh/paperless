@@ -32,9 +32,7 @@
 		private function getAssignmentFiles($class, $student, $assignment, $sl) {
 			
 			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl . "/". $assignment . "/" . $student . "/"; 
-			echo $dirname;
-			
-			//$dirname = SUBMISSIONS_DIR . "/" . $sl . "/". $assignment . "/" . $student . "/"; 
+			//echo $dirname;
 
 			if(!is_dir($dirname)) return null; // TODO handle error
 			
