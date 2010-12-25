@@ -23,7 +23,7 @@
 			$days_late = (float)($now_timestamp - $due_timestamp) / 3600. / 24.;
 			$days_late = max(0, (int)(ceil($days_late)));
 			
-			$data = "student_submission_time: " . $now->format("d/M/Y H:i:s") . "\n"; // .
+			$data = "student_submission_time: " . $now->format("d/M/Y H:i:s") . "\n" .
 			"assignment_due_time: " . $due_date->format("d/M/Y H:i:s") . "\n" .
 			"calendar_days_late: " . $days_late;
 			
