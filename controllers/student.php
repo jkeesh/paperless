@@ -13,15 +13,10 @@
 			if($student != USERNAME) {
 				Permissions::requireRole(POSITION_SECTION_LEADER, $class);
 			}
-						
-		  $sl = Model::getSectionLeaderForStudent($student);
 			
-			//TODO make sure submissions dir takes into account class
+			$sl = Model::getSectionLeaderForStudent($student);
 			
 			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl . "/";
-			echo $dirname;
-			
-//			$dirname = SUBMISSIONS_DIR . "/" . $sl ."/";
 			$assns = $this->getDirEntries($dirname);
 			
 			//information will be an associative array where index i holds
