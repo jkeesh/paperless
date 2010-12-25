@@ -16,7 +16,14 @@
         }
 		
 		function write_late_days_file($file_handle, $due_date) {
+			
+			
+			
 			$now = new DateTime();
+			
+			echo $now . "\n";
+			echo $due_date . "\n";
+			
 			$now_timestamp = (int)($now->format("U"));
 			$due_timestamp = (int)($due_date->format("U"));
 			$days_late = (float)($now_timestamp - $due_timestamp) / 3600. / 24.;
