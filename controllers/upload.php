@@ -59,6 +59,7 @@
 			$assn_dir = $_POST['assignment'];
 			$assignments_file = ROOT_URL. "controllers/assignments.csv";
 			$assns = $this->getAssns($assignments_file);
+			print_r($assns);
 			$assn_name = $assns[$assn_dir]["Name"];
 			$assn_date = $assns[$assn_dir]["DueDate"];
 			
@@ -137,6 +138,7 @@
 			$this->smarty->assign("class", $class);
 			$this->smarty->assign("dir", $dirname);
 			$this->smarty->assign("assn", $assn_name);
+			$this->smarty->assign("student", USERNAME);
 			
 			$this->smarty->display('upload.html');
 		}
