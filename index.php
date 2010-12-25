@@ -86,6 +86,8 @@
 	require_once('controllers/assignment.php'); // lists the assignments for a given student
 	require_once('controllers/sectionleader.php'); // lists the assignments and students for a sectionleader
 	require_once('controllers/admin.php');
+	require_once('controllers/submit.php');
+	require_once('controllers/upload.php');
 	
 	/*
 	 * URL routes
@@ -97,6 +99,8 @@
 									  Array('^\/([a-zA-Z0-9_ \-]+)\/assignment\/([a-zA-Z0-9_ -]+)\/([a-zA-Z0-9_ ]+)\/?$', 'regex', 'AssignmentHandler'),
 									  Array('^\/([a-zA-Z0-9_ \-]+)\/sectionleader\/([a-zA-Z0-9_ \-]+)\/?$', 'regex', 'SectionLeaderHandler'),
 									  Array('^\/([a-zA-Z0-9_ \-]+)\/admin\/?$', 'regex', 'AdminHandler'),
+									  Array('^\/([a-zA-Z0-9_ \-]+)\/submit\/?$', 'regex', 'SubmitHandler'),
+									  Array('^\/([a-zA-Z0-9_ \-]+)\/upload\/?$', 'regex', 'UploadHandler'),
 									  ));
 	
 	if(isset($_REQUEST['path']))

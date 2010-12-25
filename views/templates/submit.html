@@ -1,0 +1,21 @@
+{include file="header.html"}
+
+<h2>Submission Page for {$class}</h2>
+
+
+<div>Welcome, {$name}.</div>
+<div>Please zip together your source ({$sourcelist}) files, as well as any files that you wish to include in your submission.</div>
+
+
+<div>Select assignment to submit:</div>
+<form enctype="multipart/form-data" action="{$root_url}{$class}/upload" method="POST"> 
+	<select name="assignment">
+		{foreach from=$assignments key=dir item=arr}
+		<option value="{$dir}">{$arr.Name}</option>
+		{/foreach}
+	</select>
+	<div><input name="uploaded" type="file" /><br/></div>
+	<div><input type="submit" value="Upload" /></div>
+</form>
+
+{include file="footer.html"}
