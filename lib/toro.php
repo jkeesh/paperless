@@ -18,6 +18,8 @@ class ToroApplication {
 
   public function serve() {
     $request_method = strtolower($_SERVER['REQUEST_METHOD']);
+	echo $request_method . "<BR/>";
+	  print_r($_POST);
     $path_info = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '/';
     $discovered_handler = null;
     $regex_matches = Array();

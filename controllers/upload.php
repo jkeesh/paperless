@@ -73,7 +73,7 @@
 				$dest_dir = $target_dir . USERNAME . "_" . $idx;
 				echo "<br/>DEST: " .$dest_dir;
 				$idx++;
-			} while (file_exists($dest_dir . ".zip"));
+			} while (file_exists($dest_dir));
 			$target = $dest_dir . ".zip";
 			echo "<br/>Target: " .$target;
 			
