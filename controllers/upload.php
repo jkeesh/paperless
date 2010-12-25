@@ -61,33 +61,33 @@
 			$sl_id = Model::getSectionLeaderForStudent(USERNAME);
 			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl_id . "/" . $assn_dir . "/";
 			
+			$message = "";
+			
 			/* create directory, if necessary */
 			$target_dir = $dirname;
 			if (!file_exists($target_dir)) {
-				echo "making dir";
+				//echo "making dir";
 				mkdir($target_dir, 0777, true);
 			}else{
-				echo "dir exsits";
+				//echo "dir exsits";
 			}
 			
 			/* append index (submission number) */
 			$idx = 1;
 			do {
 				$dest_dir = $target_dir . USERNAME . "_" . $idx;
-				echo "<br/>DEST: " .$dest_dir;
+				//echo "<br/>DEST: " .$dest_dir;
 				$idx++;
 			} while (file_exists($dest_dir));
 			$dirname = $dest_dir; //for output
 			$target = $dest_dir . ".zip";
-			echo "<br/>Target: " .$target;
+			//echo "<br/>Target: " .$target;
 			
 			$ok = 1;
 			/* size check */
 			if ($_FILES['uploaded']['size'] > 2000000) { 
-				echo "<li>Your file is too large.</li>"; 
+				$message .= "<li>Your file is too large.</li>"; 
 				$ok = 0; 
-			}else{
-				echo "<br/>file size ok";
 			}
 			
 			/* type check */
@@ -95,36 +95,32 @@
 				/* if filename ends in ".zip", then we'll take it */
 				$name = $_FILES['uploaded']['name'];
 				if (strtolower(substr($name, strlen($name) - 4)) != ".zip") {
-					echo "<li>Please submit a zip file! Type detected: " . $_FILES['uploaded']['type'] . " </li>";
+					$message .= "<li>Please submit a zip file! Type detected: " . $_FILES['uploaded']['type'] . " </li>";
 					$ok = 0; 
 				}
-			}else{
-				echo "<br/> found zip";
 			}
 			
 			if ($ok==0) { 
-				$message = "Sorry, your file was not uploaded.  Please try again, or contact the course staff for assistance"; 
+				$message .= "Sorry, your file was not uploaded.  Please try again, or contact the course staff for assistance"; 
 			} else { 
-				echo "<br/> target is ". $target;
+				//echo "<br/> target is ". $target;
 				if(move_uploaded_file($_FILES['uploaded']['tmp_name'], $target)) {
-					echo "<li>The file you uploaded has been saved as " . $target . "<br/></li>";
-					echo "<li>Attempting unzip...";
+					$message .= "<div>The file you uploaded has been saved as " . $target . "<br/></div>";
+					$message .= "<div>Attempting unzip...</div>";
 					$success = $this->unzip($target);
 					if ($success) {
-						echo "unzipped";
+						//echo "unzipped";
 						unlink($target);
 						$late_days_file = $dest_dir . "/lateDays.txt";
-						echo "<br/>".$late_days_file;
+						//echo "<br/>".$late_days_file;
 						$late_days = fopen($late_days_file, "w");
 						$this->write_late_days_file($late_days, $assn_date);
 						fclose($late_days);
-						$message = "<b>" . $assn_name . "</b> was successfully submitted at " . date("d/M/Y H:i:s") . ".<br/>";
-					}else{
-						echo "no success unzipping";
+						$message .= "<div><b>" . $assn_name . "</b> was successfully submitted at " . date("d/M/Y H:i:s") . ".<br/></div>";
 					}
 				} else { 
 					$ok = 0;
-					$message = "Sorry, there was a problem uploading your file.  Please try again, or contact the course staff for assistance."; 
+					$message .= "Sorry, there was a problem uploading your file.  Please try again, or contact the course staff for assistance."; 
 				}
 			}
 			
