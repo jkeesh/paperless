@@ -3,8 +3,8 @@
 	
 	//$sunetid = $_ENV['WEBAUTH_USER'];
 	//$username = strtolower($username);
-	define('USERNAME', 'jkeeshin');
-	
+	//define('USERNAME', 'jkeeshin');
+	define('USERNAME', 'yedong');
 	define('BASE_DIR', dirname(__FILE__));
 	
 	define('POSITION_STUDENT', 1);
@@ -14,14 +14,16 @@
 	define('POSITION_TEACHING_ASSISTANT', 5);
 	define('POSITION_LECTURER', 6);
 	define('POSITION_COORDINATOR', 7);
-		
+	
 	//we will look for submissions in directories like
 	// SUBMISSIONS_PREFIX/class/SUBMISSIONS_DIR/sl/student/codefiles
 	define('SUBMISSIONS_PREFIX', '/afs/ir/class');
 	define('SUBMISSIONS_DIR', 'submissions');
 	
-	define('ROOT_URL', 'http://paperless.stanford.edu/');
+	define('CLASS_CONFIG_DIR', '/afs/ir/class/cs198/cgi-bin/paperless/class_configs');
 	
+	define('ROOT_URL', 'https://stanford.edu/class/cs198/cgi-bin/paperless/');
+	//define('ROOT_URL', 'http://paperless.stanford.edu/'); 
 	define('MYSQL_HOST', 'mysql-user.stanford.edu');
 	define('MYSQL_USERNAME', 'ccs198paperless');
 	define('MYSQL_PASSWORD', 'chauweif');

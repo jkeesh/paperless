@@ -2,7 +2,7 @@
 	//This is a configuration file for running paperless locally
 	
 	//This is the only thing you should change
-	define('USERNAME', 'jkeeshin');
+	define('USERNAME', 'asood');
 	
 	define('BASE_DIR', dirname(__FILE__));
 	
@@ -21,10 +21,8 @@
 	
 	define('ROOT_URL', 'http://localhost:8888/paperless/'); 
 	
-	define('CLASS_CONFIG', 'class_configs');
+	define('CLASS_CONFIG_DIR', 'class_configs');
 	
-	define('ASSIGNMENTS_FILE_LIST',  ROOT_URL. "controllers/assignments.csv");
-		   
 	define('MYSQL_HOST', 'localhost');
 	define('MYSQL_USERNAME', 'root');
 	define('MYSQL_PASSWORD', 'root');
