@@ -3,9 +3,11 @@
 <h2>Upload Results for {$class}</h2>
 
 <div>{$message}</div>
+
+{if $ok}
 <div>You submitted {$assn}</div>
 <div>Your files have been written in {$dir}</div>
-
 <div><a href="{$root_url}{$class}/student/{$student}">View your submitted code files</a></div>
+{/if}
 
 {include file="footer.html"}

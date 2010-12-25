@@ -123,6 +123,7 @@
 						echo "no success unzipping";
 					}
 				} else { 
+					$ok = 0;
 					$message = "Sorry, there was a problem uploading your file.  Please try again, or contact the course staff for assistance."; 
 				}
 			}
@@ -134,6 +135,7 @@
 			$this->smarty->assign("assn", $assn_name);
 			$this->smarty->assign("student", USERNAME);
 			$this->smarty->assign("message", $message);
+			$this->smarty->assign("ok", $ok);
 			
 			$this->smarty->display('upload.html');
 		}
