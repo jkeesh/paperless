@@ -21,17 +21,18 @@
 			
 			$now = new DateTime();
 			
-			echo $now . "\n";
-			echo $due_date . "\n";
+			//echo $now . "\n";
+			//echo $due_date . "\n";
 			
-			$now_timestamp = (int)($now->format("U"));
-			$due_timestamp = (int)($due_date->format("U"));
-			$days_late = (float)($now_timestamp - $due_timestamp) / 3600. / 24.;
-			$days_late = max(0, (int)(ceil($days_late)));
+			//$now_timestamp = (int)($now->format("U"));
+			//$due_timestamp = (int)($due_date->format("U"));
+			//$days_late = (float)($now_timestamp - $due_timestamp) / 3600. / 24.;
+			//$days_late = max(0, (int)(ceil($days_late)));
 			
-			$data = "student_submission_time: " . $now->format("d/M/Y H:i:s") . "\n" .
-			"assignment_due_time: " . $due_date->format("d/M/Y H:i:s") . "\n" .
-			"calendar_days_late: " . $days_late;
+			$data = "student_submission_time: " . $now->format("d/M/Y H:i:s") . "\n"; // .
+			//"assignment_due_time: " . $due_date->format("d/M/Y H:i:s") . "\n" .
+			//"calendar_days_late: " . $days_late;
+			
 			fwrite($file_handle, $data) . "\n";
         }
 		
