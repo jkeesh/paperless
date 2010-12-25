@@ -103,7 +103,7 @@
 			}
 			
 			if ($ok==0) { 
-				echo "Sorry, your file was not uploaded.  Please try again, or contact the course staff for assistance"; 
+				$message = "Sorry, your file was not uploaded.  Please try again, or contact the course staff for assistance"; 
 			} else { 
 				echo "<br/> target is ". $target;
 				if(move_uploaded_file($_FILES['uploaded']['tmp_name'], $target)) {
@@ -118,12 +118,12 @@
 						$late_days = fopen($late_days_file, "w");
 						$this->write_late_days_file($late_days, $assn_date);
 						fclose($late_days);
-						echo "<li><b>" . $assn_name . "</b> was successfully submitted at " . date("d/M/Y H:i:s") . ".<br/></li>";
+						message = "<b>" . $assn_name . "</b> was successfully submitted at " . date("d/M/Y H:i:s") . ".<br/>";
 					}else{
 						echo "no success unzipping";
 					}
 				} else { 
-					echo "<li>Sorry, there was a problem uploading your file.  Please try again, or contact the course staff for assistance.</li>"; 
+					$message = "Sorry, there was a problem uploading your file.  Please try again, or contact the course staff for assistance."; 
 				}
 			}
 			
@@ -133,6 +133,7 @@
 			$this->smarty->assign("dir", $dirname);
 			$this->smarty->assign("assn", $assn_name);
 			$this->smarty->assign("student", USERNAME);
+			$this->smarty->assign("message", $message);
 			
 			$this->smarty->display('upload.html');
 		}
