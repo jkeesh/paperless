@@ -62,6 +62,11 @@
 			exit;
 		}
 		
+		function starts_with_lower($str) {
+			$chr = mb_substr ($str, 0, 1, "UTF-8");
+			return mb_strtolower($chr, "UTF-8") == $chr;
+		}
+		
 		/*
 		 * Gets information from the directories found in a path.
 		 */
@@ -69,7 +74,7 @@
 			$entries = array();
 			$dir = opendir($dirname);
 			while($entry = readdir($dir)) {
-				if(strpos($entry, ".") === false)
+				if(strpos($entry, ".") === false && $this->starts_with_lower($entry))
 					$entries[] = $entry;
 			}
 			return $entries;

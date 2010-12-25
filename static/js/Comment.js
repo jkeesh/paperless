@@ -31,8 +31,8 @@ function /* class */ Comment(ctext, crange, code_file) {
 		}
 		
 		var elemname = '#ctext' + this.range.toString();
-		console.log("sumbit : " + elemname);
-		console.log( $(elemname) );
+		//console.log("sumbit : " + elemname);
+		//console.log( $(elemname) );
 		
 	}
 	

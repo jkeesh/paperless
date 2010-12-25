@@ -36,7 +36,7 @@ function SafeFunction(func){
 
 function addShortcuts(){
 	shortcut.add("tab", new SafeFunction ( function() {
-										  console.log('hit tab');
+										 // console.log('hit tab');
 										  var code_file = code_files[current_file_id];
 										  //if(current_range && current_dialog) {
 										  var comment = code_file.getCommentFromID("c" + current_range.toString());

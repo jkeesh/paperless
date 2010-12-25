@@ -53,7 +53,7 @@
 			$assn_dir = $_POST['assignment'];
 			$assignments_file = ASSIGNMENTS_FILE_LIST;
 			$assns = $this->getAssns($assignments_file);
-			print_r($assns);
+			//print_r($assns);
 			$assn_name = $assns[$assn_dir]["Name"];
 			$assn_date = $assns[$assn_dir]["DueDate"];
 			

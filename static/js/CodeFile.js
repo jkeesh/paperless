@@ -109,7 +109,7 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 	
 	this.addCommentDiv = function(text, range, isEditable){
 		if(isEditable == undefined) isEditable = true;
-		console.log(text + ", editable: " + isEditable);
+		//console.log(text + ", editable: " + isEditable);
 		var range_text = range.toString();
 		var comment_id = "c" + range_text;
 		var element_id = "e" + range_text;
