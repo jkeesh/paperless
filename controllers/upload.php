@@ -118,7 +118,7 @@
 						$late_days = fopen($late_days_file, "w");
 						$this->write_late_days_file($late_days, $assn_date);
 						fclose($late_days);
-						message = "<b>" . $assn_name . "</b> was successfully submitted at " . date("d/M/Y H:i:s") . ".<br/>";
+						$message = "<b>" . $assn_name . "</b> was successfully submitted at " . date("d/M/Y H:i:s") . ".<br/>";
 					}else{
 						echo "no success unzipping";
 					}
