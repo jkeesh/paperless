@@ -82,6 +82,7 @@
 				echo "<br/>DEST: " .$dest_dir;
 				$idx++;
 			} while (file_exists($dest_dir));
+			$dirname = $dest_dir; //for output
 			$target = $dest_dir . ".zip";
 			echo "<br/>Target: " .$target;
 			
