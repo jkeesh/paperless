@@ -7,7 +7,6 @@
 				Permissions::requireRole(POSITION_SECTION_LEADER, $class);
 			}
 			
-			$studentdir = DUMMYDIR;
 			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR;
 			
 			$sls = $this->getDirEntries($dirname);
