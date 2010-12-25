@@ -64,10 +64,7 @@
 		
 		function starts_with_lower($str) {
 			$chr = mb_substr ($str, 0, 1, "UTF-8");
-			echo $chr . " ";
-			$lower = mb_strtolower($chr, "UTF-8");
-			echo $lower . "<BR/>";
-			return true;
+			return ctype_lower($chr);
 		}
 		
 		/*
