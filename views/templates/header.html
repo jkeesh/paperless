@@ -10,28 +10,30 @@ root_url = '{$root_url}';
 <link rel="stylesheet" type="text/css" href="{$root_url}/static/css/style.css">
 </head>
 <body>
-{if isset($code)}
-<div id="code_wrapper">
-{else}
-<div id="wrapper">
-{/if}
-    <div class="title link">
-        <a href="{$root_url}">paperless</a>
-    </div>
-    
-    <div id="username">Hi {$display_name}!</div>
-	<div id="mylinks">
-	{if $is_admin}
-		<div class="link"><a href="{$root_url}{$class}/admin">View Admin</a></div>
-	{/if}
-	{if $is_section_leader}
-		<div class="link"><a href="{$root_url}{$class}/sectionleader/{$username}">View My Section</a></div>
-	{/if}
-	{if $is_student}
-		<div class="link"><a href="{$root_url}{$class}/student/{$username}">View My Code</a></div>
-		{if $class != "cs106a"}
-		<div class="link"><a href="{$root_url}{$class}/submit">Submit</a></div>
-		{/if}
-	{/if}
-	</div>
+    <div id="container">
+        <div id="logo"><a href="{$root_url}" id="logo-link"></a></div>
+        <div id="user">
+            <div id="name">{$display_name}</div>
+            <div id="nav">
+                {if $is_admin}
+                <a href="{$root_url}{$class}/admin">Admin</a>
+                {/if}
+                {if $is_section_leader}
+                <a href="{$root_url}{$class}/sectionleader/{$username}">My Section</a>
+                {/if}
+                
+                {if $is_student}
+            	    <a href="{$root_url}{$class}/student/{$username}">My Code</a>
+            		{if $class != "cs106a"}
+            		<a href="{$root_url}{$class}/submit">Submit</a>
+            		{/if}
+            	{/if}
+            </div>
+            <div class="clearfloat"></div>
+        </div>
+        <div class="clearfloat"></div>
+        <div class="content-header"></div>
+        <div class="content-wrapper">
+            <div class="content">
+                
 

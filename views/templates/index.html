@@ -5,7 +5,6 @@
         {foreach from=$students item=student}
         <div class="link"><a href="{$root_url}{$class}/student/{$student.SUNetID}">{$student.DisplayName}</a></div>
         {/foreach}
-    </div>
 </div>
 
 <div class="list">
@@ -13,7 +12,7 @@
         {foreach from=$assignments item=assignment}
         <div class="link"><a href="{$root_url}{$class}/assignment/{$sl}/{$assignment}">{$assignment}</a></div>
         {/foreach}
-    </div>
 </div>
 
+<div class="clearfloat"></div>
 {include file="footer.html"}

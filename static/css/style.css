@@ -39,6 +39,7 @@ textarea{
 	border: 2px solid white;
 	border-radius: 10px;
 	-moz-border-radius: 10px;
+	z-index: 100;
 }
 
 .commentbox:hover{
@@ -185,4 +186,95 @@ body{
 a{
 	text-decoration: none;
 	color: black;
+}
+
+
+/*
+* BEGIN NEW STYLE SHEET
+*/
+
+body {
+    background: url("../images/bg.png") repeat scroll;
+    margin: 0;
+    padding: 0;
+    font-family: Helvetica, arial, freesans, sans-serif;
+}
+
+#logo {
+    width: 212px;
+    height: 79px;
+    margin-top: 13px;
+    margin-left: 20px;
+    background: url("../images/logo.png");
+    float: left;
+}
+
+#logo-link {
+   display: block;
+   width: 100%;
+   height: 100%;
+}
+
+#container {
+    width: 875px;
+    height: 600px;
+    padding: 0;
+    margin: 0 auto;
+}
+
+#user {
+    width: 400px;
+    height: 36px;
+    margin-top: 32px;
+    background: url("../images/user.png");
+    float: right;
+}
+
+#name {
+    font-family: Helvetica;
+    font-size: 10pt;
+    font-weight: bold;
+    padding: 12px;
+    float: left;
+}
+
+#nav {
+    font-family: Helvetica;
+    font-size: 10pt;
+    padding: 11px 0px 11px 0px;
+    font-weight: bold;
+    float: right;
+}
+
+a {
+    color: #4f86c8;
+    text-decoration: none;
+    font-size: 12pt;
+    padding-left: 10px;
+    padding-right: 15px;
+}
+
+.clearfloat {
+    clear: both;
+}
+
+.content {
+    padding: 20px 25px 20px 25px;
+}
+
+.content-wrapper {
+    width: 880px;
+    background: url("../images/content-bg.png");
+}
+
+.content-header {
+    background: url("../images/content-header-bg.png");
+    width: 100%;
+    height: 4px;
+}
+
+.content-footer {
+    background: url("../images/content-footer-bg.png");
+    width: 100%;
+    height: 4px;
 }
