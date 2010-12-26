@@ -46,38 +46,6 @@ textarea{
 	border: 2px solid black;
 }
 
-/* CSS For Syntax Highlighting */
-
-.keyword{
-	color: blue;
-}
-
-.keyword.type{
-	color: purple;
-	/*font-weight: bold;*/
-}
-
-.keyword.operator{
-	font-weight: bold;
-}
-
-.keyword.literal{
-	font-weight: bold;
-}
-
-.comment{
-	color: green;
-}
-
-.string{
-	color: red;	
-}
-
-.identifier{
-
-}
-
-/* End syntax css */
 
 .hidden{
 	display:none;
