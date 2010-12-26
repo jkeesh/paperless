@@ -194,8 +194,11 @@ body {
     width: 400px;
     height: 36px;
     margin-top: 32px;
-    background: url("../images/user.png");
     float: right;
+	background-color: white;
+	border: 1px solid #bddff3;
+    /*background: url("../images/user.png");*/
+
 }
 
 #name {
@@ -212,6 +215,10 @@ body {
     padding: 11px 0px 11px 0px;
     font-weight: bold;
     float: right;
+}
+
+#nav a:hover{
+	text-decoration: underline;
 }
 
 a {
