@@ -23,11 +23,6 @@
 	define('CLASS_CONFIG_DIR', '/afs/ir/class/cs198/cgi-bin/paperless/class_configs');
 	
 	define('ROOT_URL', 'https://stanford.edu/class/cs198/cgi-bin/paperless/');
-	//define('ROOT_URL', 'http://paperless.stanford.edu/'); 
-	define('MYSQL_HOST', 'mysql-user.stanford.edu');
-	define('MYSQL_USERNAME', 'ccs198paperless');
-	define('MYSQL_PASSWORD', 'chauweif');
-	define('MYSQL_DATABASE', 'c_cs198_paperless');
 	
 	define('ASSIGNMENT_COMMENT_TABLE', "AssignmentComments");
 	define('ASSIGNMENT_FILE_TABLE', 'AssignmentFiles');

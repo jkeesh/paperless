@@ -105,7 +105,7 @@ body{
 
 .list{
 	width: 300px;
-	padding: 20px;
+	padding: 0px 20px 20px 20px;
 	float: left;	
 }
 
@@ -236,6 +236,7 @@ body {
 	border: 1px solid #bddff3;
     /*background: url("../images/user.png");*/
 
+
 }
 
 #name {
@@ -258,7 +259,7 @@ body {
 	text-decoration: underline;
 }
 
-a {
+#nav a {
     color: #4f86c8;
     text-decoration: none;
     font-size: 12pt;
@@ -290,4 +291,40 @@ a {
     background: url("../images/content-footer-bg.png");
     width: 100%;
     height: 4px;
+}
+
+/*
+* Jquery UI Styles
+*/
+.ui-widget-header {
+   background: #ffffff;
+   border: 0;
+   color: 46342c;
+}
+
+textarea {
+   border: 1px solid #46342c;
+}
+
+.ui-widget textarea {
+   font-size: 10pt;
+}
+
+.ui-dialog .ui-dialog-buttonpane {
+   border: 0;
+   margin: 0;
+}
+
+.ui-dialog .ui-dialog-buttonpane button {
+   font-size: 10pt;
+   background: #46342c;
+   color: #ffffff;
+   border-right: 1px solid #dfc7bc;
+   border-bottom: 1px solid #dfc7bc;
+   border-top: 0;
+   border-left: 0;
+}
+
+.ui-dialog .ui-dialog-buttonpane button.ui-state-hover {
+   background: #76584b;
 }

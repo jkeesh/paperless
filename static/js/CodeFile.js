@@ -113,12 +113,12 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 		var range_text = range.toString();
 		var comment_id = "c" + range_text;
 		var element_id = "e" + range_text;
-		var top_offset = 12.5 * (range.lower) + 213; //200 is codeposition offset in style.css , 17 is line height, 0.75 since we use a slightly smaller font
+		var top_offset = $(".number" + range.lower).offset().top;
 		var style_position = "position:absolute; top:"+ top_offset +"px; right: 100px;";
 		
-		var toAdd = "<div id='"+ element_id +"'>";
+		var toAdd = "<div id='"+ element_id +"' style='" + style_position +"'>";
 		if(isEditable) toAdd += "<a href=\"javascript:edit("+ this.fileID + ",'" + comment_id + "')\">";
-		toAdd += 	" <div id='" + comment_id +"' style='" + style_position +"' class='commentbox'><span id='ctext" + range_text + "'>" + text + "</span></div>";
+		toAdd += 	" <div id='" + comment_id +"' class='commentbox'><span id='ctext" + range_text + "'>" + text + "</span></div>";
 		if(isEditable) toAdd += "</a>";
 		toAdd += "</div>";
 		$('#comments' + this.fileID).append(toAdd);
