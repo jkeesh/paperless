@@ -105,7 +105,7 @@ body{
 
 .list{
 	width: 300px;
-	padding: 20px;
+	padding: 0px 20px 20px 20px;
 	float: left;	
 }
 
@@ -235,6 +235,7 @@ body {
 	background-color: white;
 	border: 1px solid #bddff3;
     /*background: url("../images/user.png");*/
+
 
 }
 
