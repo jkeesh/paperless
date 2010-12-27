@@ -2,9 +2,28 @@
 <head>
 <title>Paperless</title>
 
-<script>
+<script type="text/javascript">
 root_url = '{$root_url}';
 </script>
+
+{if isset($code)}
+<script type="text/javascript" src="{$root_url}static/js/jquery-1.4.1.min.js"></script>
+<script type="text/javascript" src="{$root_url}static/js/jquery-1.4.2.js"></script>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/jquery-ui.min.js"></script> 
+<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css"> 
+
+<script type="text/javascript" src="{$root_url}static/js/feedback.js"></script>
+<script type="text/javascript" src="{$root_url}static/js/shortcut.js"></script>
+
+<script type="text/javascript" src="{$root_url}static/js/Comment.js"></script>
+<script type="text/javascript" src="{$root_url}static/js/LineRange.js"></script>
+<script type="text/javascript" src="{$root_url}static/js/CodeFile.js"></script>
+
+<script type="text/javascript" src="{$root_url}static/js/syntaxhighlighter/scripts/shCore.js"></script>
+<script type="text/javascript" src="{$root_url}static/js/syntaxhighlighter/scripts/shBrushCpp.js"></script>
+<link type="text/css" rel="stylesheet" href="{$root_url}static/js/syntaxhighlighter/styles/shCoreDefault.css" id="syntaxStylesheet" />
+{/if}
 
 
 <link rel="stylesheet" type="text/css" href="{$root_url}/static/css/style.css">
