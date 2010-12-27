@@ -6,7 +6,7 @@
 	class StudentHandler extends ToroHandler {
 		
 		public function get($class, $student) {
-			
+
 			$string = explode("_", $student); // if it was student_1 just take student
 			$student = $string[0];
 			

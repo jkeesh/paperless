@@ -32,11 +32,13 @@
 		
 		public static function getRoleForClass($user, $class){
 			$db = Database::getConnection();
-			$query = "SELECT Position FROM CourseRelations 
+			$query = "SELECT Position FROM CourseRelations INNER JOIN State
 						WHERE 
 							Person IN ( SELECT ID FROM People WHERE SUNetID = :sunetid )
 						AND
-							Class IN ( SELECT ID FROM Courses WHERE Name LIKE :classname )";
+							Class IN ( SELECT ID FROM Courses WHERE Name LIKE :classname )
+						AND
+							Quarter = DefaultQuarter";
 			try {
 				$sth = $db->prepare($query);
 				$sth->execute(array(":sunetid" => $user, ":classname" => $class));
@@ -243,10 +245,8 @@
 		public static function getClass($sunetid) {
 			$db = Database::getConnection();
 			$query = "SELECT Name FROM Courses WHERE ID = (SELECT Class FROM" .
-			" SectionAssignments WHERE Person = (SELECT ID FROM People" . 
-			" WHERE SUNetID = :sunetid)) OR ID = (SELECT Class FROM" .
-			" Sections WHERE SectionLeader = (SELECT ID FROM People" . 
-			" WHERE SUNetID = :sunetid))";
+			" CourseRelations WHERE Person = (SELECT ID FROM People" . 
+			" WHERE SUNetID = :sunetid) AND Quarter = (SELECT DefaultQuarter FROM State))";
 			try {
 				$sth = $db->prepare($query);
 				$sth->execute(array(":sunetid" => $sunetid));
