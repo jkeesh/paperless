@@ -9,10 +9,8 @@
 			if ($zip->open($filename) === TRUE) {
 				$zip->extractTo(substr($filename, 0, strlen($filename) - 4));
 				$zip->close();
-				echo " success!</li>";
 				return true;
 			} else {
-				echo " failure!  Please try again, or contact the course staff for assistance.</li>";
 				return false;
 			}
         }
@@ -35,7 +33,6 @@
 		public function post($class) {
 			$assn_dir = $_POST['assignment'];
 			$assns = getAssnsForClass($class);
-			//print_r($assns);
 			$assn_name = $assns[$assn_dir]["Name"];
 			$assn_date = $assns[$assn_dir]["DueDate"];
 			
@@ -58,17 +55,15 @@
 			$idx = 1;
 			do {
 				$dest_dir = $target_dir . USERNAME . "_" . $idx;
-				//echo "<br/>DEST: " .$dest_dir;
 				$idx++;
 			} while (file_exists($dest_dir));
 			$dirname = $dest_dir; //for output
 			$target = $dest_dir . ".zip";
-			//echo "<br/>Target: " .$target;
 			
 			$ok = 1;
 			/* size check */
 			if ($_FILES['uploaded']['size'] > 2000000) { 
-				$message .= "<li>Your file is too large.</li>"; 
+				$message .= "<div class='padded'>Your file is too large.</div>"; 
 				$ok = 0; 
 			}
 			
@@ -77,18 +72,18 @@
 				/* if filename ends in ".zip", then we'll take it */
 				$name = $_FILES['uploaded']['name'];
 				if (strtolower(substr($name, strlen($name) - 4)) != ".zip") {
-					$message .= "<li>Please submit a zip file! Type detected: " . $_FILES['uploaded']['type'] . " </li>";
+					$message .= "<div class='padded'>Please submit a zip file! Type detected: " . $_FILES['uploaded']['type'] . " </div>";
 					$ok = 0; 
 				}
 			}
 			
 			if ($ok==0) { 
-				$message .= "Sorry, your file was not uploaded.  Please try again, or contact the course staff for assistance"; 
+				$message .= "<div class='padded'>Sorry, your file was not uploaded.  Please try again, or contact the course staff for assistance</div>"; 
 			} else { 
 				//echo "<br/> target is ". $target;
 				if(move_uploaded_file($_FILES['uploaded']['tmp_name'], $target)) {
-					$message .= "<div>The file you uploaded has been saved as " . $target . "<br/></div>";
-					$message .= "<div>Attempting unzip...</div>";
+					$message .= "<div class='padded'>The file you uploaded has been saved as " . $target . "<br/></div>";
+					$message .= "<div class='padded'>Attempting unzip...</div>";
 					$success = $this->unzip($target);
 					if ($success) {
 						//echo "unzipped";
@@ -98,11 +93,11 @@
 						$late_days = fopen($late_days_file, "w");
 						$this->write_late_days_file($late_days, $assn_date);
 						fclose($late_days);
-						$message .= "<div><b>" . $assn_name . "</b> was successfully submitted at " . date("d/M/Y H:i:s") . ".<br/></div>";
+						$message .= "<div class='padded'><b>" . $assn_name . "</b> was successfully submitted at " . date("d/M/Y H:i:s") . ".<br/></div>";
 					}
 				} else { 
 					$ok = 0;
-					$message .= "Sorry, there was a problem uploading your file.  Please try again, or contact the course staff for assistance."; 
+					$message .= "<div class='padded'>Sorry, there was a problem uploading your file.  Please try again, or contact the course staff for assistance.</div>"; 
 				}
 			}
 			

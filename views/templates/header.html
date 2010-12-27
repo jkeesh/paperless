@@ -10,9 +10,9 @@ root_url = '{$root_url}';
 <link rel="stylesheet" type="text/css" href="{$root_url}/static/css/style.css">
 </head>
 <body>
-    <div id="container">
+    <div id="container{if $code}-code{/if}">
         <div id="logo"><a href="{$root_url}" id="logo-link"></a></div>
-        <div id="user">
+        <div id="user" {if $code}class="user-code"{/if}>
             <div id="name">{$display_name}</div>
             <div id="nav">
                 {if $is_admin}
@@ -32,7 +32,7 @@ root_url = '{$root_url}';
             <div class="clearfloat"></div>
         </div>
         <div class="clearfloat"></div>
-        <div class="content-header"></div>
+        <div class="content-header codesettings"></div>
         <div class="content-wrapper">
             <div class="content">
                 

@@ -142,14 +142,6 @@ body{
 }
 
 
-#filelist{
-	position: absolute;
-	top: 130px;
-	right: 10px;
-	z-index: 100;
-	background-color: #ccc;
-	padding: 10px;
-}
 
 a{
 	text-decoration: none;
@@ -160,6 +152,51 @@ a{
 /*
 * BEGIN NEW STYLE SHEET
 */
+
+
+/*
+ * Submission Style
+ */
+
+.padded{
+	padding:10px;
+}
+
+.padded-top{
+	padding-top: 10px;
+}
+
+
+/* Code Style
+ *
+ */
+ #filelist{
+	position: absolute;
+	top: 113px;
+	right: 30px;
+	z-index: 100;
+	background-color: white;
+	padding: 10px;
+	border: 1px solid #bddff3;
+}
+
+#codeheader .link, #codeheader .link a{
+	font-size: 24px;
+	font-weight: bold;
+}
+
+#container-code{
+	padding-top: 20px;
+	padding-left: 60px;
+	width: 880px;
+}
+
+.user-code{
+	position: absolute;
+	top: 0px;
+	right: 30px;
+}
+
 
 body {
     background: url("../images/bg.png") repeat scroll;
@@ -244,7 +281,8 @@ a {
 
 .content-header {
     background: url("../images/content-header-bg.png");
-    width: 100%;
+    /*width: 100%;*/
+	width: 880px;
     height: 4px;
 }
 

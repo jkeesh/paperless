@@ -18,6 +18,8 @@
 <link type="text/css" rel="stylesheet" href="{$root_url}static/js/syntaxhighlighter/styles/shCoreDefault.css" id="syntaxStylesheet" />
 <script type="text/javascript">SyntaxHighlighter.all();</script>
 
+
+<div id="codeheader">
 <h2>
 {if $is_section_leader}
 <span class="link"><a href="{$root_url}{$class}/assignment/{$sl}/{$assignment}">{$assignment}</a></span>
@@ -28,6 +30,7 @@
 by 
 <span class="link"><a href="{$root_url}{$class}/student/{$student}">{$student}</a></span> 
 </h2>
+</div>
 
 <script type="text/javascript">
 {if $interactive}
