@@ -74,10 +74,22 @@
 			// if the username is something other than the owner of these files, require
 			// it to be a SL
 			if($suid != USERNAME) {
-				Permissions::requireRole(POSITION_SECTION_LEADER, $class);
+				$role = Permissions::requireRole(POSITION_SECTION_LEADER, $class);
+			}else{
+				$role = Model::getRoleForClass(USERNAME, $class);
 			}
 			
-		  $sl = Model::getSectionLeaderForStudent($suid);
+			if($role == POSITION_SECTION_LEADER){
+				$this->smarty->assign("sl_class", $class);
+			}
+			if($role == POSITION_STUDENT){
+				$this->smarty->assign("student_class", $class);
+			}
+			if($role > POSITION_SECTION_LEADER){
+				$this->smarty->assign("admin_class", $class);
+			}
+			
+		    $sl = Model::getSectionLeaderForStudent($suid);
 			//echo $student . " ". $sl . "\n";
 			
 			list($files, $file_contents, $assignment_files) = $this->getAssignmentFiles($class, $student, $assignment, $sl);
@@ -117,7 +129,6 @@
 			$suid = explode("_", $student); // if it was student_1 just take student
 			$suid = $suid[0];
 			$sl = Model::getSectionLeaderForStudent($suid);
-			
 			
 			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl . "/". $assignment . "/" . $student . "/"; 
 //			$dirname = SUBMISSIONS_DIR . "/" . $sl . "/". $assignment . "/" . $student . "/";

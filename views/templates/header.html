@@ -34,17 +34,17 @@ root_url = '{$root_url}';
         <div id="user" {if isset($code)}class="user-code"{/if}>
             <div id="name">{$display_name}</div>
             <div id="nav">	
-                {if $is_admin}
-                <a href="{$root_url}{$class}/admin">Admin</a>
+                {if $admin_class}
+                <a href="{$root_url}{$admin_class}/admin">Admin</a>
                 {/if}
-                {if $is_section_leader}
-                <a href="{$root_url}{$class}/sectionleader/{$username}">My Section</a>
+                {if $sl_class}
+                <a href="{$root_url}{$sl_class}/sectionleader/{$username}">My Section</a>
                 {/if}
                 
-                {if $is_student}
-            	    <a href="{$root_url}{$class}/student/{$username}">My Code</a>
-            		{if $class != "cs106a"}
-            		<a href="{$root_url}{$class}/submit">Submit</a>
+                {if $student_class}
+            	    <a href="{$root_url}{$student_class}/student/{$username}">My Code</a>
+            		{if $student_class != "cs106a"}
+            		<a href="{$root_url}{$student_class}/submit">Submit</a>
             		{/if}
             	{/if}
             </div>

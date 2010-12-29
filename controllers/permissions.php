@@ -7,6 +7,7 @@
 	     if($curRole < $role) {
 	       Header("Location: " . ROOT_URL);
 	     }
+		 return $curRole;
 	   }
 	 }
 	

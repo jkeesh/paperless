@@ -11,8 +11,21 @@
 			$student = $string[0];
 			
 			if($student != USERNAME) {
-				Permissions::requireRole(POSITION_SECTION_LEADER, $class);
+				$role = Permissions::requireRole(POSITION_SECTION_LEADER, $class);
+			}else{
+				$role = Model::getRoleForClass(USERNAME, $class);
 			}
+			
+			if($role == POSITION_SECTION_LEADER){
+				$this->smarty->assign("sl_class", $class);
+			}
+			if($role == POSITION_STUDENT){
+				$this->smarty->assign("student_class", $class);
+			}
+			if($role > POSITION_SECTION_LEADER){
+				$this->smarty->assign("admin_class", $class);
+			}
+			
 			
 			$sl = Model::getSectionLeaderForStudent($student);			
 			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl . "/";

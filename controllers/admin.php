@@ -3,9 +3,7 @@
 		
 		public function get($class) {
 			
-			if(!(USERNAME == "jkeeshin" || USERNAME == "econner") ){
-				Permissions::requireRole(POSITION_SECTION_LEADER, $class);
-			}
+			$role = Permissions::requireRole(POSITION_TEACHING_ASSISTANT, $class);
 			
 			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR;
 			

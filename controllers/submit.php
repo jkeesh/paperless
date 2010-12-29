@@ -6,7 +6,11 @@
 				
 		public function get($class) {
 			
-			
+			$role = Model::getRoleForClass(USERNAME, $class);			
+			if($role == POSITION_STUDENT){
+				$this->smarty->assign("student_class", $class);
+			}
+						
 			$sectionleader = Model::getSectionLeaderForStudent(USERNAME);
 			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sectionleader . "/";
 			
