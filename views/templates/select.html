@@ -1,0 +1,11 @@
+{include file="header.html"}
+
+<h2>Choose Your Class</h2>
+
+{foreach from=$classes item=class}
+<div class="link">
+    <a href="{$class.url}"><strong>{$class.role}</strong> for <strong>{$class.Name}</strong></a>
+</div>
+{/foreach}
+
+{include file="footer.html"}
