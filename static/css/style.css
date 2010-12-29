@@ -328,3 +328,31 @@ textarea {
 .ui-dialog .ui-dialog-buttonpane button.ui-state-hover {
    background: #76584b;
 }
+
+
+
+/* Submit Instructions
+ */
+
+#macvideo{
+	position: absolute;
+	top: 100px;
+	left: 300px;
+	padding: 20px;
+	background-color: #ccc;
+}
+
+.underline{
+	text-decoration: underline;
+}
+
+#closeVideo{
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	padding: 3px;
+}
+
+#closeVideo:hover{
+	text-decoration: underline;
+}
