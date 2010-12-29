@@ -191,13 +191,19 @@
 			$db = Database::getConnection();
 			$userid = Model::getUserID($student_suid);
 			$sectionid = Model::getSectionIDForUserID($userid);
+			
+			/*
+			 * TODO
+			 * If there is no section for a student, return that the section
+			 * leader is the lecturer. This is what we need to do for 109L.
+			 * I'm not sure what will be returned from getSectionIDForUserID if
+			 * there is no value. null? And I'm not quite sure how to test this
+			 */
+			
+			
 			$sectionLeaderID = Model::getSectionLeaderForSectionID($sectionid);
 			$slsuid = Model::getSUID($sectionLeaderID);
 			return $slsuid;
-			// what was wrong with my original query?	
-			//	$query = "SELECT SUNetID FROM People WHERE ID IN 
-			//				( SELECT SectionLeader FROM Sections WHERE ID IN
-			//					( SELECT Section FROM SectionAssignments WHERE Person = :userid ))";
 		}
 		
 		/*
