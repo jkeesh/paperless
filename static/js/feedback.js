@@ -46,7 +46,7 @@ function addShortcuts(){
 										  })
 				 );
 	
-	shortcut.add("shift+0", new SafeFunction ( function(){
+	shortcut.add("ctrl+0", new SafeFunction ( function(){
 											  var code_file = code_files[current_file_id];
 											  if(current_range && current_dialog) {
 											  var comment = code_file.getCommentFromID("c" + current_range.toString());
@@ -82,7 +82,7 @@ function addShortcuts(){
 															  +" font-size: 16px; background-color: black; color: white; padding: 60px; opacity:0.8;'>"
 															  +	"<div class='keyboardTitle'>Keyboard Shortcuts</div>"
 															  +	"<div><span class='keyboardShortcuts'>&lt;Tab&gt;: </span><span class='keyboardAction'>Submit</span></div>"
-															  +	"<div><span class='keyboardShortcuts'>&lt;Shift&gt;+0: </span><span class='keyboardAction'>Delete</span></div>"
+															  +	"<div><span class='keyboardShortcuts'>&lt;Ctrl&gt;+0: </span><span class='keyboardAction'>Delete</span></div>"
 															  +   "<div><span class='keyboardShortcuts'>&lt;Ctrl&gt;+z:</span><span class='keyboardAction'> Edit Last Comment</span></div>"
 															  +	"<div><span class='keyboardShortcuts'>&lt;Ctrl&gt;+1: </span><span class='keyboardAction'>Toggle Shortcuts</span></div>"
 															  +   "<div><span class='keyboardShortcuts'>&lt;Ctrl&gt;+2: </span><span class='keyboardAction'>Change Theme</span></div>"

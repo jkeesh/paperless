@@ -5,9 +5,20 @@ function /* class */ Comment(ctext, crange, code_file) {
 	this.filename = code_file.filename;
 	var self = this;
 	
+	this.filter = function(text){
+		text = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+		return text.replace(/\n/g, "<br>");
+	}
+	
+	this.unfilter = function(text){
+		return text.replace(/<br>/g, "\n");
+	}
+	
 	this.submit = function() {
 		this.code_file.last_comment_range = this.range;
 		var commentText = $("textarea").val();
+		//commentText = commentText.htmlEntities();
+		commentText = this.filter(commentText);
 		removeDialog();
 		if(commentText.length == 0) {
 			this.code_file.unhighlightRange(range);
@@ -92,7 +103,8 @@ function /* class */ Comment(ctext, crange, code_file) {
 			return;
 		}
 		
-		var text = $('#ctext' + this.range.toString()).html();		
+		var text = $('#ctext' + this.range.toString()).html();	
+		text = this.unfilter(text);	
 		var elem = "#e"+self.range.toString();
 		$(elem).remove(); // remove the comment
 		
