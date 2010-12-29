@@ -14,9 +14,7 @@
 				Permissions::requireRole(POSITION_SECTION_LEADER, $class);
 			}
 			
-			$sl = Model::getSectionLeaderForStudent($student);
-			echo "SL is " . $sl;
-			
+			$sl = Model::getSectionLeaderForStudent($student);			
 			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl . "/";
 			$assns = $this->getDirEntries($dirname);
 			

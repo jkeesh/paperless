@@ -21,7 +21,7 @@
 			$is_student = Model::isStudent(USERNAME);
 			$is_student_only = $is_student && !$is_sl;
 			//$is_admin = true;
-			$is_admin = USERNAME == "jkeeshin";
+			$is_admin = USERNAME == "sahami";
 			
 			define('IS_ADMIN', $is_admin);
 			define('IS_STUDENT', $is_student);
@@ -102,12 +102,13 @@
 	require_once('controllers/submit.php');
 	require_once('controllers/upload.php');
 	require_once('controllers/select.php'); // if a user has multiple classes with different roles, allow them to select the class
-	
+	require_once('controllers/setuser.php');
 	/*
 	 * URL routes
 	 */
 	$site = new ToroApplication(Array(
 		 							  Array('/select', 'string', 'SelectHandler'),
+		 							  Array('^\/user\/([a-zA-Z0-9_ \-]+)\/?$', 'regex', 'SetUser'),
 									  Array('^\/([a-zA-Z0-9_ \-]+)\/student\/([a-zA-Z0-9_ \-]+)\/?$', 'regex', 'StudentHandler'),
 									  Array('^\/([a-zA-Z0-9_ \-]+)\/code\/([a-zA-Z0-9_ -]+)\/([a-zA-Z0-9_]+)\/?$', 'regex', 'CodeHandler'),
 									  Array('^\/([a-zA-Z0-9_ \-]+)\/assignment\/([a-zA-Z0-9_ -]+)\/([a-zA-Z0-9_ ]+)\/?$', 'regex', 'AssignmentHandler'),
