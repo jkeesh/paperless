@@ -19,6 +19,7 @@
 			
 			$sourcelist = ".java";
 			if($class == "cs106x" || $class == "cs106b") $sourcelist = ".cpp or .h";
+			if($class == "cs109l") $sourcelist = ".r";
 			$this->smarty->assign("sourcelist", $sourcelist);
 			
 			

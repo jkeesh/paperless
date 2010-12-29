@@ -187,6 +187,24 @@
 			}
 		}
 		
+		public static function getLecturerForClass($class){
+			$db = Database::getConnection();
+			
+			$query = "SELECT SUNetID FROM PEOPLE WHERE ID IN 
+					  (SELECT Person FROM CourseRelations WHERE Class = :classID AND Position = :lec)";
+			$classID = Model::getClassID($class);
+			try {
+				$sth = $db->prepare($query);
+				$sth->execute(array(":classID" => $classID, ":lec" => 6));
+				if($row = $sth->fetch()) {
+					return $row['SUNetID'];
+				}
+			} catch(PDOException $e) {
+				echo $e->getMessage(); // TODO log this error instead of echoing
+			}
+			return false;
+		}
+		
 		public static function getSectionLeaderForStudent($student_suid){
 			$db = Database::getConnection();
 			$userid = Model::getUserID($student_suid);
@@ -199,7 +217,9 @@
 			 * I'm not sure what will be returned from getSectionIDForUserID if
 			 * there is no value. null? And I'm not quite sure how to test this
 			 */
-			
+			if(!$sectionid){
+				return Model::getLecturerForClass("cs109l");
+			} 
 			
 			$sectionLeaderID = Model::getSectionLeaderForSectionID($sectionid);
 			$slsuid = Model::getSUID($sectionLeaderID);
@@ -250,14 +270,16 @@
 		
 		public static function getClass($sunetid) {
 			$db = Database::getConnection();
-			$query = "SELECT Name FROM Courses WHERE ID = (SELECT Class FROM" .
-			" CourseRelations WHERE Person = (SELECT ID FROM People" . 
-			" WHERE SUNetID = :sunetid) AND Quarter = (SELECT DefaultQuarter FROM State))";
+			$query = "SELECT Name FROM Courses WHERE ID IN
+					(SELECT Class FROM CourseRelations WHERE Person IN
+					(SELECT ID FROM People WHERE SUNetID = :sunetid) 
+					AND Quarter = (SELECT DefaultQuarter FROM State))";
 			try {
 				$sth = $db->prepare($query);
 				$sth->execute(array(":sunetid" => $sunetid));
-				if($row = $sth->fetch()) {
-					return strtolower($row['Name']);
+				if($row = $sth->fetchAll()) {
+					return $row;
+					//return strtolower($row['Name']);
 				}
 			} catch(PDOException $e) {
 				echo $e->getMessage(); // TODO log this error instead of echoing

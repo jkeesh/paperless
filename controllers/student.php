@@ -15,6 +15,7 @@
 			}
 			
 			$sl = Model::getSectionLeaderForStudent($student);
+			echo "SL is " . $sl;
 			
 			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl . "/";
 			$assns = $this->getDirEntries($dirname);

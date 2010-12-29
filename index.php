@@ -101,12 +101,13 @@
 	require_once('controllers/admin.php');
 	require_once('controllers/submit.php');
 	require_once('controllers/upload.php');
+	require_once('controllers/select.php'); // if a user has multiple classes with different roles, allow them to select the class
 	
 	/*
 	 * URL routes
 	 */
 	$site = new ToroApplication(Array(
-									  Array('^\/([a-zA-Z0-9_]*)\/?$', 'regex', 'IndexHandler'),
+		 							  Array('/select', 'string', 'SelectHandler'),
 									  Array('^\/([a-zA-Z0-9_ \-]+)\/student\/([a-zA-Z0-9_ \-]+)\/?$', 'regex', 'StudentHandler'),
 									  Array('^\/([a-zA-Z0-9_ \-]+)\/code\/([a-zA-Z0-9_ -]+)\/([a-zA-Z0-9_]+)\/?$', 'regex', 'CodeHandler'),
 									  Array('^\/([a-zA-Z0-9_ \-]+)\/assignment\/([a-zA-Z0-9_ -]+)\/([a-zA-Z0-9_ ]+)\/?$', 'regex', 'AssignmentHandler'),
@@ -114,6 +115,7 @@
 									  Array('^\/([a-zA-Z0-9_ \-]+)\/admin\/?$', 'regex', 'AdminHandler'),
 									  Array('^\/([a-zA-Z0-9_ \-]+)\/submit\/?$', 'regex', 'SubmitHandler'),
 									  Array('^\/([a-zA-Z0-9_ \-]+)\/upload\/?$', 'regex', 'UploadHandler'),
+									  Array('^\/([a-zA-Z0-9_]*)\/?$', 'regex', 'IndexHandler'),
 									  ));
 	
 	if(isset($_REQUEST['path']))
