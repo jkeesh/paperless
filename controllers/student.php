@@ -45,11 +45,9 @@
 				$information[$i]['assignment'] = $assn;
 				$information[$i]['all'] = array();
 				foreach($student_submissions as $submission) {
-					$aNum = 0;
 					if(strpos($submission, $student) !== false) {
 						$information[$i]['studentdir'] = $submission;
-						$information[$i]['all'][$aNum] =  $submission;
-						$aNum++;
+						array_push($information[$i]['all'],$submission);
 					}
 				}
 				$i++;
