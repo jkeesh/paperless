@@ -81,6 +81,7 @@
 			
 			if($role == POSITION_SECTION_LEADER){
 				$this->smarty->assign("sl_class", $class);
+				$this->smarty->assign("interactive", 1);
 			}
 			if($role == POSITION_STUDENT){
 				$this->smarty->assign("student_class", $class);
@@ -106,7 +107,6 @@
 			$this->smarty->assign("files", $files);
 			$this->smarty->assign("file_contents", $file_contents);
 			$this->smarty->assign("assignment_files", $assignment_files);
-			$this->smarty->assign("interactive", IS_SECTION_LEADER);
 			$this->smarty->assign("sl", $sl);
 			
 			// display the template
