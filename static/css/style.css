@@ -103,6 +103,12 @@ body{
 	float: left;
 }
 
+.wideList{
+	width: 600px;
+	padding: 0px 20px 20px 20px;
+	float: left;
+}
+
 .list{
 	width: 300px;
 	padding: 0px 20px 20px 20px;
@@ -329,7 +335,11 @@ textarea {
    background: #76584b;
 }
 
-
+/* Student Page */
+.studentAssignment{
+	width: 160px;
+	float: left;
+}
 
 /* Submit Instructions
  */

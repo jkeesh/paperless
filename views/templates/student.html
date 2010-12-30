@@ -1,9 +1,18 @@
 {include file="header.html"}
 
-<div class="list">
+<div class="wideList">
     <div class="header">Assignment List</div>
         {foreach from=$information item=assignment}
-        <div class="link"><a href="{$root_url}{$class}/code/{$assignment.assignment}/{$assignment.studentdir}">{$assignment.assignment}</a></div>
+        <div class="link">
+			<div class="studentAssignment">
+				<a href="{$root_url}{$class}/code/{$assignment.assignment}/{$assignment.studentdir}">{$assignment.assignment}</a>
+			</div>
+			<span class="studentAdditional">
+			{foreach from=$assignment.all item=assn key=i}
+			<a href="{$root_url}{$class}/code/{$assignment.assignment}/{$assn}">({$i + 1})</a>
+			{/foreach}
+			<span>
+		</div>
         {/foreach}
 </div>
 <div class="clearfloat"></div>

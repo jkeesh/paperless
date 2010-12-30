@@ -53,7 +53,7 @@
 				$i++;
 			}
 			
-			print_r($information);
+			//print_r($information);
 			
 			// assign template vars
 			$this->smarty->assign("information", $information);
