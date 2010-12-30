@@ -1,5 +1,6 @@
 function /* class */ CodeFile(filename, id_number, interactive) {
 	this.interactive = interactive;
+	this.displayed = false;
 	//alert("interactive: " + this.interactive);
 	
 	if(!shortcuts_added)
@@ -15,6 +16,14 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 	this.last_comment = null;
 	
 	var self = this;
+	
+	this.showComments = function(){
+		for(var i = 0; i < this.comment_list.length; i++){
+			var comment = this.comment_list[i];
+			this.addCommentDiv(comment.text, comment.range, this.interactive);
+		}
+		this.displayed = true;
+	}
 	
 	this.isLineSelected = function(line_no) {		
 		for (var i = 0; i < this.selected_ranges.length; i++) {
@@ -104,7 +113,7 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 	this.addComment = function(comment, isEditable) {
 		if(isEditable == undefined) isEditable = true;
 		this.comment_list.push(comment);
-		this.addCommentDiv(comment.text, comment.range, isEditable);
+		//this.addCommentDiv(comment.text, comment.range, isEditable);
 	}
 	
 	this.addCommentDiv = function(text, range, isEditable){
@@ -113,7 +122,17 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 		var range_text = range.toString();
 		var comment_id = "c" + range_text;
 		var element_id = "e" + range_text;
-		var top_offset = $(".number" + range.lower).offset().top;
+
+
+		var id = "#file" + this.fileID;
+		var theclass = '.number' + range.lower;
+		var elem = $(theclass, id)[1];
+		//console.log('file '+ this.fileID);
+		//console.log(elem);
+
+		var top_offset = 0;
+		if(elem) top_offset = $(elem).offset().top;
+		//console.log(top_offset);
 		var style_position = "position:absolute; top:"+ top_offset +"px; right: 100px;";
 		
 		var toAdd = "<div id='"+ element_id +"' style='" + style_position +"'>";

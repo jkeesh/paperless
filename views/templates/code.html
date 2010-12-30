@@ -54,6 +54,8 @@ var interactive = false;
         
 		code_files.push(cur_file);
     	{/foreach}
+        //console.log(code_files);
+		display(0);
     }
     
     function hideall(){
@@ -70,6 +72,9 @@ var interactive = false;
     	 document.getElementById("file" + fileNum).className = "visible";	 
     	 document.getElementById("comments" + fileNum).className = "visible";
 		 $('#fileList'+fileNum).addClass('selectedFile');
+		 //console.log(code_files[fileNum]);
+		if(!code_files[fileNum].displayed)
+		   code_files[fileNum].showComments();
     }
     
     function edit(fileID, commentID){
@@ -98,7 +103,7 @@ var interactive = false;
 {/foreach}
 
 <script>
-display(0);
+
 </script>
 
 
