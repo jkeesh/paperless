@@ -8,6 +8,18 @@ shortcuts_added = false;
 themes = new Array('shCoreDefault.css', 'shCoreMDUltra.css' ,'shCoreMidnight.css', 'shCoreDjango.css', 'shCoreRDark.css', 'shCoreEclipse.css', 'shCoreEmacs.css', 'shCoreFadeToGrey.css');	
 themeID = 0;
 
+shortcutsBase = "<div id='shortcuts' style='width: 400px; font-family: Arial; position:absolute; top: 100px; left: 400px; -moz-border-radius: 8px; border-radius: 8px;"
+				  +" font-size: 16px; background-color: black; color: white; padding: 60px; opacity:0.8;'>"
+				  +	"<div class='keyboardTitle'>Keyboard Shortcuts</div>";
+shortcutsEdit = "<div><span class='keyboardShortcuts'>&lt;Tab&gt;: </span><span class='keyboardAction'>Submit</span></div>"
+				  +	"<div><span class='keyboardShortcuts'>&lt;Ctrl&gt;+0: </span><span class='keyboardAction'>Delete</span></div>"
+				  +   "<div><span class='keyboardShortcuts'>&lt;Ctrl&gt;+z:</span><span class='keyboardAction'> Edit Last Comment</span></div>";
+				
+shortcutsAll = "<div><span class='keyboardShortcuts'>&lt;Ctrl&gt;+1: </span><span class='keyboardAction'>Toggle Shortcuts</span></div>"
+				  +   "<div><span class='keyboardShortcuts'>&lt;Ctrl&gt;+2: </span><span class='keyboardAction'>Change Theme</span></div>"
+				  +	"</div>";
+
+
 
 function removeDialog(){
 	if( $('textarea')) $('textarea').remove();
@@ -38,6 +50,7 @@ function addShortcuts(){
 	shortcut.add("tab", new SafeFunction ( function() {
 										 // console.log('hit tab');
 										  var code_file = code_files[current_file_id];
+										  if(!code_file.editable) return;
 										  //if(current_range && current_dialog) {
 										  var comment = code_file.getCommentFromID("c" + current_range.toString());
 										  code_file.comment_list.push(comment);
@@ -48,6 +61,7 @@ function addShortcuts(){
 	
 	shortcut.add("ctrl+0", new SafeFunction ( function(){
 											  var code_file = code_files[current_file_id];
+											  if(!code_file.editable) return;
 											  if(current_range && current_dialog) {
 											  var comment = code_file.getCommentFromID("c" + current_range.toString());
 											  code_file.removeCommentFromID("c" + current_range.toString());
@@ -58,6 +72,7 @@ function addShortcuts(){
 	
 	shortcut.add("ctrl+z", new SafeFunction ( function(){
 											 var code_file = code_files[current_file_id];
+											 if(!code_file.editable) return;
 											 if(code_file.last_comment == null) return;
 											 code_file.last_comment.edit();
 											 code_file.last_comment = null;
@@ -78,15 +93,13 @@ function addShortcuts(){
 											 if($("#shortcuts").html() != null){
 											 $("#shortcuts").remove();
 											 }else{
-											 $("body").append("<div id='shortcuts' style='width: 400px; font-family: Arial; position:absolute; top: 100px; left: 400px; -moz-border-radius: 8px; border-radius: 8px;"
-															  +" font-size: 16px; background-color: black; color: white; padding: 60px; opacity:0.8;'>"
-															  +	"<div class='keyboardTitle'>Keyboard Shortcuts</div>"
-															  +	"<div><span class='keyboardShortcuts'>&lt;Tab&gt;: </span><span class='keyboardAction'>Submit</span></div>"
-															  +	"<div><span class='keyboardShortcuts'>&lt;Ctrl&gt;+0: </span><span class='keyboardAction'>Delete</span></div>"
-															  +   "<div><span class='keyboardShortcuts'>&lt;Ctrl&gt;+z:</span><span class='keyboardAction'> Edit Last Comment</span></div>"
-															  +	"<div><span class='keyboardShortcuts'>&lt;Ctrl&gt;+1: </span><span class='keyboardAction'>Toggle Shortcuts</span></div>"
-															  +   "<div><span class='keyboardShortcuts'>&lt;Ctrl&gt;+2: </span><span class='keyboardAction'>Change Theme</span></div>"
-															  +	"</div>");
+												 var code_file = code_files[current_file_id];
+												var display = shortcutsBase;
+											 if(code_file.editable){
+												display += shortcutsEdit;
+											 }
+											  display += shortcutsAll;
+											 $("body").append(display);
 											 }
 											 } )
 				 );

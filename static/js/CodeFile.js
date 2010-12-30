@@ -1,5 +1,6 @@
 function /* class */ CodeFile(filename, id_number, interactive) {
 	this.interactive = interactive;
+	this.editable = interactive;
 	this.displayed = false;
 	//alert("interactive: " + this.interactive);
 	
@@ -110,10 +111,8 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 		}
 	}
 	
-	this.addComment = function(comment, isEditable) {
-		if(isEditable == undefined) isEditable = true;
+	this.addComment = function(comment) {
 		this.comment_list.push(comment);
-		//this.addCommentDiv(comment.text, comment.range, isEditable);
 	}
 	
 	this.addCommentDiv = function(text, range, isEditable){
