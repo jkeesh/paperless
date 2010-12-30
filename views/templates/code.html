@@ -5,7 +5,7 @@
 
 <div id="codeheader">
 <h2>
-{if $is_section_leader}
+{if $sl_class or $admin_class}
 <span class="link"><a href="{$root_url}{$class}/assignment/{$sl}/{$assignment}">{$assignment}</a></span>
 {else}
 {$assignment}
