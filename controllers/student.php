@@ -43,13 +43,19 @@
 				$student_submissions = $this->getDirEntries($dir);
 				
 				$information[$i]['assignment'] = $assn;
+				$information[$i]['all'] = array();
 				foreach($student_submissions as $submission) {
+					$aNum = 0;
 					if(strpos($submission, $student) !== false) {
 						$information[$i]['studentdir'] = $submission;
+						$information[$i]['all'][$aNum] =  $submission;
+						$aNum++;
 					}
 				}
 				$i++;
 			}
+			
+			print_r($information);
 			
 			// assign template vars
 			$this->smarty->assign("information", $information);
