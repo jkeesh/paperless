@@ -356,3 +356,9 @@ textarea {
 #closeVideo:hover{
 	text-decoration: underline;
 }
+
+
+/* Code File List */
+.selectedFile{
+	background-color: yellow;
+}

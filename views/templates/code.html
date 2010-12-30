@@ -60,6 +60,7 @@ var interactive = false;
     	 for(var i = 0; i < files.length; i++){	 
     		 document.getElementById("file" + i).className = "hidden";
     		 document.getElementById("comments" + i).className = "hidden";
+ 			$('#fileList'+i).removeClass('selectedFile');
     	 }
     }
 
@@ -68,6 +69,7 @@ var interactive = false;
     	 hideall();
     	 document.getElementById("file" + fileNum).className = "visible";	 
     	 document.getElementById("comments" + fileNum).className = "visible";
+		 $('#fileList'+fileNum).addClass('selectedFile');
     }
     
     function edit(fileID, commentID){
@@ -83,7 +85,7 @@ var interactive = false;
 
 <div id="filelist">
     {foreach from=$files item=file key=i}
-    <div class="link"><a href="javascript:display('{$i}')">{$file}</a></div>
+    <div id="fileList{$i}" class="link"><a href="javascript:display('{$i}')">{$file}</a></div>
     {/foreach}
 </div>
 
