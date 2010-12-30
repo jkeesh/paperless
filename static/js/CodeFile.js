@@ -152,9 +152,6 @@ CodeFile.mousePressed = function(event) {
 	}
 	
 	var line_no = code_file.getLineNumber(this);
-	if (current_dialog != null || code_file.isLineSelected(line_no)) {
-		return false;
-	}
 	
 	dragging_in_file = code_file;
 	code_file.selected_range_start = code_file.selected_range_end = line_no;
@@ -170,16 +167,6 @@ CodeFile.mouseEntered = function(event) {
 	}
 	
 	var line_no = code_file.getLineNumber(this);
-	
-	// Trim range so it doesn't overlap any already selected lines.
-	var increment = (line_no >= code_file.selected_range_start ? 1 : -1);
-	for (var i = code_file.selected_range_start; !(code_file.isLineSelected(i)); i += increment) {
-		new_line_no = i;
-		if (i == line_no) {
-			break;
-		}
-	}
-	line_no = new_line_no;
 	
 	old_range = new LineRange(code_file.selected_range_start, code_file.selected_range_end);
 	range = new LineRange(code_file.selected_range_start, line_no);
