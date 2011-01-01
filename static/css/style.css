@@ -370,3 +370,17 @@ textarea {
 .selectedFile{
 	background-color: yellow;
 }
+
+
+/* Inline Comment CSS */
+.content .code .inlineComment{
+/*	background-color: red !important; */
+	padding: 10px !important;
+	border: 2px solid black !important;
+	font-family: Helvetica !important;
+	margin: 10px !important;
+}
+
+.content .code .inlineCommentText{
+	font-family: Helvetica !important;
+}

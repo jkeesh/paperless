@@ -96,7 +96,7 @@ var interactive = false;
 
 {foreach from=$files item=file key=i}
 <div id="file{$i}" class="hidden">
-    <pre class="brush: cpp;">
+    <pre class="brush: cpp; gutter: false;">
 {$file_contents[$i]}
     </pre>
 </div>

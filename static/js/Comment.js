@@ -17,7 +17,6 @@ function /* class */ Comment(ctext, crange, code_file) {
 	this.submit = function() {
 		this.code_file.last_comment_range = this.range;
 		var commentText = $("textarea").val();
-		//commentText = commentText.htmlEntities();
 		commentText = this.filter(commentText);
 		removeDialog();
 		if(commentText.length == 0) {
