@@ -58,7 +58,8 @@ textarea{
 body{
 	font-family: Trebuchet MS, Verdana;   
 	height: 10px;
-	background-image:url('../images/paper.jpg');
+	background-color: #EDEFF4;
+/*	background-image:url('../images/paper.jpg'); */
 }
 
 .link{
@@ -205,18 +206,19 @@ a{
 
 
 body {
-    background: url("../images/bg.png") repeat scroll;
+   /* background: url("../images/bg.png") repeat scroll; */
     margin: 0;
     padding: 0;
     font-family: Helvetica, arial, freesans, sans-serif;
 }
 
 #logo {
-    width: 212px;
-    height: 79px;
-    margin-top: 13px;
-    margin-left: 20px;
-    background: url("../images/logo.png");
+    width: 130px;
+    height: 45px;
+    margin-top: 32px;
+    margin-left: 10px;
+	margin-bottom: 10px;
+    background: url("../images/logo2.png");
     float: left;
 }
 
@@ -234,15 +236,11 @@ body {
 }
 
 #user {
-    width: 370px;
     height: 36px;
     margin-top: 32px;
     float: right;
 	background-color: white;
 	border: 1px solid #bddff3;
-    /*background: url("../images/user.png");*/
-
-
 }
 
 #name {
