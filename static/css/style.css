@@ -374,11 +374,12 @@ textarea {
 
 /* Inline Comment CSS */
 .content .code .inlineComment{
-/*	background-color: red !important; */
+	background-color: white !important; 
 	padding: 10px !important;
 	border: 2px solid black !important;
 	font-family: Helvetica !important;
 	margin: 10px !important;
+	z-index: 5 !important;
 }
 
 .content .code .inlineCommentText{
