@@ -30,6 +30,23 @@
 			$this->conn = Database::getConnection();
 		}
 		
+		public static function getRoleForClass($user, $class){
+			$db = Database::getConnection();
+			$query = "SELECT Position FROM CourseRelations 
+						WHERE 
+							Person IN ( SELECT ID FROM People WHERE SUNetID = :sunetid )
+						AND
+							Class IN ( SELECT ID FROM Courses WHERE Name LIKE :classname )";
+			try {
+				$sth = $db->prepare($query);
+				$sth->execute(array(":sunetid" => $user, ":classname" => $class));
+				if($rows = $sth->fetch()) {
+					return $rows['Position'];      
+				}
+			} catch(PDOException $e) {
+				echo $e->getMessage(); // TODO log this error instead of echoing
+			}
+		}
 		
 		public static function getQuarterID() {
 			$db = Database::getConnection();
@@ -240,5 +257,68 @@
 				echo $e->getMessage(); // TODO log this error instead of echoing
 			}
 			return null;
+		}
+		
+		public static function getClassID($class) {
+		  $db = Database::getConnection();
+		  
+		  $class = strtolower($class);
+		  $query = "SELECT ID FROM Courses WHERE NAME = :class;";
+		  try {
+				$sth = $db->prepare($query);
+				$sth->execute(array(":class" => $class));
+				$sth->setFetchMode(PDO::FETCH_ASSOC);
+				if($row = $sth->fetch()) {
+				  return $row['ID'];
+				}
+			} catch(PDOException $e) {
+				echo $e->getMessage(); // TODO log this error instead of echoing
+			}
+		}
+		
+		public static function getGradedAssignID($class, $sunetid, $assn) {
+		  $db = Database::getConnection();
+		  
+		  $assnID = self::getAssignID($assn, $db);
+		  $quarterID = self::getQuarterID();
+		  $classID = self::getClassID($class);
+		  $userID = self::getUserID($sunetid);
+		  
+		  $query = "SELECT * FROM GradedAssignments WHERE Criteria = (SELECT ID FROM Criteria" .
+		          " WHERE Class = $classID AND Quarter = $quarterID AND Assignment = $assnID) AND" .
+		          " QUARTER = $quarterID AND Student = $userID;";
+      try {
+				$sth = $db->prepare($query);
+				$sth->execute();
+				$sth->setFetchMode(PDO::FETCH_ASSOC);
+				if($row = $sth->fetch()) {
+				 return $row['ID'];
+				}
+			} catch(PDOException $e) {
+				echo $e->getMessage(); // TODO log this error instead of echoing
+			}
+			return 0; // no id found
+		}
+		
+    /*
+		* Gets the assignment id for a given name
+		* Note: we do it this way since we use preg_replace which isn't possible 
+		* with SQL.
+		*/
+		private static function getAssignID($assn, $db) {
+		  $query = "SELECT ID,Title FROM Assignments;";
+		  $assn = strtolower(preg_replace('/\W/', '', $assn));
+		  try {
+				$sth = $db->prepare($query);
+				$sth->execute();
+				$sth->setFetchMode(PDO::FETCH_ASSOC);
+				while($row = $sth->fetch()) {
+				  $curAssn = strtolower(preg_replace('/\W/', '', $row['Title']));
+				  if($curAssn == $assn)
+				    return $row['ID'];
+				}
+			} catch(PDOException $e) {
+				echo $e->getMessage(); // TODO log this error instead of echoing
+			}
 		}
 	}

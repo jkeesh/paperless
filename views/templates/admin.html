@@ -1,0 +1,23 @@
+{include file="header.html"}
+
+<div class="list">
+    <div class="header">Section Leaders</div>
+	{counter start=1 print=false assign=x}
+	<table cellpadding="15">
+		<tr>
+		<td valign="top">
+			{foreach from=$sls item=sl}
+			<div class="link"><a href="{$root_url}{$class}/sectionleader/{$sl}">{$sl}</a></div>
+			{if $x is div by 10}
+			</td><td valign="top">
+			{/if}
+			{counter}
+			
+			{/foreach}
+		</td>
+		</tr>
+	</table>
+</div>
+</div>
+
+{include file="footer.html"}

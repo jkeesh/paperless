@@ -9,18 +9,38 @@
 <script type="text/javascript" src="{$root_url}static/js/feedback.js"></script>
 <script type="text/javascript" src="{$root_url}static/js/shortcut.js"></script>
 
+<script type="text/javascript" src="{$root_url}static/js/Comment.js"></script>
+<script type="text/javascript" src="{$root_url}static/js/LineRange.js"></script>
+<script type="text/javascript" src="{$root_url}static/js/CodeFile.js"></script>
+
 <script type="text/javascript" src="{$root_url}static/js/syntaxhighlighter/scripts/shCore.js"></script>
 <script type="text/javascript" src="{$root_url}static/js/syntaxhighlighter/scripts/shBrushCpp.js"></script>
 <link type="text/css" rel="stylesheet" href="{$root_url}static/js/syntaxhighlighter/styles/shCoreDefault.css" id="syntaxStylesheet" />
 <script type="text/javascript">SyntaxHighlighter.all();</script>
 
 <h2>
-<span class="link"><a href="{$root_url}{$class}/assignment/{$assignment}">{$assignment}</a></span>
+{if $is_section_leader}
+<span class="link"><a href="{$root_url}{$class}/assignment/{$sl}/{$assignment}">{$assignment}</a></span>
+{else}
+{$assignment}
+{/if}
+
 by 
 <span class="link"><a href="{$root_url}{$class}/student/{$student}">{$student}</a></span> 
 </h2>
 
+{if $interactive}
+interactive
+{else}
+notinteractive
+{/if}
+
 <script type="text/javascript">
+{if $interactive}
+var interactive = true;
+{else}
+var interactive = false;
+{/if}
 
     var files = new Array();
     {foreach from=$files item=file key=i}
@@ -35,17 +55,23 @@ by
     function setupCodeFiles(){
         
         {foreach from=$files item=file key=i}
-        var cur_file = new CodeFile('{$file}', {$i});
+		var cur_file = new CodeFile('{$file}', {$i}, interactive);
         
         {foreach from=$assignment_files[$i]->getAssignmentComments() item=comment}
-            for(var i = {$comment->getStartLine()}; i < {$comment->getEndLine()}; i++)
-                cur_file.hiliteLineNo(i);
-                
-            var curRange = new LineRange({$comment->getStartLine()}, {$comment->getEndLine()});
-            cur_file.addCommentDiv('{$comment->getCommentText()}', curRange);
+		var curRange = new LineRange({$comment->getStartLine()}, {$comment->getEndLine()});
+		cur_file.highlightRange(curRange);
+		var curComment = new Comment('{$comment->getCommentText()}', curRange, cur_file);
+		
+		{if $interactive}
+		var isEditable = true;
+		{else}
+		var isEditable = false;
+		{/if}
+		
+		cur_file.addComment(curComment, isEditable);
         {/foreach}
         
-    	code_files.push(cur_file);
+		code_files.push(cur_file);
     	{/foreach}
     }
     
@@ -63,23 +89,10 @@ by
     	 document.getElementById("comments" + fileNum).className = "visible";
     }
     
-    function getRangeFromComment(commentID){
-    	///the commentID is of the form: cLOWER-HIGHER
-    	var pattern = /c(\d+)-(\d+)/;
-    	var result = pattern.exec(commentID);
-    	if(result == null){
-    		result = /c(\d+)/.exec(commentID);
-    		var range = new LineRange(parseInt(result[1]), parseInt(result[1]));
-    	}else{
-    		var range = new LineRange(parseInt(result[1]), parseInt(result[2]));		
-    	}
-    	return range;
-    }
-    
     function edit(fileID, commentID){
     	var file = code_files[fileID];
-    	var range = getRangeFromComment(commentID);
-    	file.editComment(range, fileID); 
+    	var comment = file.getCommentFromID(commentID);
+    	comment.edit();
     }
 </script>
 
@@ -106,5 +119,3 @@ display(0);
 </script>
 
 <!-- <a href="http://alexgorbatchev.com/SyntaxHighlighter/">Syntax Highlighter Credit</a> -->
-
-

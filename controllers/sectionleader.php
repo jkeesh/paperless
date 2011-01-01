@@ -1,25 +1,28 @@
 <?php
+require_once("permissions.php");
+
 	class SectionLeaderHandler extends ToroHandler {
 		
 		public function get($class, $sectionleader) {
-				
-			//TODO replace with call to has permission 
-    		if(IS_STUDENT_ONLY){
-				echo "Redirect to error page";
-				return;
-    		}
-			
+			Permissions::requireRole(POSITION_SECTION_LEADER, $class);
+						
 			$studentdir = DUMMYDIR;
-			$dirname = SUBMISSIONS_DIR . "/" . USERNAME ."/";
 			
+			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sectionleader . "/";
+			echo $dirname;
+			
+//			$dirname = SUBMISSIONS_DIR . "/" . $sectionleader ."/";			
 			$assns = $this->getDirEntries($dirname);
+			
+			$this->smarty->assign("students", Model::getStudentsForSectionLeader($sectionleader));
 			
 			// assign template variables
 			$this->smarty->assign("assignments", $assns);
 			$this->smarty->assign("class", htmlentities($class));
+			$this->smarty->assign("sl", $sectionleader);
 			
 			// display the template
 			$this->smarty->display('index.html');
 		}
 	}
-	?>
+?>

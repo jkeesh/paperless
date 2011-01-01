@@ -1,5 +1,8 @@
 <?php
 	require_once('index.php');
+	require_once('models/Model.php');
+	require_once('permissions.php');
+	
 	class StudentHandler extends ToroHandler {
 		
 		public function get($class, $student) {
@@ -7,15 +10,18 @@
 			$string = explode("_", $student); // if it was student_1 just take student
 			$student = $string[0];
 			
-			if(IS_STUDENT_ONLY) {
-				if($student != USERNAME) {
-					echo "You don't have permission to view this";
-					return;
-				}
+			if($student != USERNAME) {
+				Permissions::requireRole(POSITION_SECTION_LEADER, $class);
 			}
+						
+		  $sl = Model::getSectionLeaderForStudent($student);
 			
-			// for now hard coded .. need to setup DB access
-			$dirname = SUBMISSIONS_DIR . "/" . SECTION_LEADER ."/";
+			//TODO make sure submissions dir takes into account class
+			
+			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl . "/";
+			echo $dirname;
+			
+//			$dirname = SUBMISSIONS_DIR . "/" . $sl ."/";
 			$assns = $this->getDirEntries($dirname);
 			
 			//information will be an associative array where index i holds
@@ -26,7 +32,7 @@
 			//for every assignment, go find ones that belong to the student
 			//we will save the submission with the highest number.
 			foreach($assns as $assn) {
-				$dir = SUBMISSIONS_DIR ."/". SECTION_LEADER ."/" . $assn ."/";
+				$dir = $dirname . $assn ."/";
 				$student_submissions = $this->getDirEntries($dir);
 				
 				$information[$i]['assignment'] = $assn;

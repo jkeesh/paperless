@@ -1,6 +1,8 @@
 <?php
 	require_once("models/AssignmentFile.php");
 	require_once("models/AssignmentComment.php");
+	require_once("models/Model.php");
+	require_once("permissions.php");
 	
 	/*
 	 * Controller that handles the syntax highlighted code view
@@ -24,12 +26,17 @@
 		/*
 		 * Gets the file contents, file names, and appropriate AssignmentFile model objects
 		 * corresponding to a given student, assignment pair.
-		 * TODO: Associate the AssignmentFile with an actual GradedAssignment object / row
 		 * TODO: Don't use a hardcoded path / we need to allow multiple base search paths
 		 * TODO: Handle error when a pathname is not found
 		 */
-		private function getAssignmentFiles($student, $assignment) {
-			$dirname = SUBMISSIONS_DIR . "/" . SECTION_LEADER . "/". $assignment . "/" . $student . "/"; 
+
+		private function getAssignmentFiles($class, $student, $assignment, $sl) {
+			
+			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl . "/". $assignment . "/" . $student . "/"; 
+			echo $dirname;
+			
+			//$dirname = SUBMISSIONS_DIR . "/" . $sl . "/". $assignment . "/" . $student . "/"; 
+
 			if(!is_dir($dirname)) return null; // TODO handle error
 			
 			$dir = opendir($dirname);
@@ -38,10 +45,16 @@
 			$assignment_files = array();
 			
 			while($file = readdir($dir)) {
-				if($this->isCodeFile($file, CLASSNAME)) {
+				if($this->isCodeFile($file, $class)) {
 					$assignmentFile = AssignmentFile::load(array("FilePath" => $dirname . $file));
 					if(!$assignmentFile) {
-						$assignmentFile = AssignmentFile::create(0, $dirname . $file); // TODO associate this with an actual GradedAssignment
+					  $string = explode("_", $student); // if it was student_1 just take student
+      			$student_suid = $string[0];
+					  $gradedAssignID = Model::getGradedAssignID($class, $student_suid, $assignment);
+					  if(!$gradedAssignID) {
+					    echo "Couldn't find graded assignment $assignment for $student student in class $class!";
+					  }
+						$assignmentFile = AssignmentFile::create($gradedAssignID, $dirname . $file);
 						$assignmentFile->save();
 					}
 					
@@ -58,18 +71,19 @@
 		 */
 		public function get($class, $assignment, $student) {
 			//echo "student " . $student;
-			if(IS_STUDENT_ONLY) {
-				$suid = explode("_", $student); // if it was student_1 just take student
-				$suid = $suid[0];
-				if($suid != USERNAME) {
-					echo "You don't have permission to view this";
-					return;
-				}
-			} else {
-				//echo 'is sl';
+			$suid = explode("_", $student); // if it was student_1 just take student
+			$suid = $suid[0];
+			
+			// if the username is something other than the owner of these files, require
+			// it to be a SL
+			if($suid != USERNAME) {
+				Permissions::requireRole(POSITION_SECTION_LEADER, $class);
 			}
 			
-			list($files, $file_contents, $assignment_files) = $this->getAssignmentFiles($student, $assignment);
+		  $sl = Model::getSectionLeaderForStudent($suid);
+			//echo $student . " ". $sl . "\n";
+			
+			list($files, $file_contents, $assignment_files) = $this->getAssignmentFiles($class, $student, $assignment, $sl);
 			
 			// assign template vars
 			$this->smarty->assign("code", true);
@@ -84,6 +98,7 @@
 			$this->smarty->assign("file_contents", $file_contents);
 			$this->smarty->assign("assignment_files", $assignment_files);
 			$this->smarty->assign("interactive", IS_SECTION_LEADER);
+			$this->smarty->assign("sl", $sl);
 			
 			// display the template
 			$this->smarty->display("code.html");
@@ -99,11 +114,16 @@
 		 */
 		public function post_xhr($class, $assignment, $student) {
 			
-			if(IS_STUDENT_ONLY)
-				return; // students should not be able to add or delete comments
+			// only section leaders should be able to add comments
+			Permissions::requireRole(POSITION_SECTION_LEADER, $class);
 			
-			// TODO this shouldn't be hard coded
-			$dirname = SUBMISSIONS_DIR . "/" . SECTION_LEADER . "/". $assignment . "/" . $student . "/";
+			$suid = explode("_", $student); // if it was student_1 just take student
+			$suid = $suid[0];
+			$sl = Model::getSectionLeaderForStudent($suid);
+			
+			
+			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl . "/". $assignment . "/" . $student . "/"; 
+//			$dirname = SUBMISSIONS_DIR . "/" . $sl . "/". $assignment . "/" . $student . "/";
 			
 			if(!isset($_POST['action'])) return;
 			

@@ -1,10 +1,18 @@
 <?php
+	require_once('models/Model.php');
+	
 	class AssignmentHandler extends ToroHandler {
 		
-		public function get($class, $assignment) {
-			//for now get users in a hacky way, because the database isn't hooked in
-			//$dirname="/afs/ir.stanford.edu/class/cs106x/submissions/".$sl."/";
-			$dirname = SUBMISSIONS_DIR . "/" . USERNAME . "/";
+		public function get($class, $sectionleader, $assignment) {
+
+			Permissions::requireRole(POSITION_SECTION_LEADER, $class);
+			
+			
+			
+			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sectionleader . "/";
+			echo $dirname;
+//			$dirname = SUBMISSIONS_DIR . "/" . $sectionleader . "/";
+			
 			$students = $this->getDirEntries($dirname . $assignment);
 			
 			$this->smarty->assign("students", $students);
@@ -15,4 +23,4 @@
 			$this->smarty->display('assignment.html');
 		}
 	}
-	?>
+?>

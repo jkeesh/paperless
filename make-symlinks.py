@@ -2,6 +2,13 @@
 #Adds symbolic links to assignments to section leaders' folders.  
 #Used when we need to make a submissions2 folder, but submissions needs 
 #to have every assignment in it for the sake of the paperless IG system.
+#
+#
+#
+# How to run:
+# /afs/ir/class/cs198/cgi-bin/paperless/make-symlinks.py submissions submissions2 nameSurfer 2
+# This preserves the capability to find the assignment by only appending a number.
+#
 import os, sys
 
 #Returns a list of all section leaders inside rootFolder
@@ -30,7 +37,7 @@ def main():
     if os.path.isdir(submissionsRoot + '/' + sectionLeader):
       os.chdir(submissionsRoot + '/' + sectionLeader)
       symbolicLinkPath = getSymLinkPath(submissions2Root, sectionLeader, assignmentName)
-      os.symlink(symbolicLinkPath, assignmentName + '-' + appendName)
+      os.symlink(symbolicLinkPath, assignmentName + appendName)
 
 if __name__ == '__main__':
   main()

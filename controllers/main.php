@@ -6,27 +6,19 @@
 				$class = Model::getClass(USERNAME);
 			}
 			
-    		if(IS_STUDENT_ONLY){
-				echo "<script type='text/javascript'> window.location = '". ROOT_URL ."$class/student/" . USERNAME ."'</script>";
-				return;
-    		}
-			
-			if(IS_SECTION_LEADER){
-				echo "<script type='text/javascript'> window.location = '". ROOT_URL ."$class/sectionleader/" . USERNAME ."'</script>";
+			$role = Model::getRoleForClass(USERNAME, $class);
+			if($role <= POSITION_STUDENT) {
+				Header("Location: " .  ROOT_URL ."$class/student/" . USERNAME);
 				return;
 			}
 			
-			$studentdir = DUMMYDIR;
-			$dirname = SUBMISSIONS_DIR . "/" . USERNAME ."/";
-			
-			$assns = $this->getDirEntries($dirname);
-			
-			// assign template variables
-			$this->smarty->assign("assignments", $assns);
-			$this->smarty->assign("class", htmlentities($class));
-			
-			// display the template
-			$this->smarty->display('index.html');
+			if($role == POSITION_SECTION_LEADER) {
+				Header("Location: " .  ROOT_URL ."$class/sectionleader/" . USERNAME);
+				return;
+			} else {
+				echo "what is your position?";
+			}
 		}
+		
 	}
 	?>
