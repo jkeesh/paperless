@@ -80,7 +80,8 @@ var interactive = false;
     function edit(fileID, commentID){
     	var file = code_files[fileID];
     	var comment = file.getCommentFromID(commentID);
-    	comment.edit();
+		if(comment)
+			comment.edit();
     }
 </script>
 
