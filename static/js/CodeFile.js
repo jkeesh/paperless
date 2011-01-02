@@ -144,14 +144,22 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 		toAdd += "</div>";
 		//$('#comments' + this.fileID).append(toAdd);
 		//$('#container .index'+range.lower).append(toAdd);
-		var commentLocation = $('#file'+ this.fileID + ' .code .number'+range.lower);
-		var lineLocation = $('#file'+this.fileID + ' .gutter .number'+range.lower);
-		console.log(commentLocation);
-		console.log(lineLocation);
-		commentLocation.before(toAdd);
+//		var commentLocation = $('#file'+ this.fileID + ' .code .number'+range.lower);
+//		var lineLocation = $('#file'+this.fileID + ' .gutter .number'+range.lower);
+//		console.log(commentLocation);
+//		console.log(lineLocation);
+//		commentLocation.before(toAdd);
+
+		var commentLocation = $('#file'+ this.fileID + ' .code .number'+range.higher);
+		var lineLocation = $('#file'+this.fileID + ' .gutter .number'+range.higher);
+//		console.log(commentLocation);
+//		console.log(lineLocation);
+		commentLocation.after(toAdd);		
+		
+		
 		var justAdded = $('#'+element_id);
-		console.log(justAdded);
-		console.log(justAdded.height());
+//		console.log(justAdded);
+//		console.log(justAdded.height());
 	//	var height = toAdd.style.pixelHeight;
 	//	console.log(height);
 		var height = justAdded.height() + 44;
