@@ -42,13 +42,6 @@ var interactive = false;
 		var curRange = new LineRange({$comment->getStartLine()}, {$comment->getEndLine()});
 		cur_file.highlightRange(curRange);
 		var curComment = new Comment('{$comment->getCommentText()}', curRange, cur_file);
-		
-		{if $interactive}
-		var isEditable = true;
-		{else}
-		var isEditable = false;
-		{/if}
-		
 		cur_file.addComment(curComment);
         {/foreach}
         
