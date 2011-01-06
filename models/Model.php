@@ -206,23 +206,31 @@
 		}
 		
 		public static function getSectionLeaderForStudent($student_suid){
-			$db = Database::getConnection();
-			$userid = Model::getUserID($student_suid);
-			$sectionid = Model::getSectionIDForUserID($userid);
 			
-			/*
-			 * TODO
-			 * If there is no section for a student, return that the section
-			 * leader is the lecturer. This is what we need to do for 109L.
-			 * I'm not sure what will be returned from getSectionIDForUserID if
-			 * there is no value. null? And I'm not quite sure how to test this
-			 */
-			if(!$sectionid){
-				return Model::getLecturerForClass("cs109l");
-			} 
+
 			
-			$sectionLeaderID = Model::getSectionLeaderForSectionID($sectionid);
-			$slsuid = Model::getSUID($sectionLeaderID);
+			$db = Database::getConnection();					 
+			$query = "(SELECT SectionLeader FROM Sections 
+						WHERE ID IN 
+						(SELECT Section FROM SectionAssignments 
+							WHERE Person IN 
+								(SELECT ID FROM People WHERE SUNetID = :sunetid ))
+						AND Quarter = (SELECT DefaultQuarter FROM State)
+					  )";
+			
+			try {
+				$sth = $db->prepare($query);
+				$sth->execute(array(":sunetid" => $student_suid));
+				if($row = $sth->fetch()) {
+					if(empty($row)) return "unknown";
+					$slsuid = Model::getSUID($row['SectionLeader']);
+					return $slsuid;
+				}
+			} catch(PDOException $e) {
+				echo $e->getMessage(); // TODO log this error instead of echoing
+			}
+
+			
 			return $slsuid;
 		}
 		

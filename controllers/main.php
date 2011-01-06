@@ -13,6 +13,7 @@
 			
 			$class = strtolower($class[0]['Name']);
 			$role = Model::getRoleForClass(USERNAME, $class);
+			
 			if($role <= POSITION_STUDENT) {
 				Header("Location: " .  ROOT_URL ."$class/student/" . USERNAME);
 				return;

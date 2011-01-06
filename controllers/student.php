@@ -27,7 +27,10 @@
 			}
 			
 			
-			$sl = Model::getSectionLeaderForStudent($student);			
+			$sl = Model::getSectionLeaderForStudent($student);	
+			echo "student " . $student;
+			echo " sl " . $sl;
+			
 			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl . "/";
 			$assns = $this->getDirEntries($dirname);
 			
