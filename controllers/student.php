@@ -43,6 +43,9 @@
 			$i = 0;
 			//for every assignment, go find ones that belong to the student
 			//we will save the submission with the highest number.
+			
+			if($assns){
+			
 			foreach($assns as $assn) {
 				$dir = $dirname . $assn ."/";
 				$student_submissions = $this->getDirEntries($dir);
@@ -57,10 +60,9 @@
 				}
 				$i++;
 			}
-			
-			if (count($information) == 0)
+			}else{
 				$this->smarty->assign("nofiles", 1);
-			
+			}			
 			//print_r($information);
 			
 			// assign template vars
