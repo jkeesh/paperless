@@ -6,7 +6,7 @@
 	class StudentHandler extends ToroHandler {
 		
 		public function get($class, $student) {
-
+			
 			$string = explode("_", $student); // if it was student_1 just take student
 			$student = $string[0];
 			
@@ -45,21 +45,20 @@
 			//we will save the submission with the highest number.
 			
 			if($assns){
-			
-			foreach($assns as $assn) {
-				$dir = $dirname . $assn ."/";
-				$student_submissions = $this->getDirEntries($dir);
-				
-				$information[$i]['assignment'] = $assn;
-				$information[$i]['all'] = array();
-				foreach($student_submissions as $submission) {
-					if(strpos($submission, $student) !== false) {
-						$information[$i]['studentdir'] = $submission;
-						array_push($information[$i]['all'],$submission);
+				foreach($assns as $assn) {
+					$dir = $dirname . $assn ."/";
+					$student_submissions = $this->getDirEntries($dir);
+					
+					$information[$i]['assignment'] = $assn;
+					$information[$i]['all'] = array();
+					foreach($student_submissions as $submission) {
+						if(strpos($submission, $student) !== false) {
+							$information[$i]['studentdir'] = $submission;
+							array_push($information[$i]['all'],$submission);
+						}
 					}
+					$i++;
 				}
-				$i++;
-			}
 			}else{
 				$this->smarty->assign("nofiles", 1);
 			}			

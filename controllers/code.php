@@ -48,14 +48,14 @@
 					  $string = explode("_", $student); // if it was student_1 just take student
       			$student_suid = $string[0];
 					  $gradedAssignID = Model::getGradedAssignID($class, $student_suid, $assignment);
-					  if(!$gradedAssignID) {
+					  /* if(!$gradedAssignID) {
 					    echo "Couldn't find graded assignment $assignment for $student student in class $class!";
-					  }
+					  } */
 						$assignmentFile = AssignmentFile::create($gradedAssignID, $dirname . $file);
 						$assignmentFile->save();
 					}
 					
-					$assignment_files[] = $assignmentFile;
+					//$assignment_files[] = $assignmentFile;
 					$files[] = $file;
 					$file_contents[] = htmlentities(file_get_contents($dirname . $file));
 				}
