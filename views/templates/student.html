@@ -2,6 +2,9 @@
 
 <div class="wideList">
     <div class="header">Assignment List</div>
+		{if $nofiles}
+		<div>No Assignment Files Yet!</div>
+		{/if}
         {foreach from=$information item=assignment}
         <div class="link">
 			<div class="studentAssignment">

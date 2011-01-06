@@ -32,6 +32,8 @@
 			echo " sl " . $sl;
 			
 			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl . "/";
+			
+			echo $dirname;
 			$assns = $this->getDirEntries($dirname);
 			
 			//information will be an associative array where index i holds
@@ -55,6 +57,9 @@
 				}
 				$i++;
 			}
+			
+			if (count($information) == 0)
+				$this->smarty->assign("nofiles", 1);
 			
 			//print_r($information);
 			

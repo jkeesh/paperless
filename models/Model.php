@@ -222,16 +222,13 @@
 				$sth = $db->prepare($query);
 				$sth->execute(array(":sunetid" => $student_suid));
 				if($row = $sth->fetch()) {
-					if(empty($row)) return "unknown";
-					$slsuid = Model::getSUID($row['SectionLeader']);
-					return $slsuid;
+					return Model::getSUID($row['SectionLeader']);
+				}else{
+					return "unknown";
 				}
 			} catch(PDOException $e) {
 				echo $e->getMessage(); // TODO log this error instead of echoing
 			}
-
-			
-			return $slsuid;
 		}
 		
 		/*
