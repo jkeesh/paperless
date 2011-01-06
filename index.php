@@ -81,6 +81,7 @@
 		protected function getDirEntries($dirname) {
 			$entries = array();
 			$dir = opendir($dirname);
+			if(!dir) return false;
 			while($entry = readdir($dir)) {
 				if($this->isValidDirectory($entry))
 					$entries[] = $entry;
