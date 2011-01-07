@@ -28,12 +28,15 @@
 			
 			
 			$sl = Model::getSectionLeaderForStudent($student);	
-			echo "student " . $student;
-			echo " sl " . $sl;
+			
+			if($sl == "unknown"){
+				$this->smarty->assign("nosl", 1);
+			}
+			
 			
 			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl . "/";
 			
-			echo $dirname;
+			//echo $dirname;
 			$assns = $this->getDirEntries($dirname);
 			
 			//information will be an associative array where index i holds

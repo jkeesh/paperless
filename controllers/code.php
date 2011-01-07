@@ -55,7 +55,7 @@
 						$assignmentFile->save();
 					}
 					
-					//$assignment_files[] = $assignmentFile;
+					$assignment_files[] = $assignmentFile;
 					$files[] = $file;
 					$file_contents[] = htmlentities(file_get_contents($dirname . $file));
 				}
