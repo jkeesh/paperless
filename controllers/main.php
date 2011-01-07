@@ -12,16 +12,22 @@
 			}
 			
 			$class = strtolower($class[0]['Name']);
+			
+			if(strlen($class) == 0){
+				$this->smarty->display("error.html");
+				return;
+			}
+
 			$role = Model::getRoleForClass(USERNAME, $class);
 			
-			if($role <= POSITION_STUDENT) {
-				Header("Location: " .  ROOT_URL ."$class/student/" . USERNAME);
+			if($role > POSITION_SECTION_LEADER){
+				Header("Location: ".  ROOT_URL ."$class/admin");
 				return;
-			}else if($role <= POSITION_SECTION_LEADER) {
+			}else if($role == POSITION_SECTION_LEADER){
 				Header("Location: " .  ROOT_URL ."$class/sectionleader/" . USERNAME);
 				return;
 			}else{
-				Header("Location: ".  ROOT_URL ."$class/admin");
+				Header("Location: " .  ROOT_URL ."$class/student/" . USERNAME);
 				return;
 			}
 		}
