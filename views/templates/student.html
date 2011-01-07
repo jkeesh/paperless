@@ -13,11 +13,11 @@
 			<div class="studentAssignment">
 				<a href="{$root_url}{$class}/code/{$assignment.assignment}/{$assignment.studentdir}">{$assignment.assignment}</a>
 			</div>
-			<span class="studentAdditional">
+			
 			{foreach from=$assignment.all item=assn key=i}
-			<a href="{$root_url}{$class}/code/{$assignment.assignment}/{$assn}">({$i + 1})</a>
+			<div class="studentAdditional"><a href="{$root_url}{$class}/code/{$assignment.assignment}/{$assn}">submission {$i + 1}</a></div>
 			{/foreach}
-			<span>
+			
 		</div>
 		<div style="clear:both"></div>
         {/foreach}
