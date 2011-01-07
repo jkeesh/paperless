@@ -88,8 +88,8 @@
 			} else { 
 				//echo "<br/> target is ". $target;
 				if(move_uploaded_file($_FILES['uploaded']['tmp_name'], $target)) {
-					$message .= "<div class='padded'>The file you uploaded has been saved as " . $target . "<br/></div>";
-					$message .= "<div class='padded'>Attempting unzip...</div>";
+					//$message .= "<div class='padded'>The file you uploaded has been saved as " . $target . "<br/></div>";
+					//$message .= "<div class='padded'>Attempting unzip...</div>";
 					$success = $this->unzip($target);
 					if ($success) {
 						//echo "unzipped";
