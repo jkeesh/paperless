@@ -17,7 +17,6 @@
 		 */
 		private function isCodeFile($filename, $class){
 			$ext = pathinfo($filename, PATHINFO_EXTENSION);
-			
 			$filetypes = getFileTypesForClass($class);
 			return in_array($ext, $filetypes);
 		}

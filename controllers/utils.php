@@ -11,7 +11,6 @@
 		
 		fgetcsv($assn_data); //read off first three lines, not assignment data
 		fgetcsv($assn_data);
-		fgetcsv($assn_data);
 		
 		while (! feof($assn_data)) {
 			$info = fgetcsv($assn_data);
@@ -34,7 +33,6 @@
 	function getFileTypesForClass($class){
 		$config = getConfigFileForClass($class);
 		$file = fopen($config, "r");
-		fgetcsv($file); //read off first line lines, not file data
 		$info = fgetcsv($file);
 		return $info;
 	}
