@@ -91,6 +91,17 @@
 					//$message .= "<div class='padded'>The file you uploaded has been saved as " . $target . "<br/></div>";
 					//$message .= "<div class='padded'>Attempting unzip...</div>";
 					$success = $this->unzip($target);
+
+					$pos = strpos($target, ".zip");
+					$dirname = substr($target, 0, $pos);
+					if(!is_dir($dirname)) return null; // TODO handle error
+					$dir = opendir($dirname);
+					$fileList = array();
+					while($file = readdir($dir)) {
+					 	if($file != "." && $file != "..")
+							$fileList []= $file;
+					}
+					
 					if ($success) {
 						//echo "unzipped";
 						unlink($target);
@@ -115,6 +126,7 @@
 			$this->smarty->assign("student", USERNAME);
 			$this->smarty->assign("message", $message);
 			$this->smarty->assign("ok", $ok);
+			$this->smarty->assign("fileList", $fileList);
 			
 			$this->smarty->display('upload.html');
 		}

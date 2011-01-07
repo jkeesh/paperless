@@ -346,6 +346,21 @@ textarea {
 	font-size: 12px;
 }
 
+#submittedFiles{
+	padding-left: 10px;
+}
+
+#submittedFilesTitle{
+	font-weight: bold;
+	padding-top: 10px;
+}
+
+.submittedFile{
+	padding-top: 12px;
+	padding-left: 17px;
+
+}
+
 /* Submit Instructions
  */
 

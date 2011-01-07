@@ -6,6 +6,13 @@
 
 {if $ok}
 <div class="link"><a href="{$root_url}{$class}/student/{$student}">View your submitted code files</a></div>
+
+<div id="submittedFiles">
+<div id="submittedFilesTitle">Files Included in this Submission</div>
+{foreach from=$fileList item=file}
+<div class="submittedFile">{$file}</div>
+{/foreach}
+</div>
 {/if}
 
 {include file="footer.html"}
