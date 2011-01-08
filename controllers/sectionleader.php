@@ -1,7 +1,16 @@
 <?php
 require_once("permissions.php");
-
+	
+	function studentSort($a, $b){
+		return $a['DisplayName'] > $b['DisplayName'];
+	}
+	
 	class SectionLeaderHandler extends ToroHandler {
+		
+		function sortAll($students){
+			uasort($students, 'studentSort');
+			return $students;
+		}
 		
 		public function get($class, $sectionleader) {
 			$role = Permissions::requireRole(POSITION_SECTION_LEADER, $class);
@@ -18,7 +27,12 @@ require_once("permissions.php");
 			
 			$assns = $this->getDirEntries($dirname);
 			
-			$this->smarty->assign("students", Model::getStudentsForSectionLeader($sectionleader, $class));
+			$students = Model::getStudentsForSectionLeader($sectionleader, $class);
+			//print_r($students);
+			
+			$students = $this->sortAll($students);
+			
+			$this->smarty->assign("students", $students);
 			
 			// assign template variables
 			$this->smarty->assign("assignments", $assns);
