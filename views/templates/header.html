@@ -35,7 +35,7 @@ root_url = '{$root_url}';
         <div id="logo"><a href="{$root_url}" id="logo-link"></a></div>
         <div id="user" {if isset($code)}class="user-code"{/if}>
 			{if $class}
-			<div id="classname">{$class}</div>
+			<div id="classname">{$class|upper}</div>
 			{/if}
             <div id="name">{$display_name}</div>
             <div id="nav">	

@@ -26,7 +26,7 @@ Just zip the files you want to submit, do not zip a directory containing those f
 
 
 <div class="padded">Select assignment to submit:</div>
-<form  class="padded" enctype="multipart/form-data" action="{$root_url}{$class}/upload" method="POST"> 
+<form  class="padded" enctype="multipart/form-data" action="{$root_url}{$class|lower}/upload" method="POST"> 
 	<select name="assignment">
 		{foreach from=$assignments key=dir item=arr}
 		<option value="{$dir}">{$arr.Name}</option>
