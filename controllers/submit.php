@@ -18,7 +18,7 @@
 
 			// assign template variables
 			$this->smarty->assign("assignments", $assns);
-			$this->smarty->assign("class", $class);
+			$this->smarty->assign("class", strtoupper($class));
 			$this->smarty->assign("name", Model::getDisplayName(USERNAME));
 			
 			$sourcelist = ".java";

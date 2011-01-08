@@ -36,7 +36,7 @@ require_once("permissions.php");
 			
 			// assign template variables
 			$this->smarty->assign("assignments", $assns);
-			$this->smarty->assign("class", htmlentities($class));
+			$this->smarty->assign("class", strtoupper(htmlentities($class)));
 			$this->smarty->assign("sl", $sectionleader);
 			
 			// display the template

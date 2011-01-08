@@ -243,6 +243,14 @@ body {
 	border: 1px solid #bddff3;
 }
 
+#classname{
+	font-family: Helvetica;
+    font-size: 10pt;
+    font-weight: bold;
+    padding: 12px;
+    float: left;
+}
+
 #name {
     font-family: Helvetica;
     font-size: 10pt;

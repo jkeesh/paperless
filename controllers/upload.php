@@ -120,7 +120,7 @@
 			
 
 			$this->smarty->assign("name", Model::getDisplayName(USERNAME));
-			$this->smarty->assign("class", $class);
+			$this->smarty->assign("class", strtoupper($class));
 			$this->smarty->assign("dir", $dirname);
 			$this->smarty->assign("assn", $assn_name);
 			$this->smarty->assign("student", USERNAME);
