@@ -111,8 +111,29 @@
 			}
 		}
 		
-		public static function getStudentsForSectionLeader($sl_sunetid) {
+		public static function getAllStudentsForClass($class){
+			$db = Database::getConnection();	
+			$query = "SELECT ID, DisplayName, SUNetID FROM People WHERE ID IN 
+						(SELECT Person FROM SectionAssignments WHERE Class IN
+							(SELECT ID FROM Courses WHERE Name LIKE :classname ))";			
+			try {
+				$sth = $db->prepare($query);
+				$sth->execute(array(":classname" => $class));
+				if($rows = $sth->fetchAll()) {
+					return $rows;
+				}
+			} catch(PDOException $e) {
+				echo $e->getMessage(); // TODO log this error instead of echoing
+			}
+		}
+		
+		public static function getStudentsForSectionLeader($sl_sunetid, $class) {
 			$db = Database::getConnection();
+			
+			if($sl_sunetid == "unknown"){
+				return Model::getAllStudentsForClass($class);
+			}
+			
 			$section_db_id = Model::getSectionIDForSectionLeader($sl_sunetid);
 			
 			$query = "SELECT ID, DisplayName, SUNetID FROM People WHERE ID IN (SELECT Person FROM SectionAssignments WHERE Section = :sectionID)";

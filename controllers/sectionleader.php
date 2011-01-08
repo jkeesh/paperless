@@ -18,7 +18,7 @@ require_once("permissions.php");
 			
 			$assns = $this->getDirEntries($dirname);
 			
-			$this->smarty->assign("students", Model::getStudentsForSectionLeader($sectionleader));
+			$this->smarty->assign("students", Model::getStudentsForSectionLeader($sectionleader, $class));
 			
 			// assign template variables
 			$this->smarty->assign("assignments", $assns);
