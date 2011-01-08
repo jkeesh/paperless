@@ -70,8 +70,6 @@
 			//echo "student " . $student;
 			if($print){
 				$this->smarty->assign("print_view", 1);
-			}else{
-				
 			}
 			
 			$this->smarty->assign("code_file", $student);
@@ -102,6 +100,10 @@
 			//echo $student . " ". $sl . "\n";
 			
 			list($files, $file_contents, $assignment_files) = $this->getAssignmentFiles($class, $student, $assignment, $sl);
+			
+			if(count($files) == 0){
+				  Header("Location: " . ROOT_URL . "error/for/you");
+			}
 			
 			// assign template vars
 			$this->smarty->assign("code", true);
