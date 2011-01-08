@@ -85,6 +85,12 @@
 					$information[$i]['all'] = $all;
 					$information[$i]['studentdir'] = $all[count($all)-1];
 					
+					if(count($all) == 0){
+						//they have no submissions for this assignment so remove that
+						array_splice($information, $i);
+						$i--;
+					}
+					
 					$i++;
 				}
 			}else{
@@ -93,7 +99,8 @@
 			//print_r($information);
 			
 			// assign template vars
-			$this->smarty->assign("information", $information);
+			if(count($all) > 0) // do not show any links if there are no files
+				$this->smarty->assign("information", $information);
 			$this->smarty->assign("class", htmlentities($class));
 			
 			// display the template
