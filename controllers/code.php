@@ -66,7 +66,7 @@
 		/*
 		 * Displays the syntax highlighted code for a student, assignment pair
 		 */
-		public function get($class, $assignment, $student, $print) {
+		public function get($class, $assignment, $student, $print=False) {
 			//echo "student " . $student;
 			if($print){
 				$this->smarty->assign("print_view", 1);
