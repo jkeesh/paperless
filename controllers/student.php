@@ -17,7 +17,6 @@
 
 		
 		function sortArr($arr){
-			echo "sort arr\n";
 			uasort($arr, 'cmp');
 			$result = array();
 			foreach($arr as $item){
