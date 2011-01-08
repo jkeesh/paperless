@@ -17,7 +17,7 @@ by
 </div>
 
 <script type="text/javascript">
-{if $sl_class or $admin_class}
+{if ($sl_class or $admin_class) and !$print_view}
 var interactive = true;
 {else}
 var interactive = false;
@@ -30,7 +30,6 @@ var interactive = false;
     
     // we need to wait for the syntax highlighter to finish before we access the modified dom
     $(document).ready(function(){
-	   
        setTimeout("setupCodeFiles()", 2000); 
     });
     
@@ -49,7 +48,12 @@ var interactive = false;
 		code_files.push(cur_file);
     	{/foreach}
         //console.log(code_files);
-		display(0);
+		{if $print_view}
+			displayAll();
+		{else}
+			display(0);
+		{/if}
+
     }
     
     function hideall(){
@@ -60,9 +64,18 @@ var interactive = false;
     	 }
     }
 
-    function display(fileNum){
+    function displayAll(){
+		for(var i = 0; i < code_files.length; i++){
+			display(i, false);
+		}
+    }
+
+    function display(fileNum, hide){
+		 if(hide == undefined) hide = true;
+	
 		 current_file_id = fileNum; //so we know what is currently being viewed
-    	 hideall();
+    	 if(hide)
+			hideall();
     	 document.getElementById("file" + fileNum).className = "visible";	 
     	 document.getElementById("comments" + fileNum).className = "visible";
 		 $('#fileList'+fileNum).addClass('selectedFile');
@@ -83,11 +96,19 @@ var interactive = false;
 <div id="comments{$i}"></div>
 {/foreach}
 
+{if !$print_view}
+<div id="rightside">
 <div id="filelist">
     {foreach from=$files item=file key=i}
-    <div id="fileList{$i}" class="link"><a href="javascript:display('{$i}')">{$file}</a></div>
+    <div id="fileList{$i}" class="link smaller"><a href="javascript:display('{$i}')">{$file}</a></div>
     {/foreach}
 </div>
+
+<div id="printlink">
+	<div class="link smaller"><a href="{$code_file}/print" target="_blank">Print</a></div>
+</div>
+</div>
+{/if}
 
 {foreach from=$files item=file key=i}
 <div id="file{$i}" class="hidden">

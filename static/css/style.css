@@ -178,13 +178,32 @@ a{
  *
  */
  #filelist{
-	position: absolute;
+/*	position: absolute;
 	top: 90px;
-	right: 30px;
+	right: 30px;*/
 	z-index: 100;
 	background-color: white;
 	padding: 10px;
 	border: 1px solid #bddff3;
+}
+
+#rightside{
+	position: absolute;
+	top: 90px;
+	right: 30px;
+}
+
+#printlink{
+	margin-top: 20px;
+	z-index: 100;
+	background-color: white;
+	padding: 8px;
+	border: 1px solid #bddff3;
+}
+
+
+.smaller{
+	font-size: 12px;
 }
 
 #codeheader .link, #codeheader .link a{

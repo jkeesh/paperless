@@ -66,8 +66,16 @@
 		/*
 		 * Displays the syntax highlighted code for a student, assignment pair
 		 */
-		public function get($class, $assignment, $student) {
+		public function get($class, $assignment, $student, $print) {
 			//echo "student " . $student;
+			if($print){
+				$this->smarty->assign("print_view", 1);
+			}else{
+				
+			}
+			
+			$this->smarty->assign("code_file", $student);
+			
 			$suid = explode("_", $student); // if it was student_1 just take student
 			$suid = $suid[0];
 			

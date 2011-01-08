@@ -32,6 +32,7 @@ root_url = '{$root_url}';
 </head>
 <body>
     <div id="container">
+		{if !$print_view}
         <div id="logo"><a href="{$root_url}" id="logo-link"></a></div>
         <div id="user">
 			{if $class}
@@ -55,6 +56,7 @@ root_url = '{$root_url}';
             </div>
             <div class="clearfloat"></div>
         </div>
+		{/if}
         <div class="clearfloat"></div>
         <div class="content-header codesettings"></div>
         <div class="content-wrapper">
