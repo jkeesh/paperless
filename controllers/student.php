@@ -3,7 +3,28 @@
 	require_once('models/Model.php');
 	require_once('permissions.php');
 	
+	function cmp($a, $b){
+		$pos_a = strpos($a, "_");
+		$pos_b = strpos($b, "_");
+		$num_a = substr($a, $pos_a + 1);
+		$num_b = substr($b, $pos_b + 1);
+		if($num_a > $num_b) return 1;
+		return -1;
+	}
+	
 	class StudentHandler extends ToroHandler {
+		
+
+		
+		function sortArr($arr){
+			echo "sort arr\n";
+			uasort($arr, 'cmp');
+			$result = array();
+			foreach($arr as $item){
+				$result []= $item;
+			}
+			return $result;
+		}
 		
 		public function get($class, $student) {
 			
@@ -60,12 +81,21 @@
 							array_push($information[$i]['all'],$submission);
 						}
 					}
+					
+					$all = $information[$i]['all'];
+					echo "presort\n";
+					print_r($all);
+					$all = $this->sortArr($all);
+					echo "postsort\n";
+					print_r($all);
+					$information[$i]['all'] = $all;
+					
 					$i++;
 				}
 			}else{
 				$this->smarty->assign("nofiles", 1);
 			}			
-			//print_r($information);
+			print_r($information);
 			
 			// assign template vars
 			$this->smarty->assign("information", $information);
