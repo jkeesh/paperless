@@ -15,3 +15,5 @@ submissions/*
 
 #ignore those cached things
 views/templates_c/*
+
+class_configs/*
