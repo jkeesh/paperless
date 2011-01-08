@@ -91,7 +91,7 @@
 			}else{
 				$this->smarty->assign("nofiles", 1);
 			}			
-			print_r($information);
+			//print_r($information);
 			
 			// assign template vars
 			$this->smarty->assign("information", $information);
