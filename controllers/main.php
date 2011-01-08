@@ -1,11 +1,15 @@
 <?php
 	class IndexHandler extends ToroHandler {
 		
-		public function get($class) {
+		public function get($class) {			
 			if(!$class) {
 				$class = Model::getClass(USERNAME);
 			}
 			
+			if(!is_array($class)){
+				Header("Location: ".  ROOT_URL ."error/for/you");
+				return;
+			}
 			if( count($class) > 1){ //they are in multiple classes, redirect to choice page
 				Header("Location: " . ROOT_URL . "select");
 				return;

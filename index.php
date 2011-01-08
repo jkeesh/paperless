@@ -104,6 +104,8 @@
 	require_once('controllers/upload.php');
 	require_once('controllers/select.php'); // if a user has multiple classes with different roles, allow them to select the class
 	require_once('controllers/setuser.php');
+	require_once('controllers/error.php');
+	
 	/*
 	 * URL routes
 	 */
@@ -118,6 +120,7 @@
 									  Array('^\/([a-zA-Z0-9_ \-]+)\/submit\/?$', 'regex', 'SubmitHandler'),
 									  Array('^\/([a-zA-Z0-9_ \-]+)\/upload\/?$', 'regex', 'UploadHandler'),
 									  Array('^\/([a-zA-Z0-9_]*)\/?$', 'regex', 'IndexHandler'),
+									  Array('(.*)', 'regex', 'ErrorHandler'),
 									  ));
 	
 	if(isset($_REQUEST['path']))
