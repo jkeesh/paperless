@@ -95,6 +95,9 @@
 				}
 			}else{
 				$this->smarty->assign("nofiles", 1);
+			}
+			if(count($information) == 0){
+				$this->smarty->assign("nofiles", 1);
 			}			
 			//print_r($information);
 			
