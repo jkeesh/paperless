@@ -8,7 +8,8 @@ require_once("permissions.php");
 	class SectionLeaderHandler extends ToroHandler {
 		
 		function sortAll($students){
-			uasort($students, 'studentSort');
+			if($students)
+				uasort($students, 'studentSort');
 			return $students;
 		}
 		
@@ -21,7 +22,6 @@ require_once("permissions.php");
 			if($role > POSITION_SECTION_LEADER){
 				$this->smarty->assign("admin_class", $class);
 			}
-			
 									
 			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sectionleader . "/";
 			
