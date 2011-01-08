@@ -77,7 +77,6 @@
 					$information[$i]['all'] = array();
 					foreach($student_submissions as $submission) {
 						if(strpos($submission, $student) !== false) {
-							$information[$i]['studentdir'] = $submission;
 							array_push($information[$i]['all'],$submission);
 						}
 					}
@@ -89,6 +88,7 @@
 					echo "postsort\n";
 					print_r($all);
 					$information[$i]['all'] = $all;
+					$information[$i]['studentdir'] = $all[count($all)-1];
 					
 					$i++;
 				}
