@@ -31,9 +31,9 @@ root_url = '{$root_url}';
 <link rel="stylesheet" type="text/css" href="{$root_url}/static/css/style.css">
 </head>
 <body>
-    <div id="container{if isset($code)}-code{/if}">
+    <div id="container">
         <div id="logo"><a href="{$root_url}" id="logo-link"></a></div>
-        <div id="user" {if isset($code)}class="user-code"{/if}>
+        <div id="user">
 			{if $class}
 			<div id="classname">{$class|upper}</div>
 			{/if}
