@@ -114,8 +114,9 @@
 		public static function getAllStudentsForClass($class){
 			$db = Database::getConnection();	
 			$query = "SELECT ID, DisplayName, SUNetID FROM People WHERE ID IN 
-						(SELECT Person FROM SectionAssignments WHERE Class IN
-							(SELECT ID FROM Courses WHERE Name LIKE :classname ))";			
+						(SELECT Person FROM CourseRelations WHERE Position = 1 
+							AND Class = (SELECT ID FROM Courses WHERE Name LIKE :classname) 
+							AND Quarter = (SELECT DefaultQuarter FROM State))";		
 			try {
 				$sth = $db->prepare($query);
 				$sth->execute(array(":classname" => $class));
