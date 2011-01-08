@@ -82,11 +82,7 @@
 					}
 					
 					$all = $information[$i]['all'];
-					echo "presort\n";
-					print_r($all);
 					$all = $this->sortArr($all);
-					echo "postsort\n";
-					print_r($all);
 					$information[$i]['all'] = $all;
 					$information[$i]['studentdir'] = $all[count($all)-1];
 					
