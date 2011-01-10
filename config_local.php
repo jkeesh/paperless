@@ -1,8 +1,8 @@
 <?php
 	//This is a configuration file for running paperless locally
-	
-	//This is the only thing you should change
-	define('USERNAME', 'asood');
+
+	//This is the only thing you should change	
+	define('USERNAME', 'username');
 	
 	define('BASE_DIR', dirname(__FILE__));
 	
@@ -13,7 +13,7 @@
 	define('POSITION_TEACHING_ASSISTANT', 5);
 	define('POSITION_LECTURER', 6);
 	define('POSITION_COORDINATOR', 7);
-	
+		
 	//we will look for submissions in directories like
 	// SUBMISSIONS_PREFIX/class/SUBMISSIONS_DIR/sl/student/codefiles
 	define('SUBMISSIONS_PREFIX', 'submission_files');
@@ -22,7 +22,7 @@
 	define('ROOT_URL', 'http://localhost:8888/paperless/'); 
 	
 	define('CLASS_CONFIG_DIR', 'class_configs');
-	
+
 	define('MYSQL_HOST', 'localhost');
 	define('MYSQL_USERNAME', 'root');
 	define('MYSQL_PASSWORD', 'root');

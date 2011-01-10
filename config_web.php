@@ -1,10 +1,9 @@
 <?php
 	//This is a configuration file for running paperless locally
 	
-	//$sunetid = $_ENV['WEBAUTH_USER'];
-	//$username = strtolower($username);
-	//define('USERNAME', 'jkeeshin');
-	define('USERNAME', 'yedong');
+	$sunetid = $_ENV['WEBAUTH_USER'];
+	$username = strtolower($username);
+	define('USERNAME', $username);
 	define('BASE_DIR', dirname(__FILE__));
 	
 	define('POSITION_STUDENT', 1);
