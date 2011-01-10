@@ -394,7 +394,9 @@ textarea {
 #macvideo{
 	position: absolute;
 	top: 100px;
-	left: 300px;
+/*	left: 300px; */
+	left: 50%;
+	margin-left: -320px;
 	padding: 20px;
 	background-color: #ccc;
 }
