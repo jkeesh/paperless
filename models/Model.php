@@ -135,13 +135,17 @@
 				return Model::getAllStudentsForClass($class);
 			}
 			
-			$section_db_id = Model::getSectionIDForSectionLeader($sl_sunetid);
 			
-			$query = "SELECT ID, DisplayName, SUNetID FROM People WHERE ID IN (SELECT Person FROM SectionAssignments WHERE Section = :sectionID)";
-			
+			$query = "SELECT ID, DisplayName, SUNetID FROM People WHERE ID IN 
+						(SELECT Person FROM SectionAssignments WHERE Section IN
+							(SELECT ID FROM Sections 
+								WHERE SectionLeader IN
+									(SELECT ID FROM People WHERE SUNetID LIKE :slid )
+								AND Quarter = (SELECT DefaultQuarter FROM State)
+									))";
 			try {
 				$sth = $db->prepare($query);
-				$sth->execute(array(":sectionID" => $section_db_id));
+				$sth->execute(array(":slid" => $sl_sunetid));
 				if($rows = $sth->fetchAll()) {
 					return $rows;
 				}
