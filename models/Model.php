@@ -100,6 +100,7 @@
 			$quarterID = Model::getQuarterID();
 			$sl_db_ID = Model::getUserID($sl_sunetid);
 			$query = "SELECT ID FROM Sections WHERE Quarter = :quarterID AND SectionLeader = :sectionLeaderID";
+		
 			try {
 				$sth = $db->prepare($query);
 				$sth->execute(array(":quarterID" => $quarterID, ":sectionLeaderID" => $sl_db_ID));
