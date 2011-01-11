@@ -38,7 +38,7 @@ root_url = '{$root_url}';
 			{if $class}
 			<div id="classname">{$class|upper}</div>
 			{/if}
-            <div id="name">{$display_name}</div>
+            <div id="name">{$display_name|escape}</div>
             <div id="nav">	
                 {if $admin_class}
                 <a href="{$root_url}{$admin_class}/admin">Admin</a>
