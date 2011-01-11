@@ -26,6 +26,19 @@
 		return CLASS_CONFIG_DIR . "/" . $class . ".csv";
 	}
 	
+	function createRelease($dir){
+		$file = $dir."release";
+		$release = fopen($file, "w");
+		fclose($release);
+	}
+	
+	function deleteRelease($dir){
+		$file = $dir."release";
+		if(is_file($file)){
+		  return unlink($file);
+		}
+	}
+	
 	/* 
 	 * This function returns an array of the accepted file types for a class
 	 * It gets this information from the class configuration file

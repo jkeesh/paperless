@@ -31,6 +31,9 @@ var interactive = false;
     // we need to wait for the syntax highlighter to finish before we access the modified dom
     $(document).ready(function(){
        setTimeout("setupCodeFiles()", 2000); 
+	 	$(':checkbox').change(function() {
+			release();
+		});
     });
     
     function setupCodeFiles(){
@@ -38,12 +41,14 @@ var interactive = false;
         {foreach from=$files item=file key=i}
 		var cur_file = new CodeFile('{$file}', {$i}, interactive);
         
+		{if $showComments}
         {foreach from=$assignment_files[$i]->getAssignmentComments() item=comment}
 		var curRange = new LineRange({$comment->getStartLine()}, {$comment->getEndLine()});
 		cur_file.highlightRange(curRange);
 		var curComment = new Comment('{$comment->getCommentText()}', curRange, cur_file);
 		cur_file.addComment(curComment);
         {/foreach}
+		{/if}
         
 		code_files.push(cur_file);
     	{/foreach}
@@ -90,6 +95,40 @@ var interactive = false;
 		if(comment)
 			comment.edit();
     }
+
+	function release(){
+ 		var action = "delete";
+		var val = $('input:checkbox:checked').val(); 
+ 		if(val != undefined){
+ 		 	action = "create";
+ 		}
+ 		$.ajax({
+ 		   	type: 'POST',
+ 		   	url: window.location.pathname, // post to current location url
+ 		   	data: "action=release&release=" + action,
+ 		   	success: function(data) {
+				showSaved();
+ 		   	},
+ 		   	error: function(XMLHttpRequest, textStatus, errorThrown) {
+ 		   	//TODO
+ 		   	}
+ 		 });
+ 	}
+
+	function resetSaved(){
+			$("#saved").addClass("hidden");
+
+	}
+
+	function fade(){	
+			$("#saved").fadeOut(400);
+			setTimeout("resetSaved()", 500);
+	}
+	function showSaved(){
+			$("#saved").removeClass("hidden");
+			$("#saved").css("display", "block");
+			setTimeout("fade()", 700);
+	}	
 </script>
 
 {foreach from=$files item=file key=i}
@@ -107,6 +146,19 @@ var interactive = false;
 <div id="printlink">
 	<div class="link smaller"><a href="{$code_file}/print" target="_blank">Print</a></div>
 </div>
+
+{if $sl_class or $admin_class}
+<div id="release">
+	<form class="link smaller">
+	<input type="checkbox" name="release" value="" {if $release}checked{/if} />Release<br />
+	</form>
+</div>
+
+<div id="saved" class="hidden">
+	Saved.
+</div>
+
+{/if}
 </div>
 {/if}
 

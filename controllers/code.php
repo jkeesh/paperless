@@ -41,8 +41,11 @@
 			$file_contents = array();
 			$assignment_files = array();
 			
+			$release = False;
 			while($file = readdir($dir)) {
-				if($this->isCodeFile($file, $class)) {
+				if($file == "release"){
+					$release = True;
+				}else if($this->isCodeFile($file, $class)) {
 					$assignmentFile = AssignmentFile::load(array("FilePath" => $dirname . $file));
 					if(!$assignmentFile) {
 					  $string = explode("_", $student); // if it was student_1 just take student
@@ -60,7 +63,7 @@
 					$file_contents[] = htmlentities(file_get_contents($dirname . $file));
 				}
 			}
-			return array($files, $file_contents, $assignment_files);
+			return array($files, $file_contents, $assignment_files, $release);
 		}
 		
 		/*
@@ -85,24 +88,29 @@
 				$role = Model::getRoleForClass(USERNAME, $class);
 			}
 			
-			if($role == POSITION_SECTION_LEADER){
-				$this->smarty->assign("sl_class", $class);
-				$this->smarty->assign("interactive", 1);
-			}
-			if($role == POSITION_STUDENT){
-				$this->smarty->assign("student_class", $class);
-			}
-			if($role > POSITION_SECTION_LEADER){
-				$this->smarty->assign("admin_class", $class);
-			}
+
 			
 		    $sl = Model::getSectionLeaderForStudent($suid);
 			//echo $student . " ". $sl . "\n";
 			
-			list($files, $file_contents, $assignment_files) = $this->getAssignmentFiles($class, $student, $assignment, $sl);
+			list($files, $file_contents, $assignment_files, $release) = $this->getAssignmentFiles($class, $student, $assignment, $sl);
 			
 			if(count($files) == 0){
 				  Header("Location: " . ROOT_URL . "error/for/you");
+			}
+			
+			if($role == POSITION_SECTION_LEADER){
+				$this->smarty->assign("sl_class", $class);
+				$this->smarty->assign("interactive", 1);
+				$showComments = True;
+			}
+			if($role == POSITION_STUDENT){
+				$this->smarty->assign("student_class", $class);
+				$showComments = $release;
+			}
+			if($role > POSITION_SECTION_LEADER){
+				$this->smarty->assign("admin_class", $class);
+				$showComments = True;
 			}
 			
 			// assign template vars
@@ -119,6 +127,21 @@
 			$this->smarty->assign("assignment_files", $assignment_files);
 			$this->smarty->assign("sl", $sl);
 			
+			$this->smarty->assign("release", $release);
+			$this->smarty->assign("showComments", $showComments);
+			
+			// if($release){
+			// 	echo "released";
+			// }else{
+			// 	echo "NO release";
+			// }
+			// 
+			// if($showComments){
+			// 	echo "showcom";
+			// }else{
+			// 	echo "NOshow com";
+			// }
+			
 			// display the template
 			$this->smarty->display("code.html");
 		}
@@ -132,7 +155,7 @@
 		 *       to confirm the request succeeded
 		 */
 		public function post_xhr($class, $assignment, $student) {
-			
+
 			// only section leaders should be able to add comments
 			Permissions::requireRole(POSITION_SECTION_LEADER, $class);
 			
@@ -141,14 +164,24 @@
 			$sl = Model::getSectionLeaderForStudent($suid);
 			
 			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl . "/". $assignment . "/" . $student . "/"; 
-//			$dirname = SUBMISSIONS_DIR . "/" . $sl . "/". $assignment . "/" . $student . "/";
-			
+
 			if(!isset($_POST['action'])) return;
+
+			
+			if($_POST['action'] == "release"){
+				if($_POST['release'] == "create"){
+					createRelease($dirname);
+				}else{
+					deleteRelease($dirname);
+				}
+				return;
+			}
 			
 			$curFile = AssignmentFile::load(array("FilePath" => $dirname . $_POST['filename']));
 			if(!$curFile) return; // TODO handle error
 			
 			if($_POST['action'] == "create") {
+				echo "create";
 				$newComment = AssignmentComment::create($curFile->getID(), $_POST['rangeLower'], $_POST['rangeHigher'], $_POST['text']);
 				$newComment->save();
 			} else if($_POST['action'] == "delete") {
@@ -159,7 +192,7 @@
 						break;
 					}
 				}
-			}
+			} 
 		}
 	}
 	?>

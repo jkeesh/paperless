@@ -448,3 +448,26 @@ textarea {
 	width: 50px;
 	float: left;
 }
+
+#release{
+	margin-top: 20px;
+	z-index: 100;
+	background-color: white;
+	padding: 8px;
+	border: 1px solid #bddff3;
+}
+
+#saved{
+	margin-top: 20px;
+	z-index: 100;
+	background-color: white;
+	padding: 8px;
+	border: 1px solid #bddff3;
+	font-size: 12px;
+	font-family: Helvetica;
+	padding-left: 14px;
+}
+
+.hidden{
+	display: none;
+}

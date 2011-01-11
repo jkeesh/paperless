@@ -25,13 +25,12 @@ function /* class */ Comment(ctext, crange, code_file) {
 			this.text = commentText;
 			this.code_file.addCommentDiv(commentText, self.range);
 			this.code_file.last_comment = self;
-			
 			$.ajax({
 				   type: 'POST',
 				   url: window.location.pathname, // post to current location url
 				   data: "action=create&text=" + commentText + "&rangeLower=" + this.range.lower + "&rangeHigher=" + this.range.higher + "&filename=" + this.filename,
 				   success: function(data) {
-				   //TODO
+					//TODO
 				   },
 				   error: function(XMLHttpRequest, textStatus, errorThrown) {
 				   //TODO
