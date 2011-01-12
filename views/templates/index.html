@@ -9,6 +9,9 @@
 
 <div class="list">
     <div class="header">Assignments</div>
+		{if $no_assns}
+		<div>Nothing Submitted Yet!</div>
+		{/if}
         {foreach from=$assignments item=assignment}
         <div class="link"><a href="{$root_url}{$class}/assignment/{$sl}/{$assignment}">{$assignment}</a></div>
         {/foreach}

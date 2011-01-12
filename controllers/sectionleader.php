@@ -27,6 +27,10 @@ require_once("permissions.php");
 			
 			$assns = $this->getDirEntries($dirname);
 			
+			if(strlen($assns[0]) == 0){
+				$this->smarty->assign("no_assns", 1);
+			}
+			
 			$students = Model::getStudentsForSectionLeader($sectionleader, $class);
 			//print_r($students);
 			
