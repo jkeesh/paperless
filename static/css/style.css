@@ -391,7 +391,7 @@ textarea {
 /* Submit Instructions
  */
 
-#macvideo{
+#macvideo, #pcvideo{
 	position: absolute;
 	top: 100px;
 /*	left: 300px; */
@@ -470,4 +470,9 @@ textarea {
 
 .hidden{
 	display: none;
+}
+
+.error{
+	color: red;
+	font-weight: bold;
 }

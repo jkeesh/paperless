@@ -4,8 +4,13 @@
 
 <div>{$message}</div>
 
-{if $ok}
-<div class="link"><a href="{$root_url}{$class}/student/{$student}">View your submitted code files</a></div>
+{if !$ok}
+<div class="padded link"><a href="{$root_url}{$class}/submit">Please resubmit your files.</a></div>
+
+<div class="padded">If the problem persists, please contact 
+	<span class="link"><a href="mailto:jkeeshin@stanford.edu">jkeeshin@stanford.edu</a></span>
+</div>
+{/if}
 
 <div id="submittedFiles">
 <div id="submittedFilesTitle">Files Included in this Submission</div>
@@ -13,6 +18,16 @@
 <div class="submittedFile">{$file}</div>
 {/foreach}
 </div>
+
+{if $ok}
+<div style="height:20px;">&nbsp;</div>
+<div class="padded">
+	<div>Hey! You're almost done submitting.</div>
+	<div>Please take a look at your code files and make sure they look correct.</div>
+	<div>Whatever you see here is what your section leader will see.</div>
+</div>
+<div class="link"><a href="{$root_url}{$class}/code/{$assn_dir}/{$dir}">View your submitted code files</a></div>
 {/if}
+
 
 {include file="footer.html"}

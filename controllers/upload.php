@@ -39,6 +39,8 @@
 			
 			$assn_dir = $_POST['assignment'];
 			$assns = getAssnsForClass($class);
+			
+			
 			$assn_name = $assns[$assn_dir]["Name"];
 			$assn_date = $assns[$assn_dir]["DueDate"];
 			
@@ -61,15 +63,17 @@
 			$idx = 1;
 			do {
 				$dest_dir = $target_dir . USERNAME . "_" . $idx;
+				$cur_submission = USERNAME . "_" . $idx;
 				$idx++;
 			} while (file_exists($dest_dir));
+			
 			$dirname = $dest_dir; //for output
 			$target = $dest_dir . ".zip";
 			
 			$ok = 1;
 			/* size check */
 			if ($_FILES['uploaded']['size'] > 2000000) { 
-				$message .= "<div class='padded'>Your file is too large.</div>"; 
+				$message .= "<div class='padded error'>Your file is too large.</div>"; 
 				$ok = 0; 
 			}
 			
@@ -78,13 +82,13 @@
 				/* if filename ends in ".zip", then we'll take it */
 				$name = $_FILES['uploaded']['name'];
 				if (strtolower(substr($name, strlen($name) - 4)) != ".zip") {
-					$message .= "<div class='padded'>Please submit a zip file! Type detected: " . $_FILES['uploaded']['type'] . " </div>";
+					$message .= "<div class='padded error'>Please submit a zip file! Type detected: " . $_FILES['uploaded']['type'] . " </div>";
 					$ok = 0; 
 				}
 			}
 			
 			if ($ok==0) { 
-				$message .= "<div class='padded'>Sorry, your file was not uploaded.  Please try again, or contact the course staff for assistance</div>"; 
+				//$message .= "<div class='padded'>Sorry, your file was not uploaded.</div>"; 
 			} else { 
 				//echo "<br/> target is ". $target;
 				if(move_uploaded_file($_FILES['uploaded']['tmp_name'], $target)) {
@@ -97,11 +101,37 @@
 					if(!is_dir($dirname)) return null; // TODO handle error
 					$dir = opendir($dirname);
 					$fileList = array();
+					$foundCode = False;
+					$allDirectories = True;
 					while($file = readdir($dir)) {
-					 	if($file != "." && $file != "..")
+					 	if($file != "." && $file != ".." && $file != "__MACOSX"){
 							$fileList []= $file;
+							if(isCodeFileForClass($file, $class)){
+								$foundCode = True;
+							}
+							$fullpath = $dirname."/". $file;
+							//echo $fullpath;
+							if(!is_dir($fullpath)){
+								$allDirectories = False;
+								//echo $file . " is not a directory";
+							}else{
+								//echo $file . "IS A DIRECTORY";
+							}
+						}
 					}
 					
+					if($allDirectories){
+						$success = False;
+						$ok = 0;
+						$message .="<div class='padded error'>Error. It looks like you zipped a directory instead of just zipping files.</div>";
+					}
+					
+					if(!$foundCode){
+						$success = False;
+						$ok = 0;
+						$legalCodeFiles = getFileTypesForClass($class);
+						$message .= "<div class='padded error'>Error. There were no code files of the proper type submitted.</div>";
+					}
 					if ($success) {
 						//echo "unzipped";
 						unlink($target);
@@ -114,15 +144,16 @@
 					}
 				} else { 
 					$ok = 0;
-					$message .= "<div class='padded'>Sorry, there was a problem uploading your file.  Please try again, or contact the course staff for assistance.</div>"; 
+					$message .= "<div class='padded error'>Sorry, there was a problem uploading your file.  Please try again, or contact the course staff for assistance.</div>"; 
 				}
 			}
 			
 
 			$this->smarty->assign("name", Model::getDisplayName(USERNAME));
 			$this->smarty->assign("class", $class);
-			$this->smarty->assign("dir", $dirname);
+			$this->smarty->assign("dir", $cur_submission);
 			$this->smarty->assign("assn", $assn_name);
+			$this->smarty->assign("assn_dir", $assn_dir);
 			$this->smarty->assign("student", USERNAME);
 			$this->smarty->assign("message", $message);
 			$this->smarty->assign("ok", $ok);

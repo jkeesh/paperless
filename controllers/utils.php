@@ -49,4 +49,12 @@
 		$info = fgetcsv($file);
 		return $info;
 	}
+	
+	function isCodeFileForClass($filename, $class){
+		$ext = pathinfo($filename, PATHINFO_EXTENSION);
+		$ext = strtolower($ext);
+		$filetypes = getFileTypesForClass($class);
+		return in_array($ext, $filetypes);
+	}
+	
 	?>
