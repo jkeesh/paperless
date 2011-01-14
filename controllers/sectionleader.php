@@ -24,7 +24,7 @@ require_once("permissions.php");
 			}
 					
 			$slsdirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR;
-			$sls = $this->getDirEntries($slsdirname);
+			$sls = $this->sortAll($this->getDirEntries($slsdirname));
 									
 			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sectionleader . "/";
 			
