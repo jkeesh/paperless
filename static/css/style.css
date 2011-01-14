@@ -474,6 +474,10 @@ textarea {
 	width: 50px;
 }
 
+.footer-item a:hover{
+	text-decoration: underline;
+}
+
 #release{
 	margin-top: 20px;
 	z-index: 100;
