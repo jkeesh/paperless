@@ -222,8 +222,13 @@ a{
 }
 
 #codeheader .link, #codeheader .link a{
-	font-size: 24px;
+	font-size: 15px;
+	padding: 5px;
 	font-weight: bold;
+}
+
+#codeheader{
+	margin-bottom: 10px;
 }
 
 #container-code{
@@ -464,9 +469,9 @@ textarea {
 }
 
 .footer-item{
-	padding-left: 20px;
+	padding-left: 10px;
+	padding-top: 4px;
 	width: 50px;
-	float: left;
 }
 
 #release{
