@@ -496,3 +496,8 @@ textarea {
 	color: red;
 	font-weight: bold;
 }
+
+
+select{
+	width: 200px;
+}

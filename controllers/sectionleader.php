@@ -22,6 +22,9 @@ require_once("permissions.php");
 			if($role > POSITION_SECTION_LEADER){
 				$this->smarty->assign("admin_class", $class);
 			}
+					
+			$slsdirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR;
+			$sls = $this->getDirEntries($slsdirname);
 									
 			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sectionleader . "/";
 			
@@ -39,6 +42,7 @@ require_once("permissions.php");
 			$this->smarty->assign("students", $students);
 			
 			// assign template variables
+			$this->smarty->assign("sls", $sls);
 			$this->smarty->assign("assignments", $assns);
 			$this->smarty->assign("class", htmlentities($class));
 			$this->smarty->assign("sl", $sectionleader);

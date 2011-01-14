@@ -1,5 +1,19 @@
 {include file="header.html"}
 
+<script type="text/javascript">
+$(document).ready(function(){
+	$("select").change(function() {
+	  	var sl = "";
+        $("select option:selected").each(function () {
+              sl += $(this).text() + " ";
+            });
+			var newurl = "{$root_url}{$class}/sectionleader/" + sl;
+			window.location = newurl;
+	});
+});
+
+</script>
+
 <div class="list">
     <div class="header">Students</div>
         {foreach from=$students item=student}
@@ -15,6 +29,18 @@
         {foreach from=$assignments item=assignment}
         <div class="link"><a href="{$root_url}{$class}/assignment/{$sl}/{$assignment}">{$assignment}</a></div>
         {/foreach}
+</div>
+
+<div class="clearfloat"></div>
+
+<div class="list">
+	<div class="header">Other Section Leaders</div>
+	<select>
+		<option>Select SL to Switch Views</option>
+	{foreach from=$sls item=sl}
+	  <option>{$sl}</option>
+	{/foreach}
+	</select>
 </div>
 
 <div class="clearfloat"></div>
