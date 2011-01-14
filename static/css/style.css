@@ -111,7 +111,7 @@ body{
 }
 
 .list{
-	width: 300px;
+	width: 250px;
 	padding: 0px 20px 20px 20px;
 	float: left;	
 }
@@ -248,9 +248,8 @@ body {
 }
 
 #container {
-	
-/*    width: 875px; */
-	width: 65%;
+    width: 725px; 
+/*	width: 65%; */
     height: 600px;
     padding: 0;
     margin: 0 auto;
@@ -309,8 +308,7 @@ body {
 }
 
 .content-wrapper {
-/*    width: 880px; */
-	width: 100%;
+ 	width: 100%;
   /*  background: url("../images/content-bg.png"); */
 	background-color: white;
 	border: 1px solid #bddff3;
