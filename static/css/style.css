@@ -79,6 +79,24 @@ body{
 	padding: 5px;
 }
 
+.filelink{
+	float: left;
+	padding: 5px;
+	margin-top: 8px;
+	font-size: 12px;
+}
+
+.filelink a{
+	color: black;
+	padding: 5px;
+}
+
+.filelink a:hover{
+	color: white;
+	background-color: gray;
+	padding: 5px;
+}
+
 #wrapper{
 	width: 800px;
 	margin: auto;
@@ -178,6 +196,7 @@ a{
  *
  */
  #filelist{
+	float :left;
 	z-index: 100;
 	background-color: white;
 	padding: 10px;
@@ -218,10 +237,6 @@ a{
 	position: absolute;
 	top: 0px;
 	right: 30px;
-}
-
-.margin{
-	margin: 10px;
 }
 
 
