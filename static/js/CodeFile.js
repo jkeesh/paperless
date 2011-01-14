@@ -117,7 +117,6 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 	
 	this.addCommentDiv = function(text, range, isEditable){
 		if(isEditable == undefined) isEditable = true;
-		//console.log(text + ", editable: " + isEditable);
 		var range_text = range.toString();
 		var comment_id = "c" + range_text;
 		var element_id = "e" + range_text;
@@ -126,50 +125,35 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 		var id = "#file" + this.fileID;
 		var theclass = '.number' + range.lower;
 		var elem = $(theclass, id)[1];
-		//console.log('file '+ this.fileID);
-		//console.log(elem);
 
 		var top_offset = 0;
 		if(elem) top_offset = $(elem).offset().top;
-		//console.log(top_offset);
-//		var style_position = "position:absolute; top:"+ top_offset +"px; right: 100px;";
 		var style_position = "background-color: red; z-index: 5;";
 		
 		var toAdd = "<div id='"+ element_id +"' class='inlineComment'>";
-//		var toAdd = "</pre><div id='"+ element_id +"' style='" + style_position +"'>";
 
 		if(isEditable) toAdd += "<a href=\"javascript:edit("+ this.fileID + ",'" + comment_id + "')\">";
 		toAdd += 	" <div id='" + comment_id +"' class='commentbox'><span class='inlineCommentText' id='ctext" + range_text + "'>" + text + "</span></div>";
 		if(isEditable) toAdd += "</a>";
 		toAdd += "</div>";
-		//$('#comments' + this.fileID).append(toAdd);
-		//$('#container .index'+range.lower).append(toAdd);
-//		var commentLocation = $('#file'+ this.fileID + ' .code .number'+range.lower);
-//		var lineLocation = $('#file'+this.fileID + ' .gutter .number'+range.lower);
-//		console.log(commentLocation);
-//		console.log(lineLocation);
-//		commentLocation.before(toAdd);
+
 
 		var commentLocation = $('#file'+ this.fileID + ' .code .number'+range.higher);
 		var lineLocation = $('#file'+this.fileID + ' .gutter .number'+range.higher);
-//		console.log(commentLocation);
-//		console.log(lineLocation);
+
 		commentLocation.after(toAdd);		
 		
 		
 		var justAdded = $('#'+element_id);
-//		console.log(justAdded);
-//		console.log(justAdded.height());
-	//	var height = toAdd.style.pixelHeight;
-	//	console.log(height);
 		var height = justAdded.height() + 44;
-//		lineLocation.before('<div style="height:'+height + 'px;">&nbsp;</div>');
 	}
 	
 	this.addHandlers();
 }
 
 CodeFile.mousePressed = function(event) {
+	if(commentOpen) return;
+	
 	code_file = event.data.code_file;
 	if (dragging_in_file != null && dragging_in_file != code_file) {
 		return false;

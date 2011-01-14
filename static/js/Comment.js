@@ -15,6 +15,7 @@ function /* class */ Comment(ctext, crange, code_file) {
 	}
 	
 	this.submit = function() {
+		commentOpen = false;
 		this.code_file.last_comment_range = this.range;
 		var commentText = $("textarea").val();
 		commentText = this.filter(commentText);
@@ -68,6 +69,7 @@ function /* class */ Comment(ctext, crange, code_file) {
 	}
 	
 	this.get = function() {
+		commentOpen = true;
 		var id = "#file" + this.code_file.fileID;
 		var theclass = '.number' + this.range.lower;
 		var commentLocation = $(theclass, id);
@@ -93,6 +95,8 @@ function /* class */ Comment(ctext, crange, code_file) {
 	}
 	
 	this.edit = function() {
+		if(commentOpen) return;
+		commentOpen = true;
 		
 		current_range = this.range;
 		current_file_id = this.code_file.fileID;
@@ -135,6 +139,7 @@ function /* class */ Comment(ctext, crange, code_file) {
 	}
 	
 	this.cancel = function(range){
+		commentOpen = false;
 		this.code_file.unhighlightRange(this.range);
 		removeDialog();
 	}

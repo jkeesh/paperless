@@ -1,3 +1,4 @@
+commentOpen = false;
 code_files = [];
 dragging_in_file = null;
 current_dialog = null; // we will only have one dialog at a time
