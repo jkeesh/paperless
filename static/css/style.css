@@ -178,13 +178,10 @@ a{
  *
  */
  #filelist{
-/*	position: absolute;
-	top: 90px;
-	right: 30px;*/
 	z-index: 100;
 	background-color: white;
 	padding: 10px;
-	border: 1px solid #bddff3;
+	border: 2px solid #bddff3; 
 }
 
 #rightside{

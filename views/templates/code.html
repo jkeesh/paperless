@@ -10,11 +10,16 @@
 {else}
 {$assignment}
 {/if}
-
-by 
-<span class="link"><a href="{$root_url}{$class}/student/{$student}">{$student}</a></span> 
 </h2>
 </div>
+
+{if !$print_view}
+<div id="filelist">
+    {foreach from=$files item=file key=i}
+    <span id="fileList{$i}" class="link smaller"><a href="javascript:display('{$i}')">{$file}</a></span>
+    {/foreach}
+</div>
+{/if}
 
 <script type="text/javascript">
 {if ($sl_class or $admin_class) and !$print_view}
@@ -136,12 +141,9 @@ var interactive = false;
 {/foreach}
 
 {if !$print_view}
+
+
 <div id="rightside">
-<div id="filelist">
-    {foreach from=$files item=file key=i}
-    <div id="fileList{$i}" class="link smaller"><a href="javascript:display('{$i}')">{$file}</a></div>
-    {/foreach}
-</div>
 
 <div id="printlink">
 	<div class="link smaller"><a href="{$code_file}/print" target="_blank">Print</a></div>
