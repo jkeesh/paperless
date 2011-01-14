@@ -248,7 +248,9 @@ body {
 }
 
 #container {
-    width: 875px;
+	
+/*    width: 875px; */
+	width: 65%;
     height: 600px;
     padding: 0;
     margin: 0 auto;
@@ -307,14 +309,19 @@ body {
 }
 
 .content-wrapper {
-    width: 880px;
-    background: url("../images/content-bg.png");
+/*    width: 880px; */
+	width: 100%;
+  /*  background: url("../images/content-bg.png"); */
+	background-color: white;
+	border: 1px solid #bddff3;
 }
 
 .content-header {
-    background: url("../images/content-header-bg.png");
+   /* background: url("../images/content-header-bg.png"); */
     /*width: 100%;*/
-	width: 880px;
+	/*width: 880px; */
+	width: 100%;
+	border: px solid #bddff3;
     height: 4px;
 }
 
