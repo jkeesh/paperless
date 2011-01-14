@@ -220,6 +220,10 @@ a{
 	right: 30px;
 }
 
+.margin{
+	margin: 10px;
+}
+
 
 body {
    /* background: url("../images/bg.png") repeat scroll; */
