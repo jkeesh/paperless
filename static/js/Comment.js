@@ -47,7 +47,7 @@ function /* class */ Comment(ctext, crange, code_file) {
 	}
 	
 	this.remove = function() {
-		
+		commentOpen = false;
 		var elem = "#e"+self.range.toString();
 		$(elem).remove(); // remove the comment
 		this.code_file.unhighlightRange(self.range);

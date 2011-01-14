@@ -510,3 +510,8 @@ textarea {
 select{
 	width: 200px;
 }
+
+
+.commentauthor{
+	font-style: italic;
+}

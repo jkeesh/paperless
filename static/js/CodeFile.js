@@ -133,7 +133,9 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 		var toAdd = "<div id='"+ element_id +"' class='inlineComment'>";
 
 		if(isEditable) toAdd += "<a href=\"javascript:edit("+ this.fileID + ",'" + comment_id + "')\">";
-		toAdd += 	" <div id='" + comment_id +"' class='commentbox'><span class='inlineCommentText' id='ctext" + range_text + "'>" + text + "</span></div>";
+		toAdd += 	" <div id='" + comment_id +"' class='commentbox'><span class='inlineCommentText' id='ctext" + range_text + "'>" + text + "</span>";
+		//toAdd +=	"<div class='commentauthor'>Jeremy</div>"; // add the author
+		toAdd +=    "</div>";
 		if(isEditable) toAdd += "</a>";
 		toAdd += "</div>";
 
