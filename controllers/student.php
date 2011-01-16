@@ -102,8 +102,7 @@
 			//print_r($information);
 			
 			// assign template vars
-			if(count($all) > 0) // do not show any links if there are no files
-				$this->smarty->assign("information", $information);
+			$this->smarty->assign("information", $information);
 			$this->smarty->assign("class", htmlentities($class));
 			$this->smarty->assign("student", Model::getDisplayName($student));
 			
