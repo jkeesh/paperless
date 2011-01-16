@@ -16,6 +16,7 @@
 						
 			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sectionleader . "/";
 			$students = $this->getDirEntries($dirname . $assignment);
+			sort($students);
 			
 			$this->smarty->assign("students", $students);
 			$this->smarty->assign("assignment", $assignment);

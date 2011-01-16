@@ -55,7 +55,7 @@ function /* class */ Comment(ctext, crange, code_file) {
 		//remove it from selected ranges
 		for (i = 0; i < this.code_file.selected_ranges.length; i++) {
 			var saved_range = this.code_file.selected_ranges[i];
-			if (saved_range.lower == range.lower && saved_range.higher == range.higher) {
+			if (saved_range && saved_range.lower == this.range.lower && saved_range.higher == this.range.higher) {
 				this.code_file.selected_ranges.splice(i, 1);
 			}
 		}

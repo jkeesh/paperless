@@ -512,6 +512,11 @@ select{
 }
 
 
-.commentauthor{
-	font-style: italic;
+.content .code .inlineComment .commentbox .commentauthor{
+	font-style: italic !important;	
+	font-family: Helvetica !important;
+	float: right !important;
+	font-size: 10px !important;
+	margin-bottom: 0px !important;
 }
+
