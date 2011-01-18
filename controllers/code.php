@@ -181,7 +181,6 @@
 			if(!$curFile) return; // TODO handle error
 			
 			if($_POST['action'] == "create") {
-				echo "create";
 				$newComment = AssignmentComment::create($curFile->getID(), $_POST['rangeLower'], $_POST['rangeHigher'], $_POST['text']);
 				$newComment->save();
 			} else if($_POST['action'] == "delete") {

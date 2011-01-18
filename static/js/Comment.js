@@ -26,6 +26,8 @@ function /* class */ Comment(ctext, crange, code_file) {
 			this.text = commentText;
 			this.code_file.addCommentDiv(commentText, self.range);
 			this.code_file.last_comment = self;
+			commentText = encodeURIComponent(commentText); //needed to keep +, other special chars sent in url
+			//console.log(commentText);
 			$.ajax({
 				   type: 'POST',
 				   url: window.location.pathname, // post to current location url
