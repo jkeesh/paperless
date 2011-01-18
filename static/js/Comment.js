@@ -7,7 +7,9 @@ function /* class */ Comment(ctext, crange, code_file) {
 	
 	this.filter = function(text){
 		text = text.replace(/</g,'&lt;').replace(/>/g,'&gt;');
-		return text.replace(/\n/g, "<br>");
+		text = text.replace(/\n/g, "<br>");
+		text = text.replace(/\s/g, '&nbsp;');
+		return text;
 	}
 	
 	this.unfilter = function(text){
