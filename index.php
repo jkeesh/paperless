@@ -9,6 +9,7 @@
 	 */
 	require_once('lib/smarty/Smarty.class.php');
 	require_once('lib/toro.php');
+	require_once('controllers/utils.php');
 	
 	/*
 	 * Each controller extends the following class.
@@ -28,9 +29,6 @@
 			define('IS_STUDENT_ONLY', $is_student_only);
 			define('IS_SECTION_LEADER', $is_sl);
 			
-			//$class = Model::getClass(USERNAME);
-			//define('CLASSNAME', $class); //we may need CLASSNAME_STUDENT and CLASSNAME_SL because they could be different ah!
-			
 			$this->smarty = new Smarty();
 			
 			$this->smarty->template_dir = BASE_DIR . '/views/templates/';
@@ -47,6 +45,10 @@
 			$this->smarty->assign("is_section_leader", $is_sl);
 			$this->smarty->assign("is_student", $is_student);
 			$this->smarty->assign("is_admin", $is_admin);
+			
+			if(usingIE()){
+				$this->smarty->assign("ie", 1);
+			}
 			
 			if($is_sl) $sectionLeader = USERNAME;
 			else $sectionLeader = Model::getSectionLeaderForStudent(USERNAME);

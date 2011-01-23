@@ -32,6 +32,11 @@ root_url = '{$root_url}';
 </head>
 <body>
     <div id="container">
+		{if $ie}
+		<div class="iebox">
+		This site is not designed for Intenet Explorer.  If you want to see this webpage as intended, please use <a href="http://www.google.com/chrome">Google Chrome</a> or <a href="http://firefox.com">Mozilla Firefox.</a>
+		</div>
+		{/if}
 		{if !$print_view}
         <div id="logo"><a href="{$root_url}" id="logo-link"></a></div>
         <div id="user">
@@ -56,6 +61,8 @@ root_url = '{$root_url}';
             </div>
             <div class="clearfloat"></div>
         </div>
+
+
 		{/if}
         <div class="clearfloat"></div>
         <!-- <div class="content-header codesettings"></div> -->

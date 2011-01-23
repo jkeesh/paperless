@@ -520,3 +520,16 @@ select{
 	margin-bottom: 0px !important;
 }
 
+.iebox{
+	margin-top: 15px;
+	padding-top: 20px;
+	padding-left: 50px;
+	padding-right: 50px;
+	padding-bottom: 20px;
+	background-color: #FFC1C1;
+	border: 2px solid black;
+}
+
+.iebox a{
+	text-decoration: underline;
+}
