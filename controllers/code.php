@@ -130,18 +130,6 @@
 			$this->smarty->assign("release", $release);
 			$this->smarty->assign("showComments", $showComments);
 			
-			// if($release){
-			// 	echo "released";
-			// }else{
-			// 	echo "NO release";
-			// }
-			// 
-			// if($showComments){
-			// 	echo "showcom";
-			// }else{
-			// 	echo "NOshow com";
-			// }
-			
 			// display the template
 			$this->smarty->display("code.html");
 		}

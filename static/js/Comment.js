@@ -7,13 +7,11 @@ function /* class */ Comment(ctext, crange, code_file) {
 	
 	this.filter = function(text){
 		text = text.replace(/<script>/g,'').replace(/<\/script>/g,'');
-		text = text.replace(/\n/g, "<br>");
-		text = text.replace(/\s/g, '&nbsp;');
 		return text;
 	}
 	
 	this.unfilter = function(text){
-		return text.replace(/<br>/g, "\n");
+		return text;
 	}
 	
 	this.submit = function() {
@@ -44,10 +42,7 @@ function /* class */ Comment(ctext, crange, code_file) {
 
 		}
 		
-		var elemname = '#ctext' + this.range.toString();
-		//console.log("sumbit : " + elemname);
-		//console.log( $(elemname) );
-		
+		var elemname = '#ctext' + this.range.toString();		
 	}
 	
 	this.remove = function() {
@@ -109,8 +104,10 @@ function /* class */ Comment(ctext, crange, code_file) {
 			return;
 		}
 		
-		var text = $('#ctext' + this.range.toString()).html();	
+		var unformatted = $('#htext'+this.range.toString());
+		var text = $('#htext' + this.range.toString()).html();			
 		text = this.unfilter(text);	
+		
 		var elem = "#e"+self.range.toString();
 		$(elem).remove(); // remove the comment
 		
@@ -135,7 +132,7 @@ function /* class */ Comment(ctext, crange, code_file) {
 				closeOnEscape: false,
 				buttons: { 
 				"Submit":  function() { self.submit(); }, 
-				"Delete":  function() { self.remove(); }
+				"Delete":  function() { self.remove(); },
 				}, 
 				});
 		

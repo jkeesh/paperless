@@ -12,15 +12,34 @@ themeID = 0;
 shortcutsBase = "<div id='shortcuts' style='width: 400px; font-family: Arial; position:absolute; top: 100px; left: 400px; -moz-border-radius: 8px; border-radius: 8px;"
 				  +" font-size: 16px; background-color: black; color: white; padding: 60px; opacity:0.8;'>"
 				  +	"<div class='keyboardTitle'>Keyboard Shortcuts</div>";
-shortcutsEdit = "<div><span class='keyboardShortcuts'>&lt;Tab&gt;: </span><span class='keyboardAction'>Submit</span></div>"
-				  +	"<div><span class='keyboardShortcuts'>&lt;Ctrl&gt;+0: </span><span class='keyboardAction'>Delete</span></div>"
-				  +   "<div><span class='keyboardShortcuts'>&lt;Ctrl&gt;+z:</span><span class='keyboardAction'> Edit Last Comment</span></div>";
-				
-shortcutsAll = "<div><span class='keyboardShortcuts'>&lt;Ctrl&gt;+1: </span><span class='keyboardAction'>Toggle Shortcuts</span></div>"
-				  +   "<div><span class='keyboardShortcuts'>&lt;Ctrl&gt;+2: </span><span class='keyboardAction'>Change Theme</span></div>"
+shortcutsEdit = "<div class='keyboardLine'><span class='keyboardShortcuts'>&lt;Tab&gt;: </span><span class='keyboardAction'>Submit</span></div>"
+				  +	"<div class='keyboardLine'><span class='keyboardShortcuts'>&lt;Ctrl&gt;+0: </span><span class='keyboardAction'>Delete</span></div>"
+				  +   "<div class='keyboardLine'><span class='keyboardShortcuts'>&lt;Ctrl&gt;+z:</span><span class='keyboardAction'> Edit Last Comment</span></div>"
+				  +   "<div class='keyboardLine'><span class='keyboardShortcuts'>&lt;Ctrl&gt;+3:</span><span class='keyboardAction'> Show Markdown</span></div>"
 				  +	"</div>";
+					
+				
+shortcutsAll = "<div class='keyboardLine'><span class='keyboardShortcuts'>&lt;Ctrl&gt;+1: </span><span class='keyboardAction'>Toggle Shortcuts</span></div>"
+				  +   "<div class='keyboardLine'><span class='keyboardShortcuts'>&lt;Ctrl&gt;+2: </span><span class='keyboardAction'>Change Theme</span></div>"
 
 
+
+markdownBase = "<div id='shortcuts' style='width: 400px; font-family: Arial; position:absolute; top: 100px; left: 400px; -moz-border-radius: 8px; border-radius: 8px;"
+				+" font-size: 16px; background-color: black; color: white; padding: 60px; opacity:0.8;'>"
+				+	"<div class='keyboardTitle'>Markdown Reference</div>";
+				
+markdownRef = "<div class='keyboardLine'><span class='keyboardShortcuts'>Emphasis</span><span class='keyboardAction'>_italics_</span></div>"
+			 +	"<div class='keyboardLine'><span class='keyboardShortcuts'>Bold</span><span class='keyboardAction'>**bold**</span></div>"
+			 +   "<div class='keyboardLine'><span class='keyboardShortcuts'>Header</span><span class='keyboardAction'># Header</span></div>"
+			 +   "<div class='keyboardLine'><span class='keyboardShortcuts'>Header</span><span class='keyboardAction'>## Smaller</span></div>"
+			 +   "<div class='keyboardLine'><span class='keyboardShortcuts'>Code</span><span class='keyboardAction'>start line with 4+ spaces</span></div>"
+			 +   "<div class='keyboardLine'><span class='keyboardShortcuts'>Paragraph</span><span class='keyboardAction'>2 line returns</span></div>"
+			 +   "<div class='keyboardLine'><span class='keyboardShortcuts'>List</span><span class='keyboardAction'>* this</span></div>"
+			 +   "<div class='keyboardLine'><span class='keyboardShortcuts'>&nbsp;</span><span class='keyboardAction'>* that</span></div>"
+			 +   "<div class='keyboardLine'><span class='keyboardShortcuts'>List (#)</span><span class='keyboardAction'>1. item</span></div>"
+			 +   "<div class='keyboardLine'><span class='keyboardShortcuts'>&nbsp;</span><span class='keyboardAction'>2. item 2</span></div>"
+			 +   "<div class='keyboardLine'><span class='keyboardShortcuts'>Line</span><span class='keyboardAction'>***</span></div>"
+			+	"</div>";
 
 function removeDialog(){
 	if( $('textarea')) $('textarea').remove();
@@ -88,18 +107,29 @@ function addShortcuts(){
 											 $('#syntaxStylesheet').attr('href', newTheme);
 											 })
 				 );
+				
+	shortcut.add("ctrl+3", new SafeFunction ( function(){
+		 									if($("#shortcuts").html() != null){
+		 										$("#shortcuts").remove();
+		 									}else{
+												var display = markdownBase + markdownRef;
+		 										$("body").append(display);
+		 										}
+														 })
+											);
 	
 	
 	shortcut.add("ctrl+1", new SafeFunction ( function(){
 											 if($("#shortcuts").html() != null){
 											 $("#shortcuts").remove();
 											 }else{
-												 var code_file = code_files[current_file_id];
-												var display = shortcutsBase;
-											 if(code_file.editable){
-												display += shortcutsEdit;
-											 }
-											  display += shortcutsAll;
+													var code_file = code_files[current_file_id];
+												 	var display = shortcutsBase;
+													display += shortcutsAll;
+											 		if(code_file.editable){
+														display += shortcutsEdit;
+											 		}
+											  
 											 $("body").append(display);
 											 }
 											 } )

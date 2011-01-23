@@ -1,11 +1,7 @@
 function /* class */ LineRange(a, b) {
 	this.lower = Math.min(a, b);
 	this.higher = Math.max(a, b);
-	
-	this.toString = function() {
-		return "(" + this.lower + "," + this.higher + ")";
-	}
-	
+		
 	this.contains = function(num) {
 		if (num >= lower && num <= higher) {
 			return true;
@@ -24,8 +20,15 @@ function /* class */ LineRange(a, b) {
 	}
 	
 	this.toString = function(){
-		var range_text = this.lower + "-" + this.higher;
-		if(this.lower == this.higher) range_text = this.lower;
-		return range_text;
+		return this.lower + "-" + this.higher;
 	}
+	
+}
+
+function stringToRange(str){
+	var pattern = /(\d+)-(\d+)/;
+	var result = pattern.exec(str);
+	var start = parseInt(result[1]);
+	var end = parseInt(result[2]);
+	return new LineRange(start, end);
 }

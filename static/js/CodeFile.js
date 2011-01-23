@@ -18,6 +18,24 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 	
 	var self = this;
 	
+	
+	this.setupComments = function(){
+		var commentLocation = $('#comments'+this.fileID);
+		var children = commentLocation.children();
+		for(var i = 0; i < children.length; i++){
+			var curComment = children[i];
+			var cur = $(curComment);
+			var rangeString = cur.attr('id');
+			var span = cur.find('span');
+			var text = span.html();
+			var range = stringToRange(rangeString);
+			var newComment = new Comment(text, range, this);
+			this.addComment(newComment);
+		}
+	}
+	
+	
+	
 	this.showComments = function(){
 		for(var i = 0; i < this.comment_list.length; i++){
 			var comment = this.comment_list[i];
@@ -131,9 +149,12 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 		var style_position = "background-color: red; z-index: 5;";
 		
 		var toAdd = "<div id='"+ element_id +"' class='inlineComment'>";
+		
+		formattedText = converter.makeHtml(text);	
 
+		toAdd += "<span class='hiddenPlainText' id='htext" + range_text + "'>" + text + "</span>";
 		if(isEditable) toAdd += "<a href=\"javascript:edit("+ this.fileID + ",'" + comment_id + "')\">";
-		toAdd += 	" <div id='" + comment_id +"' class='commentbox'><span class='inlineCommentText' id='ctext" + range_text + "'>" + text + "</span>";
+		toAdd += 	" <div id='" + comment_id +"' class='commentbox'><span class='inlineCommentText' id='ctext" + range_text + "'>" + formattedText + "</span>";
 		//toAdd +=	"<div class='commentauthor'>Jeremy Keeshin</div><div style='clear:both'></div>"; // add the author
 		toAdd +=    "</div>";
 		if(isEditable) toAdd += "</a>";

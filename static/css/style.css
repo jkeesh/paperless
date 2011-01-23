@@ -12,6 +12,10 @@ textarea{
 	right: 20px;
 }
 
+.keyboardLine{
+	padding-top: 3px;
+}
+
 .keyboardShortcuts{
 	color: yellow;
 	width: 140px;
@@ -451,12 +455,14 @@ textarea {
 /* Inline Comment CSS */
 .content .code .inlineComment{
 	background-color: white !important; 
-	padding: 10px !important;
+/*	padding: 7px !important; */
+	padding-left: 10px !important;
+	padding-right: 10px !important;
 	border: 2px solid black !important;
 	font-family: Helvetica !important;
 	margin: 10px !important;
 	z-index: 5 !important;
-	width: 780px !important;
+/*	width: 780px !important; */
 }
 
 .content .code .inlineCommentText{
@@ -532,4 +538,8 @@ select{
 
 .iebox a{
 	text-decoration: underline;
+}
+
+.hiddenPlainText{
+	display: none !important;
 }
