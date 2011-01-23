@@ -1,22 +1,25 @@
 <?php
 	class IndexHandler extends ToroHandler {
 		
-		public function get($class) {			
-			if(!$class) {
-				$class = Model::getClass(USERNAME);
-			}
-			
-			if(!is_array($class)){
+		public function get($class) {		
+			if($class){
 				Header("Location: ".  ROOT_URL ."error/for/you");
 				return;
 			}
-			if( count($class) > 1){ //they are in multiple classes, redirect to choice page
+			
+			$userClasses = Model::getClass(USERNAME);
+			
+			if(!is_array($userClasses)){
+				Header("Location: ".  ROOT_URL ."error/for/you");
+				return;
+			}
+			if( count($userClasses) > 1){ //they are in multiple classes, redirect to choice page
 				Header("Location: " . ROOT_URL . "select");
 				return;
 			}
 			
-			$class = strtolower($class[0]['Name']);
-			
+			$class = strtolower($userClasses[0]['Name']);
+
 			if(strlen($class) == 0){
 				$this->smarty->display("error.html");
 				return;

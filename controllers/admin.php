@@ -2,7 +2,7 @@
 	class AdminHandler extends ToroHandler {
 		
 		public function get($class) {
-			
+						
 			$role = Permissions::requireRole(POSITION_TEACHING_ASSISTANT, $class);
 			
 			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR;
