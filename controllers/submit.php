@@ -5,10 +5,12 @@
 	class SubmitHandler extends ToroHandler {
 				
 		public function get($class) {
-			
-			$role = Model::getRoleForClass(USERNAME, $class);			
+			$role = Model::getRoleForClass(USERNAME, $class);	
+					
 			if($role == POSITION_STUDENT){
 				$this->smarty->assign("student_class", $class);
+			}else{
+				Header("Location: " . ROOT_URL);
 			}
 						
 			$sectionleader = Model::getSectionLeaderForStudent(USERNAME);
