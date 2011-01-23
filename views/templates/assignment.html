@@ -2,6 +2,10 @@
 
 <h2>Assignment: {$assignment}</h2>
 
+{if $nothing}
+<div style="padding: 10px; font-weight: bold;">No submissions here yet.</div>
+{/if}
+
 {foreach from=$students item=student}
 <div class="link">
     <a href="{$root_url}{$class}/code/{$assignment}/{$student}">{$assignment} by {$student}</a>
