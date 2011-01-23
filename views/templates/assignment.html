@@ -6,9 +6,12 @@
 <div style="padding: 10px; font-weight: bold;">No submissions here yet.</div>
 {/if}
 
-{foreach from=$students item=student}
-<div class="link">
-    <a href="{$root_url}{$class}/code/{$assignment}/{$student}">{$assignment} by {$student}</a>
+
+{foreach from=$info item=student}
+<div class="link">	
+	{if $student.release}<strong>{/if}	
+    <a href="{$root_url}{$class}/code/{$assignment}/{$student.dirname}">{$assignment} by {$student.dirname}</a>
+	{if $student.release}</strong>{/if}	
 </div>
 {/foreach}
 

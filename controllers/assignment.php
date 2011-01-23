@@ -18,16 +18,34 @@
 				$this->smarty->assign("admin_class", $class);
 			}
 						
-			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sectionleader . "/";
-			$students = $this->getDirEntries($dirname . $assignment);
+			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sectionleader . "/" . $assignment;
+			$students = $this->getDirEntries($dirname);
 			
 
+			$info = array();
+			
 			sort($students);
 			
-			if(count($students[0]) > 0)
+			$i = 0;
+			foreach($students as $student){
+				$info[$i]['dirname'] = $student;
+				$releaseCheck = $dirname . "/" .$student."/release";
+				$info[$i]['release'] = 0;
+				if(is_file($releaseCheck)){
+					echo "exists";
+					$info[$i]['release'] = 1;
+				}
+
+				$i++;
+			}
+						
+			if(count($students[0]) > 0){
 				$this->smarty->assign("students", $students);
-			else
+				$this->smarty->assign("info", $info);
+			}else{
 				$this->smarty->assign("nothing", 1);
+			}
+				
 			$this->smarty->assign("assignment", $assignment);
 			$this->smarty->assign("class", $class);
 			
