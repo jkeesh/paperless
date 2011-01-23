@@ -22,7 +22,9 @@ var converter = new Showdown.converter();
     <span id="fileList{$i}" class="filelink"><a href="javascript:display('{$i}')">{$file}</a></span>
     {/foreach}
 </div>
+
 <div style="clear:both"></div>
+<div id="loading">Loading...</div>
 {/if}
 
 <script type="text/javascript">
@@ -39,14 +41,14 @@ var interactive = false;
     
     // we need to wait for the syntax highlighter to finish before we access the modified dom
     $(document).ready(function(){
-       	setTimeout("setupCodeFiles()", 2000); 
+       	setTimeout("setupCodeFiles()", 3000); 
 	 	$(':checkbox').change(function() {
 			release();
 		});
     });
     
     function setupCodeFiles(){
-        
+        $('#loading').fadeOut();
         {foreach from=$files item=file key=i}
 		var cur_file = new CodeFile('{$file}', {$i}, interactive);
 		code_files.push(cur_file);

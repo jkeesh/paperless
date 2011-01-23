@@ -543,3 +543,9 @@ select{
 .hiddenPlainText{
 	display: none !important;
 }
+
+#loading{
+	position: absolute;
+	top: 200px;
+	padding: 20px;
+}
