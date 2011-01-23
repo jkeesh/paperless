@@ -32,7 +32,6 @@
 				$releaseCheck = $dirname . "/" .$student."/release";
 				$info[$i]['release'] = 0;
 				if(is_file($releaseCheck)){
-					echo "exists";
 					$info[$i]['release'] = 1;
 				}
 
