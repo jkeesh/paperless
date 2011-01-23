@@ -87,7 +87,7 @@ function /* class */ Comment(ctext, crange, code_file) {
 				buttons: { 
 				"Submit": function() { self.submit(); },
 				"Cancel": function() { self.cancel(); },
-				},
+				}
 				});
 		
 		$("textarea").focus();
@@ -133,7 +133,7 @@ function /* class */ Comment(ctext, crange, code_file) {
 				buttons: { 
 				"Submit":  function() { self.submit(); }, 
 				"Delete":  function() { self.remove(); },
-				}, 
+				}
 				});
 		
 		$("textarea").focus();
