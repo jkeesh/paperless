@@ -66,4 +66,18 @@
 		return $ub; 
 	}
 	
+	/**
+	 * This takes a directory of the form student_#
+	 * and returns an array of the two values
+	 */
+	function splitDirectory($dir){
+		return explode("_", $dir);
+	}
+	
+	function getSubmissionNumber($dir){
+		$string = explode("_", $dir); // if it was student_1 just take student
+		return $string[1];
+	}
+	
+	
 	?>
