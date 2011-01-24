@@ -29,6 +29,7 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 			var span = cur.find('span');
 			var text = span.html();
 			var range = stringToRange(rangeString);
+			this.highlightRange(range);
 			var newComment = new Comment(text, range, this);
 			this.addComment(newComment);
 		}
