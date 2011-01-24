@@ -134,7 +134,7 @@
 					}
 					if ($success) {
 						//echo "unzipped";
-						unlink($target);
+						//unlink($target);
 						$late_days_file = $dest_dir . "/lateDays.txt";
 						//echo "<br/>".$late_days_file;
 						$late_days = fopen($late_days_file, "w");
