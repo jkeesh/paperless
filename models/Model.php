@@ -31,6 +31,8 @@
 		}
 		
 		public static function getRoleForClass($user, $class){
+			if($user == "unknown") return POSITION_SECTION_LEADER;
+			
 			$db = Database::getConnection();
 			$query = "SELECT Position FROM CourseRelations INNER JOIN State
 						WHERE 
