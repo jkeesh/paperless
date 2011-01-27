@@ -138,7 +138,7 @@ var interactive = false;
 {if $showComments}
 {foreach from=$assignment_files[$i]->getAssignmentComments() item=comment}
 <div id="e{$comment->getStartLine()}-{$comment->getEndLine()}" class="inlineComment">
-<span class="hiddenPlainText">{$comment->getCommentText()}</span>
+<span class="hiddenPlainText">{$comment->getCommentText()|stripslashes}</span>
 </div>
 {/foreach}
 {/if}
