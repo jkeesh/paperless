@@ -549,3 +549,16 @@ select{
 	top: 200px;
 	padding: 20px;
 }
+
+.message{
+	padding: 15px;
+	background-color: #ccc;
+	margin: 10px 10px;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+}
+
+.message a{
+	text-decoration: underline;
+	font-weight: bold;
+}

@@ -6,6 +6,11 @@ var converter = new Showdown.converter();
 </script>
 
 
+{if $sl_class}
+<div class="message">Hi section leaders! I have gotten a few questions recently about changes in paperless so I wanted to clarify them. Comments can now be formatted with <a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a>, and this has caused a few changes. If you do a line break, it will not create a line break. That is because Markdown requires two returns. If you want a single line break, you can end a line with two spaces. If you want to type code and maintain spacing, start a line with four spaces. Hit ctrl+1 for shortcuts and ctrl+3 for a quick markdown reference. Email me if you have any questions. - Jeremy </div>
+{/if}
+
+
 <div id="codeheader">
 {if $sl_class or $admin_class}
 <span class="link"><a href="{$root_url}{$class}/assignment/{$sl}/{$assignment}">{$assignment}</a></span>
