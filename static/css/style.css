@@ -562,3 +562,19 @@ select{
 	text-decoration: underline;
 	font-weight: bold;
 }
+
+.blackbox{
+	width: 400px; 
+	font-family: Arial; 
+	position:fixed; 
+	top: 100px; 
+	left: 50%;
+	margin-left: -250px;
+	-moz-border-radius: 8px; 
+	border-radius: 8px;"
+	font-size: 16px; 
+	background-color: black; 
+	color: white; 
+	padding: 60px; 
+	opacity:0.8;'
+}

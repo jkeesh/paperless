@@ -9,8 +9,7 @@ shortcuts_added = false;
 themes = new Array('shCoreDefault.css', 'shCoreMDUltra.css' ,'shCoreMidnight.css', 'shCoreDjango.css', 'shCoreRDark.css', 'shCoreEclipse.css', 'shCoreEmacs.css', 'shCoreFadeToGrey.css');	
 themeID = 0;
 
-shortcutsBase = "<div id='shortcuts' style='width: 400px; font-family: Arial; position:absolute; top: 100px; left: 400px; -moz-border-radius: 8px; border-radius: 8px;"
-				  +" font-size: 16px; background-color: black; color: white; padding: 60px; opacity:0.8;'>"
+shortcutsBase = "<div id='shortcuts' class='blackbox'>"
 				  +	"<div class='keyboardTitle'>Keyboard Shortcuts</div>";
 shortcutsEdit = "<div class='keyboardLine'><span class='keyboardShortcuts'>&lt;Tab&gt;: </span><span class='keyboardAction'>Submit</span></div>"
 				  +	"<div class='keyboardLine'><span class='keyboardShortcuts'>&lt;Ctrl&gt;+0: </span><span class='keyboardAction'>Delete</span></div>"
@@ -24,8 +23,7 @@ shortcutsAll = "<div class='keyboardLine'><span class='keyboardShortcuts'>&lt;Ct
 
 
 
-markdownBase = "<div id='shortcuts' style='width: 400px; font-family: Arial; position:absolute; top: 100px; left: 400px; -moz-border-radius: 8px; border-radius: 8px;"
-				+" font-size: 16px; background-color: black; color: white; padding: 60px; opacity:0.8;'>"
+markdownBase = "<div id='shortcuts' class='blackbox'>"
 				+	"<div class='keyboardTitle'>Markdown Reference</div>";
 				
 markdownRef = "<div class='keyboardLine'><span class='keyboardShortcuts'>Emphasis</span><span class='keyboardAction'>_italics_</span></div>"
@@ -34,6 +32,7 @@ markdownRef = "<div class='keyboardLine'><span class='keyboardShortcuts'>Emphasi
 			 +   "<div class='keyboardLine'><span class='keyboardShortcuts'>Header</span><span class='keyboardAction'>## Smaller</span></div>"
 			 +   "<div class='keyboardLine'><span class='keyboardShortcuts'>Code</span><span class='keyboardAction'>start line with 4+ spaces</span></div>"
 			 +   "<div class='keyboardLine'><span class='keyboardShortcuts'>Paragraph</span><span class='keyboardAction'>2 line returns</span></div>"
+			 +   "<div class='keyboardLine'><span class='keyboardShortcuts'>Line Break</span><span class='keyboardAction'>end line with 2 spaces</span></div>"
 			 +   "<div class='keyboardLine'><span class='keyboardShortcuts'>List</span><span class='keyboardAction'>* this</span></div>"
 			 +   "<div class='keyboardLine'><span class='keyboardShortcuts'>&nbsp;</span><span class='keyboardAction'>* that</span></div>"
 			 +   "<div class='keyboardLine'><span class='keyboardShortcuts'>List (#)</span><span class='keyboardAction'>1. item</span></div>"
