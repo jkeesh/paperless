@@ -110,7 +110,7 @@ function /* class */ Comment(ctext, crange, code_file) {
 		text = this.unfilter(text);	
 		
 		var elem = "#e"+self.range.toString();
-		console.log($(elem));
+		//console.log($(elem));
 		$(elem).remove(); // remove the comment
 		
 		// remove the old comment     
