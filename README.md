@@ -11,14 +11,10 @@ easy, and to avoid paper submission copies. It's almost 2011!
 
 Download MAMP.
 
-Visit localhost:8888/MAMP
-
-Click phpMyAdmin
-
-Create a new database called 'paperless'
-
-Get the sql copy of the database with relevant tables
-
+Visit localhost:8888/MAMP  
+Click phpMyAdmin  
+Create a new database called 'paperless'  
+Get the sql copy of the database with relevant tables  
 Click import and select the sql file
 
 ### Configure the Code
