@@ -18,10 +18,10 @@ Click import and select the sql file
 
 ### Configure the Code
 
-    Go to /Applications/MAMP/htdocs
+    $ cd /Applications/MAMP/htdocs
     $ git clone git://github.com/jkeesh/paperless.git
-    cd paperless
-    ./setup
+    $ cd paperless
+    $ ./setup
 
 ### Configure the Submissions
 
