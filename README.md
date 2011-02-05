@@ -18,10 +18,10 @@ Click import and select the sql file
 
 ### Configure the Code
 
-Go to /Applications/MAMP/htdocs
-$ git clone git://github.com/jkeesh/paperless.git
-cd paperless
-./setup
+    Go to /Applications/MAMP/htdocs
+    $ git clone git://github.com/jkeesh/paperless.git
+    cd paperless
+    ./setup
 
 ### Configure the Submissions
 
@@ -47,11 +47,11 @@ contents of the configuration files for the web and your local
 machine. To get it to run locally copy the config_local.php file
 into a file called config.php.
 
-cp config_local.php config.php
+    cp config_local.php config.php
 
 There are two .htaccess files, one for local and one for web.
 
-cp .htaccess_local .htaccess 
+    cp .htaccess_local .htaccess 
 
 to use the local version of the .htaccess file.
 
