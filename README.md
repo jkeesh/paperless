@@ -31,7 +31,7 @@ If you are going to work with local submissions files for testing,
 make sure you put them in a directory called submission_files
 
 For example, for me it should look like this:
-submission_files/cs106a/submissions/jkeeshin/(assn)/(student)/(code)
+    submission_files/cs106a/submissions/jkeeshin/(assn)/(student)/(code)
 
 ### Run
 
