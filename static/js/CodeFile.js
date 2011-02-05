@@ -16,6 +16,8 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 	this.selected_ranges = [];
 	this.last_comment = null;
 	
+	this.highlights = new Array();
+	
 	var self = this;
 	
 	
@@ -58,14 +60,18 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 	
 	this.addHandlers = function() {
 		if(!this.interactive) return;
-		
+
+		this.highlights.push(0); // just put a zero in index zero-- we want to start from line 1
 		var line_no = 1;
 		do {
+			this.highlights.push(0);
 			var line = this.getLine(line_no);
 			line.bind("mousedown", {code_file : this}, CodeFile.mousePressed);
 			line.bind("mouseenter", {code_file : this}, CodeFile.mouseEntered);
 			line_no++;
 		} while(line.size() != 0);
+		
+		console.log(this.highlights);
 	}
 	
 	this.getLine = function(line_no) {
@@ -83,7 +89,7 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 	
 	this.hiliteLineNo = function(line_no) {
 		var id = "#file" + this.fileID;
-		var theclass = '.number' + line_no;
+		var theclass = '.number' + line_no;		
 		$(theclass, id).addClass('highlighted');
 	}
 	
@@ -103,16 +109,36 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 	}
 	
 	this.highlightRange = function(range){
+		console.log("highlight " + range);
+		
 		for (var i = range.lower; i <= range.higher; i++) {
 			this.hiliteLineNo(i);
+			this.highlights[i]++;
 		}  
+		console.log(this.highlights);
 	}
 	
 	/* Unhighlights the range passed in as a parameter */
 	this.unhighlightRange = function(range){
+		console.log("unlighlighting " + range);
+		console.log(this.highlights);
+		
 		for (var i = range.lower; i <= range.higher; i++) {
-			this.unhiliteLineNo(i);
-		}  
+			
+			if(this.highlights[i] > 0){
+				this.highlights[i]--;
+			}
+
+
+			//only unhighlight if the highlight count is zero. otherwise
+			//there are possibly multiple comments on this line
+			if(this.highlights[i] == 0){
+				this.unhiliteLineNo(i);
+			}
+			
+		}
+		
+		console.log(this.highlights);  
 	}
 	
 	this.getCommentFromID = function(commentID) {

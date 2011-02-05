@@ -199,7 +199,7 @@ a{
  *
  */
  #filelist{
-	float :left;
+/*	float :left;*/
 	z-index: 100;
 	background-color: white;
 	padding: 10px;
@@ -551,11 +551,20 @@ select{
 }
 
 .message{
-	padding: 15px;
-	background-color: #ccc;
-	margin: 10px 10px;
-	border-radius: 10px;
-	-moz-border-radius: 10px;
+	font-family: Lucida Grande;
+	background-color: #FFF9D7;
+	border: 1px solid #E2C822;
+	padding: 11px;
+/*	margin: 20px 0px; top-bottom l-r */
+	margin: 10px 0px 20px 0px; /* T R B L */
+	font-size: 12px;
+}
+
+.message .title{
+	font-size: 13px;
+	height: 16px;
+	font-weight: bold;
+	padding: 0px 0px 5px 0px;
 }
 
 .message a{

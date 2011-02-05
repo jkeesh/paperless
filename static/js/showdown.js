@@ -873,7 +873,10 @@ var _DoCodeBlocks = function(text) {
 			codeblock = _Detab(codeblock);
 			codeblock = codeblock.replace(/^\n+/g,""); // trim leading newlines
 			codeblock = codeblock.replace(/\n+$/g,""); // trim trailing whitespace
-
+			
+			codeblock = codeblock.replace(/&amp;/g,"&"); 
+			/// ADDED BY JEREMY: This line makes sure lines like Map<Vector<char>> show up as brackets and not html entities in code mode
+			
 			codeblock = "<pre><code>" + codeblock + "\n</code></pre>";
 
 			return hashBlock(codeblock) + nextChar;

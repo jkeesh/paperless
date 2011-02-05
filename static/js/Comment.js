@@ -24,6 +24,7 @@ function /* class */ Comment(ctext, crange, code_file) {
 		if(commentText.length == 0) {
 			this.code_file.unhighlightRange(range);
 		} else {
+			this.code_file.highlightRange(self.range);
 			this.text = commentText;
 			this.code_file.addCommentDiv(commentText, self.range);
 			this.code_file.last_comment = self;
