@@ -30,7 +30,6 @@ function /* class */ LineRange(a, b) {
 }
 
 function stringToRange(str){
-	console.log(str);
 	var pattern = /(\d+)-(\d+)/;
 	var result = pattern.exec(str);
 	var start = parseInt(result[1]);

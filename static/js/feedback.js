@@ -40,13 +40,7 @@ markdownRef = "<div class='keyboardLine'><span class='keyboardShortcuts'>Emphasi
 			 +   "<div class='keyboardLine'><span class='keyboardShortcuts'>Line</span><span class='keyboardAction'>***</span></div>"
 			+	"</div>";
 
-function removeDialog(){
-	if( $('textarea')) $('textarea').remove();
-	if(current_dialog == null) return;
-	current_dialog.dialog("close");
-	current_dialog.dialog("destroy");
-	current_dialog = null;
-}
+
 
 /* Creates a safe function that cannot be called more than once in
  * a period of 100 milliseconds. */
@@ -69,8 +63,7 @@ function addShortcuts(){
 	shortcut.add("tab", new SafeFunction ( function() {
 										  var code_file = code_files[current_file_id];
 										  if(!code_file.editable) return;
-										  var comment = code_file.getCommentFromID("c" + current_range.toString());
-										  code_file.comment_list.push(comment);
+										  var comment = code_file.getCurrentComment();
 										  comment.submit();
 										  })
 				 );
@@ -79,7 +72,7 @@ function addShortcuts(){
 											  var code_file = code_files[current_file_id];
 											  if(!code_file.editable) return;
 											  if(current_range && current_dialog) {
-											  var comment = code_file.getCommentFromID("c" + current_range.toString());
+											  var comment = code_file.getCurrentComment();
 											  comment.remove();
 											  }
 											  })

@@ -18,6 +18,8 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 	
 	this.highlights = new Array();
 	
+	this.currentComment = null;
+	
 	var self = this;
 	
 	this.commentID = 0;
@@ -139,19 +141,9 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 		//console.log(this.highlights);  
 	}
 	
-	this.getCommentFromID = function(commentID) {
-		for(var i = 0; i < this.comment_list.length; i++) {
-			if(commentID == "c" + this.comment_list[i].range.toString())
-				return this.comment_list[i];
-		}
-		return null;
-	}
 	
 	//var comment = file.getCommentByRangeAndID(commentRange, commentID);
 	this.getCommentByRangeAndID = function(commentRange, commentID){
-
-		console.log("getting comment for range" + commentRange +" and id " + commentID);
-		console.log(this.comment_list);
 		for(var i = 0; i < this.comment_list.length; i++) {
 			var cur = this.comment_list[i];
 			
@@ -161,11 +153,17 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 		return null;
 	}
 	
-	this.removeCommentFromID = function(commentID) {
+	this.getCurrentComment = function(){
+		return this.currentComment;
+	}
+	
+	this.removeComment = function(comment) {
 		for(var i = 0; i < this.comment_list.length; i++) {
-			if(commentID == "c" + this.comment_list[i].range.toString())
-				this.comment_list.splice(i, i);
+			if(this.comment_list[i] == comment){
+				this.comment_list.splice(i, 1);
+			}
 		}
+		// console.log(this.comment_list);
 	}
 	
 	this.addComment = function(comment) {

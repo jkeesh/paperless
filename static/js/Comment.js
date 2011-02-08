@@ -1,3 +1,11 @@
+function removeDialog(){
+	if( $('textarea')) $('textarea').remove();
+	if(current_dialog == null) return;
+	current_dialog.dialog("close");
+	current_dialog.dialog("destroy");
+	current_dialog = null;
+}
+
 function /* class */ Comment(ctext, crange, code_file, id) {
 	this.range = crange;
 	this.text = ctext;
@@ -30,12 +38,15 @@ function /* class */ Comment(ctext, crange, code_file, id) {
 	}
 	
 	this.submit = function() {
+		// console.log("submit");
+		// console.log(this.code_file.comment_list);
+
 		commentOpen = false;
+		this.code_file.currentComment = null;
 		this.code_file.last_comment_range = this.range;
 		var commentText = $("textarea").val();
 		commentText = this.filter(commentText);
 		removeDialog();
-		console.log(commentText.length);
 		if(commentText.length == 0) {
 			this.code_file.unhighlightRange(range);
 		} else {			
@@ -47,25 +58,38 @@ function /* class */ Comment(ctext, crange, code_file, id) {
 			this.code_file.last_comment = self;
 			this.ajax("create");
 		}
+		
+		// console.log("submit finish");
+		// console.log(this.code_file.comment_list);
+		
 	}
 	
 	this.remove = function() {
+		// console.log("remove");
+		// console.log(this.code_file.comment_list);
+		
+		
 		commentOpen = false;
+		this.code_file.currentComment = null;
 		var elem = ".e"+self.range.toString();
 		var commentID = ".comment"+self.id;
 		var fullClass = elem+commentID;
-		
 		$(elem+commentID).remove();
-		this.code_file.unhighlightRange(self.range);		
+		this.code_file.unhighlightRange(this.range);		
 		$('textArea').remove();
 		removeDialog();		
 		var commentID = "c"+self.range.toString();
-		this.code_file.removeCommentFromID(commentID);
+		this.code_file.removeComment(this);
 		$("." + commentID).remove();
+		
+		// console.log("remove finish");
+		// console.log(this.code_file.comment_list);
+		
 	}
 	
 	this.get = function() {
 		commentOpen = true;
+		this.code_file.currentComment = this;
 		var id = "#file" + this.code_file.fileID;
 		var theclass = '.number' + this.range.lower;
 		var commentLocation = $(theclass, id);
@@ -91,11 +115,17 @@ function /* class */ Comment(ctext, crange, code_file, id) {
 	}
 	
 	this.edit = function() {
+		// console.log("edit");
+		// console.log(this.code_file.comment_list);
+		
+		
 		if(commentOpen) return;
 		commentOpen = true;
 		
+		
 		current_range = this.range;
 		current_file_id = this.code_file.fileID;
+		this.code_file.currentComment = this;
 		
 		if (current_dialog != null){
 			return;
@@ -123,10 +153,15 @@ function /* class */ Comment(ctext, crange, code_file, id) {
 				buttons: { 
 				"Submit":  function() { self.submit(); }, 
 				"Delete":  function() { self.remove(); },
+				//"Cancel":  function() { self.submit(); },
 				}
 				});
 		
 		$("textarea").focus();
+		
+		// console.log("edit finish");
+		// console.log(this.code_file.comment_list);
+		
 	}
 	
 	this.cancel = function(range){
