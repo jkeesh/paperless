@@ -31,7 +31,7 @@ root_url = '{$root_url}';
 <link rel="stylesheet" type="text/css" href="{$root_url}/static/css/style.css">
 </head>
 <body>
-    <div id="container">
+    <div id="container{if isset($print_view)}-fullscreen{/if}">
 		{if $ie}
 		<div class="iebox">
 		This site is not designed for Intenet Explorer.  If you want to see this webpage as intended, please use <a href="http://www.google.com/chrome">Google Chrome</a> or <a href="http://firefox.com">Mozilla Firefox.</a>

@@ -5,7 +5,7 @@ SyntaxHighlighter.all();
 var converter = new Showdown.converter();
 </script>
 
-{if $sl_class}
+{if $sl_class and !$print_view}
 <div class="message">
 <div class="title">Hi Section Leaders.</div>
 Lots of updates and bug fixes! You can now make multiple comments on the same line or same line range and it should work. Email me or <a href="https://spreadsheets.google.com/viewform?formkey=dFdQbGljMUg5OEQyekd2VWlIN0Jmbmc6MQ" target="_blank">take this survey</a> to make paperless better.
@@ -13,7 +13,7 @@ Lots of updates and bug fixes! You can now make multiple comments on the same li
 {/if}
 
 
-{if $student_class}
+{if $student_class and !$print_view}
 <div class="message">
 <div class="title">Hi Students!</div>
 I hope you have enjoyed using paperless this quarter and that it has improved the process of submitting and getting feedback on your code. We are always trying to make it better, and if you want to help, <a href="https://spreadsheets.google.com/viewform?formkey=dGhJTVFZTHR6OE9LNGdJYldzc0Y3V2c6MQ" target="_blank">take this quick survey.</a>
