@@ -20,6 +20,7 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 	
 	var self = this;
 	
+	this.commentID = 0;
 	
 	this.setupComments = function(){
 		var commentLocation = $('#comments'+this.fileID);
@@ -27,22 +28,19 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 		for(var i = 0; i < children.length; i++){
 			var curComment = children[i];
 			var cur = $(curComment);
-			var rangeString = cur.attr('id');
-			var span = cur.find('span');
-			var text = span.html();
+			var rangeString = cur.attr('id');			
+			var text = cur.find('span').html();
 			var range = stringToRange(rangeString);
 			this.highlightRange(range);
-			var newComment = new Comment(text, range, this);
+			var newComment = new Comment(text, range, this, this.commentID);
 			this.addComment(newComment);
 		}
 	}
 	
-	
-	
 	this.showComments = function(){
 		for(var i = 0; i < this.comment_list.length; i++){
 			var comment = this.comment_list[i];
-			this.addCommentDiv(comment.text, comment.range, this.interactive);
+			this.addCommentDiv(comment.text, comment.range, this.interactive, comment.id);
 		}
 		this.displayed = true;
 	}
@@ -71,7 +69,7 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 			line_no++;
 		} while(line.size() != 0);
 		
-		console.log(this.highlights);
+		//console.log(this.highlights);
 	}
 	
 	this.getLine = function(line_no) {
@@ -109,19 +107,19 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 	}
 	
 	this.highlightRange = function(range){
-		console.log("highlight " + range);
+		//console.log("highlight " + range);
 		
 		for (var i = range.lower; i <= range.higher; i++) {
 			this.hiliteLineNo(i);
 			this.highlights[i]++;
 		}  
-		console.log(this.highlights);
+		//console.log(this.highlights);
 	}
 	
 	/* Unhighlights the range passed in as a parameter */
 	this.unhighlightRange = function(range){
-		console.log("unlighlighting " + range);
-		console.log(this.highlights);
+		//console.log("unlighlighting " + range);
+		//console.log(this.highlights);
 		
 		for (var i = range.lower; i <= range.higher; i++) {
 			
@@ -138,12 +136,26 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 			
 		}
 		
-		console.log(this.highlights);  
+		//console.log(this.highlights);  
 	}
 	
 	this.getCommentFromID = function(commentID) {
 		for(var i = 0; i < this.comment_list.length; i++) {
 			if(commentID == "c" + this.comment_list[i].range.toString())
+				return this.comment_list[i];
+		}
+		return null;
+	}
+	
+	//var comment = file.getCommentByRangeAndID(commentRange, commentID);
+	this.getCommentByRangeAndID = function(commentRange, commentID){
+
+		console.log("getting comment for range" + commentRange +" and id " + commentID);
+		console.log(this.comment_list);
+		for(var i = 0; i < this.comment_list.length; i++) {
+			var cur = this.comment_list[i];
+			
+			if(cur.id == commentID && cur.range.toString() == commentRange)
 				return this.comment_list[i];
 		}
 		return null;
@@ -158,30 +170,20 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 	
 	this.addComment = function(comment) {
 		this.comment_list.push(comment);
+		this.commentID++;
 	}
 	
-	this.addCommentDiv = function(text, range, isEditable){
+	this.addCommentDiv = function(text, range, isEditable, commentID){
+		
 		if(isEditable == undefined) isEditable = true;
 		var range_text = range.toString();
-		var comment_id = "c" + range_text;
-		var element_id = "e" + range_text;
-
-
-		var id = "#file" + this.fileID;
-		var theclass = '.number' + range.lower;
-		var elem = $(theclass, id)[1];
-
-		var top_offset = 0;
-		if(elem) top_offset = $(elem).offset().top;
-		var style_position = "background-color: red; z-index: 5;";
-		
-		var toAdd = "<div id='"+ element_id +"' class='inlineComment'>";
-		
 		formattedText = converter.makeHtml(text);	
 
-		toAdd += "<span class='hiddenPlainText' id='htext" + range_text + "'>" + text + "</span>";
-		if(isEditable) toAdd += "<a href=\"javascript:edit("+ this.fileID + ",'" + comment_id + "')\">";
-		toAdd += 	" <div id='" + comment_id +"' class='commentbox'><span class='inlineCommentText' id='ctext" + range_text + "'>" + formattedText + "</span>";
+		
+		var toAdd = "<div class='inlineComment e"+ range_text +" comment"+commentID+"'>";
+		toAdd += "<span class='hiddenPlainText htext" + range_text + "'>" + text + "</span>";
+		if(isEditable) toAdd += "<a href=\"javascript:edit("+ this.fileID + ",'" + range_text + "',"+commentID+")\">";
+		toAdd += 	" <div class='" + range_text +" commentbox'><span class='inlineCommentText ctext" + range_text + "'>" + formattedText + "</span>";
 		//toAdd +=	"<div class='commentauthor'>Jeremy Keeshin</div><div style='clear:both'></div>"; // add the author
 		toAdd +=    "</div>";
 		if(isEditable) toAdd += "</a>";
@@ -189,13 +191,7 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 
 
 		var commentLocation = $('#file'+ this.fileID + ' .code .number'+range.higher);
-		var lineLocation = $('#file'+this.fileID + ' .gutter .number'+range.higher);
-
 		commentLocation.after(toAdd);		
-		
-		
-		var justAdded = $('#'+element_id);
-		var height = justAdded.height() + 44;
 	}
 	
 	this.addHandlers();

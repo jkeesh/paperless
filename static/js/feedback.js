@@ -67,14 +67,11 @@ function SafeFunction(func){
 
 function addShortcuts(){
 	shortcut.add("tab", new SafeFunction ( function() {
-										 // console.log('hit tab');
 										  var code_file = code_files[current_file_id];
 										  if(!code_file.editable) return;
-										  //if(current_range && current_dialog) {
 										  var comment = code_file.getCommentFromID("c" + current_range.toString());
 										  code_file.comment_list.push(comment);
 										  comment.submit();
-										  //}
 										  })
 				 );
 	
@@ -83,7 +80,6 @@ function addShortcuts(){
 											  if(!code_file.editable) return;
 											  if(current_range && current_dialog) {
 											  var comment = code_file.getCommentFromID("c" + current_range.toString());
-											  code_file.removeCommentFromID("c" + current_range.toString());
 											  comment.remove();
 											  }
 											  })

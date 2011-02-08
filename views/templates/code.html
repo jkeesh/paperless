@@ -5,7 +5,6 @@ SyntaxHighlighter.all();
 var converter = new Showdown.converter();
 </script>
 
-
 {if $sl_class}
 <div class="message">
 <div class="title">Hi Section Leaders.</div>
@@ -21,7 +20,7 @@ You can now make multiple comments on the same line or same line range and it sh
 {$assignment}
 {/if}
 :
-<span class="link"><a href="{$root_url}{$class}/student/{$student}">{$student}</a></span>
+<span class="link"><a href="{$root_url}{$class}/student/{$student}">{$student_display}</a></span>
 </div>
 
 {if !$print_view}
@@ -34,7 +33,6 @@ You can now make multiple comments on the same line or same line range and it sh
 </div>
 
 <div style="clear:both"></div>
-<!-- <div id="loading">Loading...</div> -->
 {/if}
 
 <script type="text/javascript">
@@ -58,7 +56,6 @@ var interactive = false;
     });
     
     function setupCodeFiles(){
-        //$('#loading').fadeOut();
         {foreach from=$files item=file key=i}
 		var cur_file = new CodeFile('{$file}', {$i}, interactive);
 		code_files.push(cur_file);
@@ -100,11 +97,10 @@ var interactive = false;
 		   code_files[fileNum].showComments();
     }
     
-    function edit(fileID, commentID){
+    function edit(fileID, commentRange, commentID){
     	var file = code_files[fileID];
-    	var comment = file.getCommentFromID(commentID);
-		if(comment)
-			comment.edit();
+		var comment = file.getCommentByRangeAndID(commentRange, commentID);
+		if(comment) comment.edit();
     }
 
 	function release(){
@@ -121,8 +117,8 @@ var interactive = false;
 				showSaved();
  		   	},
  		   	error: function(XMLHttpRequest, textStatus, errorThrown) {
- 		   	//TODO
- 		   	}
+ 				//TODO
+		   	}
  		 });
  	}
 
@@ -130,7 +126,6 @@ var interactive = false;
 			$("#saved").addClass("hidden");
 
 	}
-
 	function fade(){	
 			$("#saved").fadeOut(400);
 			setTimeout("resetSaved()", 500);

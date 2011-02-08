@@ -23,9 +23,14 @@ function /* class */ LineRange(a, b) {
 		return this.lower + "-" + this.higher;
 	}
 	
+	this.equals = function(other){
+		return other.lower == this.lower && other.higher == this.higher;
+	}
+	
 }
 
 function stringToRange(str){
+	console.log(str);
 	var pattern = /(\d+)-(\d+)/;
 	var result = pattern.exec(str);
 	var start = parseInt(result[1]);

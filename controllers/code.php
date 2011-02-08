@@ -80,6 +80,9 @@
 			$suid = explode("_", $student); // if it was student_1 just take student
 			$suid = $suid[0];
 			
+			$studentDisplayName = Model::getDisplayName($suid);
+			$this->smarty->assign("student_display", $studentDisplayName);
+			
 			// if the username is something other than the owner of these files, require
 			// it to be a SL
 			if($suid != USERNAME) {
@@ -143,6 +146,7 @@
 		 *       to confirm the request succeeded
 		 */
 		public function post_xhr($class, $assignment, $student) {
+			
 
 			// only section leaders should be able to add comments
 			Permissions::requireRole(POSITION_SECTION_LEADER, $class);
@@ -174,10 +178,17 @@
 			} else if($_POST['action'] == "delete") {
 				// find the comment to delete
 				foreach($curFile->getAssignmentComments() as $comment) {
-					if($comment->getStartLine() == $_POST['rangeLower'] && $comment->getEndLine() == $_POST['rangeHigher']) {
+					if(	$comment->getStartLine() == $_POST['rangeLower'] && 
+						$comment->getEndLine() == $_POST['rangeHigher'] && 
+						$comment->getCommentText() == $_POST['text'] ) {
 						$comment->delete();
 						break;
 					}
+					// TODO: Probably a better way to delete comments would be to associate with a unique id
+					// if(	$comment->getID() == $_POST['commentID'] ) {
+					// 	$comment->delete();
+					// 	break;
+					// }
 				}
 			} 
 		}

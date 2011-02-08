@@ -1,12 +1,12 @@
-function /* class */ Comment(ctext, crange, code_file) {
+function /* class */ Comment(ctext, crange, code_file, id) {
 	this.range = crange;
 	this.text = ctext;
 	this.code_file = code_file;
 	this.filename = code_file.filename;
 	var self = this;
+	this.id = id;
 	
 	this.filter = function(text){
-//		text = text.replace(/<script>/g,'').replace(/<\/script>/g,'');
 		text = text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 		return text;
 	}
@@ -15,58 +15,53 @@ function /* class */ Comment(ctext, crange, code_file) {
 		return text;
 	}
 	
+	this.ajax = function(action){
+		$.ajax({
+			   type: 'POST',
+			   url: window.location.pathname, // post to current location url
+			   data: "action="+action+"&text=" + encodeURIComponent(this.text) + "&rangeLower=" + this.range.lower + "&rangeHigher=" + this.range.higher + "&filename=" + this.filename,
+			   success: function(data) {
+					//TODO
+			   },
+			   error: function(XMLHttpRequest, textStatus, errorThrown) {
+			  		alert("There was an error with the last comment. Please refresh the page.");
+			   }
+			   });
+	}
+	
 	this.submit = function() {
 		commentOpen = false;
 		this.code_file.last_comment_range = this.range;
 		var commentText = $("textarea").val();
 		commentText = this.filter(commentText);
 		removeDialog();
+		console.log(commentText.length);
 		if(commentText.length == 0) {
 			this.code_file.unhighlightRange(range);
-		} else {
+		} else {			
 			this.code_file.highlightRange(self.range);
 			this.text = commentText;
-			this.code_file.addCommentDiv(commentText, self.range);
+			this.id = this.code_file.commentID;
+			this.code_file.addCommentDiv(commentText, self.range, true, this.id);
+			this.code_file.commentID++;
 			this.code_file.last_comment = self;
-			commentText = encodeURIComponent(commentText); //needed to keep +, other special chars sent in url
-			//console.log(commentText);
-			$.ajax({
-				   type: 'POST',
-				   url: window.location.pathname, // post to current location url
-				   data: "action=create&text=" + commentText + "&rangeLower=" + this.range.lower + "&rangeHigher=" + this.range.higher + "&filename=" + this.filename,
-				   success: function(data) {
-					//TODO
-				   },
-				   error: function(XMLHttpRequest, textStatus, errorThrown) {
-				   //TODO
-				   }
-				   });
-
+			this.ajax("create");
 		}
-		
-		var elemname = '#ctext' + this.range.toString();		
 	}
 	
 	this.remove = function() {
 		commentOpen = false;
-		var elem = "#e"+self.range.toString();
-		$(elem).remove(); // remove the comment
-		this.code_file.unhighlightRange(self.range);
+		var elem = ".e"+self.range.toString();
+		var commentID = ".comment"+self.id;
+		var fullClass = elem+commentID;
 		
-		//remove it from selected ranges
-		for (i = 0; i < this.code_file.selected_ranges.length; i++) {
-			var saved_range = this.code_file.selected_ranges[i];
-			if (saved_range && saved_range.lower == this.range.lower && saved_range.higher == this.range.higher) {
-				this.code_file.selected_ranges.splice(i, 1);
-			}
-		}
-		
+		$(elem+commentID).remove();
+		this.code_file.unhighlightRange(self.range);		
 		$('textArea').remove();
-		removeDialog();
-		
+		removeDialog();		
 		var commentID = "c"+self.range.toString();
 		this.code_file.removeCommentFromID(commentID);
-		$("#" + commentID).remove();
+		$("." + commentID).remove();
 	}
 	
 	this.get = function() {
@@ -105,23 +100,15 @@ function /* class */ Comment(ctext, crange, code_file) {
 		if (current_dialog != null){
 			return;
 		}
+		text = this.text;
+		var commentID = ".comment"+self.id;
+		var elem = ".e"+self.range.toString();
+		var fullClass = elem+commentID;
+		var thisCommentBox = $(elem+commentID);
+
+		$(thisCommentBox).remove(); // remove the comment
 		
-		var unformatted = $('#htext'+this.range.toString());
-		var text = $('#htext' + this.range.toString()).html();			
-		text = this.unfilter(text);	
-		
-		var elem = "#e"+self.range.toString();
-		//console.log($(elem));
-		$(elem).remove(); // remove the comment
-		
-		// remove the old comment     
-		$.ajax({
-			   type: 'POST',
-			   url: window.location.pathname, // post to current location url
-			   data: "action=delete&rangeLower=" + this.range.lower + "&rangeHigher=" + this.range.higher + "&filename=" + this.filename,
-			   success: function(data) { /* TODO */ },
-			   error: function(XMLHttpRequest, textStatus, errorThrown) { /* TODO */ }
-			   });
+		this.ajax("delete");
 		
 		current_dialog = $('<div></div>')
 		.html('<textarea>' + text +'</textarea>')
