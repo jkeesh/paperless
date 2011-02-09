@@ -15,6 +15,7 @@ function /* class */ Comment(ctext, crange, code_file, id) {
 	this.id = id;
 	
 	this.filter = function(text){
+		text = text.replace(/&/g, '&amp;');		
 		text = text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 		return text;
 	}

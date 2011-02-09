@@ -176,7 +176,8 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 		if(isEditable == undefined) isEditable = true;
 		var range_text = range.toString();
 		formattedText = converter.makeHtml(text);	
-
+		formattedText = formattedText.replace(/&amp;/g, '&');		
+		
 		
 		var toAdd = "<div class='inlineComment e"+ range_text +" comment"+commentID+"'>";
 		toAdd += "<span class='hiddenPlainText htext" + range_text + "'>" + text + "</span>";
