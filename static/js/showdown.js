@@ -685,7 +685,8 @@ var _DoHeaders = function(text) {
 		/gm, function() {...});
 	*/
 
-	text = text.replace(/^(\#{1,6})[ \t]*(.+?)[ \t]*\#*\n+/gm,
+	// JEREMY EDIT: Add space requirement \s+ after # so that things like #include dont become headers
+	text = text.replace(/^(\#{1,6})\s+[ \t]*(.+?)[ \t]*\#*\n+/gm,
 		function(wholeMatch,m1,m2) {
 			var h_level = m1.length;
 			return hashBlock("<h" + h_level + ">" + _RunSpanGamut(m2) + "</h" + h_level + ">");
