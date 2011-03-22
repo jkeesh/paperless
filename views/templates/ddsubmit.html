@@ -1,0 +1,132 @@
+{include file="header.html"}
+
+<h2>Submission Page for {$class|upper}</h2>
+
+<script>
+function showMac(){
+	$('#macvideo').removeClass('hidden');
+}
+
+function showPC(){
+	$('#pcvideo').removeClass('hidden');
+}
+
+function close(){
+	$('#macvideo').addClass('hidden');
+	$('#pcvideo').addClass('hidden');
+}
+</script>
+
+<div id="macvideo" class="hidden">
+	<div id="closeVideo"><a href="javascript:close()">Close</a></div>
+<object width="640" height="505"><param name="movie" value="http://www.youtube.com/v/dgV48AY6-Jw?fs=1&amp;hl=en_US"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/dgV48AY6-Jw?fs=1&amp;hl=en_US" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="640" height="505"></embed></object>
+</div>
+
+<div id="pcvideo" class="hidden">
+	<div id="closeVideo"><a href="javascript:close()">Close</a></div>
+<object width="640" height="505"><param name="movie" value="http://www.youtube.com/v/m2FStgSocLg?fs=1&amp;hl=en_US"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/m2FStgSocLg?fs=1&amp;hl=en_US" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="640" height="505"></embed></object>
+</div>
+
+
+
+{if !$dragdrop}
+<div class="padded">Hi, {$name|escape}. Welcome to the really cool drag and drop submitter.</div>
+
+<div class="padded">Select assignment to submit:</div>
+<form  class="padded" action="{$root_url}{$class|lower}/ddsubmit" method="GET"> 
+	<select name="assignment">
+		{foreach from=$assignments key=dir item=arr}
+		<option value="{$dir}">{$arr.Name}</option>
+		{/foreach}
+	</select>
+	<div class="padded-top"><input type="submit" value="Next" /></div>
+</form>
+{else}
+<div class="padded">Drag and drop the files you want to include onto blue box. These are generally the source files which you modified ({$sourcelist}).</div>
+
+<script type="text/javascript" src="{$root_url}static/js/html5uploader.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  new uploader('drop', 'status', '{$root_url}{$class|lower}/ddupload', 'list', '{$assndir}');
+});
+
+// col.addEventListener('dragstart', handleDragStart, false);
+// col.addEventListener('dragenter', handleDragEnter, false)
+// col.addEventListener('dragover', handleDragOver, false);
+// col.addEventListener('dragleave', handleDragLeave, false);
+// col.addEventListener('drop', handleDrop, false);
+// col.addEventListener('dragend', handleDragEnd, false);
+
+$("#drop").bind('dragstart dragenter dragover dragleave drop dragend', function(){
+	console.log('we have an event');
+});
+
+$("#drop").bind('dragenter', function(){
+	$("#drop").addClass("thick");
+}, false);
+
+$("#drop").bind('dragleave', function(){
+	 $("#drop").removeClass("thick");
+}, false);
+
+</script>
+
+<style> 
+#box {
+	background-color: #8FA1B2;
+	width: 100%;
+	border: 1px solid #8FA1B2;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	padding-bottom: 10px;
+	float: left;
+}
+#box p {
+	font-size: 10px;
+	padding: 5px;
+	margin: 0px;
+}
+#drop {
+	width: 100%;
+	height: 300px;
+	background-color: #DDE3E8;
+}
+
+#status {
+	width: 100%;
+	height: 25px;
+	font-size: 12px;
+	color: #fff;
+	padding: 5px;
+}
+#list {
+	width: 100%;
+	font-size: 18px;
+	float: left;
+	margin-left: 10px;
+}
+.addedIMG {
+	width: 100px;
+	height: 100px;
+}
+
+.thick{
+	border: 5px solid black;
+}
+</style>
+
+<div id="box">  
+        <div id="status">status text</div>  
+        <div id="drop"></div>  
+</div> 
+<div style="clear:both"></div> 
+<div id="list"></div>
+
+<div style="clear:both"></div>
+
+
+{/if}
+
+{include file="footer.html"}
