@@ -63,6 +63,9 @@
 					$file_contents[] = htmlentities(file_get_contents($dirname . $file));
 				}
 			}
+			
+			sort($files);
+			
 			return array($files, $file_contents, $assignment_files, $release);
 		}
 		
