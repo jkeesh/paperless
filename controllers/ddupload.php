@@ -21,13 +21,15 @@
 		
 		public function post_xhr($class) {
 			
-			return json_encode($_POST);
+			return json_encode($class);
+			
+			//return json_encode($_POST);
 			
 			
-			$role = Model::getRoleForClass(USERNAME, $class);			
-			if($role == POSITION_STUDENT){
-				$this->smarty->assign("student_class", $class);
-			}
+			// $role = Model::getRoleForClass(USERNAME, $class);			
+			// 			if($role == POSITION_STUDENT){
+			// 				$this->smarty->assign("student_class", $class);
+			// 			}
 			
 			//$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl_id . "/tester";
 			////

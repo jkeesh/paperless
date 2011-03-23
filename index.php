@@ -59,6 +59,8 @@
 		}
 		
 		public function __call($name, $arguments) {
+			//print_r($name);
+			print_r($arguments);
 			
 			$this->smarty->display("error.html");
 			exit;
@@ -109,7 +111,7 @@
 	require_once('controllers/select.php'); // if a user has multiple classes with different roles, allow them to select the class
 	require_once('controllers/setuser.php');
 	require_once('controllers/error.php');
-	
+		
 	/*
 	 * URL routes
 	 */
