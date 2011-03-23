@@ -4,17 +4,6 @@
 	
 	class DragDropUploadHandler extends ToroHandler {
 		
-		function unzip($filename) {
-			$zip = new ZipArchive;
-			if ($zip->open($filename) === TRUE) {
-				$zip->extractTo(substr($filename, 0, strlen($filename) - 4));
-				$zip->close();
-				return true;
-			} else {
-				return false;
-			}
-        }
-		
 		function write_late_days_file($file_handle, $due_date) {
 			
 			$now = new DateTime();
@@ -30,7 +19,10 @@
 			fwrite($file_handle, $data) . "\n";
         }
 		
-		public function post($class, $up, $base64, $assn) {
+		public function post_xhr($class) {
+			
+			return json_encode($_POST);
+			
 			
 			$role = Model::getRoleForClass(USERNAME, $class);			
 			if($role == POSITION_STUDENT){

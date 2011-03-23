@@ -39,9 +39,9 @@ function uploader(place, status, targetPHP, show, assndir) {
 					xhr.sendAsBinary(body); 
 				// Chrome 7 sends data but you must use the base64_decode on the PHP side
 				} else { 
-					var url = targetPHP+'?up=true&base64=true&assndir='+assndir;
-					console.log(url);
-					xhr.open('POST', targetPHP+'?up=true&base64=true&assndir='+assndir, true);
+					//var url = targetPHP+'?up=true&base64=true&assndir='+assndir;
+					//console.log(url);
+					xhr.open('POST', targetPHP+'?up=true&base64=true', true);
 					xhr.setRequestHeader('UP-FILENAME', file.name);
 					xhr.setRequestHeader('UP-SIZE', file.size);
 					xhr.setRequestHeader('UP-TYPE', file.type);
@@ -55,6 +55,20 @@ function uploader(place, status, targetPHP, show, assndir) {
 				if (status) {
 					document.getElementById(status).innerHTML = 'Loaded : 100%<br/>Next file ...';
 				}
+				
+				xhr.onreadystatechange = function() {
+				        console.log(xhr.readyState);
+						if(xhr.readyState == 4){
+							if(xhr.status == 200){
+								console.log('success');
+							}else{
+								console.log('fail');
+							}
+							console.log(xhr.responseXML);
+							console.log(xhr.responseText);
+							console.log(xhr.getAllResponseHeaders());
+						}
+				};
 			}
 				
 			// Loading errors
