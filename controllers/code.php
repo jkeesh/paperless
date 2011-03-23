@@ -102,7 +102,8 @@
 			list($files, $file_contents, $assignment_files, $release) = $this->getAssignmentFiles($class, $student, $assignment, $sl);
 			
 			if(count($files) == 0){
-				  Header("Location: " . ROOT_URL . "error/for/you");
+				  //Header("Location: " . ROOT_URL . "error/for/you");
+				$this->smarty->assign("message", "Nothing here yet.");
 			}
 			
 			if($role == POSITION_SECTION_LEADER){

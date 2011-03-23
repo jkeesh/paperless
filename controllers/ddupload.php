@@ -20,15 +20,17 @@
         }
 		
 		
-		//public function post_xhr($class) {
-		public function post($class){
-			
+		function getUploadDirectory($class){
 			$sl_id = Model::getSectionLeaderForStudent(USERNAME);
 			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl_id . "/" . $_GET['assndir'] . "/" . USERNAME . "_1"; 
 			// the _1 is hacky to make it backwards compatible with the 106a submission style. 
 			// now all 106bx submissions will go in the same directory and students will have only 1 submission folder
-			echo $dirname;
-			
+			return $dirname;
+		}
+		
+		//public function post_xhr($class) {
+		public function post($class){
+			$dirname = $this->getUploadDirectory($class);
 			if (!file_exists($dirname)) {
 				mkdir($dirname, 0777, true);
 			}
@@ -43,6 +45,9 @@
 			
 			$late_days = fopen($late_days_file, "w");
 			$this->write_late_days_file($late_days, $assn_date);
+			
+			echo "FILE COUNT\n";
+			echo count($_FILES);
 			
 			// If the browser supports sendAsBinary () can use the array $ _FILES
 			if(count($_FILES)>0) { 

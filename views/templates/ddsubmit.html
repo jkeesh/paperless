@@ -44,32 +44,15 @@ function close(){
 {else}
 <div class="padded">Drag and drop the files you want to include onto blue box. These are generally the source files which you modified ({$sourcelist}).</div>
 
+<div class="padded"><a href="{$root_url}{$class|lower}/code/{$assndir}/{$username}_1">View My Submission</a></div>
+
+
 <script type="text/javascript" src="{$root_url}static/js/html5uploader.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
   new uploader('drop', 'status', '{$root_url}{$class|lower}/ddupload', 'list', '{$assndir}');
 });
-
-// col.addEventListener('dragstart', handleDragStart, false);
-// col.addEventListener('dragenter', handleDragEnter, false)
-// col.addEventListener('dragover', handleDragOver, false);
-// col.addEventListener('dragleave', handleDragLeave, false);
-// col.addEventListener('drop', handleDrop, false);
-// col.addEventListener('dragend', handleDragEnd, false);
-
-// $("#drop").bind('dragstart dragenter dragover dragleave drop dragend', function(){
-// 	console.log('we have an event');
-// });
-// 
-// $("#drop").bind('dragenter', function(){
-// 	$("#drop").addClass("thick");
-// }, false);
-// 
-// $("#drop").bind('dragleave', function(){
-// 	 $("#drop").removeClass("thick");
-// }, false);
-
 </script>
 
 <style> 
@@ -114,6 +97,8 @@ $(document).ready(function() {
 }
 </style>
 
+
+
 <div id="box">  
         <div id="status">status text</div>  
         <div id="drop"></div>  
@@ -123,7 +108,6 @@ $(document).ready(function() {
 
 <div style="clear:both"></div>
 
-<a href="{$root_url}{$class|lower}/code/{$assndir}/{$username}_1">View My Code</a>
 
 
 {/if}
