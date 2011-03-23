@@ -28,6 +28,15 @@
 			return $dirname;
 		}
 		
+		function lateDays($class, $dirname){
+			$late_days_file = $dirname . "/lateDays.txt";
+			$assn_dir = $_GET['assndir'];
+			$assns = getAssnsForClass($class);
+			$assn_date = $assns[$assn_dir]["DueDate"];			
+			$late_days = fopen($late_days_file, "w");
+			$this->write_late_days_file($late_days, $assn_date);
+		}
+		
 		//public function post_xhr($class) {
 		public function post($class){
 			$dirname = $this->getUploadDirectory($class);
@@ -35,16 +44,8 @@
 				mkdir($dirname, 0777, true);
 			}
 			
-			$late_days_file = $dirname . "/lateDays.txt";
-			echo $late_days_file;
-			$assn_dir = $_GET['assndir'];
-			$assns = getAssnsForClass($class);
+			$this->lateDays($class, $dirname);
 			
-			$assn_name = $assns[$assn_dir]["Name"];
-			$assn_date = $assns[$assn_dir]["DueDate"];
-			
-			$late_days = fopen($late_days_file, "w");
-			$this->write_late_days_file($late_days, $assn_date);
 			
 			echo "FILE COUNT\n";
 			echo count($_FILES);
