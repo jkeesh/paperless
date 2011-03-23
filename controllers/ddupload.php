@@ -29,7 +29,16 @@
 			print_r($_POST);
 			echo "\nGET\n"; 
 			print_r($_GET);
-			$dirname = SUBMISSIONS_PREFIX ."/cs106b/submissions/jkeeshin";
+			
+			$sl_id = Model::getSectionLeaderForStudent(USERNAME);
+			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl_id . "/" . $_GET['assndir'] . "/" . USERNAME;
+			echo $dirname;
+			
+			if (!file_exists($dirname)) {
+				mkdir($dirname, 0777, true);
+			}
+			
+			//$dirname = SUBMISSIONS_PREFIX ."/cs106b/submissions/jkeeshin";
 			//$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl_id . "/" . $assn . "/";
 			$late_days_file = $dirname . "/lateDays.txt";
 			echo $late_days_file;
