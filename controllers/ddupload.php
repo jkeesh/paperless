@@ -33,8 +33,6 @@
 				mkdir($dirname, 0777, true);
 			}
 			
-			//$dirname = SUBMISSIONS_PREFIX ."/cs106b/submissions/jkeeshin";
-			//$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl_id . "/" . $assn . "/";
 			$late_days_file = $dirname . "/lateDays.txt";
 			echo $late_days_file;
 			$assn_dir = $_GET['assndir'];
@@ -43,11 +41,9 @@
 			$assn_name = $assns[$assn_dir]["Name"];
 			$assn_date = $assns[$assn_dir]["DueDate"];
 			
-			
 			$late_days = fopen($late_days_file, "w");
 			$this->write_late_days_file($late_days, $assn_date);
 			
-			echo "file count\n";
 			// If the browser supports sendAsBinary () can use the array $ _FILES
 			if(count($_FILES)>0) { 
 				if( move_uploaded_file( $_FILES['upload']['tmp_name'] , $dirname.'/'.$_FILES['upload']['name'] ) ) {
@@ -70,8 +66,6 @@
 				}
 				exit();
 			}
-			
-			
 
 		}
 	}
