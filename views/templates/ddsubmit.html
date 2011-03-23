@@ -58,17 +58,17 @@ $(document).ready(function() {
 // col.addEventListener('drop', handleDrop, false);
 // col.addEventListener('dragend', handleDragEnd, false);
 
-$("#drop").bind('dragstart dragenter dragover dragleave drop dragend', function(){
-	console.log('we have an event');
-});
-
-$("#drop").bind('dragenter', function(){
-	$("#drop").addClass("thick");
-}, false);
-
-$("#drop").bind('dragleave', function(){
-	 $("#drop").removeClass("thick");
-}, false);
+// $("#drop").bind('dragstart dragenter dragover dragleave drop dragend', function(){
+// 	console.log('we have an event');
+// });
+// 
+// $("#drop").bind('dragenter', function(){
+// 	$("#drop").addClass("thick");
+// }, false);
+// 
+// $("#drop").bind('dragleave', function(){
+// 	 $("#drop").removeClass("thick");
+// }, false);
 
 </script>
 
@@ -89,7 +89,7 @@ $("#drop").bind('dragleave', function(){
 	margin: 0px;
 }
 #drop {
-	width: 100%;
+/*	width: 100%;*/
 	height: 300px;
 	background-color: #DDE3E8;
 }
@@ -101,19 +101,17 @@ $("#drop").bind('dragleave', function(){
 	color: #fff;
 	padding: 5px;
 }
+
 #list {
 	width: 100%;
 	font-size: 18px;
 	float: left;
 	margin-left: 10px;
 }
-.addedIMG {
-	width: 100px;
-	height: 100px;
-}
 
 .thick{
-	border: 5px solid black;
+	border: 4px dashed black;
+/*	background-color: red;*/
 }
 </style>
 
