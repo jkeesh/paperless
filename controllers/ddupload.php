@@ -25,13 +25,42 @@
 			echo "did we get any information...";
 			//return "did we get any information back";
 			//return json_encode($class);
-			print_r($_POST); 
-			$dirname = SUBMISSIONS_PREFIX ."/cs106b/submissions/jkeeshin/";
+			echo "POST\n";
+			print_r($_POST);
+			echo "\nGET\n"; 
+			print_r($_GET);
+			$dirname = SUBMISSIONS_PREFIX ."/cs106b/submissions/jkeeshin";
 			//$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl_id . "/" . $assn . "/";
 			$late_days_file = $dirname . "/lateDays.txt";
 			echo $late_days_file;
 			$late_days = fopen($late_days_file, "w");
-			$this->write_late_days_file($late_days, $assn_date);
+			//$this->write_late_days_file($late_days, $assn_date);
+			
+			echo "file count\n";
+			// If the browser supports sendAsBinary () can use the array $ _FILES
+			if(count($_FILES)>0) { 
+				if( move_uploaded_file( $_FILES['upload']['tmp_name'] , $dirname.'/'.$_FILES['upload']['name'] ) ) {
+					echo 'done';
+				}
+				exit();
+			} else if(isset($_GET['up'])) {
+				// If the browser does not support sendAsBinary ()
+				if(isset($_GET['base64'])) {
+					$content = base64_decode(file_get_contents('php://input'));
+				} else {
+					$content = file_get_contents('php://input');
+				}
+
+				$headers = getallheaders();
+				$headers = array_change_key_case($headers, CASE_UPPER);
+
+				if(file_put_contents($dirname.'/'.$headers['UP-FILENAME'], $content)) {
+					echo 'done';
+				}
+				exit();
+			}
+			
+			
 			return;
 			//return json_encode($_POST);
 			
