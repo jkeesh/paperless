@@ -31,7 +31,9 @@
 			print_r($_GET);
 			
 			$sl_id = Model::getSectionLeaderForStudent(USERNAME);
-			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl_id . "/" . $_GET['assndir'] . "/" . USERNAME;
+			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl_id . "/" . $_GET['assndir'] . "/" . USERNAME . "_1"; 
+			// the _1 is hacky to make it backwards compatible with the 106a submission style. 
+			// now all 106bx submissions will go in the same directory and students will have only 1 submission folder
 			echo $dirname;
 			
 			if (!file_exists($dirname)) {
