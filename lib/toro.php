@@ -22,6 +22,16 @@ class ToroApplication {
     $discovered_handler = null;
     $regex_matches = Array();
     $method_arguments = null;
+
+	// echo "REQUEST METHOD\n";
+	// print_r($request_method);
+	// echo "\n";
+	// 
+	// echo "PATH INFO\n";
+	// print_r($path_info);
+	// echo "\n";
+	
+	
     
     foreach ($this->_handler_route_pairs as $handler) {
       $pattern = $handler[0];
@@ -50,7 +60,13 @@ class ToroApplication {
       }
     }
 
+	// echo "DISCOVERED HANDLER\n";
+	// print_r($discovered_handler);
+	// echo "\n---\n";
+
     if ($discovered_handler && class_exists($discovered_handler)) {
+		//echo "FOUND HANLDER\n";
+	
       unset($regex_matches[0]);
       $handler_instance = new $discovered_handler();
 
@@ -58,8 +74,15 @@ class ToroApplication {
         $method_arguments = $regex_matches;
       }
 
+		// echo "method args\n";
+		// print_r($method_arguments);
+		// echo "\n---\n";
+
       // XHR (must come first), iPad, mobile catch all
       if ($this->xhr_request() && method_exists($discovered_handler, $request_method . '_xhr')) {
+		
+		//echo "this was an ajax request\n";
+	
         header('Content-type: application/json');
         header('Pragma: no-cache');
         header('Cache-Control: no-cache, must-revalidate');
@@ -72,6 +95,12 @@ class ToroApplication {
       else if ($this->mobile_request() && method_exists($discovered_handler, $request_method . '_mobile')) {
         $request_method .= '_mobile';
       }
+	  
+		// echo "FINAL REQUEST METHOD\n";
+		// echo $request_method;
+		// echo "\n";
+
+	
 
       call_user_func_array(Array($handler_instance, $request_method), $method_arguments);
     }

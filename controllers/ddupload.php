@@ -19,10 +19,20 @@
 			fwrite($file_handle, $data) . "\n";
         }
 		
-		public function post_xhr($class) {
-			
-			return json_encode($class);
-			
+		
+		//public function post_xhr($class) {
+		public function post($class){
+			echo "did we get any information...";
+			//return "did we get any information back";
+			//return json_encode($class);
+			print_r($_POST); 
+			$dirname = SUBMISSIONS_PREFIX ."/cs106b/submissions/jkeeshin/";
+			//$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl_id . "/" . $assn . "/";
+			$late_days_file = $dirname . "/lateDays.txt";
+			echo $late_days_file;
+			$late_days = fopen($late_days_file, "w");
+			$this->write_late_days_file($late_days, $assn_date);
+			return;
 			//return json_encode($_POST);
 			
 			
@@ -33,15 +43,10 @@
 			
 			//$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl_id . "/tester";
 			////
-			$dirname = SUBMISSIONS_PREFIX ."/cs106b/submissions/jkeeshin/test";
-			//$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl_id . "/" . $assn . "/";
-			$late_days_file = $dirname . "/lateDays.txt";
+
 			echo "<br/>".$late_days_file;
-			$late_days = fopen($late_days_file, "w");
-			$this->write_late_days_file($late_days, $assn_date);
-			
-			return;
-			////
+
+
 			
 			$assn_dir = $_POST['assignment'];
 			$assns = getAssnsForClass($class);
@@ -155,17 +160,6 @@
 			}
 			
 
-			$this->smarty->assign("name", Model::getDisplayName(USERNAME));
-			$this->smarty->assign("class", $class);
-			$this->smarty->assign("dir", $cur_submission);
-			$this->smarty->assign("assn", $assn_name);
-			$this->smarty->assign("assn_dir", $assn_dir);
-			$this->smarty->assign("student", USERNAME);
-			$this->smarty->assign("message", $message);
-			$this->smarty->assign("ok", $ok);
-			$this->smarty->assign("fileList", $fileList);
-			
-			$this->smarty->display('upload.html');
 		}
 	}
 	?>

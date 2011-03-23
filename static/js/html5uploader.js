@@ -61,12 +61,13 @@ function uploader(place, status, targetPHP, show, assndir) {
 						if(xhr.readyState == 4){
 							if(xhr.status == 200){
 								console.log('success');
+								console.log(xhr.responseXML);
+								console.log(xhr.getAllResponseHeaders());
+								console.log("RESPONSE TEXT: " + xhr.responseText);
 							}else{
 								console.log('fail');
 							}
-							console.log(xhr.responseXML);
-							console.log(xhr.responseText);
-							console.log(xhr.getAllResponseHeaders());
+
 						}
 				};
 			}

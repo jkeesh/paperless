@@ -60,7 +60,7 @@
 		
 		public function __call($name, $arguments) {
 			//print_r($name);
-			print_r($arguments);
+			//print_r($arguments);
 			
 			$this->smarty->display("error.html");
 			exit;
