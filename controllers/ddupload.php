@@ -60,12 +60,26 @@
 					$content = file_get_contents('php://input');
 				}
 				
+				if (!function_exists('getallheaders')) 
+				{
+				    function getallheaders() 
+				    {
+				       foreach ($_SERVER as $name => $value) 
+				       {
+				           if (substr($name, 0, 5) == 'HTTP_') 
+				           {
+				               $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+				           }
+				       }
+				       return $headers;
+				    }
+				}
 
 
 				$headers = getallheaders();
 				$headers = array_change_key_case($headers, CASE_UPPER);
 				
-								print_r($headers);
+				print_r($headers);
 
 				if(file_put_contents($dirname.'/'.$headers['UP-FILENAME'], $content)) {
 					echo 'done';
