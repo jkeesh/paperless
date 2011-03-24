@@ -46,10 +46,6 @@
 			
 			$this->lateDays($class, $dirname);
 			
-			
-			echo "FILE COUNT\n";
-			echo count($_FILES);
-			
 			// If the browser supports sendAsBinary () can use the array $ _FILES
 			if(count($_FILES)>0) { 
 				if( move_uploaded_file( $_FILES['upload']['tmp_name'] , $dirname.'/'.$_FILES['upload']['name'] ) ) {
@@ -63,9 +59,13 @@
 				} else {
 					$content = file_get_contents('php://input');
 				}
+				
+
 
 				$headers = getallheaders();
 				$headers = array_change_key_case($headers, CASE_UPPER);
+				
+								print_r($headers);
 
 				if(file_put_contents($dirname.'/'.$headers['UP-FILENAME'], $content)) {
 					echo 'done';

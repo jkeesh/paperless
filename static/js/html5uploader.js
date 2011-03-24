@@ -18,7 +18,8 @@ function uploader(place, status, targetPHP, show, assndir) {
 	
 	// Upload image files
 	upload = function(file) {
-	
+		console.log('uploading the file');
+		console.log(file);
 		// Firefox 3.6, Chrome 6, WebKit
 		if(window.FileReader) { 
 				
@@ -38,9 +39,7 @@ function uploader(place, status, targetPHP, show, assndir) {
 				if(xhr.sendAsBinary != null) { 
 					xhr.sendAsBinary(body); 
 				// Chrome 7 sends data but you must use the base64_decode on the PHP side
-				} else { 
-					var url = targetPHP+'?up=true&base64=true&assndir='+assndir;
-					//console.log(url);
+				} else {
 					xhr.open('POST', targetPHP+'?up=true&base64=true&assndir='+assndir, true);
 					xhr.setRequestHeader('UP-FILENAME', file.name);
 					xhr.setRequestHeader('UP-SIZE', file.size);
@@ -61,8 +60,8 @@ function uploader(place, status, targetPHP, show, assndir) {
 						if(xhr.readyState == 4){
 							if(xhr.status == 200){
 								console.log('success');
-								console.log(xhr.responseXML);
-								console.log(xhr.getAllResponseHeaders());
+								//console.log(xhr.responseXML);
+								//console.log(xhr.getAllResponseHeaders());
 								console.log("RESPONSE TEXT: " + xhr.responseText);
 							}else{
 								console.log('fail');
@@ -176,10 +175,13 @@ function uploader(place, status, targetPHP, show, assndir) {
 		
 	 	var dt = event.dataTransfer;
 	 	var files = dt.files;
+		console.log("num files " + files.length);
 	 	for (var i = 0; i<files.length; i++) {
 			var file = files[i];
-			upload(file);
-	 	}
+			//pass the parameters to upload as the final arguments of setTimeout
+			//we will wait 2 seconds between calls to the let the system respond.
+	 		setTimeout(upload, 2000*i, file);
+		}
 	
 	}
 	
