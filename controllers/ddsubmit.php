@@ -5,14 +5,14 @@
 	class DragDropSubmitHandler extends ToroHandler {
 				
 		public function get($class) {
-			print_r($_GET);
+			//print_r($_GET);
 			$selected = $_GET['assignment'];
 			if($selected){
-				echo "drag and drop page";
+				//echo "drag and drop page";
 				$this->smarty->assign("dragdrop", 1);
 				$this->smarty->assign("assndir", $selected);
 			}else{
-				echo "first page";
+				//echo "first page";
 			}
 			
 			
