@@ -64,7 +64,7 @@
 				}
 			}
 			
-			sort($files);
+			//sort($files);
 			
 			return array($files, $file_contents, $assignment_files, $release);
 		}
