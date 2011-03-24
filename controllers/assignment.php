@@ -2,11 +2,24 @@
 	require_once('models/Model.php');
 	require_once('utils.php');
 	
+	/**
+	 * This class handles the logic for a section leader view of a 
+	 * single assignment. An assignment view will list all of the submissions
+	 * for a particular assignment, and if there are multiple for the same student.
+	 * Using the drag-drop submitter, each student should only have 1 submission,
+	 * but in the 106A submitter, and older version each submission comes up as
+	 * sunetid_#.
+	 */
 	class AssignmentHandler extends ToroHandler {
 		
+		/**
+		 * This method handles the AJAX request when the Section Leader modifies the check
+		 * box which determines whether or not the comments on this code file should be released.
+		 * Since we are on an assignment page, we know the SL, class, and assignment. The student
+		 * is passed in in the POST array. Based on the POST action, we decide if we should create
+		 * or delete the release file.
+		 */
 		public function post_xhr($class, $sectionleader, $assignment){
-			//echo "POST AJAX";
-			//echo json_encode($class);
 			$student = $_POST['student'];
 			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sectionleader . "/" . $assignment . "/". $student . "/";
 			
@@ -18,7 +31,7 @@
 				}
 			}
 	
-			echo json_encode("success");
+			//echo json_encode("success"); //This is not needed. But remember to echo a result in JSON format.
 		}
 		
 		public function get($class, $sectionleader, $assignment) {
