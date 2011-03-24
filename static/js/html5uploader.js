@@ -18,8 +18,8 @@ function uploader(place, status, targetPHP, show, assndir) {
 	
 	// Upload image files
 	upload = function(file) {
-		console.log('uploading the file');
-		console.log(file);
+		//console.log('uploading the file');
+		//console.log(file);
 		// Firefox 3.6, Chrome 6, WebKit
 		if(window.FileReader) { 
 				
@@ -56,15 +56,15 @@ function uploader(place, status, targetPHP, show, assndir) {
 				}
 				
 				xhr.onreadystatechange = function() {
-				        console.log(xhr.readyState);
+				        //console.log(xhr.readyState);
 						if(xhr.readyState == 4){
 							if(xhr.status == 200){
-								console.log('success');
+								//console.log('success');
 								//console.log(xhr.responseXML);
 								//console.log(xhr.getAllResponseHeaders());
-								console.log("RESPONSE TEXT: " + xhr.responseText);
+								//console.log("RESPONSE TEXT: " + xhr.responseText);
 							}else{
-								console.log('fail');
+								//console.log('fail');
 							}
 
 						}
@@ -170,12 +170,12 @@ function uploader(place, status, targetPHP, show, assndir) {
 	this.drop = function(event) {
 		event.preventDefault();
 		
-		console.log('drop event');
+		//console.log('drop event');
 		$("#drop").removeClass("thick");
 		
 	 	var dt = event.dataTransfer;
 	 	var files = dt.files;
-		console.log("num files " + files.length);
+		//console.log("num files " + files.length);
 	 	for (var i = 0; i<files.length; i++) {
 			var file = files[i];
 			//pass the parameters to upload as the final arguments of setTimeout
