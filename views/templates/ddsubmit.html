@@ -2,32 +2,6 @@
 
 <h2>Submission Page for {$class|upper}</h2>
 
-<script>
-function showMac(){
-	$('#macvideo').removeClass('hidden');
-}
-
-function showPC(){
-	$('#pcvideo').removeClass('hidden');
-}
-
-function close(){
-	$('#macvideo').addClass('hidden');
-	$('#pcvideo').addClass('hidden');
-}
-</script>
-
-<div id="macvideo" class="hidden">
-	<div id="closeVideo"><a href="javascript:close()">Close</a></div>
-<object width="640" height="505"><param name="movie" value="http://www.youtube.com/v/dgV48AY6-Jw?fs=1&amp;hl=en_US"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/dgV48AY6-Jw?fs=1&amp;hl=en_US" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="640" height="505"></embed></object>
-</div>
-
-<div id="pcvideo" class="hidden">
-	<div id="closeVideo"><a href="javascript:close()">Close</a></div>
-<object width="640" height="505"><param name="movie" value="http://www.youtube.com/v/m2FStgSocLg?fs=1&amp;hl=en_US"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/m2FStgSocLg?fs=1&amp;hl=en_US" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="640" height="505"></embed></object>
-</div>
-
-
 
 {if !$dragdrop}
 <div class="padded">Hi, {$name|escape}. Welcome to the really cool drag and drop submitter.</div>
@@ -57,9 +31,6 @@ function close(){
   });
 </script>
 
-<!-- <fb:login-button show-faces="true" width="400" max-rows="2">Login to Paperless</fb:login-button> -->
-
-
 <table>
 	<tr>
 		<td>
@@ -88,33 +59,24 @@ $(document).ready(function() {
 
 FB.getLoginStatus(function(response) {
   if (response.session) {
-	console.log('logged in');
+	// console.log('logged in');
 
 	$('#fbpost').html('<a href="#">Share on Facebook</a>');
-	$('#fbpost').bind('mouseover', function(){
-		// $('#fbpost').css('color', 'white');
-		// $('#fbpost').css('background-color', 'gray');
-	})
-	$('#fbpost').bind('mouseleave', function(){
-		// $('#fbpost').css('color', 'black');
-		// $('#fbpost').css('background-color', 'white');
-	})
 	$('#fbpost').bind('click', function(){
 		FB.ui({ method: 'feed', 
 		       message: 'Just submitted my {$class} assignment with Paperless!'});
-	})
+	});
 
 	
     // logged in and connected user, someone you know
   } else {
 	$("#fblogin").css('display', 'block');
-	console.log('not logged in');
-    // no user session available, someone you dont know
-
+	// console.log('not logged in');
+	//this was tricky. only if they were NOT LOGGED IN, then THE SESSION CHANGES,
+	//then reload. otherwise well just keep reloading forever.
 	FB.Event.subscribe('auth.sessionChange', function(response) {
 	  // do something with response.session
-		console.log('event changed response');
-		console.log(response);
+		// console.log(response);
 		if(response.status == "connected"){
 		  	window.location.reload();
 		}
