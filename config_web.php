@@ -26,4 +26,6 @@
 	define('ASSIGNMENT_COMMENT_TABLE', "AssignmentComments");
 	define('ASSIGNMENT_FILE_TABLE', 'AssignmentFiles');
 	
+	define('FACEBOOK_APP_ID', '101468079939627');
+	
 	?>

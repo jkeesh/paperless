@@ -55,6 +55,8 @@
 			
 			define('SECTION_LEADER', $sectionLeader);
 			
+			$this->smarty->assign("FACEBOOK_APP_ID", FACEBOOK_APP_ID);
+			
 			$this->smarty->assign("section_leader", $sectionLeader);			
 		}
 		

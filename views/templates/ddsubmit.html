@@ -42,17 +42,91 @@ function close(){
 	<div class="padded-top"><input type="submit" value="Next" /></div>
 </form>
 {else}
-<div class="padded">Drag and drop the files you want to include onto blue box. These are generally the source files which you modified ({$sourcelist}).</div>
+<div class="padded">Drag and drop the files you want to include onto blue box. These are generally the source files which you modified ({$sourcelist}). Log in with Facebook, and you have the option to tell your friends you just submitted.</div>
 
+<div id="fb-root"></div>
+<script src="https://connect.facebook.net/en_US/all.js#appId=120178364723061&amp;xfbml=1"></script>
+
+
+<script>
+  FB.init({
+    appId  : '{$FACEBOOK_APP_ID}',
+    status : true, // check login status
+    cookie : true, // enable cookies to allow the server to access the session
+    xfbml  : true  // parse XFBML
+  });
+</script>
+
+<!-- <fb:login-button show-faces="true" width="400" max-rows="2">Login to Paperless</fb:login-button> -->
+
+
+<table>
+	<tr>
+		<td>
+			<div id="fblogin" style="display:none;">
+			<fb:login-button>Login to Paperless</fb:login-button>
+			</div>
+		</td>
+		<td>
 <div class="padded link underline"><a href="{$root_url}{$class|lower}/code/{$assndir}/{$username}_1">View My Submission</a></div>
+		</td>
+		<td>
+<div class="padded link underline" id="fbpost">
 
+</div>
+		</td>
+	</tr>
+</table>
 
 <script type="text/javascript" src="{$root_url}static/js/html5uploader.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
   new uploader('drop', 'status', '{$root_url}{$class|lower}/ddupload', 'list', '{$assndir}');
+
 });
+
+FB.getLoginStatus(function(response) {
+  if (response.session) {
+	console.log('logged in');
+
+	$('#fbpost').html('<a href="#">Share on Facebook</a>');
+	$('#fbpost').bind('mouseover', function(){
+		// $('#fbpost').css('color', 'white');
+		// $('#fbpost').css('background-color', 'gray');
+	})
+	$('#fbpost').bind('mouseleave', function(){
+		// $('#fbpost').css('color', 'black');
+		// $('#fbpost').css('background-color', 'white');
+	})
+	$('#fbpost').bind('click', function(){
+		FB.ui({ method: 'feed', 
+		       message: 'Just submitted my {$class} assignment with Paperless!'});
+	})
+
+	
+    // logged in and connected user, someone you know
+  } else {
+	$("#fblogin").css('display', 'block');
+	console.log('not logged in');
+    // no user session available, someone you dont know
+
+	FB.Event.subscribe('auth.sessionChange', function(response) {
+	  // do something with response.session
+		console.log('event changed response');
+		console.log(response);
+		if(response.status == "connected"){
+		  	window.location.reload();
+		}
+
+	});
+
+  }
+});
+
+
+
+
 </script>
 
 <style> 
@@ -96,7 +170,6 @@ $(document).ready(function() {
 	border: 4px dashed black;
 }
 </style>
-
 
 
 <div id="box">  
