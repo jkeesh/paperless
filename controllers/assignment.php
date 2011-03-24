@@ -4,6 +4,23 @@
 	
 	class AssignmentHandler extends ToroHandler {
 		
+		public function post_xhr($class, $sectionleader, $assignment){
+			//echo "POST AJAX";
+			//echo json_encode($class);
+			$student = $_POST['student'];
+			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sectionleader . "/" . $assignment . "/". $student . "/";
+			
+			if($_POST['action'] == "release"){
+				if($_POST['release'] == "create"){
+					createRelease($dirname);
+				}else{
+					deleteRelease($dirname);
+				}
+			}
+	
+			echo json_encode("success");
+		}
+		
 		public function get($class, $sectionleader, $assignment) {
 			$status = Model::getRoleForClass($sectionleader, $class); //sanity check: make sure they are visiting an sl for this class
 			if($status < POSITION_SECTION_LEADER){

@@ -7,12 +7,55 @@
 {/if}
 
 
+<script>
+
+// we need to wait for the syntax highlighter to finish before we access the modified dom
+$(document).ready(function(){
+ 	$(':checkbox').change(function() {
+		release(this);
+	});
+});
+
+function release(obj){
+	var student = $(obj).attr('student');
+	var action = "delete";	
+	var checked = $(obj).attr('checked');
+	if(checked ){
+		action = "create";
+	}
+	
+	$.ajax({
+	   	type: 'POST',
+	   	url: window.location.pathname, // post to current location url
+	   	data: "student="+student+"&action=release&release=" + action,
+	   	success: function(data) {
+			$('#'+student).toggleClass('bold');
+	   	},
+	   	error: function(jqXHR, textStatus, errorThrown) {
+	   	}
+	 });
+}
+
+
+</script>
+
+<style>
+.bold{
+	font-weight: bold;
+}
+</style>
+
 {foreach from=$info item=student}
-<div class="link {if $student.num == $greatest[$student.student]}underline{/if}">	
-	{if $student.release}<strong>{/if}	
-    <a href="{$root_url}{$class}/code/{$assignment}/{$student.dirname}">{$assignment} by {$student.dirname}</a>
-	{if $student.release}</strong>{/if}	
+<div class="link {if $student.num == $greatest[$student.student]}underline{/if}">
+	<form style="float: left;">
+	<input title="Click to release comments" type="checkbox" student="{$student.dirname}" 
+			name="release" value="" {if $student.release}checked{/if} />
+	</form>	
+    <a {if $student.release}class='bold'{/if} 
+		href="{$root_url}{$class}/code/{$assignment}/{$student.dirname}" 
+		id="{$student.dirname}">{$assignment} by {$student.dirname}</a>
 </div>
+<div style="clear:both"></div>
 {/foreach}
 
 {include file="footer.html"}
