@@ -41,7 +41,7 @@
 			$this->smarty->assign("root_url", ROOT_URL);
 			$this->smarty->assign("quarter_name", Model::getQuarterName());
 			$this->smarty->assign("display_name", Model::getDisplayName(USERNAME));
-			
+						
 			$this->smarty->assign("is_section_leader", $is_sl);
 			$this->smarty->assign("is_student", $is_student);
 			$this->smarty->assign("is_admin", $is_admin);
@@ -57,13 +57,15 @@
 			
 			$this->smarty->assign("FACEBOOK_APP_ID", FACEBOOK_APP_ID);
 			
+			$userClasses = Model::getClass(USERNAME);
+			if(count($userClasses) > 1){
+				$this->smarty->assign("multiple_classes", 1);				
+			}
+			
 			$this->smarty->assign("section_leader", $sectionLeader);			
 		}
 		
-		public function __call($name, $arguments) {
-			//print_r($name);
-			//print_r($arguments);
-			
+		public function __call($name, $arguments) {			
 			$this->smarty->display("error.html");
 			exit;
 		}

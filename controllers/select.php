@@ -25,6 +25,7 @@
 				$classes[$i]['role'] = $role;
 			}
 			
+			$this->smarty->assign("multiple_classes", 0); // dont show the switch link on this page.
 			$this->smarty->assign("classes", $classes);
 			// display the template
 			$this->smarty->display('select.html');
