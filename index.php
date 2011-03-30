@@ -60,6 +60,8 @@
 			$userClasses = Model::getClass(USERNAME);
 			if(count($userClasses) > 1){
 				$this->smarty->assign("multiple_classes", 1);				
+			}else{
+				$this->smarty->assign("multiple_classes", 0);
 			}
 			
 			$this->smarty->assign("section_leader", $sectionLeader);			
