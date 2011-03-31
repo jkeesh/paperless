@@ -5,9 +5,14 @@
 <div>
 	<table>
 		<tr>
-			<td>Assignment Name</td>
-			<td>Directory Name</td>
-			<td>Due Date</td>
+			<td class="table-title">Assignment Name</td>
+			<td class="table-title">Directory Name</td>
+			<td class="table-title">Due Date</td>
+		</tr>
+		<tr>
+			<td class="table-info">what students see</td>
+			<td class="table-info">lower camel case</td>
+			<td class="table-info">format: YYYY-MM-DD HH:MM</td>
 		</tr>
 		<tr>
 			<form action="{$root_url}{$class|lower}/manage" method="post">
@@ -20,6 +25,7 @@
 		<!-- for every existing assignment, display its data -->
 		<tr>
 			<form action="{$root_url}{$class|lower}/manage" method="post">
+			<input type="hidden" name="id" value="5" />
 			<td>	<input type="text" name="name" value="Game of Life" /></td>
 			<td>	<input type="text" name="directory" value="life" /></td>
 			<td>	<input type="text" name="duedate" value="1-23" /></td>

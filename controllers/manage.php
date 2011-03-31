@@ -1,5 +1,7 @@
 <?php
 
+	require_once("models/PaperlessAssignment.php");
+
 	/**
 	 * Lets the Class admins modify class configurations
 	 */
@@ -18,6 +20,10 @@
 		public function post($class){
 			print_r($_POST);
 			$role = Permissions::requireRole(POSITION_TEACHING_ASSISTANT, $class);
+						
+			$assn = PaperlessAssignment::create($class, $_POST['directory'], $_POST['name'], $_POST['duedate']);
+			$assn->save();
+			
 			$this->smarty->assign("class", $class);
 			$this->smarty->assign("admin_class", $class);
 			// display the template

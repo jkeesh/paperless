@@ -587,3 +587,10 @@ select{
 	padding: 60px; 
 	opacity:0.8;'
 }
+
+.table-title{
+    font-size: 12px;
+}
+.table-info{
+    font-size: 10px;
+}
