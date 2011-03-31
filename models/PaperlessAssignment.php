@@ -63,25 +63,25 @@ class PaperlessAssignment extends Model {
 	/*
 		* Load from an id
 		*/
-	public static function load($args) {
-		// extract($args);
-		// 
-		// $query = "SELECT * FROM " . ASSIGNMENT_FILE_TABLE . " WHERE File=:FilePath;";
-		// $instance = new self();
-		// 
-		// try {
-		// 	$sth = $instance->conn->prepare($query);
-		// 	$sth->execute(array(":FilePath" => $FilePath));
-		// 
-		// 	$sth->setFetchMode(PDO::FETCH_NUM);
-		// 	if($row = $sth->fetch()) {
-		// 		$instance->fill($row);
-		// 		return $instance;
-		// 	}
-		// } catch(PDOException $e) {
-		// 	echo $e->getMessage(); // TODO log this error instead of echo
-		// }
-		// return null;
+	public static function loadForClass($class) {
+		$query = "SELECT * FROM PaperlessAssignments WHERE Class=:Class";
+		$instance = new self();
+		
+		$assns = array();
+		
+		try {
+			$sth = $instance->conn->prepare($query);
+			$class_id = Model::getClassID($class);
+	      	$sth->setFetchMode(PDO::FETCH_ASSOC);
+			$sth->execute(array(":Class" => $class_id));
+			if($rows = $sth->fetchAll()) {
+				print_r($rows);
+				return $rows;
+			}
+		} catch(PDOException $e) {
+			echo $e->getMessage(); // TODO log this error instead of echo
+		}
+		return null;
 	}
 
 	/*

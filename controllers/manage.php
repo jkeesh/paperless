@@ -33,6 +33,9 @@
 		public function get($class) {
 						
 			$role = Permissions::requireRole(POSITION_TEACHING_ASSISTANT, $class);
+			
+			$assns = PaperlessAssignment::loadForClass($class);
+			$this->smarty->assign("assignments", $assns);
 			$this->smarty->assign("class", $class);
 			$this->smarty->assign("admin_class", $class);
 			// display the template

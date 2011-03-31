@@ -23,15 +23,21 @@
 			</form>
 		</tr>
 		<!-- for every existing assignment, display its data -->
-		<tr>
-			<form action="{$root_url}{$class|lower}/manage" method="post">
-			<input type="hidden" name="id" value="5" />
-			<td>	<input type="text" name="name" value="Game of Life" /></td>
-			<td>	<input type="text" name="directory" value="life" /></td>
-			<td>	<input type="text" name="duedate" value="1-23" /></td>
-			<td> 	<input type="submit" value="Update" /></td>
-			</form>
-		</tr>
+		
+		{foreach from=$assignments item=assignment key=i}
+			
+			<tr>
+				<form action="{$root_url}{$class|lower}/manage" method="post">
+				<input type="hidden" name="id" value="{$assignment.ID}" />
+				<td>	<input type="text" name="name" value="{$assignment.Name}" /></td>
+				<td>	<input type="text" name="directory" value="{$assignment.DirectoryName}" /></td>
+				<td>	<input type="text" name="duedate" value="{$assignment.DueDate}" /></td>
+				<td> 	<input type="submit" value="Update" /></td>
+				</form>
+			</tr>
+			
+		{/foreach}
+
 		<!-- end for -->
 	</div>
 </div>
