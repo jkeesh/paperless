@@ -5,6 +5,16 @@
 	 */
 	class ManageHandler extends ToroHandler {
 		
+		
+		// CREATE TABLE  `paperless5`.`PaperlessAssignments` (
+		// `ID` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+		// `Quarter` INT NOT NULL ,
+		// `Class` INT NOT NULL ,
+		// `DirectoryName` VARCHAR( 30 ) NOT NULL ,
+		// `Name` VARCHAR( 100 ) NOT NULL ,
+		// `DueDate` DATETIME NOT NULL
+		// ) ENGINE = MYISAM ;
+		
 		public function post($class){
 			print_r($_POST);
 			$role = Permissions::requireRole(POSITION_TEACHING_ASSISTANT, $class);
