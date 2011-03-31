@@ -40,14 +40,16 @@ class PaperlessAssignment extends Model {
 		}
 	}
 
-	public function delete() {
-		// delete the file object
+	public function deleteID($id) {
+		echo "deleting...". $id;
+		$instance = new self();
 		$query = "DELETE FROM PaperlessAssignments " .
 			" WHERE ID=:ID;";
 		try {
-			$sth = $this->conn->prepare($query);
-			$sth->execute(array(":ID" => $this->ID));
+			$sth = $instance->conn->prepare($query);
+			$sth->execute(array(":ID" => $id));
 		} catch(PDOException $e) {
+			echo "fail..";
 			echo $e->getMessage(); // TODO log this error instead of echo
 		}
 	}
@@ -67,15 +69,13 @@ class PaperlessAssignment extends Model {
 		$query = "SELECT * FROM PaperlessAssignments WHERE Class=:Class";
 		$instance = new self();
 		
-		$assns = array();
-		
 		try {
 			$sth = $instance->conn->prepare($query);
 			$class_id = Model::getClassID($class);
 	      	$sth->setFetchMode(PDO::FETCH_ASSOC);
 			$sth->execute(array(":Class" => $class_id));
 			if($rows = $sth->fetchAll()) {
-				print_r($rows);
+				//print_r($rows);
 				return $rows;
 			}
 		} catch(PDOException $e) {

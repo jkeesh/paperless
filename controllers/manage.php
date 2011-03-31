@@ -18,12 +18,25 @@
 		// ) ENGINE = MYISAM ;
 		
 		public function post($class){
-			print_r($_POST);
-			$role = Permissions::requireRole(POSITION_TEACHING_ASSISTANT, $class);
-						
-			$assn = PaperlessAssignment::create($class, $_POST['directory'], $_POST['name'], $_POST['duedate']);
-			$assn->save();
 			
+			
+			$role = Permissions::requireRole(POSITION_TEACHING_ASSISTANT, $class);
+
+			print_r($_POST);
+
+			if($_POST['action'] == "Update"){
+				echo "update";
+			}else if($_POST['action'] == "Delete"){
+				echo "delete";
+				PaperlessAssignment::deleteID($_POST['id']);
+			}else{
+				echo "add";
+				$assn = PaperlessAssignment::create($class, $_POST['directory'], $_POST['name'], $_POST['duedate']);
+				$assn->save();
+			}
+
+			$assns = PaperlessAssignment::loadForClass($class);
+			$this->smarty->assign("assignments", $assns);
 			$this->smarty->assign("class", $class);
 			$this->smarty->assign("admin_class", $class);
 			// display the template

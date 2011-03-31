@@ -19,7 +19,7 @@
 			<td>	<input type="text"  name="name"  /></td>
 			<td>	<input type="text" name="directory" /></td>
 			<td>	<input type="text" name="duedate" /></td>
-			<td> 	<input type="submit" value="Add" /></td>
+			<td> 	<input type="submit" name="action" value="Add" /></td>
 			</form>
 		</tr>
 		<!-- for every existing assignment, display its data -->
@@ -28,11 +28,13 @@
 			
 			<tr>
 				<form action="{$root_url}{$class|lower}/manage" method="post">
+				<input type="hidden" name="action" value="update" />
 				<input type="hidden" name="id" value="{$assignment.ID}" />
 				<td>	<input type="text" name="name" value="{$assignment.Name}" /></td>
 				<td>	<input type="text" name="directory" value="{$assignment.DirectoryName}" /></td>
 				<td>	<input type="text" name="duedate" value="{$assignment.DueDate}" /></td>
-				<td> 	<input type="submit" value="Update" /></td>
+				<td> 	<input type="submit" name="action" value="Update" /></td>
+				<td> 	<input type="submit" name="action" value="Delete" /></td>
 				</form>
 			</tr>
 			
