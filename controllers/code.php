@@ -75,7 +75,7 @@
 		public function get($class, $assignment, $student, $print=False) {
 			//echo "student " . $student;
 			if($print){
-				$this->smarty->assign("print_view", 1);
+				$this->smarty->assign("print_view", $print);
 			}
 			
 			$this->smarty->assign("code_file", $student);

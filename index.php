@@ -48,6 +48,8 @@
 			
 			if(usingIE()){
 				$this->smarty->assign("ie", 1);
+			}else{
+				$this->smarty->assign("ie", 0);				
 			}
 			
 			if($is_sl) $sectionLeader = USERNAME;
