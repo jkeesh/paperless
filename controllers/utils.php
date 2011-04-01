@@ -1,4 +1,5 @@
 <?php
+
 	/*
 	 * This reads of the assignment configuration information for a class
 	 * as specified by a csv file in the class configuration directory.
