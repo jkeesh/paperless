@@ -32,8 +32,9 @@ function /* class */ Comment(ctext, crange, code_file, id) {
 			   success: function(data) {
 					//TODO
 			   },
-			   error: function(XMLHttpRequest, textStatus, errorThrown) {
-			  		alert("There was an error with the last comment. Please refresh the page.");
+			   error: function(jqXHR, textStatus, errorThrown) {
+			        console.log(jqXHR.responseText);
+			  		//alert("There was an error with the last comment. Please refresh the page.");
 			   }
 			   });
 	}

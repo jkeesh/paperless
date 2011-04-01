@@ -35,15 +35,19 @@ class CodeHandler extends ToroHandler {
 			if($file == "release"){
 				$release = True;
 			}else if(isCodeFileForClass($file, $class)) {
-				$assignmentFile = AssignmentFile::load(array("FilePath" => $dirname . $file));
+//				$assignmentFile = AssignmentFile::load(array("FilePath" => $dirname . $file));
 				$assn = AssignmentFile::loadFile($class, $student, $assignment, $file);
 				if(is_null($assn)){
 					$string = explode("_", $student); // if it was student_1 just take student
 					$student_suid = $string[0];
 					$assn = AssignmentFile::createFile($class, $assignment, $student_suid, $file);
 					$assn->saveFile();
+				}else{
+					//echo "existed";
 				}
-				$assignment_files[] = $assignmentFile;
+//				$assignment_files[] = $assignmentFile;
+				$assignment_files[] = $assn;
+				
 				$files[] = $file;
 				$file_contents[] = htmlentities(file_get_contents($dirname . $file));
 			}
@@ -158,12 +162,33 @@ class CodeHandler extends ToroHandler {
 			return;
 		}
 
-		$curFile = AssignmentFile::load(array("FilePath" => $dirname . $_POST['filename']));
-		if(!$curFile) return; // TODO handle error
-
+		// echo $class . "\n";
+		// echo $suid . "\n";
+		// echo $assignment . "\n";
+		// echo $_POST['filename'] . "\n";
+		$curFile = AssignmentFile::loadFile($class, $suid, $assignment, $_POST['filename']);
+//		print_r($curFile);
+//		$curFile = AssignmentFile::load(array("FilePath" => $dirname . $_POST['filename']));
+		$id = $curFile->getID();
+		if(!isset($id)){
+//			echo "no valid assnment found";
+			return;
+		}
+		
+		// echo "found";
+		// print_r($_POST);
+		
+		$commenter = Model::getUserID(USERNAME);
+		$student = Model::getUserID($suid);
+		
 		if($_POST['action'] == "create") {
-			$newComment = AssignmentComment::create($curFile->getID(), $_POST['rangeLower'], $_POST['rangeHigher'], $_POST['text']);
+			
+			
+			$newComment = AssignmentComment::create($curFile->getID(), $_POST['rangeLower'], 
+						$_POST['rangeHigher'], $_POST['text'], $commenter, $student);
 			$newComment->save();
+			
+			//print_r($newComment);
 			} else if($_POST['action'] == "delete") {
 				// find the comment to delete
 				foreach($curFile->getAssignmentComments() as $comment) {
