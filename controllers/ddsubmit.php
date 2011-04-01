@@ -30,7 +30,6 @@
 			
 			
 			//$assns = getAssnsForClass($class);
-			
 			//print_r($assns);
 
 			$assns = PaperlessAssignment::loadForClass($class);

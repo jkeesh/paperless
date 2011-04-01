@@ -1,22 +1,33 @@
 <?php
 	
 	require_once('utils.php');
+	require_once("models/PaperlessAssignment.php");
 	
 	class DragDropUploadHandler extends ToroHandler {
 		
 		function write_late_days_file($file_handle, $due_date) {
 			
+			$due_date = new DateTime($due_date);
 			$now = new DateTime();
 			$now_timestamp = (int)($now->format("U"));
-			$due_timestamp = (int)($due_date->format("U"));
+			$due_timestamp = (int)strtotime($due_date);
+			// fwrite($file_handle, $now_timestamp);
+			// fwrite($file_handle, "\n");
+			// fwrite($file_handle, $due_timestamp);
+//			$due_timestamp = (int)($due_date->format("U"));
 			$days_late = (float)($now_timestamp - $due_timestamp) / 3600. / 24.;
 			$days_late = max(0, (int)(ceil($days_late)));
-			
+			// 
 			$data = "student_submission_time: " . $now->format("d/M/Y H:i:s") . "\n" .
+//			"assignment_due_time: " . $due_date . "\n" .
 			"assignment_due_time: " . $due_date->format("d/M/Y H:i:s") . "\n" .
 			"calendar_days_late: " . $days_late;
 			
-			fwrite($file_handle, $data) . "\n";
+//			fwrite($file_handle, $data) . "\n";
+//			$data = "student_submission_time: " . $now->format("d/M/Y H:i:s") . "\n";
+			
+			fwrite($file_handle, $data);
+//			fwrite($file_handle, $due_date);
         }
 		
 		
@@ -31,8 +42,11 @@
 		function lateDays($class, $dirname){
 			$late_days_file = $dirname . "/lateDays.txt";
 			$assn_dir = $_GET['assndir'];
-			$assns = getAssnsForClass($class);
-			$assn_date = $assns[$assn_dir]["DueDate"];			
+			
+			//$assns = getAssnsForClass($class);
+			//$assn_date = $assns[$assn_dir]["DueDate"];			
+			$assn_date = PaperlessAssignment::getDueDate($class, $assn_dir);
+			print_r($assn_date);
 			$late_days = fopen($late_days_file, "w");
 			$this->write_late_days_file($late_days, $assn_date);
 			fclose($late_days);

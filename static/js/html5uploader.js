@@ -62,7 +62,7 @@ function uploader(place, status, targetPHP, show, assndir) {
 								//console.log('success');
 								//console.log(xhr.responseXML);
 								//console.log(xhr.getAllResponseHeaders());
-								//console.log("RESPONSE TEXT: " + xhr.responseText);
+								console.log("RESPONSE TEXT: " + xhr.responseText);
 							}else{
 								//console.log('fail');
 							}
