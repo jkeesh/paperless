@@ -21,7 +21,6 @@ class CodeHandler extends ToroHandler {
 	private function getAssignmentFiles($class, $student, $assignment, $sl) {
 
 		$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl . "/". $assignment . "/" . $student . "/"; 
-		//echo $dirname;
 
 		if(!is_dir($dirname)) return null; // TODO handle error
 
@@ -41,19 +40,13 @@ class CodeHandler extends ToroHandler {
 					$student_suid = $string[0];
 					$assn = AssignmentFile::createFile($class, $assignment, $student_suid, $file);
 					$assn->saveFile();
-				}else{
-					//echo "existed";
 				}
-//				$assignment_files[] = $assignmentFile;
 				$assignment_files[] = $assn;
-				
 				$files[] = $file;
 				$file_contents[] = htmlentities(file_get_contents($dirname . $file));
 			}
 		}
-
-		//sort($files);
-
+		
 		return array($files, $file_contents, $assignment_files, $release);
 	}
 
@@ -61,7 +54,6 @@ class CodeHandler extends ToroHandler {
 		* Displays the syntax highlighted code for a student, assignment pair
 		*/
 	public function get($class, $assignment, $student, $print=False) {
-		//echo "student " . $student;
 		if($print){
 			$this->smarty->assign("print_view", $print);
 		}
@@ -82,10 +74,7 @@ class CodeHandler extends ToroHandler {
 			$role = Model::getRoleForClass(USERNAME, $class);
 		}
 
-
-
 		$sl = Model::getSectionLeaderForStudent($suid);
-		//echo $student . " ". $sl . "\n";
 
 		list($files, $file_contents, $assignment_files, $release) = $this->getAssignmentFiles($class, $student, $assignment, $sl);
 
