@@ -156,6 +156,7 @@ function /* class */ CodeFile(filename, id_number, interactive, user) {
 	}
 	
 	this.getCurrentComment = function(){
+	    this.currentComment.commenter = this.user;
 		return this.currentComment;
 	}
 	
