@@ -9,8 +9,8 @@
 <div class="padded">Select assignment to submit:</div>
 <form  class="padded" action="{$root_url}{$class|lower}/ddsubmit" method="GET"> 
 	<select name="assignment">
-		{foreach from=$assignments key=dir item=arr}
-		<option value="{$dir}">{$arr.Name}</option>
+		{foreach from=$assignments item=assignment}
+		<option value="{$assignment.DirectoryName}">{$assignment.Name}</option>
 		{/foreach}
 	</select>
 	<div class="padded-top"><input type="submit" value="Next" /></div>

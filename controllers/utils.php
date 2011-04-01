@@ -1,4 +1,5 @@
 <?php
+
 	/*
 	 * This reads of the assignment configuration information for a class
 	 * as specified by a csv file in the class configuration directory.
@@ -44,10 +45,23 @@
 	 * It gets this information from the class configuration file
 	 */
 	function getFileTypesForClass($class){
-		$config = getConfigFileForClass($class);
-		$file = fopen($config, "r");
-		$info = fgetcsv($file);
-		return $info;
+		// $config = getConfigFileForClass($class);
+		// $file = fopen($config, "r");
+		// $info = fgetcsv($file);
+		// return $info;
+		
+		if($class == "cs106b" || $class == "cs106x" || $class == "cs106l"){
+			return array("cpp","h", "txt");
+		}
+		if($class == "cs106a"){
+			return array("java", "txt");
+		}
+		
+		if($class == "cs109l"){
+			return array("r", "txt");
+		}
+		
+		
 	}
 	
 	function isCodeFileForClass($filename, $class){

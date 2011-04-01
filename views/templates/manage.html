@@ -1,31 +1,45 @@
 {include file="header.html"}
 
-<div class="header">{$class|upper} Settings</div>
+<div class="header">{$class|upper} Assignment Settings</div>
 
 <div>
 	<table>
 		<tr>
-			<td>Assignment Name</td>
-			<td>Directory Name</td>
-			<td>Due Date</td>
+			<td class="table-title">Assignment Name</td>
+			<td class="table-title">Directory Name</td>
+			<td class="table-title">Due Date</td>
+		</tr>
+		<tr>
+			<td class="table-info">what students see</td>
+			<td class="table-info">lower camel case</td>
+			<td class="table-info">format: YYYY-MM-DD HH:MM</td>
 		</tr>
 		<tr>
 			<form action="{$root_url}{$class|lower}/manage" method="post">
 			<td>	<input type="text"  name="name"  /></td>
 			<td>	<input type="text" name="directory" /></td>
 			<td>	<input type="text" name="duedate" /></td>
-			<td> 	<input type="submit" value="Add" /></td>
+			<td> 	<input type="submit" name="action" value="Add" /></td>
 			</form>
 		</tr>
 		<!-- for every existing assignment, display its data -->
-		<tr>
-			<form action="{$root_url}{$class|lower}/manage" method="post">
-			<td>	<input type="text" name="name" value="Game of Life" /></td>
-			<td>	<input type="text" name="directory" value="life" /></td>
-			<td>	<input type="text" name="duedate" value="1-23" /></td>
-			<td> 	<input type="submit" value="Update" /></td>
-			</form>
-		</tr>
+		
+		{foreach from=$assignments item=assignment key=i}
+			
+			<tr>
+				<form action="{$root_url}{$class|lower}/manage" method="post">
+				<input type="hidden" name="action" value="update" />
+				<input type="hidden" name="id" value="{$assignment.ID}" />
+				<td>	<input type="text" name="name" value="{$assignment.Name}" /></td>
+				<td>	<input type="text" name="directory" value="{$assignment.DirectoryName}" /></td>
+				<td>	<input type="text" name="duedate" value="{$assignment.DueDate}" /></td>
+				<td> 	<input type="submit" name="action" value="Update" /></td>
+				<td> 	<input type="submit" name="action" value="Delete" /></td>
+				</form>
+			</tr>
+			
+		{/foreach}
+
 		<!-- end for -->
 	</div>
 </div>

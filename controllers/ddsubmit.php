@@ -1,7 +1,8 @@
 <?php
 	
 	require_once('utils.php');
-	
+	require_once("models/PaperlessAssignment.php");
+		
 	class DragDropSubmitHandler extends ToroHandler {
 				
 		public function get($class) {
@@ -27,7 +28,12 @@
 			$sectionleader = Model::getSectionLeaderForStudent(USERNAME);
 			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sectionleader . "/";
 			
-			$assns = getAssnsForClass($class);
+			
+			//$assns = getAssnsForClass($class);
+			//print_r($assns);
+
+			$assns = PaperlessAssignment::loadForClass($class);
+			//print_r($assns);
 
 			// assign template variables
 			$this->smarty->assign("assignments", $assns);

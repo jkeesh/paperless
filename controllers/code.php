@@ -12,17 +12,6 @@
 	class CodeHandler extends ToroHandler {
 		
 		/*
-		 * Given a filename, tests if this is a good file type for the class
-		 * i.e cs106a only gets java files and 106bx gets cpp/h
-		 */
-		private function isCodeFile($filename, $class){
-			$ext = pathinfo($filename, PATHINFO_EXTENSION);
-			$ext = strtolower($ext);
-			$filetypes = getFileTypesForClass($class);
-			return in_array($ext, $filetypes);
-		}
-		
-		/*
 		 * Gets the file contents, file names, and appropriate AssignmentFile model objects
 		 * corresponding to a given student, assignment pair.
 		 * TODO: Don't use a hardcoded path / we need to allow multiple base search paths
@@ -45,7 +34,7 @@
 			while($file = readdir($dir)) {
 				if($file == "release"){
 					$release = True;
-				}else if($this->isCodeFile($file, $class)) {
+				}else if(isCodeFileForClass($file, $class)) {
 					$assignmentFile = AssignmentFile::load(array("FilePath" => $dirname . $file));
 					if(!$assignmentFile) {
 					  $string = explode("_", $student); // if it was student_1 just take student
