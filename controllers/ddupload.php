@@ -35,6 +35,16 @@
 			$assn_date = $assns[$assn_dir]["DueDate"];			
 			$late_days = fopen($late_days_file, "w");
 			$this->write_late_days_file($late_days, $assn_date);
+			fclose($late_days);
+		}
+		
+		function gradeFile($dirname){
+			$gradeFile = $dirname . "/GRADE.txt";
+			if(file_exists($gradeFile)) return;
+			$file = fopen($gradeFile, "w");
+			$data = "\n\nFunctionality\n\n\n\n\n\n\n\nStyle\n\n\n\n\n\n\n\nOverall\n\n\n\n\n\n\n\n\n-";
+			fwrite($file, $data);
+			fclose($file);
 		}
 		
 		//public function post_xhr($class) {
@@ -43,15 +53,14 @@
 			if (!file_exists($dirname)) {
 				mkdir($dirname, 0777, true);
 			}
-			
-			$this->lateDays($class, $dirname);
-			
+						
 			// If the browser supports sendAsBinary () can use the array $ _FILES
 			if(count($_FILES)>0) { 
 				if( move_uploaded_file( $_FILES['upload']['tmp_name'] , $dirname.'/'.$_FILES['upload']['name'] ) ) {
-					echo 'done';
+					//echo 'done';
+				}else{
+					// log error
 				}
-				exit();
 			} else if(isset($_GET['up'])) {
 				// If the browser does not support sendAsBinary ()
 				if(isset($_GET['base64'])) {
@@ -82,11 +91,16 @@
 				print_r($headers);
 
 				if(file_put_contents($dirname.'/'.$headers['UP-FILENAME'], $content)) {
-					echo 'done';
+					//log success
+					//echo 'done';
+				}else{
+					//log error
 				}
-				exit();
 			}
 
+
+			$this->lateDays($class, $dirname);
+			$this->gradeFile($dirname);
 		}
 	}
 	?>

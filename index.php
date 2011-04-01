@@ -48,6 +48,8 @@
 			
 			if(usingIE()){
 				$this->smarty->assign("ie", 1);
+			}else{
+				$this->smarty->assign("ie", 0);				
 			}
 			
 			if($is_sl) $sectionLeader = USERNAME;
@@ -117,6 +119,7 @@
 	require_once('controllers/select.php'); // if a user has multiple classes with different roles, allow them to select the class
 	require_once('controllers/setuser.php');
 	require_once('controllers/error.php');
+	require_once('controllers/manage.php');
 		
 	/*
 	 * URL routes
@@ -129,6 +132,7 @@
 									  Array('^\/([a-zA-Z0-9_ \-]+)\/assignment\/([a-zA-Z0-9_ -]+)\/([a-zA-Z0-9_ ]+)\/?$', 'regex', 'AssignmentHandler'),
 									  Array('^\/([a-zA-Z0-9_ \-]+)\/sectionleader\/([a-zA-Z0-9_ \-]+)\/?$', 'regex', 'SectionLeaderHandler'),
 									  Array('^\/([a-zA-Z0-9_ \-]+)\/admin\/?$', 'regex', 'AdminHandler'),
+									  Array('^\/([a-zA-Z0-9_ \-]+)\/manage\/?$', 'regex', 'ManageHandler'),
 									  Array('^\/([a-zA-Z0-9_ \-]+)\/submit\/?$', 'regex', 'SubmitHandler'),
 									  Array('^\/([a-zA-Z0-9_ \-]+)\/ddsubmit\/?$', 'regex', 'DragDropSubmitHandler'),
 									  Array('^\/([a-zA-Z0-9_ \-]+)\/upload\/?$', 'regex', 'UploadHandler'),
