@@ -7,7 +7,7 @@
 	 */
 	class ManageHandler extends ToroHandler {
 		
-		
+		/// Important Note!
 		// CREATE TABLE  `paperless5`.`PaperlessAssignments` (
 		// `ID` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 		// `Quarter` INT NOT NULL ,
