@@ -3,13 +3,21 @@
 	require_once('utils.php');
 	
 	class SelectHandler extends ToroHandler {
-				
+		
 		public function get() {
 			$classes = Model::getClass(USERNAME);
 			
+			// classes not using paperless
+			$classesToExclude = array("cs107", "cs198");
+			
 			for($i = 0; $i < count($classes); $i++){
+			    
 				$classinfo = $classes[$i];
 				$classname = strtolower($classinfo['Name']);
+				
+				// skip classes not using paperless
+				if(in_array($classname, $classesToExclude)) continue;
+				
 				$role = Model::getRoleForClass(USERNAME, $classname);				
 				if($role <= POSITION_STUDENT) {
 					$link = ROOT_URL ."$classname/student/" . USERNAME;
