@@ -21,9 +21,6 @@
 			
 			
 			$role = Permissions::requireRole(POSITION_TEACHING_ASSISTANT, $class);
-
-			print_r($_POST);
-
 			if($_POST['action'] == "Update"){
 				echo "update";
 				PaperlessAssignment::update($_POST['id'], $class, $_POST['directory'], $_POST['name'], $_POST['duedate']);
