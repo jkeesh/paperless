@@ -34,8 +34,7 @@ require_once("permissions.php");
 			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sectionleader . "/";
 			
 			$assns = $this->getDirEntries($dirname);
-			
-			if(strlen($assns[0]) == 0){
+			if(empty($assns) || strlen($assns[0]) == 0){
 				$this->smarty->assign("no_assns", 1);
 			}
 			
