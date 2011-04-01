@@ -3,7 +3,7 @@
 <h2>Submission Page for {$class|upper}</h2>
 
 
-{if !$dragdrop}
+{if !isset($dragdrop)}
 <div class="padded">Hi, {$name|escape}. Welcome to the really cool drag and drop submitter.</div>
 
 <div class="padded">Select assignment to submit:</div>

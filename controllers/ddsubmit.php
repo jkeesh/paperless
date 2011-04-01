@@ -7,11 +7,11 @@
 				
 		public function get($class) {
 			//print_r($_GET);
-			$selected = $_GET['assignment'];
-			if($selected){
+		
+			if(array_key_exists('assignment', $_GET)){
 				//echo "drag and drop page";
 				$this->smarty->assign("dragdrop", 1);
-				$this->smarty->assign("assndir", $selected);
+				$this->smarty->assign("assndir", $_GET['assignment']);
 			}else{
 				//echo "first page";
 			}

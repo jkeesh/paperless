@@ -2,7 +2,7 @@
 
 <div class="wideList">
     <div class="header">Assignment List for {$student|escape}</div>
-		{if $nofiles}
+		{if isset($nofiles)}
 		<div>No Assignment Files Yet!</div>
 		{/if}
 		{if isset($nosl) and $class|lower != "cs109l"}

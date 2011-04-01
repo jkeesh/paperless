@@ -101,6 +101,28 @@ class PaperlessAssignment extends Model {
 		}
 		return null;
 	}
+	
+	
+	//PaperlessAssignment::getID($class, $student);
+	public static function getID($class, $dir){
+		$instance = new self();	
+		$query = "SELECT ID FROM PaperlessAssignments WHERE Class=:Class AND Quarter=:Quarter AND DirectoryName LIKE :Dir";		
+		$quarter_id = Model::getQuarterID();
+		$class_id = Model::getClassID($class);
+		
+		try {
+			$sth = $instance->conn->prepare($query);
+			$sth->setFetchMode(PDO::FETCH_ASSOC);
+			$sth->execute(array(":Class" => $class_id, ":Quarter" => $quarter_id, ":Dir" => $dir));
+			if($row = $sth->fetch()) {
+				return $row['ID'];
+			}
+		} catch(PDOException $e) {
+			echo $e->getMessage(); // TODO log this error instead of echo
+		}
+		return null;
+		
+	}
 
 	/*
 		* Load from an id
