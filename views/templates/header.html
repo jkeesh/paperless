@@ -32,12 +32,12 @@ root_url = '{$root_url}';
 </head>
 <body>
     <div id="container{if isset($print_view)}-fullscreen{/if}">
-		{if $ie}
+		{if isset($ie)}
 		<div class="iebox">
 		This site is not designed for Intenet Explorer.  If you want to see this webpage as intended, please use <a href="http://www.google.com/chrome">Google Chrome</a> or <a href="http://firefox.com">Mozilla Firefox.</a>
 		</div>
 		{/if}
-		{if !$print_view}
+		{if !isset($print_view)}
         <div id="logo"><a href="{$root_url}" id="logo-link"></a></div>
         <div id="user">
 			{if $class}
@@ -45,17 +45,17 @@ root_url = '{$root_url}';
 			{/if}
             <div id="name">{$display_name|escape}</div>
             <div id="nav">	
-                {if $admin_class}
+                {if isset($admin_class)}
                 <a href="{$root_url}{$admin_class}/admin">Admin</a>
                 <a href="{$root_url}{$admin_class}/manage">Manage</a>
                 {/if}
-                {if $sl_class}
+                {if isset($sl_class)}
                 <a href="{$root_url}{$sl_class}/sectionleader/{$username}">My Section</a>
                 {/if}
                 {if $multiple_classes}
 				<a href="{$root_url}select">My Classes</a>
 				{/if}
-                {if $student_class}
+                {if isset($student_class)}
             	    <a href="{$root_url}{$student_class}/student/{$username}">My Code</a>
             		{if $student_class != "cs106a"}
             		<a href="{$root_url}{$student_class}/ddsubmit">Submit</a>
