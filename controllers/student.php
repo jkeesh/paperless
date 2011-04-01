@@ -82,8 +82,10 @@
 					
 					$all = $information[$i]['all'];
 					$all = $this->sortArr($all);
+									
 					$information[$i]['all'] = $all;
-					$information[$i]['studentdir'] = $all[count($all)-1];
+					if(count($all) > 0)
+						$information[$i]['studentdir'] = $all[count($all)-1];
 					
 					if(count($all) == 0){
 						//they have no submissions for this assignment so remove that

@@ -36,24 +36,13 @@ class CodeHandler extends ToroHandler {
 				$release = True;
 			}else if(isCodeFileForClass($file, $class)) {
 				$assignmentFile = AssignmentFile::load(array("FilePath" => $dirname . $file));
-				$a2 = AssignmentFile::loadFile($class, $student, $assignment, $file);
-				if(is_null($a2)){
-				//if(!$assignmentFile) {
+				$assn = AssignmentFile::loadFile($class, $student, $assignment, $file);
+				if(is_null($assn)){
 					$string = explode("_", $student); // if it was student_1 just take student
 					$student_suid = $string[0];
-
-					//$assignmentFile = AssignmentFile::create($gradedAssignID, $dirname . $file);
-					//$assignmentFile->save();
-
-					$a2 = AssignmentFile::createFile($class, $assignment, $student_suid, $file);
-					//echo "assnfile\n";
-					//print_r($a2);
-					//$a2->save();
-					//$a2->saveFile();
-				}else{
-					echo "existed";
+					$assn = AssignmentFile::createFile($class, $assignment, $student_suid, $file);
+					$assn->saveFile();
 				}
-
 				$assignment_files[] = $assignmentFile;
 				$files[] = $file;
 				$file_contents[] = htmlentities(file_get_contents($dirname . $file));
