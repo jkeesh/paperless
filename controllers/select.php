@@ -6,7 +6,7 @@
 		
 		public function get() {
 			$classes = Model::getClass(USERNAME);
-			
+
 			// classes not using paperless
 			$classesToExclude = array("cs107", "cs198");
 			
@@ -14,9 +14,6 @@
 			    
 				$classinfo = $classes[$i];
 				$classname = strtolower($classinfo['Name']);
-				
-				// skip classes not using paperless
-				if(in_array($classname, $classesToExclude)) continue;
 				
 				$role = Model::getRoleForClass(USERNAME, $classname);				
 				if($role <= POSITION_STUDENT) {
@@ -31,6 +28,10 @@
 				}
 				$classes[$i]['url'] = $link;
 				$classes[$i]['role'] = $role;
+				if(in_array($classname, $classesToExclude))
+				    $classes[$i]['include'] = false;
+				else
+				    $classes[$i]['include'] = true;
 			}
 			
 			$this->smarty->assign("multiple_classes", 0); // dont show the switch link on this page.
