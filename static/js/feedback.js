@@ -60,6 +60,7 @@ function SafeFunction(func){
 }
 
 function addShortcuts(){
+        
 	shortcut.add("tab", new SafeFunction ( function() {
 										  var code_file = code_files[current_file_id];
 										  if(!code_file.editable) return;

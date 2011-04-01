@@ -58,7 +58,6 @@ class AssignmentFile extends Model {
 	public function saveFile() {
 		$query = "INSERT INTO " . ASSIGNMENT_FILE_TABLE . 
 			" VALUES(:ID, :GradedAssignment, :File, :PaperlessAssignment, :Student);";
-
 		try {
 			$sth = $this->conn->prepare($query);
 			$rows = $sth->execute(array(
@@ -71,21 +70,17 @@ class AssignmentFile extends Model {
 				
 			if(!$this->ID) {
 				$this->ID = $this->conn->lastInsertId();
-			}else{
-				//echo "existed";
 			}
 		} catch(PDOException $e) {
 			echo $e->getMessage(); // TODO log this error instead of echo
 		}
 	}
 	
-//	$assignmentFile2 = AssignmentFile::createFile($gradedAssignID, $dirname . $file);
-//	$assignmentFile2 = AssignmentFile::createFile($class, $assignment, $student_suid, $file);
 	public static function createFile($class, $assignment, $student, $file){
 				
 		$PA_id = PaperlessAssignment::getID($class, $assignment);
 		$student_id = Model::getUserID($student);
-		
+			
 		$instance = new self();
 		$instance->ID = 0;
 		$instance->GradedAssignment = 0;
@@ -131,17 +126,14 @@ class AssignmentFile extends Model {
 		$query = "SELECT * FROM " . ASSIGNMENT_FILE_TABLE . " WHERE Student=:Student AND PaperlessAssignment=:AssnID AND File=:File;";
 		$instance = new self();
 		
-		//print_r(array(":Student" => $student_id, ":AssnID" => $paperless_assignment_id, ":File" => $file));
 		
 		try {
 			$sth = $instance->conn->prepare($query);
 			$sth->execute(array(":Student" => $student_id, ":AssnID" => $paperless_assignment_id, ":File" => $file));
 			$sth->setFetchMode(PDO::FETCH_NUM);
 			if($row = $sth->fetch()) {
-				//print_r($row);
 				$instance->fill($row);
 				$instance->loadComments();
-				//echo "found";
 				return $instance;
 			}else{
 
@@ -177,11 +169,9 @@ class AssignmentFile extends Model {
 		return null;
 	}
 
-	/*
+		/*
 		* Getters and Setters
 		*/
-
-
 	public function fill(array $row) { 
 		$this->ID = $row[0];
 		$this->GradedAssignment = $row[1];

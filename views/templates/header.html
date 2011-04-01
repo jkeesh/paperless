@@ -8,7 +8,6 @@ root_url = '{$root_url}';
 
 <script type="text/javascript" src="{$root_url}static/js/jquery-1.4.1.min.js"></script>
 <script type="text/javascript" src="{$root_url}static/js/jquery-1.4.2.js"></script>
-
 <script type="text/javascript" src="{$root_url}static/js/jquery-ui.min.js"></script> 
 <link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css"> 
 
@@ -40,7 +39,7 @@ root_url = '{$root_url}';
 		{if !isset($print_view)}
         <div id="logo"><a href="{$root_url}" id="logo-link"></a></div>
         <div id="user">
-			{if $class}
+			{if isset($class)}
 			<div id="classname">{$class|upper}</div>
 			{/if}
             <div id="name">{$display_name|escape}</div>

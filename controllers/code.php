@@ -35,7 +35,6 @@ class CodeHandler extends ToroHandler {
 			if($file == "release"){
 				$release = True;
 			}else if(isCodeFileForClass($file, $class)) {
-//				$assignmentFile = AssignmentFile::load(array("FilePath" => $dirname . $file));
 				$assn = AssignmentFile::loadFile($class, $student, $assignment, $file);
 				if(is_null($assn)){
 					$string = explode("_", $student); // if it was student_1 just take student
@@ -91,7 +90,6 @@ class CodeHandler extends ToroHandler {
 		list($files, $file_contents, $assignment_files, $release) = $this->getAssignmentFiles($class, $student, $assignment, $sl);
 
 		if(count($files) == 0){
-			//Header("Location: " . ROOT_URL . "error/for/you");
 			$this->smarty->assign("message", "Nothing here yet.");
 		}
 
