@@ -10,7 +10,8 @@
 			$due_date = new DateTime($due_date);
 			$now = new DateTime();
 			$now_timestamp = (int)($now->format("U"));
-			$due_timestamp = (int)strtotime($due_date);
+			$due_timestamp = (int)($due_date->format("U")); 
+						
 			$days_late = (float)($now_timestamp - $due_timestamp) / 3600. / 24.;
 			$days_late = max(0, (int)(ceil($days_late)));
 

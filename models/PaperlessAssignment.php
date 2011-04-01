@@ -67,7 +67,6 @@ class PaperlessAssignment extends Model {
 		$query = "REPLACE INTO PaperlessAssignments VALUES(:ID, :Quarter, :Class, :DirectoryName, :Name, :DueDate);";
 		$quarter_id = Model::getQuarterID();
 		$class_id = Model::getClassID($class);
-		echo $query;	
 		try {
 			$sth = $instance->conn->prepare($query);
 			$rows = $sth->execute(array(
