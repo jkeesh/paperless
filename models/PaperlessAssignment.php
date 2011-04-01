@@ -26,12 +26,12 @@ class PaperlessAssignment extends Model {
 		try {
 			$sth = $this->conn->prepare($query);
 			$rows = $sth->execute(array(":ID" => $this->ID,
-										":Quarter" => $this->Quarter,
-										":Class" => $this->Class,
-										":DirectoryName" => $this->DirectoryName,
-										":Name" => $this->Name,
-										":DueDate" => $this->DueDate
-										));
+				":Quarter" => $this->Quarter,
+				":Class" => $this->Class,
+				":DirectoryName" => $this->DirectoryName,
+				":Name" => $this->Name,
+				":DueDate" => $this->DueDate
+				));
 			if(!$this->ID) {
 				$this->ID = $this->conn->lastInsertId();
 			}
@@ -40,8 +40,8 @@ class PaperlessAssignment extends Model {
 		}
 	}
 
-	public function deleteID($id) {
-		echo "deleting...". $id;
+	//this is really a static method..?
+	public static function deleteID($id) {
 		$instance = new self();
 		$query = "DELETE FROM PaperlessAssignments " .
 			" WHERE ID=:ID;";
@@ -49,7 +49,6 @@ class PaperlessAssignment extends Model {
 			$sth = $instance->conn->prepare($query);
 			$sth->execute(array(":ID" => $id));
 		} catch(PDOException $e) {
-			echo "fail..";
 			echo $e->getMessage(); // TODO log this error instead of echo
 		}
 	}
@@ -62,17 +61,41 @@ class PaperlessAssignment extends Model {
 		return $instance;
 	}
 
+	public static function update($id, $class, $dir, $name, $due) {
+		
+		$instance = new self();
+		$query = "REPLACE INTO PaperlessAssignments VALUES(:ID, :Quarter, :Class, :DirectoryName, :Name, :DueDate);";
+		$quarter_id = Model::getQuarterID();
+		$class_id = Model::getClassID($class);
+		echo $query;	
+		try {
+			$sth = $instance->conn->prepare($query);
+			$rows = $sth->execute(array(
+				":ID" => $id,
+				":Quarter" => $quarter_id,
+				":Class" => $class_id,
+				":DirectoryName" => $dir,
+				":Name" => $name,
+				":DueDate" => $due
+				));
+		} catch(PDOException $e) {
+			echo $e->getMessage(); // TODO log this error instead of echo
+		}
+	}
+
+
+
 	/*
 		* Load from an id
 		*/
 	public static function loadForClass($class) {
 		$query = "SELECT * FROM PaperlessAssignments WHERE Class=:Class";
 		$instance = new self();
-		
+
 		try {
 			$sth = $instance->conn->prepare($query);
 			$class_id = Model::getClassID($class);
-	      	$sth->setFetchMode(PDO::FETCH_ASSOC);
+			$sth->setFetchMode(PDO::FETCH_ASSOC);
 			$sth->execute(array(":Class" => $class_id));
 			if($rows = $sth->fetchAll()) {
 				//print_r($rows);

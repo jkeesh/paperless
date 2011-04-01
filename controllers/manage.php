@@ -26,6 +26,7 @@
 
 			if($_POST['action'] == "Update"){
 				echo "update";
+				PaperlessAssignment::update($_POST['id'], $class, $_POST['directory'], $_POST['name'], $_POST['duedate']);
 			}else if($_POST['action'] == "Delete"){
 				echo "delete";
 				PaperlessAssignment::deleteID($_POST['id']);
