@@ -33,7 +33,7 @@
 			//print_r($assns);
 
 			$assns = PaperlessAssignment::loadForClass($class);
-			print_r($assns);
+			//print_r($assns);
 
 			// assign template variables
 			$this->smarty->assign("assignments", $assns);

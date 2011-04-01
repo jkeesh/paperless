@@ -590,6 +590,7 @@ select{
 
 .table-title{
     font-size: 12px;
+    font-weight: bold;
 }
 .table-info{
     font-size: 10px;
