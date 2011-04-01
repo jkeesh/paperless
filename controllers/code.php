@@ -35,7 +35,6 @@ class CodeHandler extends ToroHandler {
 			if($file == "release"){
 				$release = True;
 			}else if(isCodeFileForClass($file, $class)) {
-//				$assignmentFile = AssignmentFile::load(array("FilePath" => $dirname . $file));
 				$assn = AssignmentFile::loadFile($class, $student, $assignment, $file);
 				if(is_null($assn)){
 					$string = explode("_", $student); // if it was student_1 just take student
