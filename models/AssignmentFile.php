@@ -70,12 +70,7 @@ class AssignmentFile extends Model {
 				
 			print_r($rows);
 			if(!$this->ID) {
-				echo "found last";
-				echo $this->conn->lastInsertId();
-				
 				$this->ID = $this->conn->lastInsertId();
-				
-				echo $this->ID;
 			}else{
 				//echo "existed";
 			}
