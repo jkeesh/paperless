@@ -11,7 +11,8 @@
 			
 			if(!is_array($userClasses)){
 				//Header("Location: ".  ROOT_URL ."error/for/you");
-				echo "You do not seem to be a member of any classes this quarter.";
+				$this->smarty->assign("message", "It seems you are not a memeber of any classes this quarter.");
+				$this->smarty->display("message.html");
 				return;
 			}
 			if( count($userClasses) > 1){ //they are in multiple classes, redirect to choice page

@@ -32,10 +32,7 @@
 		
 		function lateDays($class, $dirname){
 			$late_days_file = $dirname . "/lateDays.txt";
-			$assn_dir = $_GET['assndir'];
-			
-			//$assns = getAssnsForClass($class);
-			//$assn_date = $assns[$assn_dir]["DueDate"];			
+			$assn_dir = $_GET['assndir'];			
 			$assn_date = PaperlessAssignment::getDueDate($class, $assn_dir);
 			print_r($assn_date);
 			$late_days = fopen($late_days_file, "w");
