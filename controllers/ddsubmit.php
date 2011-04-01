@@ -7,13 +7,19 @@
 				
 		public function get($class) {
 			//print_r($_GET);
+			
+
 		
 			if(array_key_exists('assignment', $_GET)){
 				//echo "drag and drop page";
 				$this->smarty->assign("dragdrop", 1);
 				$this->smarty->assign("assndir", $_GET['assignment']);
 			}else{
-				//echo "first page";
+				if(!array_key_exists('open', $_GET)){
+					$this->smarty->assign("message", "The submitter is not yet open for this quarter. Check back soon.");
+					$this->smarty->display("message.html");
+					return;
+				}
 			}
 			
 			

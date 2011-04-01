@@ -3,14 +3,14 @@
 		
 		public function get($class) {		
 			if($class){
-				Header("Location: ".  ROOT_URL ."error/for/you");
+				$this->smarty->assign("message", "It seems you have visited an invalid url.");
+				$this->smarty->display("message.html");
 				return;
 			}
 			
 			$userClasses = Model::getClass(USERNAME);
 			
 			if(!is_array($userClasses)){
-				//Header("Location: ".  ROOT_URL ."error/for/you");
 				$this->smarty->assign("message", "It seems you are not a memeber of any classes this quarter.");
 				$this->smarty->display("message.html");
 				return;
