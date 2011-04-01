@@ -58,8 +58,6 @@ class AssignmentFile extends Model {
 	public function saveFile() {
 		$query = "INSERT INTO " . ASSIGNMENT_FILE_TABLE . 
 			" VALUES(:ID, :GradedAssignment, :File, :PaperlessAssignment, :Student);";
-		echo $query;
-		//print_r($this);
 		try {
 			$sth = $this->conn->prepare($query);
 			$rows = $sth->execute(array(

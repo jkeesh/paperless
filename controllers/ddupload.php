@@ -93,11 +93,11 @@
 				$headers = getallheaders();
 				$headers = array_change_key_case($headers, CASE_UPPER);
 				
-				print_r($headers);
+				//print_r($headers);
 
 				if(file_put_contents($dirname.'/'.$headers['UP-FILENAME'], $content)) {
 					//log success
-					//echo 'done';
+					//echo $headers['UP-FILENAME'];
 				}else{
 					//log error
 				}
