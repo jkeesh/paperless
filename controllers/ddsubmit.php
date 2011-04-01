@@ -6,9 +6,6 @@
 	class DragDropSubmitHandler extends ToroHandler {
 				
 		public function get($class) {
-			//print_r($_GET);
-			
-
 		
 			if(array_key_exists('assignment', $_GET)){
 				//echo "drag and drop page";
@@ -33,10 +30,6 @@
 						
 			$sectionleader = Model::getSectionLeaderForStudent(USERNAME);
 			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sectionleader . "/";
-			
-			
-			//$assns = getAssnsForClass($class);
-			//print_r($assns);
 
 			$assns = PaperlessAssignment::loadForClass($class);
 			//print_r($assns);
