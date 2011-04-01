@@ -42,8 +42,8 @@ class CodeHandler extends ToroHandler {
 					$string = explode("_", $student); // if it was student_1 just take student
 					$student_suid = $string[0];
 
-					$assignmentFile = AssignmentFile::create($gradedAssignID, $dirname . $file);
-					$assignmentFile->save();
+					//$assignmentFile = AssignmentFile::create($gradedAssignID, $dirname . $file);
+					//$assignmentFile->save();
 
 					$a2 = AssignmentFile::createFile($class, $assignment, $student_suid, $file);
 					//echo "assnfile\n";

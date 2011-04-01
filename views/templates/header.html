@@ -52,7 +52,7 @@ root_url = '{$root_url}';
                 {if isset($sl_class)}
                 <a href="{$root_url}{$sl_class}/sectionleader/{$username}">My Section</a>
                 {/if}
-                {if $multiple_classes}
+                {if isset($multiple_classes)}
 				<a href="{$root_url}select">My Classes</a>
 				{/if}
                 {if isset($student_class)}

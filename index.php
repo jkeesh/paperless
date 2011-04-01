@@ -48,8 +48,6 @@
 			
 			if(usingIE()){
 				$this->smarty->assign("ie", 1);
-			}else{
-				$this->smarty->assign("ie", 0);				
 			}
 			
 			if($is_sl) $sectionLeader = USERNAME;
@@ -62,10 +60,7 @@
 			$userClasses = Model::getClass(USERNAME);
 			if(count($userClasses) > 1){
 				$this->smarty->assign("multiple_classes", 1);				
-			}else{
-				$this->smarty->assign("multiple_classes", 0);
 			}
-			
 			$this->smarty->assign("section_leader", $sectionLeader);			
 		}
 		

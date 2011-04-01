@@ -27,7 +27,7 @@ $(document).ready(function(){
 
 <div class="list">
     <div class="header">Assignments</div>
-		{if $no_assns}
+		{if isset($no_assns)}
 		<div>Nothing Submitted Yet!</div>
 		{/if}
         {foreach from=$assignments item=assignment}

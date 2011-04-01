@@ -74,7 +74,7 @@
 				$info[$i]['num'] = $submissionNumber;
 				$info[$i]['student'] = $sunetid;
 				
-				if($submissionNumber > $greatest[$sunetid]){
+				if(array_key_exists($sunetid, $greatest) && $submissionNumber > $greatest[$sunetid]){
 					$greatest[$sunetid] = $submissionNumber;
 				}
 				
