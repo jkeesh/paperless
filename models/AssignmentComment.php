@@ -100,7 +100,7 @@ class AssignmentComment extends Model {
 	}
 	
 	public function setCommenter($Commenter){ $this->Commenter = $Commenter; }
-	public function getCommenter(){ return $this->Commenter; }
+	public function getCommenter(){ return $this->getDisplayName($this->getSUID($this->Commenter)); }
 	
 	public function setStudent($Student){ $this->Student = $Student; }
 	public function getStudent(){ return $this->Student; }

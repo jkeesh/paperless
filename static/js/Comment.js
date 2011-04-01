@@ -6,13 +6,14 @@ function removeDialog(){
 	current_dialog = null;
 }
 
-function /* class */ Comment(ctext, crange, code_file, id) {
+function /* class */ Comment(ctext, crange, code_file, id, commenter) {
 	this.range = crange;
 	this.text = ctext;
 	this.code_file = code_file;
 	this.filename = code_file.filename;
 	var self = this;
 	this.id = id;
+	this.commenter = commenter;
 	
 	this.filter = function(text){
 		text = text.replace(/&/g, '&amp;');		
@@ -30,7 +31,7 @@ function /* class */ Comment(ctext, crange, code_file, id) {
 			   url: window.location.pathname, // post to current location url
 			   data: "action="+action+"&text=" + encodeURIComponent(this.text) + "&rangeLower=" + this.range.lower + "&rangeHigher=" + this.range.higher + "&filename=" + this.filename,
 			   success: function(data) {
-					//TODO
+					
 			   },
 			   error: function(jqXHR, textStatus, errorThrown) {
 			        console.log(jqXHR.responseText);
@@ -55,7 +56,7 @@ function /* class */ Comment(ctext, crange, code_file, id) {
 			this.code_file.highlightRange(self.range);
 			this.text = commentText;
 			this.id = this.code_file.commentID;
-			this.code_file.addCommentDiv(commentText, self.range, true, this.id);
+			this.code_file.addCommentDiv(commentText, this.code_file.user, self.range, true, this.id);
 			this.code_file.commentID++;
 			this.code_file.last_comment = self;
 			this.ajax("create");

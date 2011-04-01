@@ -58,8 +58,7 @@ class AssignmentFile extends Model {
 	public function saveFile() {
 		$query = "INSERT INTO " . ASSIGNMENT_FILE_TABLE . 
 			" VALUES(:ID, :GradedAssignment, :File, :PaperlessAssignment, :Student);";
-		echo $query;
-		//print_r($this);
+
 		try {
 			$sth = $this->conn->prepare($query);
 			$rows = $sth->execute(array(
@@ -70,14 +69,8 @@ class AssignmentFile extends Model {
 				":Student" => $this->Student
 				));
 				
-			print_r($rows);
 			if(!$this->ID) {
-				echo "found last";
-				echo $this->conn->lastInsertId();
-				
 				$this->ID = $this->conn->lastInsertId();
-				
-				echo $this->ID;
 			}else{
 				//echo "existed";
 			}

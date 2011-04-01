@@ -1,4 +1,4 @@
-function /* class */ CodeFile(filename, id_number, interactive) {
+function /* class */ CodeFile(filename, id_number, interactive, user) {
 	this.interactive = interactive;
 	this.editable = interactive;
 	this.displayed = false;
@@ -15,6 +15,7 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 	this.selected_range_end;
 	this.selected_ranges = [];
 	this.last_comment = null;
+	this.user = user;
 	
 	this.highlights = new Array();
 	
@@ -31,10 +32,11 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 			var curComment = children[i];
 			var cur = $(curComment);
 			var rangeString = cur.attr('id');			
-			var text = cur.find('span').html();
+			var text = $(".comment", cur).html();
 			var range = stringToRange(rangeString);
+			var commenter = $(".commenter", cur).html();
 			this.highlightRange(range);
-			var newComment = new Comment(text, range, this, this.commentID);
+			var newComment = new Comment(text, range, this, this.commentID, commenter);
 			this.addComment(newComment);
 		}
 	}
@@ -42,7 +44,7 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 	this.showComments = function(){
 		for(var i = 0; i < this.comment_list.length; i++){
 			var comment = this.comment_list[i];
-			this.addCommentDiv(comment.text, comment.range, this.interactive, comment.id);
+			this.addCommentDiv(comment.text, comment.commenter, comment.range, this.interactive, comment.id);
 		}
 		this.displayed = true;
 	}
@@ -171,7 +173,7 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 		this.commentID++;
 	}
 	
-	this.addCommentDiv = function(text, range, isEditable, commentID){
+	this.addCommentDiv = function(text, commenter, range, isEditable, commentID){
 		
 		if(isEditable == undefined) isEditable = true;
 		var range_text = range.toString();
@@ -183,7 +185,7 @@ function /* class */ CodeFile(filename, id_number, interactive) {
 		toAdd += "<span class='hiddenPlainText htext" + range_text + "'>" + text + "</span>";
 		if(isEditable) toAdd += "<a href=\"javascript:edit("+ this.fileID + ",'" + range_text + "',"+commentID+")\">";
 		toAdd += 	" <div class='" + range_text +" commentbox'><span class='inlineCommentText ctext" + range_text + "'>" + formattedText + "</span>";
-		//toAdd +=	"<div class='commentauthor'>Jeremy Keeshin</div><div style='clear:both'></div>"; // add the author
+		toAdd +=	"<div class='commentauthor'>" + commenter + "</div><div style='clear:both'></div>"; // add the author
 		toAdd +=    "</div>";
 		if(isEditable) toAdd += "</a>";
 		toAdd += "</div>";
