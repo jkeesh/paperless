@@ -79,7 +79,7 @@ class AssignmentFile extends Model {
 				
 				echo $this->ID;
 			}else{
-				echo "existed";
+				//echo "existed";
 			}
 		} catch(PDOException $e) {
 			echo $e->getMessage(); // TODO log this error instead of echo
@@ -138,14 +138,14 @@ class AssignmentFile extends Model {
 		$query = "SELECT * FROM " . ASSIGNMENT_FILE_TABLE . " WHERE Student=:Student AND PaperlessAssignment=:AssnID AND File=:File;";
 		$instance = new self();
 		
-		print_r(array(":Student" => $student_id, ":AssnID" => $paperless_assignment_id, ":File" => $file));
+		//print_r(array(":Student" => $student_id, ":AssnID" => $paperless_assignment_id, ":File" => $file));
 		
 		try {
 			$sth = $instance->conn->prepare($query);
 			$sth->execute(array(":Student" => $student_id, ":AssnID" => $paperless_assignment_id, ":File" => $file));
 			$sth->setFetchMode(PDO::FETCH_NUM);
 			if($row = $sth->fetch()) {
-				print_r($row);
+				//print_r($row);
 				$instance->fill($row);
 				$instance->loadComments();
 				//echo "found";

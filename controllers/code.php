@@ -43,7 +43,7 @@ class CodeHandler extends ToroHandler {
 					$assn = AssignmentFile::createFile($class, $assignment, $student_suid, $file);
 					$assn->saveFile();
 				}else{
-					echo "existed";
+					//echo "existed";
 				}
 //				$assignment_files[] = $assignmentFile;
 				$assignment_files[] = $assn;
@@ -162,21 +162,21 @@ class CodeHandler extends ToroHandler {
 			return;
 		}
 
-		echo $class . "\n";
-		echo $suid . "\n";
-		echo $assignment . "\n";
-		echo $_POST['filename'] . "\n";
+		// echo $class . "\n";
+		// echo $suid . "\n";
+		// echo $assignment . "\n";
+		// echo $_POST['filename'] . "\n";
 		$curFile = AssignmentFile::loadFile($class, $suid, $assignment, $_POST['filename']);
-		print_r($curFile);
+//		print_r($curFile);
 //		$curFile = AssignmentFile::load(array("FilePath" => $dirname . $_POST['filename']));
 		$id = $curFile->getID();
 		if(!isset($id)){
-			echo "no valid assnment found";
+//			echo "no valid assnment found";
 			return;
 		}
 		
-		echo "found";
-		print_r($_POST);
+		// echo "found";
+		// print_r($_POST);
 		
 		$commenter = Model::getUserID(USERNAME);
 		$student = Model::getUserID($suid);
@@ -188,7 +188,7 @@ class CodeHandler extends ToroHandler {
 						$_POST['rangeHigher'], $_POST['text'], $commenter, $student);
 			$newComment->save();
 			
-			print_r($newComment);
+			//print_r($newComment);
 			} else if($_POST['action'] == "delete") {
 				// find the comment to delete
 				foreach($curFile->getAssignmentComments() as $comment) {
