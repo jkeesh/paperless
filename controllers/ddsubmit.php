@@ -62,17 +62,12 @@ class DragDropSubmitHandler extends ToroHandler {
 
 	public function get($class) {
 
-		if(array_key_exists('assignment', $_POST)){
-			//echo "drag and drop page";
-			$this->smarty->assign("dragdrop", 1);
-			$this->smarty->assign("assndir", $_GET['assignment']);
-		}else{
-			if(!array_key_exists('open', $_GET)){
-				$this->smarty->assign("message", "The submitter is not yet open for this quarter. Check back soon.");
-				$this->smarty->display("message.html");
-				return;
-			}
-		}
+		// Uncomment this to close the submitter
+		// if(!array_key_exists('open', $_GET)){
+		// 	$this->smarty->assign("message", "The submitter is not yet open for this quarter. Check back soon.");
+		// 	$this->smarty->display("message.html");
+		// 	return;
+		// }
 
 
 		$role = Model::getRoleForClass(USERNAME, $class);	
