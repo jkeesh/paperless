@@ -5,6 +5,8 @@ require_once("models/PaperlessAssignment.php");
 
 class DragDropSubmitHandler extends ToroHandler {
 
+
+
 	public function post($class){
 
 		$assn = $_POST['assignment'];
@@ -30,6 +32,7 @@ class DragDropSubmitHandler extends ToroHandler {
 		do {
 			$dest_dir = $target_dir . USERNAME . "_" . $idx;
 			$cur_submission = USERNAME . "_" . $idx;
+			if(isEmptyDir($dest_dir)) break;
 			$idx++;
 		} while (file_exists($dest_dir));
 		echo $dest_dir;
@@ -39,7 +42,9 @@ class DragDropSubmitHandler extends ToroHandler {
 
 
 		echo $cur_submission;
-		mkdir($dest_dir, 0777, true);
+		if (!file_exists($dest_dir)) {
+			mkdir($dest_dir, 0777, true);
+		}
 
 		// $assns = PaperlessAssignment::loadForClass($class);
 		// //print_r($assns);
