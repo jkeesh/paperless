@@ -7,7 +7,7 @@
 <div class="padded">Hi, {$name|escape}. Welcome to the really cool drag and drop submitter.</div>
 
 <div class="padded">Select assignment to submit:</div>
-<form  class="padded" action="{$root_url}{$class|lower}/ddsubmit" method="GET"> 
+<form  class="padded" action="{$root_url}{$class|lower}/ddsubmit" method="POST"> 
 	<select name="assignment">
 		{foreach from=$assignments item=assignment}
 		<option value="{$assignment.DirectoryName}">{$assignment.Name}</option>
@@ -16,6 +16,9 @@
 	<div class="padded-top"><input type="submit" value="Next" /></div>
 </form>
 {else}
+
+<div class="italic">submitting {$assndir}</div>
+
 <div class="padded">Drag and drop the files you want to include onto blue box. These are generally the source files which you modified ({$sourcelist}). Log in with Facebook, and you have the option to tell your friends you just submitted.</div>
 
 <div id="fb-root"></div>
@@ -39,7 +42,7 @@
 			</div>
 		</td>
 		<td>
-<div class="padded link underline"><a href="{$root_url}{$class|lower}/code/{$assndir}/{$username}_1">View My Submission</a></div>
+<div class="padded link underline"><a href="{$root_url}{$class|lower}/code/{$assndir}">View My Submission</a></div>
 		</td>
 		<td>
 <div class="padded link underline" id="fbpost">

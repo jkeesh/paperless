@@ -595,3 +595,7 @@ select{
 .table-info{
     font-size: 10px;
 }
+
+.italic{
+    font-style: italic;
+}
