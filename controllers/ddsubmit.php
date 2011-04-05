@@ -35,22 +35,17 @@ class DragDropSubmitHandler extends ToroHandler {
 			if(isEmptyDir($dest_dir)) break;
 			$idx++;
 		} while (file_exists($dest_dir));
-		echo $dest_dir;
+		// echo $dest_dir;
 		$assn_dir = $assn . "/". $cur_submission;
-		echo "<br/>".$assn_dir."<br/>";
+		// echo "<br/>".$assn_dir."<br/>";
 		$this->smarty->assign("assndir", $assn_dir);
 
 
-		echo $cur_submission;
+		// echo $cur_submission;
 		if (!file_exists($dest_dir)) {
 			mkdir($dest_dir, 0777, true);
 		}
 
-		// $assns = PaperlessAssignment::loadForClass($class);
-		// //print_r($assns);
-		// 
-		// // assign template variables
-		// $this->smarty->assign("assignments", $assns);
 		$this->smarty->assign("class", $class);
 		$this->smarty->assign("name", Model::getDisplayName(USERNAME));
 		$this->smarty->assign("cur_submission", $cur_submission);
