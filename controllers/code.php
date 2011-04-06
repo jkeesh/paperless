@@ -29,24 +29,54 @@ class CodeHandler extends ToroHandler {
 		$file_contents = array();
 		$assignment_files = array();
 
+		$string = explode("_", $student); // if it was student_1 just take student
+		$student_suid = $string[0];
+		$submission_number = $string[1];
+		echo $submission_number;
+
+		$last_dir = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl . "/". $assignment . "/" . $student_suid; 
+
+		$last_submission = getLastSubmissionNumber($last_dir);
+		echo "last submission: " . $last_submission;
+
 		$release = False;
 		while($file = readdir($dir)) {
 			if($file == "release"){
 				$release = True;
 			}else if(isCodeFileForClass($file, $class)) {
-				$assn = AssignmentFile::loadFile($class, $student, $assignment, $file);
+				$assn = AssignmentFile::loadFile($class, $student, $assignment, $file, $submission_number);
+				print_r($assn);
+				// If we could load it by submission number, we are done
 				if(is_null($assn)){
-					$string = explode("_", $student); // if it was student_1 just take student
-					$student_suid = $string[0];
-					$assn = AssignmentFile::createFile($class, $assignment, $student_suid, $file);
-					$assn->saveFile();
+					$assn = AssignmentFile::loadFile($class, $student, $assignment, $file);
+					// Now we try to load and see if an old file was there.
+
+					if(is_null($assn)){
+						//It wasn't so create a new one.
+						$assn = AssignmentFile::createFile($class, $assignment, $student_suid, $file, $submission_number);
+						$assn->saveFile();
+					}else{
+						//If it was, update the old one.
+						if($submission_number == $last_submission){
+							echo "set submission number";
+							$assn->setSubmissionNumber($submission_number);
+							//print_r($assn);
+						}else{
+							$assn = AssignmentFile::createFile($class, $assignment, $student_suid, $file, $submission_number);
+							echo "created new file";
+						}
+						$assn->saveFile();					
+					}
+
+				}else{
+					echo "already there";
 				}
 				$assignment_files[] = $assn;
 				$files[] = $file;
 				$file_contents[] = htmlentities(file_get_contents($dirname . $file));
 			}
 		}
-		
+
 		return array($files, $file_contents, $assignment_files, $release);
 	}
 
@@ -131,8 +161,9 @@ class CodeHandler extends ToroHandler {
 		// only section leaders should be able to add comments
 		Permissions::requireRole(POSITION_SECTION_LEADER, $class);
 
-		$suid = explode("_", $student); // if it was student_1 just take student
-		$suid = $suid[0];
+		$parts = explode("_", $student); // if it was student_1 just take student
+		$suid = $parts[0];
+		$submission_number = $parts[1];
 		$sl = Model::getSectionLeaderForStudent($suid);
 
 		$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl . "/". $assignment . "/" . $student . "/"; 
@@ -153,28 +184,28 @@ class CodeHandler extends ToroHandler {
 		// echo $suid . "\n";
 		// echo $assignment . "\n";
 		// echo $_POST['filename'] . "\n";
-		$curFile = AssignmentFile::loadFile($class, $suid, $assignment, $_POST['filename']);
-//		print_r($curFile);
-//		$curFile = AssignmentFile::load(array("FilePath" => $dirname . $_POST['filename']));
+		$curFile = AssignmentFile::loadFile($class, $suid, $assignment, $_POST['filename'], $submission_number);
+		//		print_r($curFile);
+		//		$curFile = AssignmentFile::load(array("FilePath" => $dirname . $_POST['filename']));
 		$id = $curFile->getID();
 		if(!isset($id)){
-//			echo "no valid assnment found";
+			//			echo "no valid assnment found";
 			return;
 		}
-		
+
 		// echo "found";
 		// print_r($_POST);
-		
+
 		$commenter = Model::getUserID(USERNAME);
 		$student = Model::getUserID($suid);
-		
+
 		if($_POST['action'] == "create") {
-			
-			
+
+
 			$newComment = AssignmentComment::create($curFile->getID(), $_POST['rangeLower'], 
-						$_POST['rangeHigher'], $_POST['text'], $commenter, $student);
+				$_POST['rangeHigher'], $_POST['text'], $commenter, $student);
 			$newComment->save();
-			
+
 			//print_r($newComment);
 			} else if($_POST['action'] == "delete") {
 				// find the comment to delete

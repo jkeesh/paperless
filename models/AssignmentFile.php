@@ -10,32 +10,13 @@ class AssignmentFile extends Model {
 	private $AssignmentComments;
 	private $PaperlessAssignment;
 	private $Student;
+	private $SubmissionNumber;
 
 	public function __construct() {
 		parent::__construct();
 		$this->AssignmentComments = array( );
 	}
 
-	/*
-		* Saves the current assignment files's state to 
-		* the database.
-		*/
-	public function save() {
-		$query = "REPLACE INTO " . ASSIGNMENT_FILE_TABLE . 
-			" VALUES(:ID, :GradedAssignment, :File);";
-
-		try {
-			$sth = $this->conn->prepare($query);
-			$rows = $sth->execute(array(":ID" => $this->ID,
-				":GradedAssignment" => $this->GradedAssignment,
-				":File" => $this->FilePath));
-			if(!$this->ID) {
-				$this->ID = $this->conn->lastInsertId();
-			}
-		} catch(PDOException $e) {
-			echo $e->getMessage(); // TODO log this error instead of echo
-		}
-	}
 
 	public function delete() {
 		// delete the file object
@@ -56,8 +37,18 @@ class AssignmentFile extends Model {
 	}
 	
 	public function saveFile() {
-		$query = "INSERT INTO " . ASSIGNMENT_FILE_TABLE . 
-			" VALUES(:ID, :GradedAssignment, :File, :PaperlessAssignment, :Student);";
+		$query = "REPLACE INTO " . ASSIGNMENT_FILE_TABLE . 
+			" VALUES(:ID, :GradedAssignment, :File, :PaperlessAssignment, :Student, :SubmissionNumber);";
+			
+		print_r(array(
+			":ID" => $this->ID,
+			":GradedAssignment" => $this->GradedAssignment,
+			":File" => $this->FilePath,
+			":PaperlessAssignment" => $this->PaperlessAssignment,
+			":Student" => $this->Student,
+			":SubmissionNumber" => $this->SubmissionNumber
+			));
+			
 		try {
 			$sth = $this->conn->prepare($query);
 			$rows = $sth->execute(array(
@@ -65,7 +56,8 @@ class AssignmentFile extends Model {
 				":GradedAssignment" => $this->GradedAssignment,
 				":File" => $this->FilePath,
 				":PaperlessAssignment" => $this->PaperlessAssignment,
-				":Student" => $this->Student
+				":Student" => $this->Student,
+				":SubmissionNumber" => $this->SubmissionNumber
 				));
 				
 			if(!$this->ID) {
@@ -76,7 +68,7 @@ class AssignmentFile extends Model {
 		}
 	}
 	
-	public static function createFile($class, $assignment, $student, $file){
+	public static function createFile($class, $assignment, $student, $file, $submission_number){
 				
 		$PA_id = PaperlessAssignment::getID($class, $assignment);
 		$student_id = Model::getUserID($student);
@@ -87,14 +79,15 @@ class AssignmentFile extends Model {
 		$instance->FilePath = $file;
 		$instance->PaperlessAssignment = $PA_id;
 		$instance->Student = $student_id;
+		$instance->SubmissionNumber = $submission_number;
 		return $instance;
 	}
 
-	public static function create($GradedAssignment, $FilePath) {
-		$instance = new self();
-		$instance->fill(array(0, $GradedAssignment, $FilePath));
-		return $instance;
-	}
+	// public static function create($GradedAssignment, $FilePath) {
+	// 	$instance = new self();
+	// 	$instance->fill(array(0, $GradedAssignment, $FilePath));
+	// 	return $instance;
+	// }
 
 	public function loadComments() {
 		$query = "SELECT * FROM " . ASSIGNMENT_COMMENT_TABLE . " WHERE AssignmentFile=:AssignmentFile";
@@ -116,20 +109,33 @@ class AssignmentFile extends Model {
 
 
 	//	$assignmentFile = AssignmentFile::loadFile($class, $student, $assignment, $file);
-	public static function loadFile($class, $student, $dir, $file){
+	public static function loadFile($class, $student, $dir, $file, $number = 0){
+
+		// echo $class;
+		// echo $student;
+		// echo $dir;
+		// echo $file;
+		// echo "<br/>submission no " . $number;
 
 		$paperless_assignment_id = PaperlessAssignment::getID($class, $dir);		
 		$sunetid = explode("_", $student);
 		$sunetid = $sunetid[0];
 		
-		$student_id = Model::getUserID($sunetid);		
-		$query = "SELECT * FROM " . ASSIGNMENT_FILE_TABLE . " WHERE Student=:Student AND PaperlessAssignment=:AssnID AND File=:File;";
+		$student_id = Model::getUserID($sunetid);
+//		if($number)	{	
+			$query = "SELECT * FROM " . ASSIGNMENT_FILE_TABLE . " WHERE Student=:Student AND PaperlessAssignment=:AssnID AND File=:File AND SubmissionNumber=:Number;";
+			$arr = array(":Student" => $student_id, ":AssnID" => $paperless_assignment_id, ":File" => $file, ":Number" => $number);
+		// } else {
+		// 	$query = "SELECT * FROM " . ASSIGNMENT_FILE_TABLE . " WHERE Student=:Student AND PaperlessAssignment=:AssnID AND File=:File;";
+		// 	$arr = array(":Student" => $student_id, ":AssnID" => $paperless_assignment_id, ":File" => $file);
+		// }
 		$instance = new self();
+		
 		
 		
 		try {
 			$sth = $instance->conn->prepare($query);
-			$sth->execute(array(":Student" => $student_id, ":AssnID" => $paperless_assignment_id, ":File" => $file));
+			$sth->execute($arr);
 			$sth->setFetchMode(PDO::FETCH_NUM);
 			if($row = $sth->fetch()) {
 				$instance->fill($row);
@@ -178,6 +184,7 @@ class AssignmentFile extends Model {
 		$this->FilePath = $row[2];
 		$this->PaperlessAssignment = $row[3];
 		$this->Student = $row[4];
+		$this->SubmissionNumber = $row[5];
 	}
 
 	public function setID($ID) { $this->ID = $ID; }
@@ -190,5 +197,7 @@ class AssignmentFile extends Model {
 	public function getFilePath() { return $this->FilePath; }
 
 	public function getAssignmentComments() { return $this->AssignmentComments; }
+	
+	public function setSubmissionNumber($num){ $this->SubmissionNumber = $num; }
 }
 ?>

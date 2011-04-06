@@ -1,5 +1,16 @@
 <?php
 
+// Where dir is the path submissions/class/sl/assn/user/
+function getLastSubmissionNumber($dir){
+	$idx = 0;
+	while(true){
+		$idx++;
+		$dest_dir = $dir . "_" . $idx;
+		if(!file_exists($dest_dir)) break;
+	}
+	return $idx - 1;
+}
+
 function isEmptyDir($dir){ 
 	return (($files = @scandir($dir)) && count($files) <= 2); 
 }
