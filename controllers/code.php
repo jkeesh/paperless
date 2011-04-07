@@ -32,20 +32,17 @@ class CodeHandler extends ToroHandler {
 		$string = explode("_", $student); // if it was student_1 just take student
 		$student_suid = $string[0];
 		$submission_number = $string[1];
-		echo $submission_number;
-
+		
 		$last_dir = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl . "/". $assignment . "/" . $student_suid; 
 
 		$last_submission = getLastSubmissionNumber($last_dir);
-		echo "last submission: " . $last_submission;
-
+		
 		$release = False;
 		while($file = readdir($dir)) {
 			if($file == "release"){
 				$release = True;
 			}else if(isCodeFileForClass($file, $class)) {
 				$assn = AssignmentFile::loadFile($class, $student, $assignment, $file, $submission_number);
-				print_r($assn);
 				// If we could load it by submission number, we are done
 				if(is_null($assn)){
 					$assn = AssignmentFile::loadFile($class, $student, $assignment, $file);
@@ -58,18 +55,16 @@ class CodeHandler extends ToroHandler {
 					}else{
 						//If it was, update the old one.
 						if($submission_number == $last_submission){
-							echo "set submission number";
+							//echo "set submission number";
 							$assn->setSubmissionNumber($submission_number);
 							//print_r($assn);
 						}else{
 							$assn = AssignmentFile::createFile($class, $assignment, $student_suid, $file, $submission_number);
-							echo "created new file";
+							//echo "created new file";
 						}
 						$assn->saveFile();					
 					}
 
-				}else{
-					echo "already there";
 				}
 				$assignment_files[] = $assn;
 				$files[] = $file;
