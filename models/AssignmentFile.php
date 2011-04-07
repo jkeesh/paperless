@@ -40,14 +40,14 @@ class AssignmentFile extends Model {
 		$query = "REPLACE INTO " . ASSIGNMENT_FILE_TABLE . 
 			" VALUES(:ID, :GradedAssignment, :File, :PaperlessAssignment, :Student, :SubmissionNumber);";
 
-		print_r(array(
-			":ID" => $this->ID,
-			":GradedAssignment" => $this->GradedAssignment,
-			":File" => $this->FilePath,
-			":PaperlessAssignment" => $this->PaperlessAssignment,
-			":Student" => $this->Student,
-			":SubmissionNumber" => $this->SubmissionNumber
-			));
+		// print_r(array(
+		// 	":ID" => $this->ID,
+		// 	":GradedAssignment" => $this->GradedAssignment,
+		// 	":File" => $this->FilePath,
+		// 	":PaperlessAssignment" => $this->PaperlessAssignment,
+		// 	":Student" => $this->Student,
+		// 	":SubmissionNumber" => $this->SubmissionNumber
+		// 	));
 
 		try {
 			$sth = $this->conn->prepare($query);
