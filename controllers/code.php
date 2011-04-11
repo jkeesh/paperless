@@ -83,6 +83,9 @@ class CodeHandler extends ToroHandler {
 			$this->smarty->assign("print_view", $print);
 		}
 
+
+
+
 		$this->smarty->assign("code_file", $student);
 
 		$suid = explode("_", $student); // if it was student_1 just take student

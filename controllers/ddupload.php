@@ -6,12 +6,11 @@
 	class DragDropUploadHandler extends ToroHandler {
 		
 		function write_late_days_file($file_handle, $due_date) {
-			
 			$due_date = new DateTime($due_date);
 			$now = new DateTime();
 			$now_timestamp = (int)($now->format("U"));
 			$due_timestamp = (int)($due_date->format("U")); 
-						
+									
 			$days_late = (float)($now_timestamp - $due_timestamp) / 3600. / 24.;
 			$days_late = max(0, (int)(ceil($days_late)));
 
@@ -35,17 +34,17 @@
 			} while (file_exists($dest_dir));
 			echo $dest_dir;
 			
-			// the _1 is hacky to make it backwards compatible with the 106a submission style. 
-			// now all 106bx submissions will go in the same directory and students will have only 1 submission folder
 			return $dirname;
 		}
 		
 		function lateDays($class, $dirname){
 			$late_days_file = $dirname . "/lateDays.txt";
 			$assn_dir = $_GET['assndir'];			
+			$arr = explode("/", $assn_dir);
+			$assn_dir = $arr[0];
 			$assn_date = PaperlessAssignment::getDueDate($class, $assn_dir);
-			print_r($assn_date);
 			$late_days = fopen($late_days_file, "w");
+			
 			$this->write_late_days_file($late_days, $assn_date);
 			fclose($late_days);
 		}
@@ -109,7 +108,6 @@
 					//log error
 				}
 			}
-
 
 			$this->lateDays($class, $dirname);
 			$this->gradeFile($dirname);
