@@ -15,8 +15,9 @@
 			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR;
 			
 			$sls = $this->getDirEntries($dirname);
-			sort($sls);
-			
+			if($sls)
+				sort($sls);
+				
 			// assign template variables
 			$this->smarty->assign("sls", $sls);
 			$this->smarty->assign("class", htmlentities($class));

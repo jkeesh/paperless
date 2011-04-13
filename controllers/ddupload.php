@@ -24,16 +24,7 @@
 		
 		function getUploadDirectory($class){
 			$sl_id = Model::getSectionLeaderForStudent(USERNAME);
-			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl_id . "/" . $_GET['assndir'];
-			
-			$idx = 1;
-			do {
-				$dest_dir = $target_dir . USERNAME . "_" . $idx;
-				$cur_submission = USERNAME . "_" . $idx;
-				$idx++;
-			} while (file_exists($dest_dir));
-			echo $dest_dir;
-			
+			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl_id . "/" . $_GET['assndir'];			
 			return $dirname;
 		}
 		
