@@ -102,7 +102,7 @@ class CodeHandler extends ToroHandler {
 			$role = Model::getRoleForClass(USERNAME, $class);
 		}
 
-		$sl = Model::getSectionLeaderForStudent($suid);
+		$sl = Model::getSectionLeaderForStudent($suid, $class);
 
 		list($files, $file_contents, $assignment_files, $release) = $this->getAssignmentFiles($class, $student, $assignment, $sl);
 
@@ -162,7 +162,7 @@ class CodeHandler extends ToroHandler {
 		$parts = explode("_", $student); // if it was student_1 just take student
 		$suid = $parts[0];
 		$submission_number = $parts[1];
-		$sl = Model::getSectionLeaderForStudent($suid);
+		$sl = Model::getSectionLeaderForStudent($suid, $class);
 
 		$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl . "/". $assignment . "/" . $student . "/"; 
 

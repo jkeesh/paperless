@@ -233,22 +233,24 @@
 			return false;
 		}
 		
-		public static function getSectionLeaderForStudent($student_suid){
+		public static function getSectionLeaderForStudent($student_suid, $class){
 			
 
 			
-			$db = Database::getConnection();					 
+			$db = Database::getConnection();	
+			$classID = Model::getClassID($class);
 			$query = "(SELECT SectionLeader FROM Sections 
 						WHERE ID IN 
 						(SELECT Section FROM SectionAssignments 
 							WHERE Person IN 
 								(SELECT ID FROM People WHERE SUNetID = :sunetid ))
 						AND Quarter = (SELECT DefaultQuarter FROM State)
+						AND Class = :class
 					  )";
 			
 			try {
 				$sth = $db->prepare($query);
-				$sth->execute(array(":sunetid" => $student_suid));
+				$sth->execute(array(":sunetid" => $student_suid, ":class" => $classID));
 				if($row = $sth->fetch()) {
 					return Model::getSUID($row['SectionLeader']);
 				}else{

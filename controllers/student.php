@@ -47,12 +47,13 @@
 			}
 			
 			
-			$sl = Model::getSectionLeaderForStudent($student);	
+			$sl = Model::getSectionLeaderForStudent($student, $class);	
 			
 			if($sl == "unknown"){
 				$this->smarty->assign("nosl", 1);
 			}
 			
+			$this->smarty->assign("sl", $sl);
 			
 			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl . "/";
 			

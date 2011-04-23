@@ -13,7 +13,7 @@
 				Header("Location: " . ROOT_URL);
 			}
 						
-			$sectionleader = Model::getSectionLeaderForStudent(USERNAME);
+			$sectionleader = Model::getSectionLeaderForStudent(USERNAME, $class);
 			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sectionleader . "/";
 			
 			$assns = getAssnsForClass($class);

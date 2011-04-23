@@ -599,3 +599,10 @@ select{
 .italic{
     font-style: italic;
 }
+
+.small-header{
+    font-size: 12px;
+    color: #aaa;
+    font-style: italic;
+    margin-bottom: 10px;
+}

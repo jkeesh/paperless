@@ -23,7 +23,7 @@
 		
 		
 		function getUploadDirectory($class){
-			$sl_id = Model::getSectionLeaderForStudent(USERNAME);
+			$sl_id = Model::getSectionLeaderForStudent(USERNAME, $class);
 			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl_id . "/" . $_GET['assndir'];			
 			return $dirname;
 		}

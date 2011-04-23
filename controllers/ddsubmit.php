@@ -21,7 +21,7 @@ class DragDropSubmitHandler extends ToroHandler {
 			Header("Location: " . ROOT_URL);
 		}
 
-		$sectionleader = Model::getSectionLeaderForStudent(USERNAME);
+		$sectionleader = Model::getSectionLeaderForStudent(USERNAME, $class);
 		$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sectionleader . "/" . $assn . "/";
 		$target_dir = $dirname;
 		if (!file_exists($target_dir)) {
@@ -78,7 +78,7 @@ class DragDropSubmitHandler extends ToroHandler {
 			Header("Location: " . ROOT_URL);
 		}
 
-		$sectionleader = Model::getSectionLeaderForStudent(USERNAME);
+		$sectionleader = Model::getSectionLeaderForStudent(USERNAME, $class);
 		$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sectionleader . "/";
 
 		$assns = PaperlessAssignment::loadForClass($class);

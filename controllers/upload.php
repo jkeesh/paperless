@@ -45,7 +45,7 @@
 			$assn_date = $assns[$assn_dir]["DueDate"];
 			
 			
-			$sl_id = Model::getSectionLeaderForStudent(USERNAME);
+			$sl_id = Model::getSectionLeaderForStudent(USERNAME, $class);
 			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl_id . "/" . $assn_dir . "/";
 			
 			$message = "";

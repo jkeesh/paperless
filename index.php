@@ -50,10 +50,10 @@
 				$this->smarty->assign("ie", 1);
 			}
 			
-			if($is_sl) $sectionLeader = USERNAME;
-			else $sectionLeader = Model::getSectionLeaderForStudent(USERNAME);
+			//if($is_sl) $sectionLeader = USERNAME;
+			//else $sectionLeader = Model::getSectionLeaderForStudent(USERNAME);
 			
-			define('SECTION_LEADER', $sectionLeader);
+			//define('SECTION_LEADER', $sectionLeader);
 			
 			$this->smarty->assign("FACEBOOK_APP_ID", FACEBOOK_APP_ID);
 			
@@ -61,7 +61,7 @@
 			if(count($userClasses) > 1){
 				$this->smarty->assign("multiple_classes", 1);				
 			}
-			$this->smarty->assign("section_leader", $sectionLeader);			
+			//$this->smarty->assign("section_leader", $sectionLeader);			
 		}
 		
 		public function __call($name, $arguments) {			
