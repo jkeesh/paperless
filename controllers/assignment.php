@@ -83,7 +83,7 @@
 			}
 			
 			//print_r($info);
-			print_r($greatest);
+			//print_r($greatest);
 						
 			if(count($students[0]) > 0){
 				$this->smarty->assign("info", $info);
