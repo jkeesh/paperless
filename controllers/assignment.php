@@ -74,7 +74,8 @@
 				$info[$i]['num'] = $submissionNumber;
 				$info[$i]['student'] = $sunetid;
 				
-				if(array_key_exists($sunetid, $greatest) && $submissionNumber > $greatest[$sunetid]){
+				if(!array_key_exists($sunetid, $greatest) ||
+				 (array_key_exists($sunetid, $greatest) && $submissionNumber > $greatest[$sunetid] )){
 					$greatest[$sunetid] = $submissionNumber;
 				}
 				
@@ -82,7 +83,7 @@
 			}
 			
 			//print_r($info);
-			//print_r($greatest);
+			print_r($greatest);
 						
 			if(count($students[0]) > 0){
 				$this->smarty->assign("info", $info);
