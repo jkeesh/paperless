@@ -66,7 +66,7 @@ function getFileTypesForClass($class){
 	// return $info;
 
 	if($class == "cs106b" || $class == "cs106x" || $class == "cs106l"){
-		return array("cpp","h", "txt");
+		return array("cpp","h", "txt", "cc");
 	}
 	if($class == "cs106a"){
 		return array("java", "txt");
