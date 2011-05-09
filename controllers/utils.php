@@ -16,9 +16,9 @@ function isEmptyDir($dir){
 }
 
 /*
-	* This reads of the assignment configuration information for a class
-	* as specified by a csv file in the class configuration directory.
-	*/
+ * This reads of the assignment configuration information for a class
+ * as specified by a csv file in the class configuration directory.
+ */
 function getAssnsForClass($class) {
 	$assignments_file = getConfigFileForClass($class);
 	$assn_data = fopen($assignments_file, "r");
