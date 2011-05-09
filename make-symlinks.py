@@ -6,7 +6,7 @@
 #
 #
 # How to run:
-# /afs/ir/class/cs198/cgi-bin/paperless/make-symlinks.py submissions submissions2 nameSurfer 2
+# /afs/ir/class/cs198/cgi-bin/paperless/make-symlinks.py submissions submissions2 nameSurfer
 # This preserves the capability to find the assignment by only appending a number.
 #
 import os, sys
@@ -20,8 +20,8 @@ def getSymLinkPath(rootFolder, sectionLeader, assignmentName):
   return rootFolder + '/' + sectionLeader + '/' + assignmentName
 
 def main():
-  if len(sys.argv) != 5:
-    print """Usage: make-symlinks.py submissions-root submissions-2-root assignment-name append-name
+  if len(sys.argv) != 4:
+    print """Usage: make-symlinks.py submissions-root submissions-2-root assignment-name
   submissions-root: the folder that contains all section leaders that needs symlinks
   submissions-2-root: the folder that contains all section leaders that will be linked to
   assignment-name: the name of the assignment within a section leader's folder 
@@ -31,13 +31,12 @@ def main():
   submissionsRoot = os.path.abspath(sys.argv[1])
   submissions2Root = os.path.abspath(sys.argv[2])
   assignmentName = sys.argv[3]
-  appendName = sys.argv[4]
   sectionLeaders = getSectionLeaders(submissionsRoot)
   for sectionLeader in sectionLeaders:
     if os.path.isdir(submissionsRoot + '/' + sectionLeader):
       os.chdir(submissionsRoot + '/' + sectionLeader)
       symbolicLinkPath = getSymLinkPath(submissions2Root, sectionLeader, assignmentName)
-      os.symlink(symbolicLinkPath, assignmentName + appendName)
+      os.symlink(symbolicLinkPath, assignmentName)
 
 if __name__ == '__main__':
   main()
