@@ -4,8 +4,11 @@
 # to have every assignment in it for the sake of the paperless IG system.
 #
 # How to run:
-# /afs/ir/class/cs198/cgi-bin/paperless/make-symlinks.py submissions submissions2 nameSurfer
-#
+#   python make-symlinks.py SUBMISSIONS-ROOT SUBMISSIONS-NEW-ROOT ASSIGNMENT-DIR
+# 
+# This was the command that I ran in spring 2011.
+#   python make-symlinks.py /afs/ir/class/cs106a/submissions /afs/ir/class/cs106a/submissions2/submissions hangman
+
 import os, sys
 
 #Returns a list of all section leaders inside rootFolder
