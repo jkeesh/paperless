@@ -79,11 +79,15 @@ function getFileTypesForClass($class){
 
 }
 
+function getBlacklist(){
+	return array("HangmanLexicon.txt", "ShorterLexicon.txt");
+}
+
 function isCodeFileForClass($filename, $class){
 	$ext = pathinfo($filename, PATHINFO_EXTENSION);
 	$ext = strtolower($ext);
 	$filetypes = getFileTypesForClass($class);
-	return in_array($ext, $filetypes);
+	return in_array($ext, $filetypes) && !in_array($filename, getBlacklist());
 }
 
 function usingIE(){
