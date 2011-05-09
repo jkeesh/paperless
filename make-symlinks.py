@@ -25,7 +25,6 @@ def main():
   submissions-root: the folder that contains all section leaders that needs symlinks
   submissions-2-root: the folder that contains all section leaders that will be linked to
   assignment-name: the name of the assignment within a section leader's folder 
-  append-name: this is appended to the name of the symbolic link (in case half-full folders exist in submissions-root/sl)
   each section leader folder must contain directories with the names of assignments"""
     sys.exit(1)
   submissionsRoot = os.path.abspath(sys.argv[1])
