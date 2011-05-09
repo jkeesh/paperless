@@ -12,6 +12,7 @@ class AssignmentComment extends Model {
 	private $CommentText;
 	private $Commenter;
 	private $Student;
+	private $Time;
 
 	public function __construct() {
 		parent::__construct();
@@ -23,7 +24,7 @@ class AssignmentComment extends Model {
 		*/
 	public function save() {
 		$query = "REPLACE INTO " . ASSIGNMENT_COMMENT_TABLE . 
-			" VALUES(:ID, :AssignmentFile, :StartLine, :EndLine, :CommentText, :Commenter, :Student);";
+			" VALUES(:ID, :AssignmentFile, :StartLine, :EndLine, :CommentText, :Commenter, :Student, CURRENT_TIMESTAMP);";
 		try {
 			$sth = $this->conn->prepare($query);
 			$rows = $sth->execute(array(":ID" => $this->ID,
@@ -32,7 +33,7 @@ class AssignmentComment extends Model {
 				":EndLine" => $this->EndLine,
 				":CommentText" => $this->CommentText,
 				":Commenter" => $this->Commenter,
-				":Student" => $this->Student
+				":Student" => $this->Student,
 				));
 
 			if(!$this->ID) {
@@ -57,7 +58,7 @@ class AssignmentComment extends Model {
 
 	public static function create($AssignmentFile, $StartLine, $EndLine, $CommentText, $Commenter, $Student) {
 		$instance = new self();
-		$instance->fill(array(0, $AssignmentFile, $StartLine, $EndLine, $CommentText, $Commenter, $Student));
+		$instance->fill(array(0, $AssignmentFile, $StartLine, $EndLine, $CommentText, $Commenter, $Student, time()));
 		return $instance;
 	}
 
@@ -97,6 +98,7 @@ class AssignmentComment extends Model {
 		$this->setCommentText($row[4]);
 		$this->setCommenter($row[5]);
 		$this->setStudent($row[6]);
+		$this->setTime($row[7]);
 	}
 	
 	public function setCommenter($Commenter){ $this->Commenter = $Commenter; }
@@ -119,5 +121,8 @@ class AssignmentComment extends Model {
 
 	public function setCommentText($CommentText) { $this->CommentText = $CommentText; }
 	public function getCommentText() { return $this->CommentText; }
+	
+	public function setTime($Time){ $this->Time = $Time; }
+	public function getTime(){ return $this->Time; }
 }
 ?>
