@@ -600,9 +600,17 @@ select{
     font-style: italic;
 }
 
-.small-header{
+.small-header, .small-header a{
     font-size: 12px;
     color: #aaa;
     font-style: italic;
     margin-bottom: 10px;
+}
+
+.right{
+    float: right;
+}
+
+.hover-underline:hover{
+    text-decoration: underline;
 }
