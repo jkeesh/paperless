@@ -144,10 +144,6 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter) {
 	}
 	
 	this.edit = function() {
-		// console.log("edit");
-		// console.log(this.code_file.comment_list);
-		
-		
 		if(commentOpen) return;
 		commentOpen = true;
 		
