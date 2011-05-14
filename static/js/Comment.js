@@ -51,6 +51,17 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter) {
 		return text;
 	}
 	
+	
+	/* 
+	 * this.ajax
+	 * ==========================
+	 * This function handles the ajax calls to modify a comment. It takes as a
+	 * parameter the action to be taken on the comment, and checks for the results
+	 * of the request before taking the appropriate action, or notifying the user.
+	 *
+	 * Parameters
+	 * action       the action to be taken on the comment (create, delete)
+	 */
 	this.ajax = function(action){
 	    var comment = this;
 		$.ajax({
