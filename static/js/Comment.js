@@ -6,6 +6,25 @@ function removeDialog(){
 	current_dialog = null;
 }
 
+/*
+ * Comment
+ * ======================
+ * This class handles all of the functionality for a comment, including all of
+ * the main actions associated with a comment. These correspond generally to the
+ * actions that the section leader can take on a comment. You can submit a comment,
+ * edit a comment, delete a comment, or cancel the changes you make to a comment. 
+ * These all generally correspond to the functions available in the comment class,
+ * with a few utility functions as well as a general ajax function which allows
+ * for comment modification requests with different actions
+ *
+ *
+ * Parameters
+ * ctext        the text of the comment
+ * crange       the range of the comment
+ * code_file    the code_file object that this comment belongs to
+ * id           the id of the comment within the code file
+ * commenter    the person who created this comment
+ */
 function /* class */ Comment(ctext, crange, code_file, id, commenter) {
 	this.range = crange;
 	this.text = ctext;
