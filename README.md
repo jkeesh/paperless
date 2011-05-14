@@ -4,6 +4,13 @@ This is the paperless project for the cs198 program at Stanford.
 The goal is to create a web interface to make code commenting 
 easy, and to avoid paper submission copies. It's almost 2011!
 
+### Issue Tracker
+
+We do the issue tracking on Pivotal Tracker. You can see the issues,
+or add issues here:
+
+[[https://www.pivotaltracker.com/projects/291663]]
+
 ### Local Configuration Info
 
 
