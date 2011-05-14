@@ -77,10 +77,6 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter) {
 		var commentID = "c"+self.range.toString();
 		this.code_file.removeComment(this);
 		$("." + commentID).remove();
-		
-		// console.log("remove finish");
-		// console.log(this.code_file.comment_list);
-		
 	}
 	
 	this.get = function() {
