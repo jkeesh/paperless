@@ -9,7 +9,7 @@ easy, and to avoid paper submission copies. It's almost 2011!
 We do the issue tracking on Pivotal Tracker. You can see the issues,
 or add issues here:
 
-[[https://www.pivotaltracker.com/projects/291663]]
+https://www.pivotaltracker.com/projects/291663
 
 ### Local Configuration Info
 
