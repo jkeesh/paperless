@@ -117,18 +117,31 @@ class DownloadHandler extends ToroHandler {
 			$finals []= $file;
 		}
 		
+		// $rtfheader = "{\\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf350\n{\\fonttbl\\f0\\fnil\\fcharset0 Monaco;}\n{\\colortbl;\\red255\\green255\\blue255;}\n\\paperw15840\\paperh12240\\margl1440\\margr1440\\vieww21440\\viewh14120\\viewkind0\\pard\\tx720\\tx1440\\tx2160\\tx2880\\tx3600\\tx4320\\tx5040\\tx5760\\tx6480\\tx7200\\tx7920\\tx8640\\ql\\qnatural\\pardirnatural\\f0\\fs24 \\cf0";
+		// echo $rtfheader;
+		
 		$index = 0;
 		foreach($finals as $file){
-			echo "=================================================================================================\n";
-			echo $files[$index];
+			echo "================================================================================================\n";
+			echo $files[$index] . "\n";
 			echo "\n=================================================================================================\n";
 			
 			foreach($file as $line){
 				echo $line . "\n";
+				//echo $line;// . "\\";
+				//echo "\\";
+				
+				// echo strpos($line, "\r");
+				// 				echo "\n";
+				//$line = str_replace("{", "\{", $line);
+				//$line = str_replace("}", "\}", $line);
+				//echo str_replace("\r", "\r\ \r", $line);
+				// echo "\\ \n";
 			}
 			$index++;
 
 		}
+		echo "}";
 	}
 
 
