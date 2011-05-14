@@ -70,7 +70,7 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter) {
 			   success: function(response) {
 				    if(response && response.status == "ok"){ 
 				        if(response.action == "create")
-                            comment.code_file.addCommentDiv(self.text, self.code_file.user, self.range, true, self.id);
+                            self.code_file.addCommentDiv(self.text, self.code_file.user, self.range, true, self.id);
 				    }else{
 					    alert("There was an error with this comment. Try refreshing the page.");
                     }        			
