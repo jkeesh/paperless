@@ -186,11 +186,7 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter) {
 				}
 				});
 		
-		$("textarea").focus();
-		
-		// console.log("edit finish");
-		// console.log(this.code_file.comment_list);
-		
+		$("textarea").focus();		
 	}
 	
 	this.cancel = function(range){
