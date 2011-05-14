@@ -152,9 +152,7 @@ class CodeHandler extends ToroHandler {
 		*       to confirm the request succeeded
 		*/
 	public function post_xhr($class, $assignment, $student) {
-
-
-		// only section leaders should be able to add comments
+		// only section leaders should be able to add comments		
 		Permissions::requireRole(POSITION_SECTION_LEADER, $class);
 
 		$parts = explode("_", $student); // if it was student_1 just take student
