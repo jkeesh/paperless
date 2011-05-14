@@ -162,48 +162,35 @@ class CodeHandler extends ToroHandler {
 
 		$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl . "/". $assignment . "/" . $student . "/"; 
 
-		if(!isset($_POST['action'])) return;
-
-
+		if(!isset($_POST['action'])) {
+			echo json_encode(array("status" => "fail"));
+			return;
+		}
 		if($_POST['action'] == "release"){
 			if($_POST['release'] == "create"){
 				createRelease($dirname);
 			}else{
 				deleteRelease($dirname);
 			}
+			echo json_encode(array("status" => "ok"));
 			return;
 		}
-
-		// echo $class . "\n";
-		// echo $suid . "\n";
-		// echo $assignment . "\n";
-		// echo $_POST['filename'] . "\n";
 		$curFile = AssignmentFile::loadFile($class, $suid, $assignment, $_POST['filename'], $submission_number);
-		//		print_r($curFile);
-		//		$curFile = AssignmentFile::load(array("FilePath" => $dirname . $_POST['filename']));
 		$id = $curFile->getID();
-		if(!isset($id)){
-			//			echo "no valid assnment found";
+		if(!isset($id)){ //			echo "no valid assnment found";
+			echo json_encode(array("status" => "fail"));
 			return;
 		}
-
-		// echo "found";
-		// print_r($_POST);
-
 		$commenter = Model::getUserID(USERNAME);
 		$student = Model::getUserID($suid);
 
 		if($_POST['action'] == "create") {
-
-
 			$newComment = AssignmentComment::create($curFile->getID(), $_POST['rangeLower'], 
 				$_POST['rangeHigher'], $_POST['text'], $commenter, $student);
 			$newComment->save();
-
-			//print_r($newComment);
-			} else if($_POST['action'] == "delete") {
-				// find the comment to delete
-				foreach($curFile->getAssignmentComments() as $comment) {
+		} else if($_POST['action'] == "delete") {
+			// find the comment to delete: 
+			foreach($curFile->getAssignmentComments() as $comment) {
 					if(	$comment->getStartLine() == $_POST['rangeLower'] && 
 						$comment->getEndLine() == $_POST['rangeHigher'] && 
 					$comment->getCommentText() == $_POST['text'] ) {
