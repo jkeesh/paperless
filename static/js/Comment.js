@@ -58,22 +58,13 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter) {
 			this.code_file.highlightRange(self.range);
 			this.text = commentText;
 			this.id = this.code_file.commentID;
-			this.code_file.addCommentDiv(commentText, this.code_file.user, self.range, true, this.id);
 			this.code_file.commentID++;
 			this.code_file.last_comment = self;
 			this.ajax("create");
-		}
-		
-		// console.log("submit finish");
-		// console.log(this.code_file.comment_list);
-		
+		}	
 	}
 	
 	this.remove = function() {
-		// console.log("remove");
-		// console.log(this.code_file.comment_list);
-		
-		
 		commentOpen = false;
 		this.code_file.currentComment = null;
 		var elem = ".e"+self.range.toString();
