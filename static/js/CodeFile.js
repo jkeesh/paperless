@@ -33,7 +33,7 @@ function /* class */ CodeFile(filename, id_number, interactive, user) {
 			var cur = $(curComment);
 			var rangeString = cur.attr('id');			
 			var text = $(".comment", cur).html();
-			var range = stringToRange(rangeString);
+			var range = LineRange.stringToRange(rangeString);
 			var commenter = $(".commenter", cur).html();
 			this.highlightRange(range);
 			var newComment = new Comment(text, range, this, this.commentID, commenter);
