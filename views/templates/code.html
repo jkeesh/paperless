@@ -137,11 +137,15 @@ var interactive = false;
  		   	type: 'POST',
  		   	url: window.location.pathname, // post to current location url
  		   	data: "action=release&release=" + action,
- 		   	success: function(data) {
-				showSaved();
+ 		   	success: function(response) {
+				if(response && response.status == "ok"){
+					showSaved();
+				}else{
+					alert("There was an error in releasing the comments.");
+				}
  		   	},
  		   	error: function(XMLHttpRequest, textStatus, errorThrown) {
- 				//TODO
+				alert("There was an error in releasing the comments.");
 		   	}
  		 });
  	}
