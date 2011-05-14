@@ -202,8 +202,12 @@ class CodeHandler extends ToroHandler {
 						// 	$comment->delete();
 						// 	break;
 						// }
-					}
-				} 
 			}
-		}
-		?>
+		} 
+	
+		echo json_encode(array("status" => "ok", "action" => $_POST['action']));
+	}
+}
+		
+
+?>

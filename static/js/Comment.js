@@ -26,24 +26,26 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter) {
 	}
 	
 	this.ajax = function(action){
+	    var comment = this;
 		$.ajax({
 			   type: 'POST',
 			   url: window.location.pathname, // post to current location url
 			   data: "action="+action+"&text=" + encodeURIComponent(this.text) + "&rangeLower=" + this.range.lower + "&rangeHigher=" + this.range.higher + "&filename=" + this.filename,
-			   success: function(data) {
-					
+			   success: function(response) {
+				    if(response && response.status == "ok"){ 
+				        if(response.action == "create")
+                            comment.code_file.addCommentDiv(comment.text, comment.code_file.user, comment.range, true, comment.id);
+				    }else{
+					    alert("There was an error with this comment. Try refreshing the page.");
+                    }        			
 			   },
 			   error: function(jqXHR, textStatus, errorThrown) {
-			        console.log(jqXHR.responseText);
-			  		//alert("There was an error with the last comment. Please refresh the page.");
+			        alert("There was an error with this comment. Try refreshing the page.");
 			   }
 			   });
 	}
 	
 	this.submit = function() {
-		// console.log("submit");
-		// console.log(this.code_file.comment_list);
-
 		commentOpen = false;
 		this.code_file.currentComment = null;
 		this.code_file.last_comment_range = this.range;
