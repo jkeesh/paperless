@@ -11,7 +11,7 @@
 			$userClasses = Model::getClass(USERNAME);
 			
 			if(!is_array($userClasses)){
-				$this->smarty->assign("message", "It seems you are not a memeber of any classes this quarter.");
+				$this->smarty->assign("message", "It seems you are not a member of any classes this quarter.");
 				$this->smarty->display("message.html");
 				return;
 			}
