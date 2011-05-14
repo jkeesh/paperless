@@ -1,3 +1,10 @@
+/*
+ * removeDialog
+ * ======================
+ * This function removes a modal dialog from the view, but is
+ * safe because it checks the existence of a textarea on the 
+ * screen before removing
+ */
 function removeDialog(){
 	if( $('textarea')) $('textarea').remove();
 	if(current_dialog == null) return;
