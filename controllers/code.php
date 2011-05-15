@@ -96,7 +96,8 @@ class CodeHandler extends ToroHandler {
 		if($suid != USERNAME) {
 			$role = Permissions::requireRole(POSITION_SECTION_LEADER, $class);
 		}else{
-			$role = Model::getRoleForClass(USERNAME, $class);
+		// Otherwise require this student to be in the class
+			$role = Permissions::requireRole(POSITION_STUDENT, $class);
 		}
 
 		$sl = Model::getSectionLeaderForStudent($suid, $class);
