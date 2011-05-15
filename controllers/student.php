@@ -30,12 +30,16 @@
 			$string = explode("_", $student); // if it was student_1 just take student
 			$student = $string[0];
 			
+			// If the user is not the current student, require that they be a section
+			// leader for this class to be able to view the code
 			if($student != USERNAME) {
 				$role = Permissions::requireRole(POSITION_SECTION_LEADER, $class);
 			}else{
-				$role = Model::getRoleForClass(USERNAME, $class);
+			// Otherwise if the usernames match, require that this student be enrolled
+			// in the current class
+				$role = Permissions::requireRole(POSITION_STUDENT, $class);
 			}
-			
+						
 			if($role == POSITION_SECTION_LEADER){
 				$this->smarty->assign("sl_class", $class);
 			}
