@@ -6,6 +6,7 @@
 	
 	define('BASE_DIR', dirname(__FILE__));
 	
+	define('POSITION_NOT_A_MEMBER', -1);
 	define('POSITION_STUDENT', 1);
 	define('POSITION_APPLICANT', 2);
 	define('POSITION_COURSE_HELPER', 3);
