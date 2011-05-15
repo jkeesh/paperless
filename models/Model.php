@@ -46,6 +46,8 @@
 				$sth->execute(array(":sunetid" => $user, ":classname" => $class));
 				if($rows = $sth->fetch()) {
 					return $rows['Position'];      
+				}else{
+					return POSITION_NOT_A_MEMBER;
 				}
 			} catch(PDOException $e) {
 				echo $e->getMessage(); // TODO log this error instead of echoing
