@@ -90,8 +90,6 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter) {
 	this.submit = function() {
 		commentOpen = false;
 		this.code_file.currentComment = null;
-		// reset last comment range 
-		this.code_file.last_comment_range = this.range;
 		
 		var commentText = $("textarea").val();
 		commentText = this.filter(commentText);
