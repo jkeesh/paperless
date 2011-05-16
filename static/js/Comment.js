@@ -71,58 +71,82 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter) {
 				    if(response && response.status == "ok"){ 
 				        if(response.action == "create")
                             self.code_file.addCommentDiv(self.text, self.code_file.user, self.range, true, self.id);
-				    }else{
+				    } else {
 					    alert("There was an error with this comment. Try refreshing the page.");
-                    }        			
+                }        			
 			   },
 			   error: function(jqXHR, textStatus, errorThrown) {
 			        alert("There was an error with this comment. Try refreshing the page.");
 			   }
-			   });
+		});
 	}
 	
+	/*
+	* this.submit
+	* =======================
+	* Handle submitting a comment, highlighting the appropriate
+	* range, and saving to the database.
+	*/
 	this.submit = function() {
+	   // set state -- modal dialog no longer open
 		commentOpen = false;
 		this.code_file.currentComment = null;
-		this.code_file.last_comment_range = this.range;
+		
+		// remove the modal dialog
 		var commentText = $("textarea").val();
 		commentText = this.filter(commentText);
 		removeDialog();
+		
 		if(commentText.length == 0) {
-			this.code_file.unhighlightRange(range);
-		} else {			
-			this.code_file.highlightRange(self.range);
+		   // no comment entered, unhighlight selected range
+			this.code_file.unhighlightRange(self.range);
+		} else {
+		   // set state for this comment object
 			this.text = commentText;
 			this.id = this.code_file.commentID;
+			
+			// add this comment to the code file object
+			this.code_file.highlightRange(self.range);
 			this.code_file.commentID++;
 			this.code_file.last_comment = self;
+			
+			// save this comment to database
 			this.ajax("create");
-		}	
+		}
 	}
 	
+	/*
+	* this.remove
+	* =====================
+	* Remove this comment from the code view.  
+	*/
 	this.remove = function() {
+	   // set state -- modal window no longer open
 		commentOpen = false;
 		this.code_file.currentComment = null;
-		var elem = ".e"+self.range.toString();
-		var commentID = ".comment"+self.id;
-		var fullClass = elem+commentID;
-		$(elem+commentID).remove();
-		this.code_file.unhighlightRange(this.range);		
-		$('textArea').remove();
-		removeDialog();		
-		var commentID = "c"+self.range.toString();
+		
+		// remove the modal dialog box
+		removeDialog();
+		
+		// remove comment highlighting and div
+		var commentID = "c" + self.range.toString();
+		this.code_file.unhighlightRange(self.range);
 		this.code_file.removeComment(this);
 		$("." + commentID).remove();
 	}
 	
+	/*
+	* this.get
+	* =====================
+	* Open the modal dialog for this comment
+	*/
 	this.get = function() {
+	   // set state -- comment dialog open
 		commentOpen = true;
 		this.code_file.currentComment = this;
-		var id = "#file" + this.code_file.fileID;
-		var theclass = '.number' + this.range.lower;
-		var commentLocation = $(theclass, id);
-		current_range = this.range;
 		
+		// add the modal dialog textarea
+		current_range = this.range;
 		current_dialog = $('<div></div>')
 		.html('<textarea></textarea><div class="modalMessage">Comments are formatted using <a target="_blank" href="http://daringfireball.net/projects/markdown/syntax">Markdown.</a>  Ctrl+3 For simple markdown reference.</div>')
 		.dialog({
@@ -131,13 +155,13 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter) {
 				width: 350,
 				height: 250,
 				focus: true,
-				open: function(event, ui) { $(".ui-dialog-titlebar-close").hide();},
+				open: function(event, ui) { $(".ui-dialog-titlebar-close").hide(); },
 				closeOnEscape: false,
 				buttons: { 
-				"Submit": function() { self.submit(); },
-				"Cancel": function() { self.cancel(); },
+				   "Submit": function() { self.submit(); },
+				   "Cancel": function() { self.cancel(); },
 				}
-				});
+		   });
 		
 		$("textarea").focus();
 	}
