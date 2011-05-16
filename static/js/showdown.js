@@ -985,7 +985,14 @@ var _DoItalicsAndBold = function(text) {
 	text = text.replace(/(\*\*|__)(?=\S)([^\r]*?\S[*_]*)\1/g,
 		"<strong>$2</strong>");
 
-	text = text.replace(/(\*|_)(?=\S)([^\r]*?\S)\1/g,
+    // Modified regular expression by Jeremy Keeshin
+    // This does italics formatting, but only on phrases that
+    // do not appear to be constants in the code. 
+    // We are looking to italicize things like _this_, but not
+    // NAMES_OF_CONSTANTS. So we make sure that it starts with an
+    // underscore, and also that it is preceded by a space or start
+    // of line character.
+	text = text.replace(/(\s|^)_([a-zA-Z ]+)_/g,
 		"<em>$2</em>");
 
 	return text;
