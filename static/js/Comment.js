@@ -81,13 +81,22 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter) {
 			   });
 	}
 	
+	/*
+	* this.submit
+	* =======================
+	* Handle submitting a comment, highlighting the appropriate
+	* range, and saving to the database.
+	*/
 	this.submit = function() {
 		commentOpen = false;
 		this.code_file.currentComment = null;
+		// reset last comment range 
 		this.code_file.last_comment_range = this.range;
+		
 		var commentText = $("textarea").val();
 		commentText = this.filter(commentText);
 		removeDialog();
+		
 		if(commentText.length == 0) {
 			this.code_file.unhighlightRange(range);
 		} else {			
