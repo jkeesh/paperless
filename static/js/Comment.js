@@ -135,14 +135,18 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter) {
 		$("." + commentID).remove();
 	}
 	
+	/*
+	* this.get
+	* =====================
+	* Open the modal dialog for this comment
+	*/
 	this.get = function() {
+	   // set state -- comment dialog open
 		commentOpen = true;
 		this.code_file.currentComment = this;
-		var id = "#file" + this.code_file.fileID;
-		var theclass = '.number' + this.range.lower;
-		var commentLocation = $(theclass, id);
-		current_range = this.range;
 		
+		// add the modal dialog textarea
+		current_range = this.range;
 		current_dialog = $('<div></div>')
 		.html('<textarea></textarea>')
 		.dialog({
@@ -151,13 +155,13 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter) {
 				width: 350,
 				height: 225,
 				focus: true,
-				open: function(event, ui) { $(".ui-dialog-titlebar-close").hide();},
+				open: function(event, ui) { $(".ui-dialog-titlebar-close").hide(); },
 				closeOnEscape: false,
 				buttons: { 
-				"Submit": function() { self.submit(); },
-				"Cancel": function() { self.cancel(); },
+				   "Submit": function() { self.submit(); },
+				   "Cancel": function() { self.cancel(); },
 				}
-				});
+		   });
 		
 		$("textarea").focus();
 	}
