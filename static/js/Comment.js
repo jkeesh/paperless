@@ -121,17 +121,16 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter) {
 	* Remove this comment from the code view.  
 	*/
 	this.remove = function() {
+	   // set state -- modal window no longer open
 		commentOpen = false;
 		this.code_file.currentComment = null;
 		
-		var elem = ".e"+self.range.toString();
-		var commentID = ".comment"+self.id;
+		// remove the modal dialog box
+		removeDialog();
 		
-		$(elem+commentID).remove();
-		this.code_file.unhighlightRange(this.range);		
-		$('textArea').remove();
-		removeDialog();		
-		var commentID = "c"+self.range.toString();
+		// remove comment highlighting and div
+		var commentID = "c" + self.range.toString();
+		this.code_file.unhighlightRange(self.range);
 		this.code_file.removeComment(this);
 		$("." + commentID).remove();
 	}
