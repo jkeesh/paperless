@@ -72,5 +72,11 @@ root_url = '{$root_url}';
         <!-- <div class="content-header codesettings"></div> -->
         <div class="content-wrapper">
             <div class="content">
-                
+        
+				{if isset($sl_class) and !isset($print_view)}
+				<div class="message">
+				<div class="title">Hi Section Leaders.</div>
+				Please take a few minutes to <a href="https://spreadsheets.google.com/spreadsheet/viewform?formkey=dFF3RDhNdndSbldwbXV3aHJYc3Jqemc6MQ">fill out this survey</a> for us to let us know how Paperless is working for you. Thanks!
+				</div>
+				{/if}
 
