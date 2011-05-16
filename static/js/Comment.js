@@ -148,7 +148,7 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter) {
 		// add the modal dialog textarea
 		current_range = this.range;
 		current_dialog = $('<div></div>')
-		.html('<textarea></textarea><div class="modalMessage">Comments are formatted using <a target="_blank" href="http://daringfireball.net/projects/markdown/syntax">Markdown.</a>  Ctrl+3 For simple markdown reference.</div>')
+		.html('<textarea></textarea><div class="modalMessage">Comments are formatted using <a target="_blank" href="http://daringfireball.net/projects/markdown/syntax">Markdown.</a><br/>  Ctrl+3 For simple markdown reference.</div>')
 		.dialog({
 				autoOpen: true,
 				title: 'Enter Comment',
@@ -189,7 +189,7 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter) {
 		this.ajax("delete");
 		
 		current_dialog = $('<div></div>')
-		.html('<textarea>' + text +'</textarea><div class="modalMessage">Comments are formatted using <a target="_blank" href="http://daringfireball.net/projects/markdown/syntax">Markdown.</a>  Ctrl+3 For simple markdown reference.</div>')
+		.html('<textarea>' + text +'</textarea><div class="modalMessage">Comments are formatted using <a target="_blank" href="http://daringfireball.net/projects/markdown/syntax">Markdown.</a><br/>  Ctrl+3 For simple markdown reference.</div>')
 		.dialog({
 				autoOpen: true,
 				title: 'Enter Comment',
