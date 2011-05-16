@@ -614,3 +614,12 @@ select{
 .hover-underline:hover{
     text-decoration: underline;
 }
+
+.modalMessage{
+    padding: 4px;
+    font-size: 11px;
+}
+
+.modalMessage a{
+    text-decoration: underline;
+}
