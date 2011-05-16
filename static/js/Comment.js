@@ -115,12 +115,18 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter) {
 		}
 	}
 	
+	/*
+	* this.remove
+	* =====================
+	* Remove this comment from the code view.  
+	*/
 	this.remove = function() {
 		commentOpen = false;
 		this.code_file.currentComment = null;
+		
 		var elem = ".e"+self.range.toString();
 		var commentID = ".comment"+self.id;
-		var fullClass = elem+commentID;
+		
 		$(elem+commentID).remove();
 		this.code_file.unhighlightRange(this.range);		
 		$('textArea').remove();
