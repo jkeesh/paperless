@@ -71,14 +71,14 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter) {
 				    if(response && response.status == "ok"){ 
 				        if(response.action == "create")
                             self.code_file.addCommentDiv(self.text, self.code_file.user, self.range, true, self.id);
-				    }else{
+				    } else {
 					    alert("There was an error with this comment. Try refreshing the page.");
-                    }        			
+                }        			
 			   },
 			   error: function(jqXHR, textStatus, errorThrown) {
 			        alert("There was an error with this comment. Try refreshing the page.");
 			   }
-			   });
+		});
 	}
 	
 	/*
@@ -88,23 +88,31 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter) {
 	* range, and saving to the database.
 	*/
 	this.submit = function() {
+	   // set state -- modal dialog no longer open
 		commentOpen = false;
 		this.code_file.currentComment = null;
 		
+		// remove the modal dialog
 		var commentText = $("textarea").val();
 		commentText = this.filter(commentText);
 		removeDialog();
 		
 		if(commentText.length == 0) {
-			this.code_file.unhighlightRange(range);
-		} else {			
-			this.code_file.highlightRange(self.range);
+		   // no comment entered, unhighlight selected range
+			this.code_file.unhighlightRange(self.range);
+		} else {
+		   // set state for this comment object
 			this.text = commentText;
 			this.id = this.code_file.commentID;
+			
+			// add this comment to the code file object
+			this.code_file.highlightRange(self.range);
 			this.code_file.commentID++;
 			this.code_file.last_comment = self;
+			
+			// save this comment to database
 			this.ajax("create");
-		}	
+		}
 	}
 	
 	this.remove = function() {
