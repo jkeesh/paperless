@@ -7,6 +7,7 @@ globalSubmitComment = null;
 current_file_id = 0;
 shortcuts_added = false;
 themes = new Array('shCoreDefault.css', 'shCoreMDUltra.css' ,'shCoreMidnight.css', 'shCoreDjango.css', 'shCoreRDark.css', 'shCoreEclipse.css', 'shCoreEmacs.css', 'shCoreFadeToGrey.css');	
+themeColors = new Array('#edeff4', '#428bdd', '#428bdd', '#91bb9e', '#878a85', '#3f5fbf', '#ff7d27', '#696854');
 themeID = 0;
 
 shortcutsBase = "<div id='shortcuts' class='blackbox'>"
@@ -93,7 +94,9 @@ function addShortcuts(){
 											 themeID++;
 											 var themeIndex = themeID % themes.length; 
 											 var newTheme = root_url +'/static/js/syntaxhighlighter/styles/' + themes[themeIndex];
+											 var newColor = themeColors[themeIndex];
 											 $('#syntaxStylesheet').attr('href', newTheme);
+											 $('body').css('background-color', newColor);
 											 })
 				 );
 				
