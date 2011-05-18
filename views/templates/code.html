@@ -69,11 +69,13 @@ var interactive = false;
     files[{$i}] = '{$file}';
     {/foreach}
     
+    $(document).bind("status.finishedSyntaxHighlighting", function() {
+        setupCodeFiles();
+    });
+    
     // we need to wait for the syntax highlighter to finish before we access the modified dom
     $(document).ready(function(){
-
-       	setTimeout("setupCodeFiles()", 3000);
-       	//setupCodeFiles(); 
+       	//setTimeout("setupCodeFiles()", 3000);
 	 	$(':checkbox').change(function() {
 			release();
 		});

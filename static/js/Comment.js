@@ -169,12 +169,12 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter) {
 	this.edit = function() {
 		if(commentOpen) return;
 		commentOpen = true;
-		
-		
+
+
 		current_range = this.range;
 		current_file_id = this.code_file.fileID;
 		this.code_file.currentComment = this;
-		
+
 		if (current_dialog != null){
 			return;
 		}
