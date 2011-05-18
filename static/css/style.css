@@ -462,7 +462,7 @@ textarea {
 	font-family: Helvetica !important;
 	margin: 10px !important;
 	z-index: 5 !important;
-/*	width: 780px !important; */
+    width: 876px !important; 
 }
 
 .content .code .inlineCommentText{
