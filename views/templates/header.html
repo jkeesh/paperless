@@ -16,14 +16,14 @@ root_url = '{$root_url}';
 
 {if isset($code)}
 <script type="text/javascript" src="{$root_url}static/js/showdown.js"></script>
-<script type="text/javascript" src="{$root_url}static/js/feedback.js"></script>
-<script type="text/javascript" src="{$root_url}static/js/shortcut.js"></script>
+<script type="text/javascript" src="{$root_url}static/js/feedback.js?v{$version}"></script>
+<script type="text/javascript" src="{$root_url}static/js/shortcut.js?v{$version}"></script>
 
-<script type="text/javascript" src="{$root_url}static/js/Comment.js"></script>
-<script type="text/javascript" src="{$root_url}static/js/LineRange.js"></script>
-<script type="text/javascript" src="{$root_url}static/js/CodeFile.js"></script>
+<script type="text/javascript" src="{$root_url}static/js/Comment.js?v{$version}"></script>
+<script type="text/javascript" src="{$root_url}static/js/LineRange.js?v{$version}"></script>
+<script type="text/javascript" src="{$root_url}static/js/CodeFile.js?v{$version}"></script>
 
-<script type="text/javascript" src="{$root_url}static/js/syntaxhighlighter/scripts/shCore.js"></script>
+<script type="text/javascript" src="{$root_url}static/js/syntaxhighlighter/scripts/shCore.js?v{$version}"></script>
 <script type="text/javascript" src="{$root_url}static/js/syntaxhighlighter/scripts/shBrushCpp.js"></script>
 <link type="text/css" rel="stylesheet" href="{$root_url}static/js/syntaxhighlighter/styles/shCoreDefault.css" id="syntaxStylesheet" />
 {/if}

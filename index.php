@@ -61,7 +61,9 @@
 			if(count($userClasses) > 1){
 				$this->smarty->assign("multiple_classes", 1);				
 			}
-			//$this->smarty->assign("section_leader", $sectionLeader);			
+			//$this->smarty->assign("section_leader", $sectionLeader);	
+			
+			$this->smarty->assign("version", 1.2);		
 		}
 		
 		public function __call($name, $arguments) {			
