@@ -5,6 +5,27 @@ SyntaxHighlighter.all();
 var converter = new Showdown.converter();
 </script>
 
+<script id="commentTemplate" type="text/html">
+{literal}
+<div class="inlineComment e${range_text} comment${commentID}">
+	<span class="hiddenPlainText htext${range_text}">${text}</span>
+	{{if editable}}
+	<a href="javascript:edit(${fileID},'${range_text}',${commentID})"> 
+	{{/if}}
+		<div class="${range_text} commentbox">
+			<span class="inlineCommentText ctext${range_text}">
+					{{html formattedText}}
+			</span>
+			<div class="commentauthor">${commenter}</div>
+			<div style="clear:both"></div>
+		</div>
+	{{if editable}}
+	</a>
+	{{/if}}
+</div>
+{/literal}
+</script>
+
 <!-- {if isset($sl_class) and !isset($print_view)}
 <div class="message">
 <div class="title">Hi Section Leaders.</div>

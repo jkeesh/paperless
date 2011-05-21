@@ -181,19 +181,21 @@ function /* class */ CodeFile(filename, id_number, interactive, user) {
 		formattedText = converter.makeHtml(text);	
 		formattedText = formattedText.replace(/&amp;/g, '&');		
 		
-		
-		var toAdd = "<div class='inlineComment e"+ range_text +" comment"+commentID+"'>";
-		toAdd += "<span class='hiddenPlainText htext" + range_text + "'>" + text + "</span>";
-		if(isEditable) toAdd += "<a href=\"javascript:edit("+ this.fileID + ",'" + range_text + "',"+commentID+")\">";
-		toAdd += 	" <div class='" + range_text +" commentbox'><span class='inlineCommentText ctext" + range_text + "'>" + formattedText + "</span>";
-		toAdd +=	"<div class='commentauthor'>" + commenter + "</div><div style='clear:both'></div>"; // add the author
-		toAdd +=    "</div>";
-		if(isEditable) toAdd += "</a>";
-		toAdd += "</div>";
-
+		var data = {
+            range_text: range_text,
+            commentID: commentID,
+            fileID: this.fileID,
+            text: text,
+            formattedText: formattedText,
+            commenter: commenter,
+            editable: isEditable
+        };
+        //console.log(data);
+        var html = $('#commentTemplate').tmpl(data);
+        //console.log(html);
 
 		var commentLocation = $('#file'+ this.fileID + ' .code .number'+range.higher);
-		commentLocation.after(toAdd);		
+		commentLocation.after(html);		
 	}
 	
 	this.addHandlers();
