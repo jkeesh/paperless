@@ -166,30 +166,40 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter) {
 		$("textarea").focus();
 	}
 	
+	/*
+	* this.edit
+	* =====================
+	* Open the modal dialog for an existing comment to
+	* allow editing.
+	*/
 	this.edit = function() {
 		if(commentOpen) return;
-		commentOpen = true;
+		   commentOpen = true;
 
-
+      // set state to current comment
 		current_range = this.range;
 		current_file_id = this.code_file.fileID;
 		this.code_file.currentComment = this;
 
-		if (current_dialog != null){
+      // if a dialog is already open, do nothing
+		if (current_dialog != null) {
 			return;
 		}
 		text = this.text;
 		var commentID = ".comment"+self.id;
 		var elem = ".e"+self.range.toString();
-		var fullClass = elem+commentID;
 		var thisCommentBox = $(elem+commentID);
-
-		$(thisCommentBox).remove(); // remove the comment
+      // remove the comment
+		$(thisCommentBox).remove(); 
 		
+		// delete this comment server-side
 		this.ajax("delete");
 		
+		// setup the new dialog with the text of the current comement
 		current_dialog = $('<div></div>')
-		.html('<textarea>' + text +'</textarea><div class="modalMessage">Comments are formatted using <a target="_blank" href="http://daringfireball.net/projects/markdown/syntax">Markdown.</a><br/>  Ctrl+3 For simple markdown reference.</div>')
+		.html('<textarea>' + text +'</textarea><div class="modalMessage">Comments are formatted using' +
+	         '<a target="_blank" href="http://daringfireball.net/projects/markdown/syntax">Markdown.</a><br/>' +
+	          'Ctrl+3 For simple markdown reference.</div>')
 		.dialog({
 				autoOpen: true,
 				title: 'Enter Comment',
@@ -199,15 +209,19 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter) {
 				open: function(event, ui) { $(".ui-dialog-titlebar-close").hide();},
 				closeOnEscape: false,
 				buttons: { 
-				"Submit":  function() { self.submit(); }, 
-				"Delete":  function() { self.remove(); },
-				//"Cancel":  function() { self.submit(); },
+				   "Submit":  function() { self.submit(); }, 
+				   "Delete":  function() { self.remove(); },
 				}
-				});
+		});
 		
 		$("textarea").focus();		
 	}
 	
+	/*
+	* this.cancel
+	* =====================
+	* Cancel the addition of a new comment
+	*/
 	this.cancel = function(range){
 		commentOpen = false;
 		this.code_file.unhighlightRange(this.range);
