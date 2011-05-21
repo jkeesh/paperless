@@ -41,7 +41,7 @@ class CodeHandler extends ToroHandler {
 		while($file = readdir($dir)) {
 			if($file == "release"){
 				$release = True;
-			}else if(isCodeFileForClass($file, $class)) {
+			}else if(isCodeFileForClass($file, $class) && valid_size($dirname, $file)) {
 				$assn = AssignmentFile::loadFile($class, $student, $assignment, $file, $submission_number);
 				// If we could load it by submission number, we are done
 				if(is_null($assn)){
