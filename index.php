@@ -63,7 +63,7 @@
 			}
 			//$this->smarty->assign("section_leader", $sectionLeader);	
 			
-			$this->smarty->assign("version", "1.2.0.1");	// May 21, 2011	
+			$this->smarty->assign("version", "1.2.0.2");	// May 21, 2011, 3:50pm
 		}
 		
 		public function __call($name, $arguments) {			
