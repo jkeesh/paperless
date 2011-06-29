@@ -65,7 +65,7 @@ function getFileTypesForClass($class){
 	// $info = fgetcsv($file);
 	// return $info;
 
-	if($class == "cs106b" || $class == "cs106x" || $class == "cs106l"){
+	if($class == "cs106b" || $class == "cs106x" || $class == "cs106l" || $class == "cs143"){
 		return array("cpp","h", "txt", "cc");
 	}
 	if($class == "cs106a"){
