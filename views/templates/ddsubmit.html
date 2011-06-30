@@ -19,9 +19,13 @@
 
 <div class="italic">submitting {$assndir}</div>
 
-<div class="padded">Drag and drop the files you want to include onto blue box. These are generally the source files which you modified ({$sourcelist}). Log in with Facebook, and you have the option to tell your friends you just submitted.</div>
+<div class="padded">Drag and drop the <span style="font-weight: bold;">files (not directories!)</span> you want to include onto blue box. These are generally the source files which you modified ({$sourcelist}). 
+	
+	<!-- Log in with Facebook, and you have the option to tell your friends you just submitted. -->
+	
+	</div>
 
-<div id="fb-root"></div>
+<!-- <div id="fb-root"></div>
 <script src="https://connect.facebook.net/en_US/all.js#appId={$FACEBOOK_APP_ID}&amp;xfbml=1"></script>
 
 
@@ -32,15 +36,15 @@
     cookie : true, // enable cookies to allow the server to access the session
     xfbml  : true  // parse XFBML
   });
-</script>
+</script> -->
 
 <table>
 	<tr>
-		<td>
+		<!-- <td>
 			<div id="fblogin" style="display:none;">
 			<fb:login-button>Login to Paperless</fb:login-button>
 			</div>
-		</td>
+		</td> -->
 		<td>
 <div class="padded link underline"><a href="{$root_url}{$class|lower}/code/{$assndir}">View My Submission</a></div>
 		</td>
