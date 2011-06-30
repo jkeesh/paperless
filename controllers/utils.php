@@ -77,7 +77,7 @@ function getFileTypesForClass($class){
 	}
 
 	if($class == "cs143"){
-		return array("cpp","h", "hh", "cc", "c", "l", "y");		
+		return array("cpp","h", "hh", "cc", "c", "l", "y", "txt");		
 	}
 }
 
@@ -98,10 +98,28 @@ function valid_size($dir, $filename){
 	return filesize($dir.$filename) < 100000;
 }
 
+/*
+ * We will accept files called README or files with
+ * no extension that have a file name length longer 
+ * than 2
+ */
+function special_accept($fname, $ext, $class){
+	if(strtolower($fname) == "readme") return true;
+
+	if(strlen($ext) == 0 and strlen($fname) > 2) return true;
+	
+	return false;
+}
+
 function isCodeFileForClass($filename, $class){
 	$ext = pathinfo($filename, PATHINFO_EXTENSION);
 	$ext = strtolower($ext);
+	
+	$fname = pathinfo($filename, PATHINFO_FILENAME);
+	
 	$filetypes = getFileTypesForClass($class);
+	if(special_accept($fname, $ext, $class)) return true;
+	
 	return in_array($ext, $filetypes) && !in_array($filename, getBlacklist());
 }
 
