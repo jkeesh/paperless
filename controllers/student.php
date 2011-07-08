@@ -76,29 +76,31 @@
 				foreach($assns as $assn) {
 					$dir = $dirname . $assn ."/";
 					$student_submissions = $this->getDirEntries($dir);
-					
-					$information[$i]['assignment'] = $assn;
-					$information[$i]['all'] = array();
-					foreach($student_submissions as $submission) {
-						if(strpos($submission, $student) !== false) {
-							array_push($information[$i]['all'],$submission);
+
+					if(!empty($student_submissions)){
+						$information[$i]['assignment'] = $assn;
+						$information[$i]['all'] = array();
+						foreach($student_submissions as $submission) {
+							if(strpos($submission, $student) !== false) {
+								array_push($information[$i]['all'],$submission);
+							}
 						}
-					}
 					
-					$all = $information[$i]['all'];
-					$all = $this->sortArr($all);
+						$all = $information[$i]['all'];
+						$all = $this->sortArr($all);
 									
-					$information[$i]['all'] = $all;
-					if(count($all) > 0)
-						$information[$i]['studentdir'] = $all[count($all)-1];
+						$information[$i]['all'] = $all;
+						if(count($all) > 0)
+							$information[$i]['studentdir'] = $all[count($all)-1];
 					
-					if(count($all) == 0){
-						//they have no submissions for this assignment so remove that
-						array_splice($information, $i);
-						$i--;
+						if(count($all) == 0){
+							//they have no submissions for this assignment so remove that
+							array_splice($information, $i);
+							$i--;
+						}
+					
+						$i++;
 					}
-					
-					$i++;
 				}
 			}else{
 				$this->smarty->assign("nofiles", 1);
