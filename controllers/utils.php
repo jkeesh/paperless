@@ -77,7 +77,7 @@ function getFileTypesForClass($class){
 	}
 
 	if($class == "cs143"){
-		return array("cpp","h", "hh", "cc", "c", "l", "y", "txt");		
+		return array("cpp","h", "hh", "cc", "c", "l", "y", "txt", "final");		
 	}
 }
 
