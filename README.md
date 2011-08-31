@@ -22,8 +22,8 @@ https://www.pivotaltracker.com/projects/291663
 - Create a new database called 'paperless'
 - Get the sql copy of the database with relevant tables
 - Click import and select the sql file
-- Alternatively just import the database in through the mysql command line
 
+Alternatively just import the database in through the mysql command line
 
     mysql paperless < paperless_local_db
 
