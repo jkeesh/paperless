@@ -24,7 +24,9 @@ https://www.pivotaltracker.com/projects/291663
 - Click import and select the sql file
 - Alternatively just import the database in through the mysql command line
 
+
     mysql paperless < paperless_local_db
+
 
 ### Configure the Code
 
