@@ -47,7 +47,7 @@ Visit localhost:8888/paperless
 
 ### More Detailed
 
-To avoid changes with git commits, the configuration information
+To work on both the local and live server, the config file
 is not tracked by the git repository. However, there are two
 files called config_local.php and config_web.php which show the 
 contents of the configuration files for the web and your local 
@@ -62,4 +62,4 @@ There are two .htaccess files, one for local and one for web.
 
 to use the local version of the .htaccess file.
 
-That is what is in setup
+That is all that is in setup.
