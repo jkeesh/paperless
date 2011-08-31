@@ -16,12 +16,15 @@ https://www.pivotaltracker.com/projects/291663
 
 ### Configure the Database
 
-Download MAMP.
-Visit localhost:8888/MAMP
-Click phpMyAdmin
-Create a new database called 'paperless'
-Get the sql copy of the database with relevant tables
-Click import and select the sql file
+- Download MAMP.
+- Visit localhost:8888/MAMP
+- Click phpMyAdmin
+- Create a new database called 'paperless'
+- Get the sql copy of the database with relevant tables
+- Click import and select the sql file
+- Alternatively just import the database in through the mysql command line
+
+    mysql paperless < paperless_local_db
 
 ### Configure the Code
 
