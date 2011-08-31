@@ -1,7 +1,8 @@
 <?php
 	class IndexHandler extends ToroHandler {
 		
-		public function get($class) {		
+		public function get($class) {
+				
 			if($class){
 				$this->smarty->assign("message", "It seems you have visited an invalid url.");
 				$this->smarty->display("message.html");

@@ -21,8 +21,7 @@
 			$is_sl = Model::isSectionLeader(USERNAME);
 			$is_student = Model::isStudent(USERNAME);
 			$is_student_only = $is_student && !$is_sl;
-			//$is_admin = true;
-			$is_admin = USERNAME == "sahami";
+			$is_admin = false;
 			
 			define('IS_ADMIN', $is_admin);
 			define('IS_STUDENT', $is_student);
@@ -50,19 +49,13 @@
 				$this->smarty->assign("ie", 1);
 			}
 			
-			//if($is_sl) $sectionLeader = USERNAME;
-			//else $sectionLeader = Model::getSectionLeaderForStudent(USERNAME);
-			
-			//define('SECTION_LEADER', $sectionLeader);
-			
 			$this->smarty->assign("FACEBOOK_APP_ID", FACEBOOK_APP_ID);
 			
 			$userClasses = Model::getClass(USERNAME);
+						
 			if(count($userClasses) > 1){
 				$this->smarty->assign("multiple_classes", 1);				
 			}
-			//$this->smarty->assign("section_leader", $sectionLeader);	
-			
 			$this->smarty->assign("version", "1.2.0.2");	// May 21, 2011, 3:50pm
 		}
 		
@@ -142,5 +135,4 @@
 	
 	if(isset($_REQUEST['path']))
 	$_SERVER['PATH_INFO'] = $_REQUEST['path'];
-	
 	$site->serve();

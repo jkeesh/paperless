@@ -23,11 +23,6 @@ https://www.pivotaltracker.com/projects/291663
 - Get the sql copy of the database with relevant tables
 - Click import and select the sql file
 
-Alternatively just import the database in through the mysql command line
-
-    mysql paperless < paperless_local_db
-
-
 ### Configure the Code
 
     $ cd /Applications/MAMP/htdocs
