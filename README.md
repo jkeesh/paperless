@@ -12,7 +12,7 @@ Paperless has been used by CS106A, CS106B, CS106X, CS106L, CS109L, and CS143 at 
 
 We'd love to have you contribute to paperless, and we are running it as an open source project. 
 
-1) Tell us you want to get involved, and set up paperless locally and well send you a testing db. Email jkeeshin@stanford.edu
+1) Tell us you want to get involved, and set up paperless locally and well send you a testing db. Email paperlesscode@googlegroups.com
 
 2) Join the project management site Trello, and we'll add you to our board.
 
