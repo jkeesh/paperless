@@ -2,21 +2,44 @@
 
 This is the paperless project for the cs198 program at Stanford. 
 The goal is to create a web interface to make code commenting 
-easy, and to avoid paper submission copies. It's almost 2011!
+easy, and to avoid paper submission copies.
 
-### Issue Tracker
+Paperless has been used by CS106A, CS106B, CS106X, CS106L, CS109L, and CS143 at Stanford.
 
-We do the issue tracking on Pivotal Tracker. You can see the issues,
-or add issues here:
+### How to Get Involved
 
-https://www.pivotaltracker.com/projects/291663
+We'd love to have you contribute to paperless, and we are running it as an open source project. 
+
+1) Tell us you want to get involved, and set up paperless locally and well send you a testing db. Email jkeeshin@stanford.edu
+
+2) Join the project management site Trello, and we'll add you to our board.
+
+https://trello.com/board/paperless/4e71a616f8fe40db50566e3a
+
+
+3) Fork off your own version of Paperless
+
+Quick explanation on forking: http://help.github.com/fork-a-repo/
+
+4) Make your awesome improvements
+
+-- Note: If you are making what you think is a decent sized change, you should create a new branch for your feature. Here's some info on branching: http://learn.github.com/p/branching.html
+
+5) Submit a pull request, and well bring your changes into the main branch.
+
+Quick reference on pull requests: http://help.github.com/send-pull-requests/
+
+### Project Management and Issue Tracker
+
+We do the project organization on Trello, the coolest site ever.
+
+https://trello.com/board/paperless/4e71a616f8fe40db50566e3a
 
 ### Local Configuration Info
 
-
 ### Configure the Database
 
-- Download MAMP.
+- Download MAMP. (or WAMP or LAMP depending on OS)
 - Visit localhost:8888/MAMP
 - Click phpMyAdmin
 - Create a new database called 'paperless'
