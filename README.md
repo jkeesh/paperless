@@ -18,6 +18,7 @@ We'd love to have you contribute to paperless, and we are running it as an open 
 
 https://trello.com/board/paperless/4e71a616f8fe40db50566e3a
 
+-- Assign yourself to any of the items there, or create a new one and move the card to the "Doing" list.
 
 3) Fork off your own version of Paperless
 
