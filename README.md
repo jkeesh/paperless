@@ -6,6 +6,8 @@ easy, and to avoid paper submission copies.
 
 Paperless has been used by CS106A, CS106B, CS106X, CS106L, CS109L, and CS143 at Stanford.
 
+============================================================
+
 ### How to Get Involved
 
 We'd love to have you contribute to paperless, and we are running it as an open source project. 
@@ -28,6 +30,8 @@ Quick explanation on forking: http://help.github.com/fork-a-repo/
 5) Submit a pull request, and well bring your changes into the main branch.
 
 Quick reference on pull requests: http://help.github.com/send-pull-requests/
+
+============================================================
 
 ### Project Management and Issue Tracker
 
