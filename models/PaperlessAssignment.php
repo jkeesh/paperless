@@ -127,14 +127,15 @@ class PaperlessAssignment extends Model {
 		* Load from an id
 		*/
 	public static function loadForClass($class) {
-		$query = "SELECT * FROM PaperlessAssignments WHERE Class=:Class";
+		$query = "SELECT * FROM PaperlessAssignments WHERE Class=:Class AND Quarter=:Quarter";
 		$instance = new self();
+		$quarter_id = Model::getQuarterID();
 
 		try {
 			$sth = $instance->conn->prepare($query);
 			$class_id = Model::getClassID($class);
 			$sth->setFetchMode(PDO::FETCH_ASSOC);
-			$sth->execute(array(":Class" => $class_id));
+			$sth->execute(array(":Class" => $class_id, ":Quarter" => $quarter_id));
 			if($rows = $sth->fetchAll()) {
 				//print_r($rows);
 				return $rows;
