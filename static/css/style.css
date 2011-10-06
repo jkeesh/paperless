@@ -469,6 +469,12 @@ textarea {
 	font-family: Helvetica !important;
 }
 
+.content .code .inlineComment .commentbox a{
+    color: #4F86C8;
+    font-family: 'Helvetica Neue', Helvetica !important;
+    font-weight: bold !important;
+}
+
 #footer{
 	position: absolute;
 	top: 20px;
