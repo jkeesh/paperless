@@ -147,6 +147,8 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter) {
 		
 		// add the modal dialog textarea
 		current_range = this.range;
+        var range_last_line = this.code_file.getLine(this.range.higher).first();
+        var range_viewport_y = range_last_line.offset().top - window.pageYOffset;
 		current_dialog = $('<div></div>')
 		.html('<textarea></textarea><div class="modalMessage">Comments are formatted using <a target="_blank" href="http://daringfireball.net/projects/markdown/syntax">Markdown.</a><br/>  Ctrl+3 For simple markdown reference.</div>')
 		.dialog({
@@ -154,6 +156,7 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter) {
 				title: 'Enter Comment',
 				width: 350,
 				height: 250,
+                position: ['center', range_viewport_y + 30],
 				focus: true,
 				open: function(event, ui) { $(".ui-dialog-titlebar-close").hide(); },
 				closeOnEscape: false,
@@ -194,6 +197,9 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter) {
 		
 		// delete this comment server-side
 		this.ajax("delete");
+
+        var range_last_line = this.code_file.getLine(this.range.higher).first();
+        var range_viewport_y = range_last_line.offset().top - window.pageYOffset;
 		
 		// setup the new dialog with the text of the current comement
 		current_dialog = $('<div></div>')
@@ -205,6 +211,7 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter) {
 				title: 'Enter Comment',
 				width: 350,
 				height: 250,
+                position: ['center', range_viewport_y + 30],
 				focus: true,
 				open: function(event, ui) { $(".ui-dialog-titlebar-close").hide();},
 				closeOnEscape: false,
