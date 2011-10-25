@@ -60,6 +60,7 @@
 		}
 		
 		public function __call($name, $arguments) {			
+            $this->smarty->assign('errorMsg', 'Tried to __call controller.');
 			$this->smarty->display("error.html");
 			exit;
 		}

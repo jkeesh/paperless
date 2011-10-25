@@ -24,6 +24,7 @@
 			$class = strtolower($userClasses[0]['Name']);
 
 			if(strlen($class) == 0){
+                $this->smarty->assign("errorMsg", "Couldn't get name for user class.");
 				$this->smarty->display("error.html");
 				return;
 			}

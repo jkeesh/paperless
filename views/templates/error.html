@@ -6,7 +6,10 @@
     	<img src="{$root_url}static/images/monkey.png" />
 		</div>
 	</div>
-	
+
+    {if $errorMsg != null}
+    <div>Error message: {$errorMsg}</div>
+    {/if}
 </div>
 <div class="clearfloat"></div>
 
