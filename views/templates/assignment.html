@@ -46,16 +46,15 @@ function release(obj){
 </style>
 
 {foreach from=$info item=student}
-<div class="link {if $student.num == $greatest[$student.student]}underline{/if}">
-	<form style="float: left;">
+<div class="link studentSubmission {if $student.num == $greatest[$student.student]}latestSubmission{/if}">
+    <!--form style="float: left;"-->
 	<input title="Click to release comments" type="checkbox" student="{$student.dirname}" 
 			name="release" value="" {if $student.release}checked{/if} />
-	</form>	
+	<!--/form-->	
     <a {if $student.release}class='bold'{/if} 
 		href="{$root_url}{$class}/code/{$assignment}/{$student.dirname}" 
 		id="{$student.dirname}">{$assignment} by {$student.dirname}</a>
 </div>
-<div style="clear:both"></div>
 {/foreach}
 
 {include file="footer.html"}

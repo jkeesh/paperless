@@ -73,7 +73,7 @@ body{
 
 .link a{
 	margin: 0px;
-	color: black;
+	/*color: black;*/
 	padding: 5px;
 }
 
@@ -445,6 +445,20 @@ textarea {
 	text-decoration: underline;
 }
 
+
+/* Selecting assignments page */
+.studentSubmission {
+    margin: 0 0 12px 0;
+}
+
+.studentSubmission a {
+    color: #666;
+}
+
+.latestSubmission a {
+    color: black;
+    text-decoration: underline;
+}
 
 /* Code File List */
 .selectedFile{
