@@ -8,7 +8,7 @@
 		if($class == "cs106a" || $class == "cs106b" || $class == "cs106x"){
 			$cs198Role = Model::getRoleForClass(USERNAME, "cs198");
 			// If they are the coordinator, give them general SL access to the entire class.
-			if($cs198Role == POSITION_COORDINATOR){
+			if($cs198Role == POSITION_COORDINATOR && $role < POSITION_TEACHING_ASSISTANT){
 				return POSITION_SECTION_LEADER;
 			}
      	}
