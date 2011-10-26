@@ -2,7 +2,7 @@
 require_once("permissions.php");
 	
 	function studentSort($a, $b){
-		return $a['LastName'] > $b['LastName'];
+		return $a['DisplayName'] > $b['DisplayName'];
 	}
 	
 	class SectionLeaderHandler extends ToroHandler {
