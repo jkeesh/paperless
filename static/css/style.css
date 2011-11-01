@@ -505,7 +505,8 @@ textarea {
 }
 
 #release{
-	margin-top: 20px;
+    position: relative;
+	margin-top: 40px;
 	z-index: 100;
 	background-color: white;
 	padding: 8px;
