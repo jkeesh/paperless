@@ -643,3 +643,18 @@ select{
 .modalMessage a{
     text-decoration: underline;
 }
+
+
+/* Admin Style */
+#admin_title{
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.coordinator-link{
+    padding: 10px;
+}
+.coordinator-link a:hover{
+    text-decoration: underline;
+}

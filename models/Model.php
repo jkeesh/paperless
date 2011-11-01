@@ -140,7 +140,7 @@
 				return Model::getAllStudentsForClass($class);
 			}
 			
-			$query = "SELECT ID, DisplayName, SUNetID, LastName FROM People WHERE ID IN 
+			$query = "SELECT ID, DisplayName, SUNetID, FirstName, LastName FROM People WHERE ID IN 
 						(SELECT Person FROM SectionAssignments WHERE Section IN
 							(SELECT ID FROM Sections 
 								WHERE SectionLeader IN
