@@ -124,6 +124,14 @@ var interactive = false;
     	 }
     }
 
+    function hideAllComments() {
+        $('.inlineComment').hide();
+    }
+
+    function displayAllComments() {
+        $('.inlineComment').show();
+    }
+
     function displayAll(){
 		for(var i = 0; i < code_files.length; i++){
 			display(i, false);
@@ -217,6 +225,8 @@ var interactive = false;
 <div id="release">
 	<form class="link smaller">
 	<input type="checkbox" name="release" value="" {if $release}checked{/if} />Release<br />
+    <p><a href="javascript: hideAllComments()">Hide comments</a></p>
+    <p><a href="javascript: displayAllComments()">Show comments</a></p>
 	</form>
 </div>
 
