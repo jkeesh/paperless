@@ -207,7 +207,7 @@ a{
 }
 
 #rightside{
-	position: absolute;
+	position: fixed;
 	top: 90px;
 	right: 30px;
 }
