@@ -178,10 +178,11 @@ class CodeHandler extends ToroHandler {
 		}
 		
 		echo $class . "\n". $suid."\n".$assignment."\n". $submission_number;
-		return;
+		//return;
 		
 		$curFile = AssignmentFile::loadFile($class, $suid, $assignment, $_POST['filename'], $submission_number);
 		
+		echo $curFile;
 		
 		
 		$id = $curFile->getID();
