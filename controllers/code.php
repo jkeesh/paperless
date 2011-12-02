@@ -176,16 +176,9 @@ class CodeHandler extends ToroHandler {
 			echo json_encode(array("status" => "ok"));
 			return;
 		}
-		
-		echo $class . "\n". $suid."\n".$assignment."\n". $submission_number. "\n". $_POST['filename'];
-		//return;
-		
+				
 		$curFile = AssignmentFile::loadFile($class, $suid, $assignment, $_POST['filename'], $submission_number);
-		
-		echo $curFile;
-		print_r($curFile);
-		return;
-		
+				
 		$id = $curFile->getID();
 		if(!isset($id)){ //			echo "no valid assnment found";
 			echo json_encode(array("status" => "fail"));

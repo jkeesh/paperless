@@ -117,7 +117,10 @@ class AssignmentFile extends Model {
 			// echo $file;
 			// echo "<br/>submission no " . $number;
 
-			$paperless_assignment_id = PaperlessAssignment::getID($class, $dir);		
+			$paperless_assignment_id = PaperlessAssignment::getID($class, $dir);	
+			
+			
+				
 			$sunetid = explode("_", $student);
 			$sunetid = $sunetid[0];
 
