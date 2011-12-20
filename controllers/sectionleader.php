@@ -22,7 +22,7 @@ require_once('models/User.php');
 			}
 			
 			$user = new User(USERNAME);
-			//print_r($user);
+			print_r($user);
 			
 			$role = Permissions::requireRole(POSITION_SECTION_LEADER, $class);
 			

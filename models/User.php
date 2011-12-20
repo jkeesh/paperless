@@ -15,11 +15,8 @@ class User extends Model {
 		$this->sunetid = $sunetid;
 		
 		$query = "SELECT ID, FirstName, LastName, DisplayName FROM People WHERE SUNetID = :sunetid";
-						
-		$db = Database::getConnection();
-		//$query = "SELECT ID FROM People WHERE SUNetID = :sunetid";
 		try {
-			$sth = $db->prepare($query);
+			$sth = $this->conn->prepare($query);
 			$sth->execute(array(":sunetid" => $sunetid));
 			if($rows = $sth->fetch()) {
 				$this->first_name = $rows['FirstName'];
@@ -31,7 +28,6 @@ class User extends Model {
 			echo $e->getMessage(); // TODO log this error instead of echoing
 		}
 	}
-	
 	
 }
 ?>
