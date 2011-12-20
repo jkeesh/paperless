@@ -15,15 +15,15 @@ require_once('models/User.php');
 			return $students;
 		}
 		
-		public function get($class, $sectionleader) {
+		public function get($qid, $class, $sectionleader) {
+			
 			$status = Model::getRoleForClass($sectionleader, $class); //sanity check: make sure they are visiting an sl for this class
 	     	if($status < POSITION_SECTION_LEADER){
 				Header("Location: " . ROOT_URL);
 			}
 			
 			$user = new User(USERNAME);
-			print_r($user);
-			
+
 			$role = Permissions::requireRole(POSITION_SECTION_LEADER, $class);
 			
 			if($role == POSITION_SECTION_LEADER){

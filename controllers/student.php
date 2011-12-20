@@ -25,7 +25,7 @@
 			return $result;
 		}
 		
-		public function get($class, $student) {
+		public function get($qid, $class, $student) {
 			
 			$string = explode("_", $student); // if it was student_1 just take student
 			$student = $string[0];
@@ -50,12 +50,10 @@
 				$this->smarty->assign("admin_class", $class);
 			}
 		
-			$course = new Course($class);
+			$course = new Course($class, $qid);
 			$the_student = new Student($student, $course);
 			$sl = $the_student->get_section_leader();
-			
-			
-			
+						
 			if($sl == "unknown"){
 				$this->smarty->assign("nosl", 1);
 			}

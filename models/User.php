@@ -1,6 +1,8 @@
 <?php
 require_once(dirname(dirname(__FILE__)) . "/config.php");
 require_once(dirname(dirname(__FILE__)) . "/models/Model.php");
+require_once(dirname(dirname(__FILE__)) . "/models/Relationship.php");
+
 
 class User extends Model {
 
@@ -27,6 +29,30 @@ class User extends Model {
 		} catch(PDOException $e) {
 			echo $e->getMessage(); // TODO log this error instead of echoing
 		}
+	}
+	
+	/*
+	 * Return all of the classes that this user has belonged to.
+	 * For example, they may have been a student in cs106a in quarter 90,
+	 * a student in 106b in quarter 92, and a section leader in cs106b in quarter 94
+	 *
+     * We get all the relationships for a user. A relationship has a (course, role),
+     * and a course knows its quarter.
+     */
+	public function get_all_relationships(){
+		$query = "SELECT Class, Quarter, Position FROM CourseRelations WHERE Person = :pid";
+		try {
+			$sth = $this->conn->prepare($query);
+			$sth->execute(array(":pid" => $this->id));
+			
+			$relationships = array();
+			while($row = $sth->fetch()) {
+				$relationships []=  Relationship::from_row($row);
+			}
+		} catch(PDOException $e) {
+			echo $e->getMessage(); // TODO log this error instead of echoing
+		}
+		return $relationships;
 	}
 	
 }

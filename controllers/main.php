@@ -1,13 +1,13 @@
 <?php
 	class IndexHandler extends ToroHandler {
 		
-		public function get($class) {
-				
-			if($class){
-				$this->smarty->assign("message", "It seems you have visited an invalid url.");
-				$this->smarty->display("message.html");
-				return;
-			}
+		public function get($qid, $class) {
+							
+			// if($class){
+			// 	$this->smarty->assign("message", "It seems you have visited an invalid url.");
+			// 	$this->smarty->display("message.html");
+			// 	return;
+			// }
 			
 			$userClasses = Model::getClass(USERNAME);
 			
@@ -30,15 +30,16 @@
 			}
 
 			$role = Model::getRoleForClass(USERNAME, $class);
+	
 			
 			if($role > POSITION_SECTION_LEADER){
-				Header("Location: ".  ROOT_URL ."$class/admin");
+				Header("Location: ". ROOT_URL .$qid."/".$class."/admin");
 				return;
 			}else if($role == POSITION_SECTION_LEADER){
-				Header("Location: " .  ROOT_URL ."$class/sectionleader/" . USERNAME);
+				Header("Location: ". ROOT_URL .$qid."/".$class."/sectionleader/" . USERNAME);
 				return;
 			}else{
-				Header("Location: " .  ROOT_URL ."$class/student/" . USERNAME);
+				Header("Location: ". ROOT_URL .$qid."/".$class."/student/".USERNAME);
 				return;
 			}
 		}
