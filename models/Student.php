@@ -15,12 +15,12 @@ class Student extends User {
 		$query = "(SELECT SectionLeader FROM Sections 
 					WHERE ID IN 
 					(SELECT Section FROM SectionAssignments WHERE Person = :uid)
-						AND Quarter = (SELECT DefaultQuarter FROM State)
+						AND Quarter = :quarter
 						AND Class = :class
 				  )";
 		try {
 			$sth = $this->conn->prepare($query);
-			$sth->execute(array(":uid" => $this->id, ":class" => $this->course->id));
+			$sth->execute(array(":uid" => $this->id, ":class" => $this->course->id, ":quarter" => $this->course->quarter->id));
 			if($row = $sth->fetch()) {
 				return Model::getSUID($row['SectionLeader']);
 			}else{

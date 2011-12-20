@@ -50,7 +50,7 @@
 				$this->smarty->assign("admin_class", $class);
 			}
 		
-			$course = new Course($class, $qid);
+			$course = Course::from_name_and_quarter_id($class, $qid);
 			$the_student = new Student($student, $course);
 			$sl = $the_student->get_section_leader();
 						
