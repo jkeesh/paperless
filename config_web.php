@@ -16,7 +16,7 @@
 	
 	//we will look for submissions in directories like
 	// SUBMISSIONS_PREFIX/class/SUBMISSIONS_DIR/sl/student/codefiles
-	define('SUBMISSIONS_PREFIX', '/afs/ir/class');
+	define('SUBMISSIONS_PREFIX', '/afs/ir/class/archive/cs/');
 	define('SUBMISSIONS_DIR', 'submissions');
 	
 	define('CLASS_CONFIG_DIR', '/afs/ir/class/cs198/cgi-bin/paperless/class_configs');

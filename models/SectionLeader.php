@@ -53,5 +53,10 @@ class SectionLeader extends User {
 		return $students;
 	}	
 	
+	// The section leader's base directory is the course base directory + the SL name
+	public function get_base_directory(){
+		return $this->course->get_base_directory() . '/' . $this->sunetid;
+	}
+	
 }
 ?>

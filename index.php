@@ -129,7 +129,7 @@
 									  Array('^\/([0-9]+)\/([a-zA-Z0-9_ \-]+)\/admin\/?$', 'regex', 'AdminHandler'),
 									  Array('^\/([0-9]+)\/([a-zA-Z0-9_ \-]+)\/manage\/?$', 'regex', 'ManageHandler'),
 									  Array('^\/([0-9]+)\/([a-zA-Z0-9_ \-]+)\/submit\/?$', 'regex', 'SubmitHandler'),
-									  Array('^\/([0-9]+)\/([a-zA-Z0-9_ \-]+)\/ddsubmit\/?$', 'regex', 'DragDropSubmitHandler'),
+									  Array('^\/([a-zA-Z0-9_ \-]+)\/ddsubmit\/?$', 'regex', 'DragDropSubmitHandler'),
 									  Array('^\/([0-9]+)\/([a-zA-Z0-9_ \-]+)\/upload\/?$', 'regex', 'UploadHandler'),
 									  Array('^\/([0-9]+)\/([a-zA-Z0-9_ \-]+)\/ddupload\/?$', 'regex', 'DragDropUploadHandler'),
 									  Array('^\/([0-9]+)\/([a-zA-Z0-9_]*)\/?$', 'regex', 'IndexHandler'),

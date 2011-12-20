@@ -7,7 +7,7 @@ $(document).ready(function(){
         $("select option:selected").each(function () {
               sl += $(this).text() + " ";
             });
-			var newurl = "{$root_url}{$class}/sectionleader/" + sl;
+			var newurl = "{$course->get_link()}/sectionleader/" + sl;
 			window.location = newurl;
 	});
 });
