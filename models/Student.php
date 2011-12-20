@@ -12,7 +12,6 @@ class Student extends User {
 	}	
 	
 	public function get_section_leader(){
-		$db = Database::getConnection();	
 		$classID = Model::getClassID($this->class);
 
 		$query = "(SELECT SectionLeader FROM Sections 

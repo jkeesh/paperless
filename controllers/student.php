@@ -2,6 +2,7 @@
 	require_once('index.php');
 	require_once('models/Model.php');
 	require_once('models/Student.php');
+	require_once('models/Course.php');
 
 	require_once('permissions.php');
 	
@@ -51,6 +52,10 @@
 						
 			$the_student = new Student($student, $class);			
 			$sl = $the_student->get_section_leader();
+			
+			
+			$course = new Course($class);
+			print_r($course);
 			
 			if($sl == "unknown"){
 				$this->smarty->assign("nosl", 1);
