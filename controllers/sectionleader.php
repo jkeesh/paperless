@@ -17,14 +17,20 @@ require_once('models/SectionLeader.php');
 		}
 		
 		public function get($qid, $class, $sectionleader) {
+			$course = Course::from_name_and_quarter_id($class, $qid);
+			$this->smarty->assign("course", $course);
 			
-			$status = Model::getRoleForClass($sectionleader, $class); //sanity check: make sure they are visiting an sl for this class
-	     	if($status < POSITION_SECTION_LEADER){
-				Header("Location: " . ROOT_URL);
-			}
+			$user = new User(USERNAME);
+			$role = Permissions::require_role(POSITION_SECTION_LEADER, $user, $course);
+				
+			// 
+			// $status = Model::getRoleForClass($sectionleader, $class); 
+			// //sanity check: make sure they are visiting an sl for this class
+			// if($status < POSITION_SECTION_LEADER){
+			// 	Header("Location: " . ROOT_URL);
+			// }
 
-			
-			$role = Permissions::requireRole(POSITION_SECTION_LEADER, $class);
+			// $role = Permissions::requireRole(POSITION_SECTION_LEADER, $class);
 			
 			if($role == POSITION_SECTION_LEADER){
 				$this->smarty->assign("sl_class", $class);
@@ -33,18 +39,13 @@ require_once('models/SectionLeader.php');
 				$this->smarty->assign("admin_class", $class);
 			}
 			
-			$user = new User(USERNAME);
-			$course = Course::from_name_and_quarter_id($class, $qid);
-			$this->smarty->assign("course", $course);
 			$the_SL = new SectionLeader($sectionleader, $course);
-			//print_r($the_SL);
 			
 			$course_base = $course->get_base_directory();
 			echo $course_base;
 			$sls = $this->sortAll($this->getDirEntries($course_base));
 
-			$sl_base = $the_SL->get_base_directory();
-						
+			$sl_base = $the_SL->get_base_directory();						
 			$assns = $this->getDirEntries($sl_base);
 			if(empty($assns) || strlen($assns[0]) == 0){
 				$this->smarty->assign("no_assns", 1);

@@ -5,6 +5,8 @@ require_once(dirname(dirname(__FILE__)) . "/models/Model.php");
 class Relationship extends Model {
 	
 	public static $role_strings = array("Student", "Applicant", "Course Helper", "Section Leader", "Lecturer", "Coordinator");
+	
+	public static $hidden_courses = array("CS107", "CS198");
 
 	private $course;
 	private $role;
@@ -13,7 +15,8 @@ class Relationship extends Model {
 	 * We should not display this relationship if they are an applicant
 	 */
 	public function should_show(){
-		return $this->role != POSITION_APPLICANT;
+		$hide = in_array($this->course->name,  Relationship::$hidden_courses);
+		return $this->role != POSITION_APPLICANT && !$hide;
 	}
 	
 	private function get_role_url_component(){
