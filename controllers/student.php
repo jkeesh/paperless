@@ -49,13 +49,12 @@
 			if($role > POSITION_SECTION_LEADER){
 				$this->smarty->assign("admin_class", $class);
 			}
-						
-			$the_student = new Student($student, $class);			
+		
+			$course = new Course($class);
+			$the_student = new Student($student, $course);
 			$sl = $the_student->get_section_leader();
 			
 			
-			$course = new Course($class);
-			print_r($course);
 			
 			if($sl == "unknown"){
 				$this->smarty->assign("nosl", 1);

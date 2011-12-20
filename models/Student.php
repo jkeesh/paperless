@@ -3,17 +3,15 @@ require_once(dirname(dirname(__FILE__)) . "/models/User.php");
 
 class Student extends User {
 	
-	private $class;
+	private $course;
 
-	public function __construct($sunetid, $class) {
+	public function __construct($sunetid, $course) {
 		parent::__construct($sunetid);
 		
-		$this->class = $class;
+		$this->course = $course;
 	}	
 	
 	public function get_section_leader(){
-		$classID = Model::getClassID($this->class);
-
 		$query = "(SELECT SectionLeader FROM Sections 
 					WHERE ID IN 
 					(SELECT Section FROM SectionAssignments WHERE Person = :uid)
@@ -22,7 +20,7 @@ class Student extends User {
 				  )";
 		try {
 			$sth = $this->conn->prepare($query);
-			$sth->execute(array(":uid" => $this->id, ":class" => $classID));
+			$sth->execute(array(":uid" => $this->id, ":class" => $this->course->id));
 			if($row = $sth->fetch()) {
 				return Model::getSUID($row['SectionLeader']);
 			}else{
