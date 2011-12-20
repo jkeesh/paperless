@@ -15,9 +15,6 @@
 	}
 	
 	class StudentHandler extends ToroHandler {
-		
-
-		
 		function sortArr($arr){
 			uasort($arr, 'cmp');
 			$result = array();
@@ -31,15 +28,7 @@
 			
 			$string = explode("_", $student); // if it was student_1 just take student
 			$student = $string[0];
-			
-			
-			$the_student = new Student($student, $class);
-			print_r($the_student);
-			
-			$the_sl = $the_student->get_section_leader();
-			echo "THE SL...";
-			echo $the_sl;
-			
+						
 			// If the user is not the current student, require that they be a section
 			// leader for this class to be able to view the code
 			if($student != USERNAME) {
@@ -59,9 +48,9 @@
 			if($role > POSITION_SECTION_LEADER){
 				$this->smarty->assign("admin_class", $class);
 			}
-			
-			
-			$sl = Model::getSectionLeaderForStudent($student, $class);	
+						
+			$the_student = new Student($student, $class);			
+			$sl = $the_student->get_section_leader();
 			
 			if($sl == "unknown"){
 				$this->smarty->assign("nosl", 1);
