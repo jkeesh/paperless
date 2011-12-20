@@ -40,7 +40,7 @@ class User extends Model {
      * and a course knows its quarter.
      */
 	public function get_all_relationships(){
-		$query = "SELECT Class, Quarter, Position FROM CourseRelations WHERE Person = :pid";
+		$query = "SELECT Class, Quarter, Position FROM CourseRelations WHERE Person = :pid ORDER BY Quarter DESC";
 		try {
 			$sth = $this->conn->prepare($query);
 			$sth->execute(array(":pid" => $this->id));

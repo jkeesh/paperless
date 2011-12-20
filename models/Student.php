@@ -9,7 +9,24 @@ class Student extends User {
 		parent::__construct($sunetid);
 		
 		$this->course = $course;
+	}
+	
+	public function set_course($course){
+		$this->course = $course;
 	}	
+	
+	public function get_link(){
+		return ROOT_URL . $this->course->quarter->id . '/' . $this->course->name . '/student/' . $this->sunetid;
+	}
+	
+	public static function from_row($row){
+		$instance = new self($row['SUNetID'], null);
+		$instance->first_name = $row['FirstName'];
+		$instance->last_name = $row['LastName'];
+		$instance->display_name = $row['DisplayName'];
+		$instance->id = $row['ID'];
+		return $instance;
+	}
 	
 	public function get_section_leader(){
 		$query = "(SELECT SectionLeader FROM Sections 

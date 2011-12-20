@@ -78,7 +78,7 @@ class CodeHandler extends ToroHandler {
 	/*
 		* Displays the syntax highlighted code for a student, assignment pair
 		*/
-	public function get($class, $assignment, $student, $print=False) {
+	public function get($qid, $class, $assignment, $student, $print=False) {
 		if($print){
 			$this->smarty->assign("print_view", $print);
 		}

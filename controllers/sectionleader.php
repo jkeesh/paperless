@@ -1,6 +1,7 @@
 <?php
 require_once("permissions.php");
 require_once('models/User.php');
+require_once('models/SectionLeader.php');
 
 	
 	function studentSort($a, $b){
@@ -22,8 +23,12 @@ require_once('models/User.php');
 				Header("Location: " . ROOT_URL);
 			}
 			
+			
 			$user = new User(USERNAME);
-
+			$course = Course::from_name_and_quarter_id($class, $qid);
+			$the_SL = new SectionLeader(USERNAME, $course);
+			//print_r($the_SL);
+			
 			$role = Permissions::requireRole(POSITION_SECTION_LEADER, $class);
 			
 			if($role == POSITION_SECTION_LEADER){
@@ -43,12 +48,22 @@ require_once('models/User.php');
 				$this->smarty->assign("no_assns", 1);
 			}
 			
+			
+			
+			
+			
 			$students = Model::getStudentsForSectionLeader($sectionleader, $class);
 			//print_r($students);
 			
+			
+			$the_students = $the_SL->get_students();
+			//print_r($the_students);
+			
 			$students = $this->sortAll($students);
 			
-			$this->smarty->assign("students", $students);
+//			$this->smarty->assign("students", $students);
+			$this->smarty->assign("students", $the_students);
+
 			
 			// assign template variables
 			$this->smarty->assign("sls", $sls);
