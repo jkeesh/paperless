@@ -4,11 +4,11 @@ require_once(dirname(dirname(__FILE__)) . "/models/Model.php");
 
 class User extends Model {
 
-	private $sunetid;
-	private $first_name;
-	private $last_name;
-	private $display_name;
-	private $id;
+	public $sunetid;
+	public $first_name;
+	public $last_name;
+	public $display_name;
+	public $id;
 
 	public function __construct($sunetid) {
 		parent::__construct();

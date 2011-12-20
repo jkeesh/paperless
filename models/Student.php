@@ -2,35 +2,37 @@
 require_once(dirname(dirname(__FILE__)) . "/models/User.php");
 
 class Student extends User {
+	
+	private $class;
 
-	private $sunetid;
-	private $first_name;
-	private $last_name;
-	private $display_name;
-	private $id;
-
-	public function __construct($sunetid) {
-		parent::__construct();
-		$this->sunetid = $sunetid;
+	public function __construct($sunetid, $class) {
+		parent::__construct($sunetid);
 		
-		$query = "SELECT ID, FirstName, LastName, DisplayName FROM People WHERE SUNetID = :sunetid";
-						
-		$db = Database::getConnection();
-		//$query = "SELECT ID FROM People WHERE SUNetID = :sunetid";
+		$this->class = $class;
+	}	
+	
+	public function get_section_leader(){
+		$db = Database::getConnection();	
+		$classID = Model::getClassID($this->class);
+
+		$query = "(SELECT SectionLeader FROM Sections 
+					WHERE ID IN 
+					(SELECT Section FROM SectionAssignments WHERE Person = :uid)
+						AND Quarter = (SELECT DefaultQuarter FROM State)
+						AND Class = :class
+				  )";
 		try {
-			$sth = $db->prepare($query);
-			$sth->execute(array(":sunetid" => $sunetid));
-			if($rows = $sth->fetch()) {
-				$this->first_name = $rows['FirstName'];
-				$this->last_name = $rows['LastName'];
-				$this->display_name = $rows['DisplayName'];
-				$this->id = $rows['ID'];
+			$sth = $this->conn->prepare($query);
+			$sth->execute(array(":uid" => $this->id, ":class" => $classID));
+			if($row = $sth->fetch()) {
+				return Model::getSUID($row['SectionLeader']);
+			}else{
+				return "unknown";
 			}
 		} catch(PDOException $e) {
 			echo $e->getMessage(); // TODO log this error instead of echoing
 		}
 	}
-	
 	
 }
 ?>

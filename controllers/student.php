@@ -1,6 +1,8 @@
 <?php
 	require_once('index.php');
 	require_once('models/Model.php');
+	require_once('models/Student.php');
+
 	require_once('permissions.php');
 	
 	function cmp($a, $b){
@@ -29,6 +31,14 @@
 			
 			$string = explode("_", $student); // if it was student_1 just take student
 			$student = $string[0];
+			
+			
+			$the_student = new Student($student, $class);
+			print_r($the_student);
+			
+			$the_sl = $the_student->get_section_leader();
+			echo "THE SL...";
+			echo $the_sl;
 			
 			// If the user is not the current student, require that they be a section
 			// leader for this class to be able to view the code
