@@ -1,5 +1,7 @@
 <?php
 require_once("permissions.php");
+require_once('models/User.php');
+
 	
 	function studentSort($a, $b){
 		return $a['DisplayName'] > $b['DisplayName'];
@@ -18,6 +20,9 @@ require_once("permissions.php");
 	     	if($status < POSITION_SECTION_LEADER){
 				Header("Location: " . ROOT_URL);
 			}
+			
+			$user = new User(USERNAME);
+			//print_r($user);
 			
 			$role = Permissions::requireRole(POSITION_SECTION_LEADER, $class);
 			
