@@ -37,7 +37,6 @@ class Quarter extends Model {
 		return $this->quarter_string() . ", " . $this->year;
 	}
 	
-	
 	/* 
 	 * The People Soft Quarter code is a very stupid code that tells us where the
 	 * afs mount point is.
