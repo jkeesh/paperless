@@ -9,7 +9,8 @@
 	class AdminHandler extends ToroHandler {
 		
 		public function get($qid, $class) {
-			$user = User::from_sunetid(USERNAME);
+			$user = new User;
+			$user->from_sunetid(USERNAME);
 			$course = Course::from_name_and_quarter_id($class, $qid);
 			$this->smarty->assign("course", $course);
 			

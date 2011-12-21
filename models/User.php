@@ -23,10 +23,9 @@ class User extends Model {
 	public $last_name;
 	public $display_name;
 	public $id;
-
-	public static function from_id($id){
-		$instance = new static();
-		$instance->id = $id;
+	
+	public function from_id($id){
+		$this->id = $id;
 		$db = Database::getConnection();
 		
 		$query = "SELECT FirstName, LastName, DisplayName, SUNetID FROM People WHERE ID = :id";
@@ -34,20 +33,18 @@ class User extends Model {
 			$sth = $db->prepare($query);
 			$sth->execute(array(":id" => $id));
 			if($rows = $sth->fetch()) {
-				$instance->first_name = $rows['FirstName'];
-				$instance->last_name = $rows['LastName'];
-				$instance->display_name = $rows['DisplayName'];
-				$instance->sunetid = $rows['SUNetID'];
+				$this->first_name = $rows['FirstName'];
+				$this->last_name = $rows['LastName'];
+				$this->display_name = $rows['DisplayName'];
+				$this->sunetid = $rows['SUNetID'];
 			}
 		} catch(PDOException $e) {
 			echo $e->getMessage(); // TODO log this error instead of echoing
 		}
-		return $instance;
 	}
 
-	public static function from_sunetid($sunetid){
-		$instance = new static();
-		$instance->sunetid = $sunetid;
+	public function from_sunetid($sunetid){
+		$this->sunetid = $sunetid;
 		$db = Database::getConnection();
 		
 		$query = "SELECT ID, FirstName, LastName, DisplayName FROM People WHERE SUNetID = :sunetid";
@@ -55,15 +52,14 @@ class User extends Model {
 			$sth = $db->prepare($query);
 			$sth->execute(array(":sunetid" => $sunetid));
 			if($rows = $sth->fetch()) {
-				$instance->first_name = $rows['FirstName'];
-				$instance->last_name = $rows['LastName'];
-				$instance->display_name = $rows['DisplayName'];
-				$instance->id = $rows['ID'];
+				$this->first_name = $rows['FirstName'];
+				$this->last_name = $rows['LastName'];
+				$this->display_name = $rows['DisplayName'];
+				$this->id = $rows['ID'];
 			}
 		} catch(PDOException $e) {
 			echo $e->getMessage(); // TODO log this error instead of echoing
 		}
-		return $instance;
 	}
 	
 	/*

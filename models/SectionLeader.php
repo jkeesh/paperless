@@ -11,29 +11,28 @@ class SectionLeader extends User {
 	 * Static factory constructor to make a SectionLeader from a sunetid
 	 * and Course object.
 	 */
-	public static function from_sunetid_and_course($sunetid, $course){
-		$instance = SectionLeader::from_sunetid($sunetid);
-		$instance->course = $course;
+	public function from_sunetid_and_course($sunetid, $course){
+		$this->from_sunetid($sunetid);
+		$this->course = $course;
 		
 		$db = Database::getConnection();
 		$query = "SELECT ID FROM Sections WHERE SectionLeader = :uid AND Quarter = :qid AND Class = :class_id";		
 		try {
 			$sth = $db->prepare($query);
-			$sth->execute(array(":uid" => $instance->id, 
-								":qid" => $instance->course->quarter->id, 
-								":class_id" => $instance->course->id));
+			$sth->execute(array(":uid" => $this->id, 
+								":qid" => $this->course->quarter->id, 
+								":class_id" => $this->course->id));
 			if($row = $sth->fetch()) {
-				$instance->section_id = $row['ID'];				
+				$this->section_id = $row['ID'];				
 			}
 		} catch(PDOException $e) {
 			echo $e->getMessage(); // TODO log this error instead of echoing
 		}
-		return $instance;
 	}
 	
-	public static function from_id_and_course($id, $course){
-		$instance = SectionLeader::from_id($id);
-		$instance->course = $course;		
+	public function from_id_and_course($id, $course){
+		$this->from_id($id);
+		$this->course = $course;		
 		$db = Database::getConnection();
 		$query = "SELECT ID FROM Sections WHERE SectionLeader = :uid AND Quarter = :qid AND Class = :class_id";		
 		try {
@@ -42,12 +41,11 @@ class SectionLeader extends User {
 								":qid" => $course->quarter->id, 
 								":class_id" => $course->id));
 			if($row = $sth->fetch()) {
-				$instance->section_id = $row['ID'];
+				$this->section_id = $row['ID'];
 			}
 		} catch(PDOException $e) {
 			echo $e->getMessage(); // TODO log this error instead of echoing
 		}
-		return $instance;
 	}
 	
 	public function get_students(){

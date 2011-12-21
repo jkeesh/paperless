@@ -42,7 +42,8 @@
 
 			$course = Course::from_name_and_quarter_id($class, $qid);
 			$this->smarty->assign("course", $course);
-			$user = User::from_sunetid(USERNAME);
+			$user = new User;
+			$user->from_sunetid(USERNAME);
 			$role = Permissions::require_role(POSITION_SECTION_LEADER, $user, $course);
 						
 			if($role == POSITION_SECTION_LEADER){
@@ -52,7 +53,9 @@
 				$this->smarty->assign("admin_class", $class);
 			}
 			
-			$sl = SectionLeader::from_sunetid_and_course($sectionleader, $course);
+			$sl = new SectionLeader;
+			$sl->from_sunetid_and_course($sectionleader, $course);
+			
 			$dirname = $sl->get_base_directory() .'/' . $assignment;
 			echo $dirname;
 						

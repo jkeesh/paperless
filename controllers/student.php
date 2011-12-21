@@ -29,12 +29,14 @@
 			
 			$string = explode("_", $student); // if it was student_1 just take student
 			$student = $string[0];
-			$user = User::from_sunetid(USERNAME);
+			$user = new User;
+			$user->from_sunetid(USERNAME);
 			$course = Course::from_name_and_quarter_id($class, $qid);
 			$this->smarty->assign("course", $course);
 			
 			
-			$the_student = Student::from_sunetid_and_course($student, $course);
+			$the_student = new Student;
+			$the_student->from_sunetid_and_course($student, $course);
 
 			// If the user is not the current student, require that they be a section
 			// leader for this class to be able to view the code

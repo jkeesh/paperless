@@ -15,10 +15,9 @@ class Student extends User {
 
 	// Create the student by first calling the superclass factory method to setup the 
 	// user based on the sunetid, and then saving the course as well.
-	public static function from_sunetid_and_course($sunetid, $course){
-		$instance = Student::from_sunetid($sunetid);
-		$instance->course = $course;
-		return $instance;
+	public function from_sunetid_and_course($sunetid, $course){
+		$this->from_sunetid($sunetid);
+		$this->course = $course;
 	}
 	
 	public static function from_row($row){
@@ -42,7 +41,9 @@ class Student extends User {
 			$sth = $this->conn->prepare($query);
 			$sth->execute(array(":uid" => $this->id, ":class" => $this->course->id, ":quarter" => $this->course->quarter->id));
 			if($row = $sth->fetch()) {
-				return SectionLeader::from_id_and_course($row['SectionLeader'], $this->course);
+				$sl = new SectionLeader;
+				$sl->from_id_and_course($row['SectionLeader'], $this->course);
+				return $sl;
 			}else{
 //				return "unknown";
 			}

@@ -91,9 +91,11 @@ class CodeHandler extends ToroHandler {
 		
 		$course = Course::from_name_and_quarter_id($class, $qid);
 		$this->smarty->assign("course", $course);
-		$user = User::from_sunetid(USERNAME);
+		$user = new User;
+		$user->from_sunetid(USERNAME);
 		
-		$the_student = Student::from_sunetid_and_course($suid, $course);
+		$the_student = new Student;
+		$the_student->from_sunetid_and_course($suid, $course);
 		$the_sl = $the_student->get_section_leader();
 
 		$this->smarty->assign("the_student", $the_student);
@@ -166,14 +168,17 @@ class CodeHandler extends ToroHandler {
 		
 		$quarter = Quarter::current();
 		$course = Course::from_name_and_quarter_id($class, $qid);
-		$user = User::from_sunetid(USERNAME);
+		$user = new User;
+		$user->from_sunetid(USERNAME);
 		Permissions::require_role(POSITION_SECTION_LEADER, $user, $course);
 
 		$parts = explode("_", $student); // if it was student_1 just take student
 		$suid = $parts[0];
 		$submission_number = $parts[1];
 		
-		$the_student = Student::from_sunetid_and_course($suid, $course);
+		
+		$the_student = new Student;
+		$the_student->from_sunetid_and_course($suid, $course);
 		$the_sl = $the_student->get_section_leader();
 		
 		$sl = Model::getSectionLeaderForStudent($suid, $class);
