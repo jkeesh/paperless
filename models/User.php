@@ -12,24 +12,66 @@ class User extends Model {
 	public $display_name;
 	public $id;
 
-	public function __construct($sunetid) {
-		parent::__construct();
-		$this->sunetid = $sunetid;
+	public static function from_id($id){
+		$instance = new self();
+		$instance->id = $id;
+		$db = Database::getConnection();
 		
-		$query = "SELECT ID, FirstName, LastName, DisplayName FROM People WHERE SUNetID = :sunetid";
+		$query = "SELECT FirstName, LastName, DisplayName, SUNetID FROM People WHERE ID = :id";
 		try {
-			$sth = $this->conn->prepare($query);
+			$sth = $db->prepare($query);
 			$sth->execute(array(":sunetid" => $sunetid));
 			if($rows = $sth->fetch()) {
-				$this->first_name = $rows['FirstName'];
-				$this->last_name = $rows['LastName'];
-				$this->display_name = $rows['DisplayName'];
-				$this->id = $rows['ID'];
+				$instance->first_name = $rows['FirstName'];
+				$instance->last_name = $rows['LastName'];
+				$instance->display_name = $rows['DisplayName'];
+				$instance->sunetid = $rows['SUNetID'];
 			}
 		} catch(PDOException $e) {
 			echo $e->getMessage(); // TODO log this error instead of echoing
 		}
+		return $instance;
 	}
+
+	public static function from_sunetid($sunetid){
+		$instance = new self();
+		$instance->sunetid = $sunetid;
+		$db = Database::getConnection();
+		
+		$query = "SELECT ID, FirstName, LastName, DisplayName FROM People WHERE SUNetID = :sunetid";
+		try {
+			$sth = $db->prepare($query);
+			$sth->execute(array(":sunetid" => $sunetid));
+			if($rows = $sth->fetch()) {
+				$instance->first_name = $rows['FirstName'];
+				$instance->last_name = $rows['LastName'];
+				$instance->display_name = $rows['DisplayName'];
+				$instance->id = $rows['ID'];
+			}
+		} catch(PDOException $e) {
+			echo $e->getMessage(); // TODO log this error instead of echoing
+		}
+		return $instance;
+	}
+
+	// public function __construct($sunetid) {
+	// 	parent::__construct();
+	// 	$this->sunetid = $sunetid;
+	// 	
+	// 	$query = "SELECT ID, FirstName, LastName, DisplayName FROM People WHERE SUNetID = :sunetid";
+	// 	try {
+	// 		$sth = $this->conn->prepare($query);
+	// 		$sth->execute(array(":sunetid" => $sunetid));
+	// 		if($rows = $sth->fetch()) {
+	// 			$this->first_name = $rows['FirstName'];
+	// 			$this->last_name = $rows['LastName'];
+	// 			$this->display_name = $rows['DisplayName'];
+	// 			$this->id = $rows['ID'];
+	// 		}
+	// 	} catch(PDOException $e) {
+	// 		echo $e->getMessage(); // TODO log this error instead of echoing
+	// 	}
+	// }
 	
 	/*
 	 * Return all of the classes that this user has belonged to.

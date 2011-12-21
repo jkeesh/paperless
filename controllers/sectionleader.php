@@ -29,8 +29,6 @@ require_once('models/SectionLeader.php');
 			// if($status < POSITION_SECTION_LEADER){
 			// 	Header("Location: " . ROOT_URL);
 			// }
-
-			// $role = Permissions::requireRole(POSITION_SECTION_LEADER, $class);
 			
 			if($role == POSITION_SECTION_LEADER){
 				$this->smarty->assign("sl_class", $class);
@@ -39,7 +37,8 @@ require_once('models/SectionLeader.php');
 				$this->smarty->assign("admin_class", $class);
 			}
 			
-			$the_SL = new SectionLeader($sectionleader, $course);
+			$the_SL = SectionLeader::from_sunetid_and_course($sectionleader, $course);
+
 			
 			$course_base = $course->get_base_directory();
 			echo $course_base;

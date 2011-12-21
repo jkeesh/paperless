@@ -7,20 +7,67 @@ class SectionLeader extends User {
 	private $course;
 	private $section_id;
 
-	public function __construct($sunetid, $course) {
-		parent::__construct($sunetid);
-		
-		$this->course = $course;
+	// public function __construct($sunetid, $course) {
+	// 	parent::__construct($sunetid);
+	// 	
+	// 	$this->course = $course;
+	// 	
+	// 	$db = Database::getConnection();
+	// 	$query = "SELECT ID FROM Sections WHERE SectionLeader = :uid AND Quarter = :qid AND Class = :class_id";		
+	// 	try {
+	// 		$sth = $db->prepare($query);
+	// 		$sth->execute(array(":uid" => $this->id, 
+	// 							":qid" => $this->course->quarter->id, 
+	// 							":class_id" => $this->course->id));
+	// 		if($row = $sth->fetch()) {
+	// 			$this->section_id = $row['ID'];
+	// 		}
+	// 	} catch(PDOException $e) {
+	// 		echo $e->getMessage(); // TODO log this error instead of echoing
+	// 	}
+	// }
+	
+	/*
+	 * Static factory constructor to make a SectionLeader from a sunetid
+	 * and Course object.
+	 */
+	public static function from_sunetid_and_course($sunetid, $course){
+		$instance = new self($sunetid);
+		$instance->course = $course;
 		
 		$db = Database::getConnection();
 		$query = "SELECT ID FROM Sections WHERE SectionLeader = :uid AND Quarter = :qid AND Class = :class_id";		
 		try {
 			$sth = $db->prepare($query);
-			$sth->execute(array(":uid" => $this->id, 
-								":qid" => $this->course->quarter->id, 
-								":class_id" => $this->course->id));
+			$sth->execute(array(":uid" => $instance->id, 
+								":qid" => $instance->course->quarter->id, 
+								":class_id" => $instance->course->id));
 			if($row = $sth->fetch()) {
-				$this->section_id = $row['ID'];
+				$instance->section_id = $row['ID'];
+			}
+		} catch(PDOException $e) {
+			echo $e->getMessage(); // TODO log this error instead of echoing
+		}
+		return $instance;
+	}
+	
+	public static function from_id_and_course($id, $course){
+		echo $id;
+		//$this->course = $course;
+		
+		$db = Database::getConnection();
+		$query = "SELECT ID FROM Sections WHERE SectionLeader = :uid AND Quarter = :qid AND Class = :class_id";		
+		try {
+			$sth = $db->prepare($query);
+			$sth->execute(array(":uid" => $id, 
+								":qid" => $course->quarter->id, 
+								":class_id" => $course->id));
+			if($row = $sth->fetch()) {
+				print_r($row);
+//				$instance = new self($sunetid);
+				
+				
+//				$this->section_id = $row['ID'];
 			}
 		} catch(PDOException $e) {
 			echo $e->getMessage(); // TODO log this error instead of echoing

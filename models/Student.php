@@ -39,9 +39,10 @@ class Student extends User {
 			$sth = $this->conn->prepare($query);
 			$sth->execute(array(":uid" => $this->id, ":class" => $this->course->id, ":quarter" => $this->course->quarter->id));
 			if($row = $sth->fetch()) {
-				return Model::getSUID($row['SectionLeader']);
+				return SectionLeader::from_id_and_course($row['SectionLeader'], $this->course);
+//				return Model::getSUID($row['SectionLeader']);
 			}else{
-				return "unknown";
+//				return "unknown";
 			}
 		} catch(PDOException $e) {
 			echo $e->getMessage(); // TODO log this error instead of echoing
