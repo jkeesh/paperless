@@ -127,8 +127,6 @@ class AssignmentFile extends Model {
 				$sth->execute($arr);
 				$sth->setFetchMode(PDO::FETCH_NUM);
 				if($row = $sth->fetch()) {
-					echo "load file...";
-					print_r($row);
 					$instance->fill($row);
 					$instance->loadComments();
 					return $instance;
