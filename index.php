@@ -109,7 +109,6 @@
 	require_once('controllers/ddsubmit.php');	// drag drop submit
 	require_once('controllers/upload.php');		// upload
 	require_once('controllers/ddupload.php');	// drag drop upload
-	require_once('controllers/select.php'); // if a user has multiple classes with different roles, allow them to select the class
 	require_once('controllers/setuser.php');
 	require_once('controllers/error.php');
 	require_once('controllers/manage.php');
@@ -134,7 +133,7 @@
 									  Array('^\/([a-zA-Z0-9_ \-]+)\/ddsubmit\/?$', 'regex', 'DragDropSubmitHandler'),
 									  Array('^\/([0-9]+)\/([a-zA-Z0-9_ \-]+)\/upload\/?$', 'regex', 'UploadHandler'),
 									  Array('^\/([0-9]+)\/([a-zA-Z0-9_ \-]+)\/ddupload\/?$', 'regex', 'DragDropUploadHandler'),
-									  Array('^\/([0-9]+)\/([a-zA-Z0-9_]*)\/?$', 'regex', 'IndexHandler'),
+									  //Array('^\/([0-9]+)\/([a-zA-Z0-9_]*)\/?$', 'regex', 'IndexHandler'),
 									  Array('(.*)', 'regex', 'RouterHandler'),
 									  // Array('(.*)', 'regex', 'ErrorHandler'),
 									  ));
