@@ -9,12 +9,10 @@
 	class AdminHandler extends ToroHandler {
 		
 		public function get($qid, $class) {
-			$user = new User;
-			$user->from_sunetid(USERNAME);
 			$course = Course::from_name_and_quarter_id($class, $qid);
 			$this->smarty->assign("course", $course);
 			
-			$role = Permissions::require_role(POSITION_TEACHING_ASSISTANT, $user, $course);
+			$role = Permissions::require_role(POSITION_TEACHING_ASSISTANT, $this->user, $course);
 			
 			$dirname = $course->get_base_directory();
 			echo $dirname;
