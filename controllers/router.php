@@ -18,9 +18,7 @@
 		 * @author	Jeremy Keeshin December 20, 2011
 		 */
 		public function get() {
-			$user = new User;
-			$user->from_sunetid(USERNAME);
-			$relationships = $user->get_all_relationships();
+			$relationships = $this->user->get_all_relationships();
 			$this->smarty->assign("relationships", $relationships);	
 			$this->smarty->display("router.html");			
 		}		

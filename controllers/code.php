@@ -93,8 +93,6 @@ class CodeHandler extends ToroHandler {
 		
 		$course = Course::from_name_and_quarter_id($class, $qid);
 		$this->smarty->assign("course", $course);
-		$user = new User;
-		$user->from_sunetid(USERNAME);
 		
 		$the_student = new Student;
 		$the_student->from_sunetid_and_course($suid, $course);
@@ -107,10 +105,10 @@ class CodeHandler extends ToroHandler {
 		// if the username is something other than the owner of these files, require
 		// it to be a SL
 		if($suid != USERNAME) {
-			$role = Permissions::require_role(POSITION_SECTION_LEADER, $user, $course);
+			$role = Permissions::require_role(POSITION_SECTION_LEADER, $this->user, $course);
 		}else{
 		// Otherwise require this student to be in the class
-			$role = Permissions::require_role(POSITION_STUDENT, $user, $course);
+			$role = Permissions::require_role(POSITION_STUDENT, $this->user, $course);
 		}
 
 		$sl = Model::getSectionLeaderForStudent($suid, $class);
@@ -177,7 +175,7 @@ class CodeHandler extends ToroHandler {
 		$course = Course::from_name_and_quarter_id($class, $qid);
 		$user = new User;
 		$user->from_sunetid(USERNAME);
-		Permissions::require_role(POSITION_SECTION_LEADER, $user, $course);
+		Permissions::require_role(POSITION_SECTION_LEADER, $this->user, $course);
 
 		$parts = explode("_", $student); // if it was student_1 just take student
 		$suid = $parts[0];
