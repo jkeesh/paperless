@@ -38,7 +38,11 @@ class Relationship extends Model {
 		$qid = $this->course->quarter->id;
 		$course_name = strtolower($this->course->name);
 		$role_component = $this->get_role_url_component();
-		return ROOT_URL . $qid . '/' . $course_name . '/' . $role_component . '/' . USERNAME;
+		if($role_component != "admin"){
+			return ROOT_URL . $qid . '/' . $course_name . '/' . $role_component . '/' . USERNAME;
+		}else{
+			return ROOT_URL . $qid . '/' . $course_name . '/' . $role_component;			
+		}
 	}
 	
 	public static function from_row($row){
