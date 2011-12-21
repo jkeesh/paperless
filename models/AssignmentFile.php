@@ -98,6 +98,7 @@ class AssignmentFile extends Model {
 
 				$sth->setFetchMode(PDO::FETCH_ASSOC);
 				while($row = $sth->fetch()) {
+					print_r($row);
 					$curComment = AssignmentComment::create($row['AssignmentFile'], $row['StartLine'], 
 						$row['EndLine'], $row['CommentText'], $row['Commenter'], $row['Student']);
 					$curComment->setID($row['ID']);
@@ -111,17 +112,8 @@ class AssignmentFile extends Model {
 
 		//	$assignmentFile = AssignmentFile::loadFile($class, $student, $assignment, $file);
 		public static function loadFile($qid, $class, $student, $dir, $file, $number = 0){
-
-			// echo $class;
-			// echo $student;
-			// echo $dir;
-			// echo $file;
-			// echo "<br/>submission no " . $number;
-
 			$paperless_assignment_id = PaperlessAssignment::getID($qid, $class, $dir);	
 			
-			
-				
 			$sunetid = explode("_", $student);
 			$sunetid = $sunetid[0];
 
@@ -130,43 +122,18 @@ class AssignmentFile extends Model {
 			$arr = array(":Student" => $student_id, ":AssnID" => $paperless_assignment_id, ":File" => $file, ":Number" => $number);
 			$instance = new self();
 
-
-
 			try {
 				$sth = $instance->conn->prepare($query);
 				$sth->execute($arr);
 				$sth->setFetchMode(PDO::FETCH_NUM);
 				if($row = $sth->fetch()) {
+					echo "load file...";
+					print_r($row);
 					$instance->fill($row);
 					$instance->loadComments();
 					return $instance;
 				}else{
 
-				}
-			} catch(PDOException $e) {
-				echo $e->getMessage(); // TODO log this error instead of echo
-			}
-			return null;
-		}
-
-		/*
-			* Load from an id
-			*/
-		public static function load($args) {
-			extract($args);
-
-			$query = "SELECT * FROM " . ASSIGNMENT_FILE_TABLE . " WHERE File=:FilePath;";
-			$instance = new self();
-
-			try {
-				$sth = $instance->conn->prepare($query);
-				$sth->execute(array(":FilePath" => $FilePath));
-
-				$sth->setFetchMode(PDO::FETCH_NUM);
-				if($row = $sth->fetch()) {
-					$instance->fill($row);
-					$instance->loadComments();
-					return $instance;
 				}
 			} catch(PDOException $e) {
 				echo $e->getMessage(); // TODO log this error instead of echo

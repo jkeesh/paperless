@@ -48,7 +48,7 @@ class CodeHandler extends ToroHandler {
 				if(is_null($assn)){
 					$assn = AssignmentFile::loadFile($course->quarter->id, $class, $student, $assignment, $file);
 					// Now we try to load and see if an old file was there.
-
+				
 					if(is_null($assn)){
 						//It wasn't so create a new one.
 						$assn = AssignmentFile::createFile($class, $assignment, $student_suid, $file, $submission_number);
@@ -73,7 +73,7 @@ class CodeHandler extends ToroHandler {
 			}
 		}
 
-		print_r($assignment_files);
+		//print_r($assignment_files);
 
 		return array($files, $file_contents, $assignment_files, $release);
 	}
@@ -85,7 +85,6 @@ class CodeHandler extends ToroHandler {
 		if($print){
 			$this->smarty->assign("print_view", $print);
 		}
-		
 		$this->smarty->assign("code_file", $student);
 
 		$suid = explode("_", $student); // if it was student_1 just take student
@@ -100,7 +99,6 @@ class CodeHandler extends ToroHandler {
 		$the_sl = $the_student->get_section_leader();
 		$this->smarty->assign("the_student", $the_student);
 		$this->smarty->assign("the_sl", $the_sl);
-
 
 		// if the username is something other than the owner of these files, require
 		// it to be a SL

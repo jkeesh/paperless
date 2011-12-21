@@ -18,7 +18,6 @@
 			echo $dirname;
 			// $dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR;			
 			$sls = $this->getDirEntries($dirname);
-			print_r($sls);
 			if($sls){
 				sort($sls);
 			}
