@@ -5,11 +5,11 @@ class Student extends User {
 	
 	private $course;
 
-	public function __construct($sunetid, $course) {
-		parent::__construct($sunetid);
-		
-		$this->course = $course;
-	}
+	// public function __construct($sunetid, $course) {
+	// 	parent::__construct($sunetid);
+	// 	
+	// 	$this->course = $course;
+	// }
 	
 	public function set_course($course){
 		$this->course = $course;
@@ -19,8 +19,15 @@ class Student extends User {
 		return ROOT_URL . $this->course->quarter->id . '/' . $this->course->name . '/student/' . $this->sunetid;
 	}
 	
+	public static function from_sunetid_and_course($sunetid, $course){
+		$instance = new self();
+		$instance->load_by_sunetid($sunetid);
+		$instance->course = $course;
+	}
+	
 	public static function from_row($row){
-		$instance = new self($row['SUNetID'], null);
+		$instance = new self();
+		$instance->sunetid = $row['SUNetID'];
 		$instance->first_name = $row['FirstName'];
 		$instance->last_name = $row['LastName'];
 		$instance->display_name = $row['DisplayName'];
@@ -40,7 +47,6 @@ class Student extends User {
 			$sth->execute(array(":uid" => $this->id, ":class" => $this->course->id, ":quarter" => $this->course->quarter->id));
 			if($row = $sth->fetch()) {
 				return SectionLeader::from_id_and_course($row['SectionLeader'], $this->course);
-//				return Model::getSUID($row['SectionLeader']);
 			}else{
 //				return "unknown";
 			}
