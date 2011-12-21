@@ -74,7 +74,7 @@ class Course extends Model {
 	 */
 	public function get_base_directory(){
 		$people_soft_code = $this->quarter->get_people_soft_code();
-		return SUBMISSIONS_PREFIX .'/'. $this->name . '.'. $people_soft_code .'/submissions';
+		return SUBMISSIONS_PREFIX .'/'. $this->name .'/' . $this->name . '.'. $people_soft_code .'/submissions';
 	}
 }
 ?>
