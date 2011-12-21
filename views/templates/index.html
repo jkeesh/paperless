@@ -31,7 +31,7 @@ $(document).ready(function(){
 		<div>Nothing Submitted Yet!</div>
 		{/if}
         {foreach from=$assignments item=assignment}
-        <div class="link"><a href="{$root_url}{$class}/assignment/{$sl}/{$assignment}">{$assignment}</a></div>
+        <div class="link"><a href="{$course->get_link()}/assignment/{$sl}/{$assignment}">{$assignment}</a></div>
         {/foreach}
 </div>
 
