@@ -57,10 +57,7 @@
 			$this->smarty->assign("FACEBOOK_APP_ID", FACEBOOK_APP_ID);
 			
 			$userClasses = Model::getClass(USERNAME);
-						
-			// if(count($userClasses) > 1){
-			// 	$this->smarty->assign("multiple_classes", 1);				
-			// }
+					
 			$this->smarty->assign("version", "1.2.0.2");	// May 21, 2011, 3:50pm
 		}
 		
