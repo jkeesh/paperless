@@ -17,12 +17,12 @@ require_once('models/SectionLeader.php');
 		}
 		
 		public function get($qid, $class, $sectionleader) {
+			
+			
 			$course = Course::from_name_and_quarter_id($class, $qid);
 			$this->smarty->assign("course", $course);
-			
-			$user = new User;
-			$user->from_sunetid(USERNAME);
-			$role = Permissions::require_role(POSITION_SECTION_LEADER, $user, $course);
+
+			$role = Permissions::require_role(POSITION_SECTION_LEADER, $this->user, $course);
 				
 			// 
 			// $status = Model::getRoleForClass($sectionleader, $class); 
