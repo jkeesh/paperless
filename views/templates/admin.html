@@ -16,7 +16,7 @@
 		<tr>
 			<td valign="top">
 				{foreach from=$sls item=sl}
-				<div class="link"><a href="{$root_url}{$class}/sectionleader/{$sl}">{$sl}</a></div>
+				<div class="link"><a href="{$course->get_link()}/sectionleader/{$sl}">{$sl}</a></div>
 				{if $x is div by 10}
 			</td><td valign="top">
 				{/if}
