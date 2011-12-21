@@ -96,8 +96,8 @@ class CodeHandler extends ToroHandler {
 		
 		$the_student = new Student;
 		$the_student->from_sunetid_and_course($suid, $course);
+		
 		$the_sl = $the_student->get_section_leader();
-
 		$this->smarty->assign("the_student", $the_student);
 		$this->smarty->assign("the_sl", $the_sl);
 
