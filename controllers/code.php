@@ -173,8 +173,6 @@ class CodeHandler extends ToroHandler {
 		}
 		
 		$course = Course::from_name_and_quarter_id($class, $qid);
-		$user = new User;
-		$user->from_sunetid(USERNAME);
 		Permissions::require_role(POSITION_SECTION_LEADER, $this->user, $course);
 
 		$parts = explode("_", $student); // if it was student_1 just take student
