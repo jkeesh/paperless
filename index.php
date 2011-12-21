@@ -99,7 +99,6 @@
 	/*
 	 * Controllers
 	 */
-	require_once('controllers/main.php');       // builds index page (lists assignments and students)
 	require_once('controllers/student.php');    // lists the students for a given assignment
 	require_once('controllers/code.php');       // shows the code view
 	require_once('controllers/assignment.php'); // lists the assignments for a given student
