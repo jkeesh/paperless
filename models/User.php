@@ -3,7 +3,19 @@ require_once(dirname(dirname(__FILE__)) . "/config.php");
 require_once(dirname(dirname(__FILE__)) . "/models/Model.php");
 require_once(dirname(dirname(__FILE__)) . "/models/Relationship.php");
 
-
+/*
+ * A user represents a person on the site. A user has a sunetid, first and last name,
+ * a full display name, and an ID in the database.
+ * 
+ * We only provide factory methods to construct a user in different ways; from their 
+ * database id, or from their SUNetID.
+ * 
+ * We can ask a user for their role in a certain course, or all of their historical 
+ * relationships. User does not provide any more specific methods when we know their
+ * role, as those are delegated to the SectionLeader, Student, etc. subclasses.
+ *
+ * @author	Jeremy Keeshin	December 20, 2011
+ */
 class User extends Model {
 
 	public $sunetid;
@@ -53,25 +65,6 @@ class User extends Model {
 		}
 		return $instance;
 	}
-
-	// public function __construct($sunetid) {
-	// 	parent::__construct();
-	// 	$this->sunetid = $sunetid;
-	// 	
-	// 	$query = "SELECT ID, FirstName, LastName, DisplayName FROM People WHERE SUNetID = :sunetid";
-	// 	try {
-	// 		$sth = $this->conn->prepare($query);
-	// 		$sth->execute(array(":sunetid" => $sunetid));
-	// 		if($rows = $sth->fetch()) {
-	// 			$this->first_name = $rows['FirstName'];
-	// 			$this->last_name = $rows['LastName'];
-	// 			$this->display_name = $rows['DisplayName'];
-	// 			$this->id = $rows['ID'];
-	// 		}
-	// 	} catch(PDOException $e) {
-	// 		echo $e->getMessage(); // TODO log this error instead of echoing
-	// 	}
-	// }
 	
 	/*
 	 * Return all of the classes that this user has belonged to.
