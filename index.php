@@ -18,6 +18,9 @@
 		protected $smarty;
 		
 		public function __construct() {
+			$this->user = new User;
+			$this->user->from_sunetid(USERNAME);
+			
 			$is_sl = Model::isSectionLeader(USERNAME);
 			$is_student = Model::isStudent(USERNAME);
 			$is_student_only = $is_student && !$is_sl;
