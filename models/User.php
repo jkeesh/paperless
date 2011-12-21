@@ -32,7 +32,7 @@ class User extends Model {
 		$query = "SELECT FirstName, LastName, DisplayName, SUNetID FROM People WHERE ID = :id";
 		try {
 			$sth = $db->prepare($query);
-			$sth->execute(array(":sunetid" => $sunetid));
+			$sth->execute(array(":id" => $id));
 			if($rows = $sth->fetch()) {
 				$instance->first_name = $rows['FirstName'];
 				$instance->last_name = $rows['LastName'];

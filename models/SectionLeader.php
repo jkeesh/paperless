@@ -32,8 +32,7 @@ class SectionLeader extends User {
 	}
 	
 	public static function from_id_and_course($id, $course){
-		$instance = new self();
-		$instance->load_by_id($id);
+		$instance = SectionLeader::from_id($id);
 		$instance->course = $course;		
 		$db = Database::getConnection();
 		$query = "SELECT ID FROM Sections WHERE SectionLeader = :uid AND Quarter = :qid AND Class = :class_id";		

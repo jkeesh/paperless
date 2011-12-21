@@ -12,10 +12,10 @@ class Student extends User {
 	public function get_link(){
 		return ROOT_URL . $this->course->quarter->id . '/' . $this->course->name . '/student/' . $this->sunetid;
 	}
-	
+
+	// Create the student by first calling the superclass factory method to setup the 
+	// user based on the sunetid, and then saving the course as well.
 	public static function from_sunetid_and_course($sunetid, $course){
-		//$instance = new self();
-		//$instance->load_by_sunetid($sunetid);
 		$instance = Student::from_sunetid($sunetid);
 		$instance->course = $course;
 		return $instance;
