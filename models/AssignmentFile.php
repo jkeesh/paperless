@@ -98,7 +98,6 @@ class AssignmentFile extends Model {
 
 				$sth->setFetchMode(PDO::FETCH_ASSOC);
 				while($row = $sth->fetch()) {
-					print_r($row);
 					$curComment = AssignmentComment::create($row['AssignmentFile'], $row['StartLine'], 
 						$row['EndLine'], $row['CommentText'], $row['Commenter'], $row['Student']);
 					$curComment->setID($row['ID']);
