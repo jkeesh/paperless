@@ -44,12 +44,12 @@ I hope you have enjoyed using paperless this quarter and that it has improved th
 
 <div id="codeheader">
 {if isset($sl_class) or isset($admin_class)}
-<span class="link"><a href="{$root_url}{$class}/assignment/{$sl}/{$assignment}">{$assignment}</a></span>
+<span class="link"><a href="{$course->get_link()}/assignment/{$the_sl->sunetid}/{$assignment}">{$assignment}</a></span>
 {else}
 {$assignment}
 {/if}
 :
-<span class="link"><a href="{$root_url}{$class}/student/{$student}">{$the_student->display_name}</a></span>
+<span class="link"><a href="{$the_student->get_link()}">{$the_student->display_name}</a></span>
 
 <span class="small-header">Section Leader: {$sl}</span>
 

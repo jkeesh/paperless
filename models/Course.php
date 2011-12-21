@@ -9,25 +9,6 @@ class Course extends Model {
 	public $name;
 	public $quarter;
 	
-	public function __construct() {
-		// parent::__construct();
-		// 
-		// $this->name = strtolower($class);
-		// $this->quarter = new Quarter($qid);
-		// 
-		// $query = "SELECT ID FROM Courses WHERE NAME = :class;";
-		// 	  	try {
-		// 	$sth = $this->conn->prepare($query);
-		// 	$sth->execute(array(":class" => $this->name));
-		// 	$sth->setFetchMode(PDO::FETCH_ASSOC);
-		// 	if($row = $sth->fetch()) {
-		// 	  $this->id = $row['ID'];
-		// 	}
-		// } catch(PDOException $e) {
-		// 	echo $e->getMessage(); // TODO log this error instead of echoing
-		// }
-	}
-	
 	public static function from_name_and_quarter_id($name, $qid){
 		$db = Database::getConnection();	
 		$instance = new self();

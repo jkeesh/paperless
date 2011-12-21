@@ -37,7 +37,6 @@ class CodeHandler extends ToroHandler {
 		
 		$last_dir = $the_sl->get_base_directory() . "/". $assignment . "/" . $student_suid;
 		$last_submission = getLastSubmissionNumber($last_dir);
-		echo $last_submission;
 		
 		$release = False;
 		while($file = readdir($dir)) {
@@ -98,6 +97,8 @@ class CodeHandler extends ToroHandler {
 		$the_sl = $the_student->get_section_leader();
 
 		$this->smarty->assign("the_student", $the_student);
+		$this->smarty->assign("the_sl", $the_sl);
+
 
 		// if the username is something other than the owner of these files, require
 		// it to be a SL
