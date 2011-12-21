@@ -20,7 +20,6 @@
 		public function get() {
 			$user = User::from_sunetid(USERNAME);
 			$relationships = $user->get_all_relationships();
-			print_r($relationships);
 			$this->smarty->assign("relationships", $relationships);	
 			$this->smarty->display("router.html");			
 		}		
