@@ -73,6 +73,8 @@ class CodeHandler extends ToroHandler {
 			}
 		}
 
+		print_r($assignment_files);
+
 		return array($files, $file_contents, $assignment_files, $release);
 	}
 
