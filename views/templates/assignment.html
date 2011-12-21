@@ -50,7 +50,7 @@ function release(obj){
 	<input title="Click to release comments" type="checkbox" student="{$student.dirname}" 
 			name="release" value="" {if $student.release}checked{/if} />
     <a {if $student.release}class='bold'{/if} 
-		href="{$root_url}{$class}/code/{$assignment}/{$student.dirname}" 
+		href="{$course->get_link()}/code/{$assignment}/{$student.dirname}" 
 		id="{$student.dirname}">{$assignment} by {$student.dirname}</a>
 </div>
 {/foreach}
