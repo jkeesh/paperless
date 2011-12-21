@@ -18,6 +18,8 @@
 		protected $smarty;
 		
 		public function __construct() {
+			// We creat a user that can be accessed by all of the controllers. This contains
+			// The basic information, like, name, sunetid, etc.
 			$this->user = new User;
 			$this->user->from_sunetid(USERNAME);
 			
@@ -56,9 +58,9 @@
 			
 			$userClasses = Model::getClass(USERNAME);
 						
-			if(count($userClasses) > 1){
-				$this->smarty->assign("multiple_classes", 1);				
-			}
+			// if(count($userClasses) > 1){
+			// 	$this->smarty->assign("multiple_classes", 1);				
+			// }
 			$this->smarty->assign("version", "1.2.0.2");	// May 21, 2011, 3:50pm
 		}
 		
