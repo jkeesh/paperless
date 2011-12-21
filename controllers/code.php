@@ -108,7 +108,6 @@ class CodeHandler extends ToroHandler {
 		// Otherwise require this student to be in the class
 			$role = Permissions::require_role(POSITION_STUDENT, $user, $course);
 		}
-		echo "ROLE: ". $role . " ENDROLE";
 
 		$sl = Model::getSectionLeaderForStudent($suid, $class);
 
