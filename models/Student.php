@@ -23,6 +23,7 @@ class Student extends User {
 		$instance = new self();
 		$instance->load_by_sunetid($sunetid);
 		$instance->course = $course;
+		return $instance;
 	}
 	
 	public static function from_row($row){

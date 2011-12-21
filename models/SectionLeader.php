@@ -36,10 +36,7 @@ class SectionLeader extends User {
 	public static function from_id_and_course($id, $course){
 		$instance = new self();
 		$instance->load_by_id($id);
-		
-//		echo $id;
-		//$this->course = $course;
-		
+		$instance->course = $course;		
 		$db = Database::getConnection();
 		$query = "SELECT ID FROM Sections WHERE SectionLeader = :uid AND Quarter = :qid AND Class = :class_id";		
 		try {
@@ -49,14 +46,12 @@ class SectionLeader extends User {
 								":class_id" => $course->id));
 			if($row = $sth->fetch()) {
 				print_r($row);
-//				$instance = new self($sunetid);
-				
-				
-//				$this->section_id = $row['ID'];
+				$instance->section_id = $row['ID'];
 			}
 		} catch(PDOException $e) {
 			echo $e->getMessage(); // TODO log this error instead of echoing
 		}
+		return $instance;
 	}
 	
 	public function get_students(){

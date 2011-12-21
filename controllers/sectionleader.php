@@ -37,8 +37,7 @@ require_once('models/SectionLeader.php');
 				$this->smarty->assign("admin_class", $class);
 			}
 			
-			$the_SL = SectionLeader::from_sunetid_and_course($sectionleader, $course);
-						
+			$the_SL = SectionLeader::from_sunetid_and_course($sectionleader, $course);						
 			$course_base = $course->get_base_directory();
 			echo $course_base;
 			$sls = $this->sortAll($this->getDirEntries($course_base));

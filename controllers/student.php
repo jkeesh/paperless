@@ -31,101 +31,107 @@
 			$student = $string[0];
 			$user = User::from_sunetid(USERNAME);
 			
-			print_r($user);
+		//	print_r($user);
 			
+			$course = Course::from_name_and_quarter_id($class, $qid);
+			// print_r($course);
+			$the_student = Student::from_sunetid_and_course($student, $course);
+			// print_r($the_student);
+
+			// If the user is not the current student, require that they be a section
+			// leader for this class to be able to view the code
+			if($student != USERNAME) {
+				$role = Permissions::require_role(POSITION_SECTION_LEADER, $user, $course);
+			}else{
+			// Otherwise if the usernames match, require that this student be enrolled
+			// in the current class
+				$role = Permissions::require_role(POSITION_STUDENT, $user, $course);
+			}
+						
+			if($role == POSITION_SECTION_LEADER){
+				$this->smarty->assign("sl_class", $class);
+			}
+			if($role == POSITION_STUDENT){
+				$this->smarty->assign("student_class", $class);
+			}
+			if($role > POSITION_SECTION_LEADER){
+				$this->smarty->assign("admin_class", $class);
+			}
+					
+			$sl = $the_student->get_section_leader();
+			//print_r($sl);
 			// 
-			// $course = Course::from_name_and_quarter_id($class, $qid);
-			// $the_student = Student::from_sunetid_and_course($student, $course);
-			// //$the_student = new Student($student, $course);
+			// 
 			// 			
-			// // If the user is not the current student, require that they be a section
-			// // leader for this class to be able to view the code
-			// if($student != USERNAME) {
-			// 	$role = Permissions::require_role(POSITION_SECTION_LEADER, $user, $course);
-			// }else{
-			// // Otherwise if the usernames match, require that this student be enrolled
-			// // in the current class
-			// 	$role = Permissions::require_role(POSITION_STUDENT, $user, $course);
-			// }
-			// 			
-			// if($role == POSITION_SECTION_LEADER){
-			// 	$this->smarty->assign("sl_class", $class);
-			// }
-			// if($role == POSITION_STUDENT){
-			// 	$this->smarty->assign("student_class", $class);
-			// }
-			// if($role > POSITION_SECTION_LEADER){
-			// 	$this->smarty->assign("admin_class", $class);
-			// }
-			// 		
-			// $sl = $the_student->get_section_leader();
-			// 
-			// 
-			// 			
-			// if($sl == "unknown"){
-			// 	$this->smarty->assign("nosl", 1);
-			// }
-			// 
-			// $this->smarty->assign("sl", $sl);
-			// 
+			if($sl == "unknown"){
+				$this->smarty->assign("nosl", 1);
+			}
+			
+			$this->smarty->assign("sl", $sl);
+			
+			$dirname = $sl->get_base_directory();	
 			// $dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl . "/";
 			// 
-			// //echo $dirname;
-			// $assns = $this->getDirEntries($dirname);
-			// 
-			// //information will be an associative array where index i holds
-			// //the assignment and student directory information as keys
-			// $information = array();
-			// 
-			// $i = 0;
-			// //for every assignment, go find ones that belong to the student
-			// //we will save the submission with the highest number.
-			// 
-			// if($assns){
-			// 	foreach($assns as $assn) {
-			// 		$dir = $dirname . $assn ."/";
-			// 		$student_submissions = $this->getDirEntries($dir);
-			// 
-			// 		if(!empty($student_submissions)){
-			// 			$information[$i]['assignment'] = $assn;
-			// 			$information[$i]['all'] = array();
-			// 			foreach($student_submissions as $submission) {
-			// 				if(strpos($submission, $student) !== false) {
-			// 					array_push($information[$i]['all'],$submission);
-			// 				}
-			// 			}
-			// 		
-			// 			$all = $information[$i]['all'];
-			// 			$all = $this->sortArr($all);
-			// 						
-			// 			$information[$i]['all'] = $all;
-			// 			if(count($all) > 0)
-			// 				$information[$i]['studentdir'] = $all[count($all)-1];
-			// 		
-			// 			if(count($all) == 0){
-			// 				//they have no submissions for this assignment so remove that
-			// 				array_splice($information, $i);
-			// 				$i--;
-			// 			}
-			// 		
-			// 			$i++;
-			// 		}
-			// 	}
-			// }else{
-			// 	$this->smarty->assign("nofiles", 1);
-			// }
-			// if(count($information) == 0){
-			// 	$this->smarty->assign("nofiles", 1);
-			// }			
-			// //print_r($information);
-			// 
-			// // assign template vars
-			// $this->smarty->assign("information", $information);
-			// $this->smarty->assign("class", htmlentities($class));
-			// $this->smarty->assign("student", Model::getDisplayName($student));
-			// 
-			// // display the template
-			// $this->smarty->display("student.html");
+			//echo $dirname;
+			$assns = $this->getDirEntries($dirname);
+			
+			//print_r($assns);
+			
+			//information will be an associative array where index i holds
+			//the assignment and student directory information as keys
+			$information = array();
+			
+			$i = 0;
+			//for every assignment, go find ones that belong to the student
+			//we will save the submission with the highest number.
+			
+			if($assns){
+				foreach($assns as $assn) {
+					$dir = $dirname . '/'. $assn ."/";
+					echo $dir;
+					$student_submissions = $this->getDirEntries($dir);
+					print_r($student_submissions);
+			
+					if(!empty($student_submissions)){
+						$information[$i]['assignment'] = $assn;
+						$information[$i]['all'] = array();
+						foreach($student_submissions as $submission) {
+							if(strpos($submission, $student) !== false) {
+								array_push($information[$i]['all'],$submission);
+							}
+						}
+					
+						$all = $information[$i]['all'];
+						$all = $this->sortArr($all);
+									
+						$information[$i]['all'] = $all;
+						if(count($all) > 0)
+							$information[$i]['studentdir'] = $all[count($all)-1];
+					
+						if(count($all) == 0){
+							//they have no submissions for this assignment so remove that
+							array_splice($information, $i);
+							$i--;
+						}
+					
+						$i++;
+					}
+				}
+			}else{
+				$this->smarty->assign("nofiles", 1);
+			}
+			if(count($information) == 0){
+				$this->smarty->assign("nofiles", 1);
+			}			
+			//print_r($information);
+			
+			// assign template vars
+			$this->smarty->assign("information", $information);
+			$this->smarty->assign("class", htmlentities($class));
+			$this->smarty->assign("student", Model::getDisplayName($student));
+			
+			// display the template
+			$this->smarty->display("student.html");
 		}
 	}
 	?>
