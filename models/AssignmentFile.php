@@ -1,6 +1,7 @@
 <?php
 require_once(dirname(dirname(__FILE__)) . "/config.php");
 require_once(dirname(dirname(__FILE__)) . "/models/Model.php");
+require_once(dirname(dirname(__FILE__)) . "/models/Quarter.php");
 
 class AssignmentFile extends Model {
 
@@ -69,8 +70,8 @@ class AssignmentFile extends Model {
 	}
 
 	public static function createFile($class, $assignment, $student, $file, $submission_number){
-
-		$PA_id = PaperlessAssignment::getID($class, $assignment);
+		$qid = Quarter::current()->id;
+		$PA_id = PaperlessAssignment::getID($qid, $class, $assignment);
 		$student_id = Model::getUserID($student);
 
 		$instance = new self();
@@ -109,7 +110,7 @@ class AssignmentFile extends Model {
 
 
 		//	$assignmentFile = AssignmentFile::loadFile($class, $student, $assignment, $file);
-		public static function loadFile($class, $student, $dir, $file, $number = 0){
+		public static function loadFile($qid, $class, $student, $dir, $file, $number = 0){
 
 			// echo $class;
 			// echo $student;
@@ -117,7 +118,7 @@ class AssignmentFile extends Model {
 			// echo $file;
 			// echo "<br/>submission no " . $number;
 
-			$paperless_assignment_id = PaperlessAssignment::getID($class, $dir);	
+			$paperless_assignment_id = PaperlessAssignment::getID($qid, $class, $dir);	
 			
 			
 				

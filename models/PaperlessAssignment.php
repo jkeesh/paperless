@@ -102,17 +102,16 @@ class PaperlessAssignment extends Model {
 	}
 	
 	
-	//PaperlessAssignment::getID($class, $student);
-	public static function getID($class, $dir){
+	//PaperlessAssignment::getID($qid, $class, $student);
+	public static function getID($qid, $class, $dir){
 		$instance = new self();	
-		$query = "SELECT ID FROM PaperlessAssignments WHERE Class=:Class AND Quarter=:Quarter AND DirectoryName LIKE :Dir";		
-		$quarter_id = Model::getQuarterID();
+		$query = "SELECT ID FROM PaperlessAssignments WHERE Class=:Class AND Quarter=:qid AND DirectoryName LIKE :Dir";		
 		$class_id = Model::getClassID($class);
 		
 		try {
 			$sth = $instance->conn->prepare($query);
 			$sth->setFetchMode(PDO::FETCH_ASSOC);
-			$sth->execute(array(":Class" => $class_id, ":Quarter" => $quarter_id, ":Dir" => $dir));
+			$sth->execute(array(":Class" => $class_id,":Dir" => $dir, ":qid" => $qid));
 			if($row = $sth->fetch()) {
 				return $row['ID'];
 			}

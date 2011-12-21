@@ -43,10 +43,10 @@ class CodeHandler extends ToroHandler {
 			if($file == "release"){
 				$release = True;
 			}else if(isCodeFileForClass($file, $class) && valid_size($dirname, $file)) {
-				$assn = AssignmentFile::loadFile($class, $student, $assignment, $file, $submission_number);
+				$assn = AssignmentFile::loadFile($course->quarter->id, $class, $student, $assignment, $file, $submission_number);
 				// If we could load it by submission number, we are done
 				if(is_null($assn)){
-					$assn = AssignmentFile::loadFile($class, $student, $assignment, $file);
+					$assn = AssignmentFile::loadFile($course->quarter->id, $class, $student, $assignment, $file);
 					// Now we try to load and see if an old file was there.
 
 					if(is_null($assn)){
@@ -202,7 +202,7 @@ class CodeHandler extends ToroHandler {
 			return;
 		}
 				
-		$curFile = AssignmentFile::loadFile($class, $suid, $assignment, $_POST['filename'], $submission_number);
+		$curFile = AssignmentFile::loadFile($qid, $class, $suid, $assignment, $_POST['filename'], $submission_number);
 				
 		$id = $curFile->getID();
 		if(!isset($id)){ //			echo "no valid assnment found";
