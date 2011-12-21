@@ -18,9 +18,11 @@ class CodeHandler extends ToroHandler {
 		* TODO: Handle error when a pathname is not found
 		*/
 
-	private function getAssignmentFiles($class, $student, $assignment, $sl) {
-
-		$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl . "/". $assignment . "/" . $student . "/"; 
+	// $the_student		the Student object
+	// $the_sl			the SectionLeader object
+	// $course			the Course object
+	private function getAssignmentFiles($class, $student, $assignment, $sl, $the_student, $the_sl, $course) {
+		$dirname = $the_sl->get_base_directory() . "/". $assignment . "/" . $student . "/"; 
 
 		if(!is_dir($dirname)) return null; // TODO handle error
 
@@ -33,9 +35,9 @@ class CodeHandler extends ToroHandler {
 		$student_suid = $string[0];
 		$submission_number = $string[1];
 		
-		$last_dir = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl . "/". $assignment . "/" . $student_suid; 
-
+		$last_dir = $the_sl->get_base_directory() . "/". $assignment . "/" . $student_suid;
 		$last_submission = getLastSubmissionNumber($last_dir);
+		echo $last_submission;
 		
 		$release = False;
 		while($file = readdir($dir)) {
@@ -87,22 +89,29 @@ class CodeHandler extends ToroHandler {
 
 		$suid = explode("_", $student); // if it was student_1 just take student
 		$suid = $suid[0];
+		
+		$course = Course::from_name_and_quarter_id($class, $qid);
+		$this->smarty->assign("course", $course);
+		$user = User::from_sunetid(USERNAME);
+		
+		$the_student = Student::from_sunetid_and_course($suid, $course);
+		$the_sl = $the_student->get_section_leader();
 
-		$studentDisplayName = Model::getDisplayName($suid);
-		$this->smarty->assign("student_display", $studentDisplayName);
+		$this->smarty->assign("the_student", $the_student);
 
 		// if the username is something other than the owner of these files, require
 		// it to be a SL
 		if($suid != USERNAME) {
-			$role = Permissions::requireRole(POSITION_SECTION_LEADER, $class);
+			$role = Permissions::require_role(POSITION_SECTION_LEADER, $user, $course);
 		}else{
 		// Otherwise require this student to be in the class
-			$role = Permissions::requireRole(POSITION_STUDENT, $class);
+			$role = Permissions::require_role(POSITION_STUDENT, $user, $course);
 		}
+		echo "ROLE: ". $role . " ENDROLE";
 
 		$sl = Model::getSectionLeaderForStudent($suid, $class);
 
-		list($files, $file_contents, $assignment_files, $release) = $this->getAssignmentFiles($class, $student, $assignment, $sl);
+		list($files, $file_contents, $assignment_files, $release) = $this->getAssignmentFiles($class, $student, $assignment, $sl, $the_student, $the_sl, $course);
 
 		if(count($files) == 0){
 			$this->smarty->assign("message", "Nothing here yet.");
@@ -153,12 +162,18 @@ class CodeHandler extends ToroHandler {
 		*       to confirm the request succeeded
 		*/
 	public function post_xhr($class, $assignment, $student) {
-		// only section leaders should be able to add comments		
-		Permissions::requireRole(POSITION_SECTION_LEADER, $class);
+		// only section leaders should be able to add comments
+		$course = Course::from_name_and_quarter_id($class, $qid);
+		$user = User::from_sunetid(USERNAME);
+		Permissions::require_role(POSITION_SECTION_LEADER, $user, $course);
 
 		$parts = explode("_", $student); // if it was student_1 just take student
 		$suid = $parts[0];
 		$submission_number = $parts[1];
+		
+		$the_student = Student::from_sunetid_and_course($suid, $course);
+		$the_sl = $the_student->get_section_leader();
+		
 		$sl = Model::getSectionLeaderForStudent($suid, $class);
 
 		$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl . "/". $assignment . "/" . $student . "/"; 

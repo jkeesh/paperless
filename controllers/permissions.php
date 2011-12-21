@@ -26,6 +26,7 @@ class Permissions {
 		if($cur_role < $role){
 			Header("Location: " . ROOT_URL);	
 		}
+		return $cur_role;
 		// 
 		// // Special case for cs198 coordinator access to cs106.
 		// if($class == "cs106a" || $class == "cs106b" || $class == "cs106x"){
