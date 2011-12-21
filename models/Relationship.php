@@ -41,12 +41,6 @@ class Relationship extends Model {
 		return ROOT_URL . $qid . '/' . $course_name . '/' . $role_component . '/' . USERNAME;
 	}
 	
-	public function __construct() {
-		//parent::__construct();
-		//$this->role = $position;
-		//$
-	}
-	
 	public static function from_row($row){
 		$instance = new self();
 		$instance->role = $row['Position'];
