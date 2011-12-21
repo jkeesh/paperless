@@ -34,13 +34,16 @@
 			//echo json_encode("success"); //This is not needed. But remember to echo a result in JSON format.
 		}
 		
-		public function get($class, $sectionleader, $assignment) {
-			$status = Model::getRoleForClass($sectionleader, $class); //sanity check: make sure they are visiting an sl for this class
-			if($status < POSITION_SECTION_LEADER){
-				Header("Location: " . ROOT_URL);
-			}
+		public function get($qid, $class, $sectionleader, $assignment) {
+			// $status = Model::getRoleForClass($sectionleader, $class); //sanity check: make sure they are visiting an sl for this class
+			// if($status < POSITION_SECTION_LEADER){
+			// 	Header("Location: " . ROOT_URL);
+			// }
 
-			$role = Permissions::requireRole(POSITION_SECTION_LEADER, $class);
+			$course = Course::from_name_and_quarter_id($class, $qid);
+			$this->smarty->assign("course", $course);
+			$user = User::from_sunetid(USERNAME);
+			$role = Permissions::require_role(POSITION_SECTION_LEADER, $user, $course);
 						
 			if($role == POSITION_SECTION_LEADER){
 				$this->smarty->assign("sl_class", $class);
@@ -48,10 +51,12 @@
 			if($role > POSITION_SECTION_LEADER){
 				$this->smarty->assign("admin_class", $class);
 			}
-						
-			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sectionleader . "/" . $assignment;
-			$students = $this->getDirEntries($dirname);
 			
+			$sl = SectionLeader::from_sunetid_and_course($sectionleader, $course);
+			$dirname = $sl->get_base_directory() .'/' . $assignment;
+			echo $dirname;
+						
+			$students = $this->getDirEntries($dirname);
 
 			$info = array();
 			
