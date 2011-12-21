@@ -26,11 +26,8 @@
 		}
 		
 		public function get($qid, $class, $student) {
-			
 			$string = explode("_", $student); // if it was student_1 just take student
 			$student = $string[0];
-			$user = new User;
-			$user->from_sunetid(USERNAME);
 			$course = Course::from_name_and_quarter_id($class, $qid);
 			$this->smarty->assign("course", $course);
 			
@@ -41,11 +38,11 @@
 			// If the user is not the current student, require that they be a section
 			// leader for this class to be able to view the code
 			if($student != USERNAME) {
-				$role = Permissions::require_role(POSITION_SECTION_LEADER, $user, $course);
+				$role = Permissions::require_role(POSITION_SECTION_LEADER, $this->user, $course);
 			}else{
 			// Otherwise if the usernames match, require that this student be enrolled
 			// in the current class
-				$role = Permissions::require_role(POSITION_STUDENT, $user, $course);
+				$role = Permissions::require_role(POSITION_STUDENT, $this->user, $course);
 			}
 						
 			if($role == POSITION_SECTION_LEADER){
