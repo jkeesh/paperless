@@ -20,7 +20,7 @@ require_once('models/SectionLeader.php');
 			$course = Course::from_name_and_quarter_id($class, $qid);
 			$this->smarty->assign("course", $course);
 			
-			$user = new User(USERNAME);
+			$user = User::from_sunetid(USERNAME);
 			$role = Permissions::require_role(POSITION_SECTION_LEADER, $user, $course);
 				
 			// 
@@ -38,8 +38,7 @@ require_once('models/SectionLeader.php');
 			}
 			
 			$the_SL = SectionLeader::from_sunetid_and_course($sectionleader, $course);
-
-			
+						
 			$course_base = $course->get_base_directory();
 			echo $course_base;
 			$sls = $this->sortAll($this->getDirEntries($course_base));

@@ -66,6 +66,44 @@ class User extends Model {
 		return $instance;
 	}
 	
+	/// The instance already exists.
+	public function load_by_sunetid($sunetid){
+		$this->sunetid = $sunetid;
+		$db = Database::getConnection();		
+		$query = "SELECT ID, FirstName, LastName, DisplayName FROM People WHERE SUNetID = :sunetid";
+		try {
+			$sth = $db->prepare($query);
+			$sth->execute(array(":sunetid" => $sunetid));
+			if($rows = $sth->fetch()) {
+				$this->first_name = $rows['FirstName'];
+				$this->last_name = $rows['LastName'];
+				$this->display_name = $rows['DisplayName'];
+				$this->id = $rows['ID'];
+			}
+		} catch(PDOException $e) {
+			echo $e->getMessage(); // TODO log this error instead of echoing
+		}
+	}
+	
+	// Instance already exists.
+	public function load_by_id($id){
+		$this->id = $id;
+		$db = Database::getConnection();		
+		$query = "SELECT FirstName, LastName, DisplayName, SUNetID FROM People WHERE ID = :id";
+		try {
+			$sth = $db->prepare($query);
+			$sth->execute(array(":sunetid" => $sunetid));
+			if($rows = $sth->fetch()) {
+				$this->first_name = $rows['FirstName'];
+				$this->last_name = $rows['LastName'];
+				$this->display_name = $rows['DisplayName'];
+				$this->sunetid = $rows['SUNetID'];
+			}
+		} catch(PDOException $e) {
+			echo $e->getMessage(); // TODO log this error instead of echoing
+		}
+	}
+	
 	/*
 	 * Return all of the classes that this user has belonged to.
 	 * For example, they may have been a student in cs106a in quarter 90,

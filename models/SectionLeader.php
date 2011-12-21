@@ -7,32 +7,14 @@ class SectionLeader extends User {
 	private $course;
 	private $section_id;
 
-	// public function __construct($sunetid, $course) {
-	// 	parent::__construct($sunetid);
-	// 	
-	// 	$this->course = $course;
-	// 	
-	// 	$db = Database::getConnection();
-	// 	$query = "SELECT ID FROM Sections WHERE SectionLeader = :uid AND Quarter = :qid AND Class = :class_id";		
-	// 	try {
-	// 		$sth = $db->prepare($query);
-	// 		$sth->execute(array(":uid" => $this->id, 
-	// 							":qid" => $this->course->quarter->id, 
-	// 							":class_id" => $this->course->id));
-	// 		if($row = $sth->fetch()) {
-	// 			$this->section_id = $row['ID'];
-	// 		}
-	// 	} catch(PDOException $e) {
-	// 		echo $e->getMessage(); // TODO log this error instead of echoing
-	// 	}
-	// }
-	
 	/*
 	 * Static factory constructor to make a SectionLeader from a sunetid
 	 * and Course object.
 	 */
 	public static function from_sunetid_and_course($sunetid, $course){
-		$instance = new self($sunetid);
+		$instance = new self();
+		$instance->load_by_sunetid($sunetid);
+		
 		$instance->course = $course;
 		
 		$db = Database::getConnection();
@@ -43,7 +25,7 @@ class SectionLeader extends User {
 								":qid" => $instance->course->quarter->id, 
 								":class_id" => $instance->course->id));
 			if($row = $sth->fetch()) {
-				$instance->section_id = $row['ID'];
+				$instance->section_id = $row['ID'];				
 			}
 		} catch(PDOException $e) {
 			echo $e->getMessage(); // TODO log this error instead of echoing
@@ -52,7 +34,10 @@ class SectionLeader extends User {
 	}
 	
 	public static function from_id_and_course($id, $course){
-		echo $id;
+		$instance = new self();
+		$instance->load_by_id($id);
+		
+//		echo $id;
 		//$this->course = $course;
 		
 		$db = Database::getConnection();
