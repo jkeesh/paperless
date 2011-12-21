@@ -12,9 +12,7 @@ class SectionLeader extends User {
 	 * and Course object.
 	 */
 	public static function from_sunetid_and_course($sunetid, $course){
-		$instance = new self();
-		$instance->load_by_sunetid($sunetid);
-		
+		$instance = SectionLeader::from_sunetid($sunetid);
 		$instance->course = $course;
 		
 		$db = Database::getConnection();

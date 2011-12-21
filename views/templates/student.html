@@ -12,11 +12,11 @@
         {foreach from=$information item=assignment}
         <div class="link">
 			<div class="studentAssignment">
-				<a title="View Most Recent Submission" href="{$root_url}{$class}/code/{$assignment.assignment}/{$assignment.studentdir}">{$assignment.assignment}</a>
+				<a title="View Most Recent Submission" href="{$course->get_link()}/code/{$assignment.assignment}/{$assignment.studentdir}">{$assignment.assignment}</a>
 			</div>
 			
 			{foreach from=$assignment.all item=assn key=i}
-			<div class="studentAdditional"><a href="{$root_url}{$class}/code/{$assignment.assignment}/{$assn}">submission {$i + 1}</a></div>
+			<div class="studentAdditional"><a href="{$course->get_link()}/code/{$assignment.assignment}/{$assn}">submission {$i + 1}</a></div>
 			{/foreach}
 			
 		</div>

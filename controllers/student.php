@@ -30,13 +30,11 @@
 			$string = explode("_", $student); // if it was student_1 just take student
 			$student = $string[0];
 			$user = User::from_sunetid(USERNAME);
-			
-		//	print_r($user);
-			
 			$course = Course::from_name_and_quarter_id($class, $qid);
-			// print_r($course);
+			$this->smarty->assign("course", $course);
+			
+			
 			$the_student = Student::from_sunetid_and_course($student, $course);
-			// print_r($the_student);
 
 			// If the user is not the current student, require that they be a section
 			// leader for this class to be able to view the code
@@ -59,10 +57,7 @@
 			}
 					
 			$sl = $the_student->get_section_leader();
-			//print_r($sl);
-			// 
-			// 
-			// 			
+		
 			if($sl == "unknown"){
 				$this->smarty->assign("nosl", 1);
 			}
@@ -70,12 +65,8 @@
 			$this->smarty->assign("sl", $sl);
 			
 			$dirname = $sl->get_base_directory();	
-			// $dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl . "/";
-			// 
-			//echo $dirname;
 			$assns = $this->getDirEntries($dirname);
 			
-			//print_r($assns);
 			
 			//information will be an associative array where index i holds
 			//the assignment and student directory information as keys

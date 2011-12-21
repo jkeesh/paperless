@@ -20,8 +20,9 @@ class Student extends User {
 	}
 	
 	public static function from_sunetid_and_course($sunetid, $course){
-		$instance = new self();
-		$instance->load_by_sunetid($sunetid);
+		//$instance = new self();
+		//$instance->load_by_sunetid($sunetid);
+		$instance = Student::from_sunetid($sunetid);
 		$instance->course = $course;
 		return $instance;
 	}

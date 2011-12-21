@@ -25,7 +25,7 @@ class User extends Model {
 	public $id;
 
 	public static function from_id($id){
-		$instance = new self();
+		$instance = new static();
 		$instance->id = $id;
 		$db = Database::getConnection();
 		
@@ -46,7 +46,7 @@ class User extends Model {
 	}
 
 	public static function from_sunetid($sunetid){
-		$instance = new self();
+		$instance = new static();
 		$instance->sunetid = $sunetid;
 		$db = Database::getConnection();
 		
