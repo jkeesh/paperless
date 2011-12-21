@@ -4,12 +4,6 @@ require_once(dirname(dirname(__FILE__)) . "/models/User.php");
 class Student extends User {
 	
 	private $course;
-
-	// public function __construct($sunetid, $course) {
-	// 	parent::__construct($sunetid);
-	// 	
-	// 	$this->course = $course;
-	// }
 	
 	public function set_course($course){
 		$this->course = $course;
