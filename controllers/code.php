@@ -162,8 +162,10 @@ class CodeHandler extends ToroHandler {
 		* TODO: This should output (via echo or whatever) some valid JSON that is used
 		*       to confirm the request succeeded
 		*/
-	public function post_xhr($class, $assignment, $student) {
+	public function post_xhr($qid, $class, $assignment, $student) {
 		// only section leaders should be able to add comments
+		
+		$quarter = Quarter::current();
 		$course = Course::from_name_and_quarter_id($class, $qid);
 		$user = User::from_sunetid(USERNAME);
 		Permissions::require_role(POSITION_SECTION_LEADER, $user, $course);
@@ -176,6 +178,7 @@ class CodeHandler extends ToroHandler {
 		$the_sl = $the_student->get_section_leader();
 		
 		$sl = Model::getSectionLeaderForStudent($suid, $class);
+		
 
 		$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl . "/". $assignment . "/" . $student . "/"; 
 

@@ -15,6 +15,20 @@ class Quarter extends Model {
 		return Quarter::$quarter_strings[$this->quarter - 1];
 	}
 	
+	public static function current(){
+		$db = Database::getConnection();
+		$query = "SELECT DefaultQuarter FROM State;";
+		try {
+			$sth = $db->prepare($query);
+			$sth->execute(array());
+			if($rows = $sth->fetch()) {
+				return new self($rows['DefaultQuarter']);      
+			}
+		} catch(PDOException $e) {
+			echo $e->getMessage(); // TODO log this error instead of echoing
+		}
+	}
+	
 	public function __construct($qid) {
 		parent::__construct();
 

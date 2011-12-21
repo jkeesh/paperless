@@ -79,9 +79,9 @@
 			if($assns){
 				foreach($assns as $assn) {
 					$dir = $dirname . '/'. $assn ."/";
-					echo $dir;
+					//echo $dir;
 					$student_submissions = $this->getDirEntries($dir);
-					print_r($student_submissions);
+					//print_r($student_submissions);
 			
 					if(!empty($student_submissions)){
 						$information[$i]['assignment'] = $assn;

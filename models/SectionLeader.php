@@ -42,7 +42,6 @@ class SectionLeader extends User {
 								":qid" => $course->quarter->id, 
 								":class_id" => $course->id));
 			if($row = $sth->fetch()) {
-				print_r($row);
 				$instance->section_id = $row['ID'];
 			}
 		} catch(PDOException $e) {
