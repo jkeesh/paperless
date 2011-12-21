@@ -2,8 +2,7 @@
 	//This is a configuration file for running paperless locally
 
 	//This is the only thing you should change	
-	define('USERNAME', 'jkeeshin');
-	
+	define('USERNAME', 'jkeeshin');	
 	define('BASE_DIR', dirname(__FILE__));
 	
 	define('POSITION_NOT_A_MEMBER', -1);
@@ -30,6 +29,6 @@
 	define('MYSQL_DATABASE', 'paperless');
 	define('ASSIGNMENT_COMMENT_TABLE', "AssignmentComments");
 	define('ASSIGNMENT_FILE_TABLE', 'AssignmentFiles');
-	
+
 	define('FACEBOOK_APP_ID', '120178364723061');
 ?>

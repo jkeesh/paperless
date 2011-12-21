@@ -4,7 +4,7 @@ require_once(dirname(dirname(__FILE__)) . "/models/Model.php");
 
 class Relationship extends Model {
 	
-	public static $role_strings = array("Student", "Applicant", "Course Helper", "Section Leader", "Lecturer", "Coordinator");
+	public static $role_strings = array("Student", "Applicant", "Course Helper", "Section Leader", "Teaching Assistant", "Lecturer", "Coordinator");
 	
 	public static $hidden_courses = array("CS107", "CS198");
 
