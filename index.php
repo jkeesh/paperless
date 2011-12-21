@@ -119,7 +119,6 @@
 	 * URL routes
 	 */
 	$site = new ToroApplication(Array(
-		 							  Array('/select', 'string', 'SelectHandler'),
 		 							  Array('^\/user\/([a-zA-Z0-9_ \-]+)\/?$', 'regex', 'SetUser'),
 									  Array('^\/([0-9]+)\/([a-zA-Z0-9_ \-]+)\/student\/([a-zA-Z0-9_ \-]+)\/?$', 'regex', 'StudentHandler'),
 									  Array('^\/([0-9]+)\/([a-zA-Z0-9_ \-]+)\/code\/([a-zA-Z0-9_ -]+)\/([a-zA-Z0-9_]+)(\/print)?$', 'regex', 'CodeHandler'),
