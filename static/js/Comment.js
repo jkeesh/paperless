@@ -72,8 +72,12 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter) {
 				        if(response.action == "create")
                             self.code_file.addCommentDiv(self.text, self.code_file.user, self.range, true, self.id);
 				    } else {
-					    alert("There was an error with this comment. Try refreshing the page.");
-                }        			
+				        if(response.why){
+				            alert(response.why);
+				        }else{
+				            alert("There was an error with this comment. Try refreshing the page.");
+				        }
+                    }        			
 			   },
 			   error: function(jqXHR, textStatus, errorThrown) {
 			        alert("There was an error with this comment. Try refreshing the page.");

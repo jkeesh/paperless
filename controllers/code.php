@@ -167,8 +167,13 @@ class CodeHandler extends ToroHandler {
 		*/
 	public function post_xhr($qid, $class, $assignment, $student) {
 		// only section leaders should be able to add comments
-		
 		$quarter = Quarter::current();
+
+		if($quarter->id != $qid){
+			echo json_encode(array("status" => "fail", "why" => "You cannot leave comments for earlier quarters."));
+			return;
+		}
+		
 		$course = Course::from_name_and_quarter_id($class, $qid);
 		$user = new User;
 		$user->from_sunetid(USERNAME);
@@ -202,7 +207,7 @@ class CodeHandler extends ToroHandler {
 			return;
 		}
 				
-		$curFile = AssignmentFile::loadFile($qid, $class, $suid, $assignment, $_POST['filename'], $submission_number);
+		$curFile = AssignmentFile::loadFile($quarter->id, $class, $suid, $assignment, $_POST['filename'], $submission_number);
 				
 		$id = $curFile->getID();
 		if(!isset($id)){ //			echo "no valid assnment found";

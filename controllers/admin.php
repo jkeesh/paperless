@@ -17,8 +17,10 @@
 			$role = Permissions::require_role(POSITION_TEACHING_ASSISTANT, $user, $course);
 			
 			$dirname = $course->get_base_directory();
+			echo $dirname;
 			// $dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR;			
 			$sls = $this->getDirEntries($dirname);
+			print_r($sls);
 			if($sls){
 				sort($sls);
 			}
