@@ -18,11 +18,7 @@ require_once('models/SectionLeader.php');
 		
 		public function get($qid, $class, $sectionleader) {
 			$this->basic_setup(func_get_args());
-			Permissions::gate(POSITION_SECTION_LEADER, $this->role);			
-			// 
-			// 
-			// $role = Permissions::require_role(POSITION_SECTION_LEADER, $this->user, $this->course);
-			// $this->smarty->assign("role", $role);
+			Permissions::gate(POSITION_SECTION_LEADER, $this->role);		
 				
 			// 
 			// $status = Model::getRoleForClass($sectionleader, $class); 
