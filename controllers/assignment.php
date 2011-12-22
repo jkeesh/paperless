@@ -19,9 +19,21 @@
 		 * is passed in in the POST array. Based on the POST action, we decide if we should create
 		 * or delete the release file.
 		 */
-		public function post_xhr($class, $sectionleader, $assignment){
+		public function post_xhr($qid, $class, $sectionleader, $assignment){
 			$student = $_POST['student'];
-			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sectionleader . "/" . $assignment . "/". $student . "/";
+			
+			$course = Course::from_name_and_quarter_id($class, $qid);
+			Permissions::require_role(POSITION_SECTION_LEADER, $this->user, $course);
+
+			$parts = explode("_", $student); // if it was student_1 just take student
+			$suid = $parts[0];
+			$submission_number = $parts[1];
+
+			$the_student = new Student;
+			$the_student->from_sunetid_and_course($suid, $course);
+			$the_sl = $the_student->get_section_leader();
+
+			$dirname = $the_sl->get_base_directory() . '/' . $assignment . '/' . $student .'/';
 			
 			if($_POST['action'] == "release"){
 				if($_POST['release'] == "create"){
