@@ -9,6 +9,7 @@
 <div class="coordinator-link"><a href="{$root_url}cs106b/sectionleader/unknown">CS106B Students</a></div>
 <div class="coordinator-link"><a href="{$root_url}cs106x/sectionleader/unknown">CS106X Students</a></div>
 {else}
+{if $sls}
 <div class="list">
     <div class="header">Section Leaders</div>
 	{counter start=1 print=false assign=x}
@@ -27,6 +28,11 @@
 		</tr>
 	</table>
 </div>
+{else}
+<div class="header">
+	No SLs found.
+</div>
+{/if}
 {/if}
 
 
