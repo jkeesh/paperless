@@ -60,7 +60,7 @@ class Quarter extends Model {
 	 * Q	= quarter code , where 2 = Fall, 4 = Winter, 6 = Spring, 8 = Summer
 	 */
 	public function get_people_soft_code(){
-		if($this->quarter == 4){			
+		if($this->quarter == 4){ // People soft year is one greater for Fall			
 			$people_soft_year = $this->year + 1;
 		}else{
 			$people_soft_year = $this->year;
