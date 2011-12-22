@@ -24,12 +24,18 @@
 		public function basic_setup(){
 			$args = func_get_args();
 			$args = $args[0];
+			print_r($args);
+			echo count($args);
+			
+			if(count($args) < 2){
+				$this->smarty->assign("role", 0);							
+			}else{
+				$qid = $args[0];
+				$class = $args[1];
 
-			$qid = $args[0];
-			$class = $args[1];
-
-			$this->course = Course::from_name_and_quarter_id($class, $qid);
-			$this->smarty->assign("course", $this->course);						
+				$this->course = Course::from_name_and_quarter_id($class, $qid);
+				$this->smarty->assign("course", $this->course);						
+			}
 		}
 		
 		public function __construct() {
@@ -37,17 +43,6 @@
 			// The basic information, like, name, sunetid, etc.
 			$this->user = new User;
 			$this->user->from_sunetid(USERNAME);
-			
-			
-			$is_sl = Model::isSectionLeader(USERNAME);
-			$is_student = Model::isStudent(USERNAME);
-			$is_student_only = $is_student && !$is_sl;
-			$is_admin = false;
-			
-			define('IS_ADMIN', $is_admin);
-			define('IS_STUDENT', $is_student);
-			define('IS_STUDENT_ONLY', $is_student_only);
-			define('IS_SECTION_LEADER', $is_sl);
 			
 			$this->smarty = new Smarty();
 			
@@ -62,21 +57,14 @@
 			$this->smarty->assign("quarter_name", Model::getQuarterName());
 			$this->smarty->assign("display_name", Model::getDisplayName(USERNAME));
 						
-			$this->smarty->assign("is_section_leader", $is_sl);
-			$this->smarty->assign("is_student", $is_student);
-			$this->smarty->assign("is_admin", $is_admin);
-			
 			$this->smarty->assign("POSITION_TEACHING_ASSISTANT", POSITION_TEACHING_ASSISTANT);
 			$this->smarty->assign("POSITION_SECTION_LEADER", POSITION_SECTION_LEADER);
 			$this->smarty->assign("POSITION_COURSE_HELPER", POSITION_COURSE_HELPER);
 			$this->smarty->assign("POSITION_STUDENT", POSITION_STUDENT);
-
 			
 			if(usingIE()){
 				$this->smarty->assign("ie", 1);
 			}
-			
-			$this->smarty->assign("FACEBOOK_APP_ID", FACEBOOK_APP_ID);
 			
 			$userClasses = Model::getClass(USERNAME);
 					

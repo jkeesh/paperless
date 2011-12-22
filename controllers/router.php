@@ -18,6 +18,9 @@
 		 * @author	Jeremy Keeshin December 20, 2011
 		 */
 		public function get() {
+			$this->basic_setup(func_get_args());
+			
+			
 			$relationships = $this->user->get_all_relationships();
 			$this->smarty->assign("relationships", $relationships);	
 			$this->smarty->assign("role", 0);	
