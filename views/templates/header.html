@@ -42,8 +42,8 @@ root_url = '{$root_url}';
 		{if !isset($print_view)}
         <div id="logo"><a href="{$root_url}" id="logo-link"></a></div>
         <div id="user">
-			{if isset($class)}
-			<div id="classname">{$class|upper}</div>
+			{if isset($course)}
+			<div id="classname">{$course->short()}</div>
 			{/if}
             <div id="name">{$display_name|escape}</div>
             <div id="nav">	

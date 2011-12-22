@@ -48,6 +48,11 @@ class Course extends Model {
 		return $instance;
 	}
 	
+	// Return a short string representation
+	public function short(){
+		return strtoupper($this->name) . ' - ' . $this->quarter;
+	}
+	
 	public function __toString(){
 		return $this->name. " in ". $this->quarter;
 	}
