@@ -57,7 +57,6 @@
 			// assign vars we need on every page
 			$this->smarty->assign("username", USERNAME);
 			$this->smarty->assign("root_url", ROOT_URL);
-			$this->smarty->assign("quarter_name", Model::getQuarterName());
 			$this->smarty->assign("display_name", Model::getDisplayName(USERNAME));
 						
 			$this->smarty->assign("POSITION_TEACHING_ASSISTANT", POSITION_TEACHING_ASSISTANT);
