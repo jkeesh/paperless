@@ -47,8 +47,9 @@ root_url = '{$root_url}';
 			{/if}
             <div id="name">{$display_name|escape}</div>
             <div id="nav">	
-                {if isset($admin_class)}
-                <a href="{$root_url}{$admin_class}/admin">Admin</a>
+			{$role}
+                {if $role >= $POSITION_TEACHING_ASSISTANT}
+                <a href="{$course->get_link()}/admin">Admin</a>
                 <a href="{$root_url}{$admin_class}/manage">Manage</a>
                 {/if}
                 <!-- {if isset($sl_class)}

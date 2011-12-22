@@ -23,6 +23,7 @@
 			$this->user = new User;
 			$this->user->from_sunetid(USERNAME);
 			
+			
 			$is_sl = Model::isSectionLeader(USERNAME);
 			$is_student = Model::isStudent(USERNAME);
 			$is_student_only = $is_student && !$is_sl;
@@ -49,6 +50,12 @@
 			$this->smarty->assign("is_section_leader", $is_sl);
 			$this->smarty->assign("is_student", $is_student);
 			$this->smarty->assign("is_admin", $is_admin);
+			
+			$this->smarty->assign("POSITION_TEACHING_ASSISTANT", POSITION_TEACHING_ASSISTANT);
+			$this->smarty->assign("POSITION_SECTION_LEADER", POSITION_SECTION_LEADER);
+			$this->smarty->assign("POSITION_COURSE_HELPER", POSITION_COURSE_HELPER);
+			$this->smarty->assign("POSITION_STUDENT", POSITION_STUDENT);
+
 			
 			if(usingIE()){
 				$this->smarty->assign("ie", 1);

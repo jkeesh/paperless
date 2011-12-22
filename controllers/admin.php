@@ -13,6 +13,8 @@
 			$this->smarty->assign("course", $course);
 			
 			$role = Permissions::require_role(POSITION_TEACHING_ASSISTANT, $this->user, $course);
+			$this->smarty->assign("role", $role);
+			
 			
 			$dirname = $course->get_base_directory();
 			echo $dirname;
