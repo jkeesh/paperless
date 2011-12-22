@@ -24,6 +24,16 @@ class User extends Model {
 	public $display_name;
 	public $id;
 	
+	// Optional field. If a user knows it's course, then we can ask for the role.
+	// The subclasses SectionLeader and Student must have a course.
+	public $course;
+	private $role;
+	
+	public function set_course($course){
+		$this->course = $course;
+	}
+	
+	
 	public function from_id($id){
 		$this->id = $id;
 		$db = Database::getConnection();
@@ -86,14 +96,74 @@ class User extends Model {
 		return $relationships;
 	}
 	
+	public function get_role_string(){
+		if(is_null($this->role)){
+			$this->get_role();
+		}
+		if($this->role == POSITION_STUDENT){
+			return "Student";
+		}
+		if($this->role == POSITION_COURSE_HELPER){
+			return "CH";
+		}
+		if($this->role == POSITION_SECTION_LEADER){
+			return "SL";
+		}
+		if($this->role == POSITION_TEACHING_ASSISTANT){
+			return "TA";
+		}
+		if($this->role == POSITION_LECTURER){
+			return "Lecturer";
+		}
+		return "";
+	
+			// define('POSITION_NOT_A_MEMBER', -1);
+			// define('POSITION_STUDENT', 1);
+			// define('POSITION_APPLICANT', 2);
+			// define('POSITION_COURSE_HELPER', 3);
+			// define('POSITION_SECTION_LEADER', 4);
+			// define('POSITION_TEACHING_ASSISTANT', 5);
+			// define('POSITION_LECTURER', 6);
+			// define('POSITION_COORDINATOR', 7);
+	}
+	
+	
+	/*
+	 * Get the role for the user. If there is no course specified, return 
+	 * not a member, otherwise return the role.
+	 */
+	public function get_role(){
+		if(is_null($this->course)){
+			return POSITION_NOT_A_MEMBER;
+		}		
+		$db = Database::getConnection();
+		$query = "SELECT Position FROM CourseRelations INNER JOIN State
+					WHERE 
+						Person = :pid
+					AND
+						Class = :cid
+					AND
+						Quarter = :qid";
+		try {
+			$sth = $db->prepare($query);
+			$sth->execute(array(":pid" => $this->id, ":cid" => $this->course->id, ":qid" => $this->course->quarter->id));
+			if($rows = $sth->fetch()) {
+				$this->role = $rows['Position'];
+			}else{
+				$this->role = POSITION_NOT_A_MEMBER;
+			}
+		} catch(PDOException $e) {
+			//echo $e->getMessage(); // TODO log this error instead of echoing
+		}
+		return $this->role;
+	}
+	
 	/*
 	 * Given a course object, return a user's role in that course.
 	 * @param $course, the Course object
 	 * @return $role, the role of the user in the course.
 	 */
 	public function get_role_for_course($course){
-		// if($user == "unknown") return POSITION_SECTION_LEADER;
-		
 		$db = Database::getConnection();
 		$query = "SELECT Position FROM CourseRelations INNER JOIN State
 					WHERE 

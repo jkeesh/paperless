@@ -19,13 +19,11 @@
 
 		/*
 		 * This method handles all the basic setup that we want in all of the pages.
-		 * This includes, setting up the course.
+		 * This includes, setting up the course, the role, and role string.
 		 */
 		public function basic_setup(){
 			$args = func_get_args();
 			$args = $args[0];
-			print_r($args);
-			echo count($args);
 			
 			if(count($args) < 2){
 				$this->smarty->assign("role", 0);							
@@ -34,7 +32,12 @@
 				$class = $args[1];
 
 				$this->course = Course::from_name_and_quarter_id($class, $qid);
-				$this->smarty->assign("course", $this->course);						
+				$this->smarty->assign("course", $this->course);			
+				
+				$this->user->set_course($this->course);
+				$this->role = $this->user->get_role();
+				$this->smarty->assign("role", $this->role);	
+				$this->smarty->assign("role_string", $this->user->get_role_string());		
 			}
 		}
 		

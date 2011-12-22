@@ -43,7 +43,7 @@ root_url = '{$root_url}';
         <div id="logo"><a href="{$root_url}" id="logo-link"></a></div>
         <div id="user">
 			{if isset($course)}
-			<div id="classname">{$course->short()}</div>
+			<div id="classname">{$course->short()} ({$role_string})</div>
 			{/if}
             <div id="name">{$display_name|escape}</div>
             <div id="nav">	

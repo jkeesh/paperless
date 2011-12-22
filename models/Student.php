@@ -3,12 +3,6 @@ require_once(dirname(dirname(__FILE__)) . "/models/User.php");
 
 class Student extends User {
 	
-	private $course;
-	
-	public function set_course($course){
-		$this->course = $course;
-	}	
-	
 	public function get_link(){
 		return ROOT_URL . $this->course->quarter->id . '/' . $this->course->name . '/student/' . $this->sunetid;
 	}

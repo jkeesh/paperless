@@ -4,8 +4,7 @@ require_once(dirname(dirname(__FILE__)) . "/models/Student.php");
 
 class SectionLeader extends User {
 	
-	private $course;
-	private $section_id;
+	public $section_id;
 
 	/*
 	 * Static factory constructor to make a SectionLeader from a sunetid
