@@ -36,7 +36,6 @@ require_once('models/SectionLeader.php');
 			$the_SL = new SectionLeader;
 			$the_SL->from_sunetid_and_course($sectionleader, $this->course);						
 			$course_base = $this->course->get_base_directory();
-			echo $course_base;
 			$sls = $this->sortAll($this->getDirEntries($course_base));
 
 			$sl_base = $the_SL->get_base_directory();						
