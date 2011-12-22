@@ -20,6 +20,8 @@
 		public function get() {
 			$relationships = $this->user->get_all_relationships();
 			$this->smarty->assign("relationships", $relationships);	
+			$this->smarty->assign("role", 0);	
+
 			$this->smarty->display("router.html");			
 		}		
 	}

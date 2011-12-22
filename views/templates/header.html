@@ -51,14 +51,14 @@ root_url = '{$root_url}';
                 <a href="{$course->get_link()}/admin">Admin</a>
                 <a href="{$course->get_link()}/manage">Manage</a>
                 {/if}
-                <!-- {if isset($sl_class)}
-                <a href="{$root_url}{$sl_class}/sectionleader/{$username}">My Section</a>
-                {/if} -->
+                {if $role == $POSITION_SECTION_LEADER}
+                <a href="{$course->get_link()}/sectionleader/{$username}">My Section</a>
+                {/if}
 				<a href="{$root_url}">My Classes</a>
-                {if isset($student_class)}
-            	    <a href="{$root_url}{$student_class}/student/{$username}">My Code</a>
+                {if $role == $POSITION_STUDENT}
+            	    <a href="{$course->get_link()}/student/{$username}">My Code</a>
             		{if $student_class != "cs106a"}
-            		<a href="{$root_url}{$student_class}/ddsubmit">Submit</a>
+            		<a href="{$course->get_link()}/ddsubmit">Submit</a>
             		{/if}
             	{/if}
             </div>

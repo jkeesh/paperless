@@ -3,6 +3,15 @@
 <div class="header">{$class|upper} Assignment Settings</div>
 
 <div>
+	
+	{if isset($old_quarter)}
+	<div class="message">
+		Since this is an old quarter, you cannot modify the assignment settings.
+	</div>
+	{/if}
+	
+	
+	
 	<table>
 		<tr>
 			<td class="table-title">Assignment Name</td>
@@ -14,6 +23,7 @@
 			<td class="table-info">lower camel case</td>
 			<td class="table-info">format: YYYY-MM-DD HH:MM</td>
 		</tr>
+		{if !isset($old_quarter)}
 		<tr>
 			<form action="{$root_url}{$class|lower}/manage" method="post">
 			<td>	<input type="text"  name="name"  /></td>
@@ -22,6 +32,7 @@
 			<td> 	<input type="submit" name="action" value="Add" /></td>
 			</form>
 		</tr>
+		{/if}
 		<!-- for every existing assignment, display its data -->
 		
 		{foreach from=$assignments item=assignment key=i}
@@ -30,11 +41,19 @@
 				<form action="{$root_url}{$class|lower}/manage" method="post">
 				<input type="hidden" name="action" value="update" />
 				<input type="hidden" name="id" value="{$assignment.ID}" />
-				<td>	<input type="text" name="name" value="{$assignment.Name}" /></td>
-				<td>	<input type="text" name="directory" value="{$assignment.DirectoryName}" /></td>
-				<td>	<input type="text" name="duedate" value="{$assignment.DueDate}" /></td>
+				<td>	<input type="text" name="name" value="{$assignment.Name}" 
+						{if isset($old_quarter)}disabled="disabled" {/if}
+						/></td>
+				<td>	<input type="text" name="directory" value="{$assignment.DirectoryName}" 
+						{if isset($old_quarter)}disabled="disabled" {/if}
+						/></td>
+				<td>	<input type="text" name="duedate" value="{$assignment.DueDate}" 
+						{if isset($old_quarter)}disabled="disabled" {/if}
+						/></td>
+				{if !isset($old_quarter)}
 				<td> 	<input type="submit" name="action" value="Update" /></td>
 				<td> 	<input type="submit" name="action" value="Delete" /></td>
+				{/if}
 				</form>
 			</tr>
 			
