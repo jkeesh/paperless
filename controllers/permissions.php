@@ -20,10 +20,21 @@ class Permissions {
 		return $curRole;
 	}
 	
+	/*
+	 * The main function of the permissions class. Given a required role,
+	 * and the actual role of the user in this class, redirect the user
+	 * to the home page if they do not have the required permissions
+	 *
+	 * @author	Jeremy Keeshin	December 22, 2011
+	 */
 	public static function gate($required, $actual) {
 		if($actual < $required){
 			Header("Location: " . ROOT_URL);	
 		}
+	}
+	
+	public static function verify($role, $user, $course){
+		
 	}
 
 

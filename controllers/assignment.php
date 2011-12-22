@@ -48,7 +48,8 @@
 		
 		public function get($qid, $class, $sectionleader, $assignment) {
 			$this->basic_setup(func_get_args());
-			Permissions::gate(POSITION_SECTION_LEADER, $this->role);		
+			Permissions::gate(POSITION_SECTION_LEADER, $this->role);
+			Permissions::verify(POSITION_SECTION_LEADER, $sectionleader, $this->course);
 			
 			
 			// $status = Model::getRoleForClass($sectionleader, $class); //sanity check: make sure they are visiting an sl for this class
