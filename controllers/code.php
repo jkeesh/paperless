@@ -191,7 +191,7 @@ class CodeHandler extends ToroHandler {
 			return;
 		}
 		if($_POST['action'] == "release"){
-			echo $dirname;
+			// echo $dirname;
 			if($_POST['release'] == "create"){
 				createRelease($dirname);
 			}else{
