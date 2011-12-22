@@ -16,6 +16,21 @@
 	 */
 	class ToroHandler {
 		protected $smarty;
+
+		/*
+		 * This method handles all the basic setup that we want in all of the pages.
+		 * This includes, setting up the course.
+		 */
+		public function basic_setup(){
+			$args = func_get_args();
+			$args = $args[0];
+
+			$qid = $args[0];
+			$class = $args[1];
+
+			$this->course = Course::from_name_and_quarter_id($class, $qid);
+			$this->smarty->assign("course", $this->course);						
+		}
 		
 		public function __construct() {
 			// We creat a user that can be accessed by all of the controllers. This contains
@@ -135,7 +150,7 @@
 									  Array('^\/([0-9]+)\/([a-zA-Z0-9_ \-]+)\/admin\/?$', 'regex', 'AdminHandler'),
 									  Array('^\/([0-9]+)\/([a-zA-Z0-9_ \-]+)\/manage\/?$', 'regex', 'ManageHandler'),
 									  Array('^\/([0-9]+)\/([a-zA-Z0-9_ \-]+)\/submit\/?$', 'regex', 'SubmitHandler'),
-									  Array('^\/([a-zA-Z0-9_ \-]+)\/ddsubmit\/?$', 'regex', 'DragDropSubmitHandler'),
+									  Array('^\/([0-9]+)\/([a-zA-Z0-9_ \-]+)\/ddsubmit\/?$', 'regex', 'DragDropSubmitHandler'),
 									  Array('^\/([0-9]+)\/([a-zA-Z0-9_ \-]+)\/upload\/?$', 'regex', 'UploadHandler'),
 									  Array('^\/([0-9]+)\/([a-zA-Z0-9_ \-]+)\/ddupload\/?$', 'regex', 'DragDropUploadHandler'),
 									  Array('(.*)', 'regex', 'RouterHandler'),

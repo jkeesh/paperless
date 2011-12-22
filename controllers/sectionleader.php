@@ -17,12 +17,9 @@ require_once('models/SectionLeader.php');
 		}
 		
 		public function get($qid, $class, $sectionleader) {
-			
-			
-			$course = Course::from_name_and_quarter_id($class, $qid);
-			$this->smarty->assign("course", $course);
+			$this->basic_setup(func_get_args());
 
-			$role = Permissions::require_role(POSITION_SECTION_LEADER, $this->user, $course);
+			$role = Permissions::require_role(POSITION_SECTION_LEADER, $this->user, $this->course);
 			$this->smarty->assign("role", $role);
 				
 			// 
@@ -40,8 +37,8 @@ require_once('models/SectionLeader.php');
 			}
 			
 			$the_SL = new SectionLeader;
-			$the_SL->from_sunetid_and_course($sectionleader, $course);						
-			$course_base = $course->get_base_directory();
+			$the_SL->from_sunetid_and_course($sectionleader, $this->course);						
+			$course_base = $this->course->get_base_directory();
 			echo $course_base;
 			$sls = $this->sortAll($this->getDirEntries($course_base));
 

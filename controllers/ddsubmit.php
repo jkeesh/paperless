@@ -7,7 +7,7 @@ class DragDropSubmitHandler extends ToroHandler {
 
 
 
-	public function post($class){
+	public function post($qid, $class){
 
 		$assn = $_POST['assignment'];
 
@@ -60,7 +60,7 @@ class DragDropSubmitHandler extends ToroHandler {
 	}
 
 
-	public function get($class) {
+	public function get($qid, $class) {
 
 		// Uncomment this to close the submitter
 		// if(!array_key_exists('open', $_GET)){
