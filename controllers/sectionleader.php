@@ -32,9 +32,6 @@ require_once('models/SectionLeader.php');
 			if($role == POSITION_SECTION_LEADER){
 				$this->smarty->assign("sl_class", $class);
 			}
-			if($role > POSITION_SECTION_LEADER){
-				$this->smarty->assign("admin_class", $class);
-			}
 			
 			$the_SL = new SectionLeader;
 			$the_SL->from_sunetid_and_course($sectionleader, $this->course);						

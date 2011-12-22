@@ -51,9 +51,6 @@
 			if($role == POSITION_STUDENT){
 				$this->smarty->assign("student_class", $class);
 			}
-			if($role > POSITION_SECTION_LEADER){
-				$this->smarty->assign("admin_class", $class);
-			}
 					
 			$sl = $the_student->get_section_leader();
 		

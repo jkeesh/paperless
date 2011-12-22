@@ -132,7 +132,6 @@ class CodeHandler extends ToroHandler {
 			$showComments = $release;
 		}
 		if($role > POSITION_SECTION_LEADER){
-			$this->smarty->assign("admin_class", $class);
 			$showComments = True;
 		}
 

@@ -30,7 +30,6 @@
 			$assns = PaperlessAssignment::loadForClass($class);
 			$this->smarty->assign("assignments", $assns);
 			$this->smarty->assign("class", $class);
-			$this->smarty->assign("admin_class", $class);
 			// display the template
 			$this->smarty->display('manage.html');	
 		}
@@ -49,7 +48,6 @@
 			$assns = PaperlessAssignment::loadForClass($class);
 			$this->smarty->assign("assignments", $assns);
 			$this->smarty->assign("class", $class);
-			$this->smarty->assign("admin_class", $class);
 			// display the template
 			$this->smarty->display('manage.html');
 		}

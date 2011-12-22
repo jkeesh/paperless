@@ -62,9 +62,6 @@
 			if($role == POSITION_SECTION_LEADER){
 				$this->smarty->assign("sl_class", $class);
 			}
-			if($role > POSITION_SECTION_LEADER){
-				$this->smarty->assign("admin_class", $class);
-			}
 			$this->smarty->assign("role", $role);
 			
 			
