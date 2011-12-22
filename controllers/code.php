@@ -81,7 +81,10 @@ class CodeHandler extends ToroHandler {
 	/*
 		* Displays the syntax highlighted code for a student, assignment pair
 		*/
-	public function get($qid, $class, $assignment, $student, $print=False) {		
+	public function get($qid, $class, $assignment, $student, $print=False) {
+		$this->basic_setup(func_get_args());
+		
+				
 		if($print){
 			$this->smarty->assign("print_view", $print);
 		}
@@ -90,11 +93,11 @@ class CodeHandler extends ToroHandler {
 		$suid = explode("_", $student); // if it was student_1 just take student
 		$suid = $suid[0];
 		
-		$course = Course::from_name_and_quarter_id($class, $qid);
-		$this->smarty->assign("course", $course);
+		// $course = Course::from_name_and_quarter_id($class, $qid);
+		// $this->smarty->assign("course", $course);
 		
 		$the_student = new Student;
-		$the_student->from_sunetid_and_course($suid, $course);
+		$the_student->from_sunetid_and_course($suid, $this->course);
 		
 		$the_sl = $the_student->get_section_leader();
 		$this->smarty->assign("the_student", $the_student);
@@ -103,17 +106,17 @@ class CodeHandler extends ToroHandler {
 		// if the username is something other than the owner of these files, require
 		// it to be a SL
 		if($suid != USERNAME) {
-			$role = Permissions::require_role(POSITION_SECTION_LEADER, $this->user, $course);
+			$role = Permissions::require_role(POSITION_SECTION_LEADER, $this->user, $this->course);
 		}else{
 		// Otherwise require this student to be in the class
-			$role = Permissions::require_role(POSITION_STUDENT, $this->user, $course);
+			$role = Permissions::require_role(POSITION_STUDENT, $this->user, $this->course);
 		}
 		$this->smarty->assign("role", $role);
 
 
 		$sl = Model::getSectionLeaderForStudent($suid, $class);
 
-		list($files, $file_contents, $assignment_files, $release) = $this->getAssignmentFiles($class, $student, $assignment, $sl, $the_student, $the_sl, $course);
+		list($files, $file_contents, $assignment_files, $release) = $this->getAssignmentFiles($class, $student, $assignment, $sl, $the_student, $the_sl, $this->course);
 
 		if(count($files) == 0){
 			$this->smarty->assign("message", "Nothing here yet.");
