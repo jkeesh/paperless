@@ -38,10 +38,8 @@
 			$this->basic_setup(func_get_args());
 			Permissions::gate(POSITION_TEACHING_ASSISTANT, $this->role);		
 
-
 			$quarter = Quarter::current();
 			
-
 			if($quarter->id != $qid){
 				$this->smarty->assign("old_quarter", true);
 			}
@@ -49,7 +47,6 @@
 			$assns = PaperlessAssignment::loadForClass($class);
 			$this->smarty->assign("assignments", $assns);
 			$this->smarty->assign("class", $class);
-			// display the template
 			$this->smarty->display('manage.html');
 		}
 	}
