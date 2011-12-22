@@ -184,14 +184,14 @@ class CodeHandler extends ToroHandler {
 		
 		$sl = Model::getSectionLeaderForStudent($suid, $class);
 		
-
-		$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl . "/". $assignment . "/" . $student . "/"; 
+		$dirname = $the_sl->get_base_directory() . '/' . $assignment . '/' . $student .'/';
 
 		if(!isset($_POST['action'])) {
 			echo json_encode(array("status" => "fail"));
 			return;
 		}
 		if($_POST['action'] == "release"){
+			echo $dirname;
 			if($_POST['release'] == "create"){
 				createRelease($dirname);
 			}else{
