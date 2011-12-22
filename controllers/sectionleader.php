@@ -18,9 +18,11 @@ require_once('models/SectionLeader.php');
 		
 		public function get($qid, $class, $sectionleader) {
 			$this->basic_setup(func_get_args());
-
-			$role = Permissions::require_role(POSITION_SECTION_LEADER, $this->user, $this->course);
-			$this->smarty->assign("role", $role);
+			Permissions::gate(POSITION_SECTION_LEADER, $this->role);			
+			// 
+			// 
+			// $role = Permissions::require_role(POSITION_SECTION_LEADER, $this->user, $this->course);
+			// $this->smarty->assign("role", $role);
 				
 			// 
 			// $status = Model::getRoleForClass($sectionleader, $class); 
@@ -28,10 +30,7 @@ require_once('models/SectionLeader.php');
 			// if($status < POSITION_SECTION_LEADER){
 			// 	Header("Location: " . ROOT_URL);
 			// }
-			
-			if($role == POSITION_SECTION_LEADER){
-				$this->smarty->assign("sl_class", $class);
-			}
+
 			
 			$the_SL = new SectionLeader;
 			$the_SL->from_sunetid_and_course($sectionleader, $this->course);						

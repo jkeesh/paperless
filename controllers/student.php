@@ -45,9 +45,6 @@
 			$this->smarty->assign("role", $role);
 			
 						
-			if($role == POSITION_SECTION_LEADER){
-				$this->smarty->assign("sl_class", $class);
-			}
 			if($role == POSITION_STUDENT){
 				$this->smarty->assign("student_class", $class);
 			}

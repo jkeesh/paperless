@@ -19,6 +19,12 @@ class Permissions {
 		}
 		return $curRole;
 	}
+	
+	public static function gate($required, $actual) {
+		if($actual < $required){
+			Header("Location: " . ROOT_URL);	
+		}
+	}
 
 
 	public static function require_role($role, $user, $course) {

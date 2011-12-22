@@ -26,22 +26,6 @@ var converter = new Showdown.converter();
 {/literal}
 </script>
 
-<!-- {if isset($sl_class) and !isset($print_view)}
-<div class="message">
-<div class="title">Hi Section Leaders.</div>
-Please take a few minutes to <a href="https://spreadsheets.google.com/spreadsheet/viewform?formkey=dFF3RDhNdndSbldwbXV3aHJYc3Jqemc6MQ">fill out this survey</a> for us to let us know how Paperless is working for you.
-</div>
-{/if} -->
-
-
-{if isset($student_class) and !isset($print_view)}
-<!-- <div class="message">
-<div class="title">Hi Students!</div>
-I hope you have enjoyed using paperless this quarter and that it has improved the process of submitting and getting feedback on your code. We are always trying to make it better, and if you want to help, <a href="https://spreadsheets.google.com/viewform?formkey=dGhJTVFZTHR6OE9LNGdJYldzc0Y3V2c6MQ" target="_blank">take this quick survey.</a>
-</div> -->
-{/if}
-
-
 <div id="codeheader">
 {if $role >= $POSITION_SECTION_LEADER}
 <span class="link"><a href="{$course->get_link()}/assignment/{$the_sl->sunetid}/{$assignment}">{$assignment}</a></span>

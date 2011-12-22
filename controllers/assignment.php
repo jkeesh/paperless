@@ -59,9 +59,6 @@
 			// $this->smarty->assign("course", $course);
 			$role = Permissions::require_role(POSITION_SECTION_LEADER, $this->user, $this->course);
 				
-			if($role == POSITION_SECTION_LEADER){
-				$this->smarty->assign("sl_class", $class);
-			}
 			$this->smarty->assign("role", $role);
 			
 			

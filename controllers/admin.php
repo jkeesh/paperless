@@ -10,14 +10,7 @@
 		
 		public function get($qid, $class) {
 			$this->basic_setup(func_get_args());
-			
-			
-			// $course = Course::from_name_and_quarter_id($class, $qid);
-			// $this->smarty->assign("course", $course);
-			
-			$role = Permissions::require_role(POSITION_TEACHING_ASSISTANT, $this->user, $this->course);
-			$this->smarty->assign("role", $role);
-			
+			Permissions::gate(POSITION_TEACHING_ASSISTANT, $this->role);			
 			
 			$dirname = $this->course->get_base_directory();
 			$sls = $this->getDirEntries($dirname);

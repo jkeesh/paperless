@@ -123,7 +123,6 @@ class CodeHandler extends ToroHandler {
 		}
 
 		if($role == POSITION_SECTION_LEADER){
-			$this->smarty->assign("sl_class", $class);
 			$this->smarty->assign("interactive", 1);
 			$showComments = True;
 		}
