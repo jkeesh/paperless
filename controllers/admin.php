@@ -23,7 +23,6 @@
 				
 			// assign template variables
 			$this->smarty->assign("sls", $sls);
-			$this->smarty->assign("class", htmlentities($class));
 			$this->smarty->display('admin.html');
 		}
 	}
