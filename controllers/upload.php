@@ -32,10 +32,7 @@
 		
 		public function post($class) {
 			
-			$role = Model::getRoleForClass(USERNAME, $class);			
-			if($role == POSITION_STUDENT){
-				$this->smarty->assign("student_class", $class);
-			}
+			$role = Model::getRoleForClass(USERNAME, $class);	
 			
 			$assn_dir = $_POST['assignment'];
 			$assns = getAssnsForClass($class);
