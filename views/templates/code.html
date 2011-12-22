@@ -43,7 +43,7 @@ I hope you have enjoyed using paperless this quarter and that it has improved th
 
 
 <div id="codeheader">
-{if isset($sl_class) or isset($admin_class)}
+{if $role >= $POSITION_SECTION_LEADER}
 <span class="link"><a href="{$course->get_link()}/assignment/{$the_sl->sunetid}/{$assignment}">{$assignment}</a></span>
 {else}
 {$assignment}
@@ -79,7 +79,7 @@ I hope you have enjoyed using paperless this quarter and that it has improved th
 {/if}
 
 <script type="text/javascript">
-{if (isset($sl_class) or isset($admin_class)) and !isset($print_view)}
+{if $role >= $POSITION_SECTION_LEADER and !isset($print_view)}
 var interactive = true;
 {else}
 var interactive = false;
@@ -221,7 +221,7 @@ var interactive = false;
 	<div class="link smaller"><a href="{$code_file}/print" target="_blank">Print</a></div>
 </div> -->
 
-{if isset($sl_class) or isset($admin_class)}
+{if $role >= $POSITION_SECTION_LEADER}
 <div id="release">
 	<form class="link smaller">
 	<input type="checkbox" name="release" value="" {if $release}checked{/if} />Release<br />
