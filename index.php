@@ -66,8 +66,6 @@
 				$this->smarty->assign("ie", 1);
 			}
 			
-			$userClasses = Model::getClass(USERNAME);
-					
 			$this->smarty->assign("version", "1.2.0.2");	// May 21, 2011, 3:50pm
 		}
 		
