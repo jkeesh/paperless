@@ -25,7 +25,7 @@
 		</tr>
 		{if !isset($old_quarter)}
 		<tr>
-			<form action="{$root_url}{$class|lower}/manage" method="post">
+			<form action="{$course->get_link()}/manage" method="post">
 			<td>	<input type="text"  name="name"  /></td>
 			<td>	<input type="text" name="directory" /></td>
 			<td>	<input type="text" name="duedate" /></td>
@@ -38,7 +38,7 @@
 		{foreach from=$assignments item=assignment key=i}
 			
 			<tr>
-				<form action="{$root_url}{$class|lower}/manage" method="post">
+				<form action="{$course->get_link()}/manage" method="post">
 				<input type="hidden" name="action" value="update" />
 				<input type="hidden" name="id" value="{$assignment.ID}" />
 				<td>	<input type="text" name="name" value="{$assignment.Name}" 

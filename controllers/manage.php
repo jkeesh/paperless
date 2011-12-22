@@ -7,19 +7,26 @@
 	 */
 	class ManageHandler extends ToroHandler {
 		
-		public function post($class){
+		public function post($qid, $class){
+			$quarter = Quarter::current();
+			$course = Course::from_name_and_quarter_id($class, $qid);
+			$this->smarty->assign("course", $course);
+			$role = Permissions::require_role(POSITION_TEACHING_ASSISTANT, $this->user, $course);
+			$this->smarty->assign("role", $role);
 			
-			
-			$role = Permissions::requireRole(POSITION_TEACHING_ASSISTANT, $class);
-			if($_POST['action'] == "Update"){
-				PaperlessAssignment::update($_POST['id'], $class, $_POST['directory'], $_POST['name'], $_POST['duedate']);
-			}else if($_POST['action'] == "Delete"){
-				PaperlessAssignment::deleteID($_POST['id']);
+			if($quarter->id == $qid){
+				if($_POST['action'] == "Update"){
+					PaperlessAssignment::update($_POST['id'], $class, $_POST['directory'], $_POST['name'], $_POST['duedate']);
+				}else if($_POST['action'] == "Delete"){
+					PaperlessAssignment::deleteID($_POST['id']);
+				}else{
+					$assn = PaperlessAssignment::create($class, $_POST['directory'], $_POST['name'], $_POST['duedate']);
+					$assn->save();
+				}
 			}else{
-				$assn = PaperlessAssignment::create($class, $_POST['directory'], $_POST['name'], $_POST['duedate']);
-				$assn->save();
+				$this->smarty->assign("old_quarter", true);
 			}
-
+			
 			$assns = PaperlessAssignment::loadForClass($class);
 			$this->smarty->assign("assignments", $assns);
 			$this->smarty->assign("class", $class);
