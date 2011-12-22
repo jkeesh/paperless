@@ -48,6 +48,7 @@
 		
 		public function get($qid, $class, $sectionleader, $assignment) {
 			$this->basic_setup(func_get_args());
+			Permissions::gate(POSITION_SECTION_LEADER, $this->role);		
 			
 			
 			// $status = Model::getRoleForClass($sectionleader, $class); //sanity check: make sure they are visiting an sl for this class
@@ -55,12 +56,6 @@
 			// 	Header("Location: " . ROOT_URL);
 			// }
 
-			// $course = Course::from_name_and_quarter_id($class, $qid);
-			// $this->smarty->assign("course", $course);
-			$role = Permissions::require_role(POSITION_SECTION_LEADER, $this->user, $this->course);
-				
-			$this->smarty->assign("role", $role);
-			
 			
 			$sl = new SectionLeader;
 			$sl->from_sunetid_and_course($sectionleader, $this->course);
