@@ -57,9 +57,9 @@ root_url = '{$root_url}';
 				<a href="{$root_url}">My Classes</a>
                 {if $role == $POSITION_STUDENT}
             	    <a href="{$course->get_link()}/student/{$username}">My Code</a>
-            		{if $student_class != "cs106a"}
+					{if $course->name != "cs106a"}
             		<a href="{$course->get_link()}/ddsubmit">Submit</a>
-            		{/if}
+					{/if}
             	{/if}
             </div>
             <div class="clearfloat"></div>

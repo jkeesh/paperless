@@ -27,7 +27,7 @@
 		
 		public function get($qid, $class, $student) {
 			$this->basic_setup(func_get_args());
-			
+
 			$string = explode("_", $student); // if it was student_1 just take student
 			$student = $string[0];
 			
