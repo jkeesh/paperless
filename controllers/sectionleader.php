@@ -23,6 +23,7 @@ require_once('models/SectionLeader.php');
 			$this->smarty->assign("course", $course);
 
 			$role = Permissions::require_role(POSITION_SECTION_LEADER, $this->user, $course);
+			$this->smarty->assign("role", $role);
 				
 			// 
 			// $status = Model::getRoleForClass($sectionleader, $class); 
