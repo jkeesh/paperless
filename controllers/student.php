@@ -45,10 +45,6 @@
 			$this->smarty->assign("role", $role);
 			
 						
-			if($role == POSITION_STUDENT){
-				$this->smarty->assign("student_class", $class);
-			}
-					
 			$sl = $the_student->get_section_leader();
 		
 			if($sl == "unknown"){

@@ -7,9 +7,7 @@
 		public function get($class) {
 			$role = Model::getRoleForClass(USERNAME, $class);	
 					
-			if($role == POSITION_STUDENT){
-				$this->smarty->assign("student_class", $class);
-			}else{
+			if($role != POSITION_STUDENT){
 				Header("Location: " . ROOT_URL);
 			}
 						
