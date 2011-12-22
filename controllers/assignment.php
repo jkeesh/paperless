@@ -86,9 +86,6 @@
 				
 				$i++;
 			}
-			
-			//print_r($info);
-			//print_r($greatest);
 						
 			if(count($students[0]) > 0){
 				$this->smarty->assign("info", $info);
@@ -100,7 +97,6 @@
 			$this->smarty->assign("assignment", $assignment);
 			$this->smarty->assign("class", $class);
 			
-			// display the template
 			$this->smarty->display('assignment.html');
 		}
 	}
