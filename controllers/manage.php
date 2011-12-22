@@ -35,16 +35,17 @@
 		}
 		
 		public function get($qid, $class) {
+			$this->basic_setup(func_get_args());
+			Permissions::gate(POSITION_TEACHING_ASSISTANT, $this->role);		
+
+
 			$quarter = Quarter::current();
-			$course = Course::from_name_and_quarter_id($class, $qid);
-			$this->smarty->assign("course", $course);
 			
+
 			if($quarter->id != $qid){
 				$this->smarty->assign("old_quarter", true);
 			}
-			
-			$role = Permissions::require_role(POSITION_TEACHING_ASSISTANT, $this->user, $course);
-			$this->smarty->assign("role", $role);
+
 			$assns = PaperlessAssignment::loadForClass($class);
 			$this->smarty->assign("assignments", $assns);
 			$this->smarty->assign("class", $class);
