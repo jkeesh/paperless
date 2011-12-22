@@ -18,15 +18,8 @@ require_once('models/SectionLeader.php');
 		
 		public function get($qid, $class, $sectionleader) {
 			$this->basic_setup(func_get_args());
-			Permissions::gate(POSITION_SECTION_LEADER, $this->role);		
-				
-			// 
-			// $status = Model::getRoleForClass($sectionleader, $class); 
-			// //sanity check: make sure they are visiting an sl for this class
-			// if($status < POSITION_SECTION_LEADER){
-			// 	Header("Location: " . ROOT_URL);
-			// }
-
+			Permissions::gate(POSITION_SECTION_LEADER, $this->role);	
+			Permissions::verify(POSITION_SECTION_LEADER, $sectionleader, $this->course);
 			
 			$the_SL = new SectionLeader;
 			$the_SL->from_sunetid_and_course($sectionleader, $this->course);						
