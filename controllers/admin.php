@@ -9,16 +9,17 @@
 	class AdminHandler extends ToroHandler {
 		
 		public function get($qid, $class) {
-			$course = Course::from_name_and_quarter_id($class, $qid);
-			$this->smarty->assign("course", $course);
+			$this->basic_setup(func_get_args());
 			
-			$role = Permissions::require_role(POSITION_TEACHING_ASSISTANT, $this->user, $course);
+			
+			// $course = Course::from_name_and_quarter_id($class, $qid);
+			// $this->smarty->assign("course", $course);
+			
+			$role = Permissions::require_role(POSITION_TEACHING_ASSISTANT, $this->user, $this->course);
 			$this->smarty->assign("role", $role);
 			
 			
-			$dirname = $course->get_base_directory();
-			echo $dirname;
-			// $dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR;			
+			$dirname = $this->course->get_base_directory();
 			$sls = $this->getDirEntries($dirname);
 			if($sls){
 				sort($sls);
