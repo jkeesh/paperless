@@ -8,11 +8,10 @@
 	class ManageHandler extends ToroHandler {
 		
 		public function post($qid, $class){
+			$this->basic_setup(func_get_args());
+			Permissions::gate(POSITION_TEACHING_ASSISTANT, $this->role);		
+			
 			$quarter = Quarter::current();
-			$course = Course::from_name_and_quarter_id($class, $qid);
-			$this->smarty->assign("course", $course);
-			$role = Permissions::require_role(POSITION_TEACHING_ASSISTANT, $this->user, $course);
-			$this->smarty->assign("role", $role);
 			
 			if($quarter->id == $qid){
 				if($_POST['action'] == "Update"){
@@ -30,7 +29,6 @@
 			$assns = PaperlessAssignment::loadForClass($class);
 			$this->smarty->assign("assignments", $assns);
 			$this->smarty->assign("class", $class);
-			// display the template
 			$this->smarty->display('manage.html');	
 		}
 		
