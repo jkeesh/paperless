@@ -33,17 +33,16 @@
 			
 			$the_student = new Student;
 			$the_student->from_sunetid_and_course($student, $this->course);
+				
 			// If the user is not the current student, require that they be a section
 			// leader for this class to be able to view the code
 			if($student != USERNAME) {
-				$role = Permissions::require_role(POSITION_SECTION_LEADER, $this->user, $this->course);
+				Permissions::gate(POSITION_SECTION_LEADER, $this->role);	
 			}else{
 			// Otherwise if the usernames match, require that this student be enrolled
 			// in the current class
-				$role = Permissions::require_role(POSITION_STUDENT, $this->user, $this->course);
+				Permissions::gate(POSITION_STUDENT, $this->role);	
 			}
-			$this->smarty->assign("role", $role);
-			
 						
 			$sl = $the_student->get_section_leader();
 		
