@@ -42,9 +42,10 @@
 				$this->smarty->assign("old_quarter", true);
 			}
 
-			$assns = PaperlessAssignment::loadForClass($class);
+			$assns = PaperlessAssignment::load_for_course($this->course);
+			// $assns = PaperlessAssignment::loadForClass($class);
 			$this->smarty->assign("assignments", $assns);
-			$this->smarty->assign("class", $class);
+			//$this->smarty->assign("class", $class);
 			$this->smarty->display('manage.html');
 		}
 	}

@@ -144,6 +144,31 @@ class PaperlessAssignment extends Model {
 		}
 		return null;
 	}
+	
+	/*
+	 * Load all of the PaperlessAssignments for a given Course object.
+	 * 
+	 * @param	$course		the Course object
+	 *
+	 * @author	Jeremy Keeshin	December 23, 2011
+	 */
+	public static function load_for_course($course) {
+		$query = "SELECT * FROM PaperlessAssignments WHERE Class=:Class AND Quarter=:Quarter";
+		$db = Database::getConnection();
+		try {
+			$sth = $db->prepare($query);
+			$sth->setFetchMode(PDO::FETCH_ASSOC);
+			$sth->execute(array(":Class" => $course->id, ":Quarter" => $course->quarter->id));
+			if($rows = $sth->fetchAll()) {
+				return $rows;
+			}
+		} catch(PDOException $e) {
+			echo $e->getMessage(); 
+		}
+		return null;
+	}
+	
+	
 
 	/*
 		* Getters and Setters
