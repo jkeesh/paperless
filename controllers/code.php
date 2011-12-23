@@ -109,10 +109,10 @@ class CodeHandler extends ToroHandler {
 		// if the username is something other than the owner of these files, require
 		// it to be a SL
 		if($suid != USERNAME) {
-			$role = Permissions::require_role(POSITION_SECTION_LEADER, $this->user, $this->course);
+			Permissions::gate(POSITION_SECTION_LEADER, $this->role);	
 		}else{
 		// Otherwise require this student to be in the class
-			$role = Permissions::require_role(POSITION_STUDENT, $this->user, $this->course);
+			Permissions::gate(POSITION_STUDENT, $this->role);	
 		}
 		$this->smarty->assign("role", $role);
 
