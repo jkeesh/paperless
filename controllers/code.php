@@ -119,8 +119,6 @@ class CodeHandler extends ToroHandler {
 		// Otherwise require this student to be in the class
 			Permissions::gate(POSITION_STUDENT, $this->role);	
 		}
-		$this->smarty->assign("role", $role);
-
 
 		$sl = Model::getSectionLeaderForStudent($suid, $class);
 
