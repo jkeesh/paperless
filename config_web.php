@@ -1,6 +1,9 @@
 <?php
 	//This is a configuration file for running paperless locally
 	
+	// Turn off all error reporting
+	error_reporting(0);
+	
 	$sunetid = $_ENV['WEBAUTH_USER'];
 	$username = strtolower($username);
 	define('USERNAME', $username);
