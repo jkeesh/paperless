@@ -132,8 +132,6 @@ class CodeHandler extends ToroHandler {
             return;
 		}
 
-		print_r($error);
-
 		if(count($files) == 0){
 			$this->smarty->assign("message", "Nothing here yet.");
 		}
