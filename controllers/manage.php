@@ -3,7 +3,16 @@
 	require_once("models/PaperlessAssignment.php");
 
 	/**
-	 * Lets the Class admins modify class configurations
+	 * Lets the course admins modify class configurations, which right now is the 
+	 * list of class assignments.
+	 * 
+	 * Both GET and POST requests load the same page, but on a POST request, we process
+	 * the form data to either, create, update, or delete an assignment listing.
+	 *
+	 * We gate this page to only TAs and higher, and go through the basic setup
+	 * to setup the course, and role for the current user.
+	 *
+	 * @author	Jeremy Keeshin	December 23, 2011
 	 */
 	class ManageHandler extends ToroHandler {
 		
@@ -12,6 +21,7 @@
 			Permissions::gate(POSITION_TEACHING_ASSISTANT, $this->role);		
 			$quarter = Quarter::current();
 			
+			// If it is an old quarter, we do not allow modifications.
 			if($quarter->id != $qid){
 				$this->smarty->assign("old_quarter", true);
 			}else if($handle_post){
