@@ -24,7 +24,12 @@ class CodeHandler extends ToroHandler {
 	private function getAssignmentFiles($class, $student, $assignment, $sl, $the_student, $the_sl, $course) {
 		$dirname = $the_sl->get_base_directory() . "/". $assignment . "/" . $student . "/"; 
 
-		if(!is_dir($dirname)) return null;
+		$error = null;
+
+		if(!is_dir($dirname)){
+			$error = "This was not a valid directory.";
+			return array($error);
+		}
 
 		$dir = opendir($dirname);
 		$files = array();
@@ -75,7 +80,7 @@ class CodeHandler extends ToroHandler {
 
 		//print_r($assignment_files);
 
-		return array($files, $file_contents, $assignment_files, $release);
+		return array($error, $files, $file_contents, $assignment_files, $release);
 	}
 
 	/*
@@ -119,7 +124,15 @@ class CodeHandler extends ToroHandler {
 
 		$sl = Model::getSectionLeaderForStudent($suid, $class);
 
-		list($files, $file_contents, $assignment_files, $release) = $this->getAssignmentFiles($class, $student, $assignment, $sl, $the_student, $the_sl, $this->course);
+		list($error, $files, $file_contents, $assignment_files, $release) = $this->getAssignmentFiles($class, $student, $assignment, $sl, $the_student, $the_sl, $this->course);
+		
+		if($error != null){
+			$this->smarty->assign('errorMsg', $error);
+			$this->smarty->display('error.html');
+            return;
+		}
+
+		print_r($error);
 
 		if(count($files) == 0){
 			$this->smarty->assign("message", "Nothing here yet.");
