@@ -1,15 +1,17 @@
 {include file="header.html"}
 
 <div class="wideList">
-    <div class="header">Error. Monkeys are fixing this as we speak.
+    <div class="header">
+	    {if $errorMsg != null}
+	    <div>Error message: {$errorMsg}</div>
+		{else}
+			Error. Monkeys are fixing this as we speak.
+	    {/if}
 		<div class="padded">
     	<img src="{$root_url}static/images/monkey.png" />
 		</div>
 	</div>
 
-    {if $errorMsg != null}
-    <div>Error message: {$errorMsg}</div>
-    {/if}
 </div>
 <div class="clearfloat"></div>
 

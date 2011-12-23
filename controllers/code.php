@@ -90,7 +90,16 @@ class CodeHandler extends ToroHandler {
 		}
 		$this->smarty->assign("code_file", $student);
 
+
 		$suid = explode("_", $student); // if it was student_1 just take student
+
+		// The code directory was not well formed.
+		if(count($suid) != 2){
+			$this->smarty->assign('errorMsg', "The code directory was not well formed.");
+			$this->smarty->display('error.html');
+            return;
+		}
+
 		$suid = $suid[0];
 		
 		// $course = Course::from_name_and_quarter_id($class, $qid);
