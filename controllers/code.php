@@ -102,9 +102,6 @@ class CodeHandler extends ToroHandler {
 
 		$suid = $suid[0];
 		
-		// $course = Course::from_name_and_quarter_id($class, $qid);
-		// $this->smarty->assign("course", $course);
-		
 		$the_student = new Student;
 		$the_student->from_sunetid_and_course($suid, $this->course);
 		
