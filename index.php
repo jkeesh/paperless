@@ -129,17 +129,19 @@
 	// This regex represents the url for a course. It contains first
 	// the quarter id as an integer, and then the class name
 	$course_regex = '^\/([0-9]+)\/([a-zA-Z0-9_ \-]+)\/';
+	$sunet_regex = '([a-zA-Z0-9_ -]+)';
+	$assn_regex = '([a-zA-Z0-9_ -]+)';
 		
 	/*
 	 * URL routes
 	 */
 	$site = new ToroApplication(Array(
-		 							  Array('^\/user\/([a-zA-Z0-9_ \-]+)\/?$', 'regex', 'SetUser'),
-									  Array($course_regex. 'student\/([a-zA-Z0-9_ \-]+)\/?$', 'regex', 'StudentHandler'),
-									  Array($course_regex. 'code\/([a-zA-Z0-9_ -]+)\/([a-zA-Z0-9_]+)(\/print)?$', 'regex', 'CodeHandler'),
-									  Array($course_regex. 'download\/([a-zA-Z0-9_ -]+)\/([a-zA-Z0-9_]+)\/?(.*)?$', 'regex', 'DownloadHandler'),
-									  Array($course_regex. 'assignment\/([a-zA-Z0-9_ -]+)\/([a-zA-Z0-9_ ]+)\/?$', 'regex', 'AssignmentHandler'),
-									  Array($course_regex. 'sectionleader\/([a-zA-Z0-9_ \-]+)\/?$', 'regex', 'SectionLeaderHandler'),
+		 							  Array('^\/user\/'.$sunet_regex.'\/?$', 'regex', 'SetUser'),
+									  Array($course_regex. 'student\/'.$sunet_regex.'\/?$', 'regex', 'StudentHandler'),
+									  Array($course_regex. 'code\/'.$assn_regex.'\/'.$sunet_regex.'(\/print)?$', 'regex', 'CodeHandler'),
+									  Array($course_regex. 'download\/'.$assn_regex.'\/'.$sunet_regex.'\/?(.*)?$', 'regex', 'DownloadHandler'),
+									  Array($course_regex. 'assignment\/'.$sunet_regex.'\/'.$assn_regex.'\/?$', 'regex', 'AssignmentHandler'),
+									  Array($course_regex. 'sectionleader\/'.$sunet_regex.'\/?$', 'regex', 'SectionLeaderHandler'),
 									  Array($course_regex. 'admin\/?$', 'regex', 'AdminHandler'),
 									  Array($course_regex. 'manage\/?$', 'regex', 'ManageHandler'),
 									  Array($course_regex. 'submit\/?$', 'regex', 'SubmitHandler'),
