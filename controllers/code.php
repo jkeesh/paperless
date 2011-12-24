@@ -209,9 +209,9 @@ class CodeHandler extends ToroHandler {
 		if($_POST['action'] == "release"){
 			// echo $dirname;
 			if($_POST['release'] == "create"){
-				createRelease($dirname);
+				Utilities::create_release($dirname);
 			}else{
-				deleteRelease($dirname);
+				Utilities::delete_release($dirname);
 			}
 			echo json_encode(array("status" => "ok"));
 			return;

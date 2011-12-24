@@ -18,6 +18,19 @@ class Utilities {
 		return (($files = @scandir($dir)) && count($files) <= 2); 
 	}
 	
+	public static function create_release($dir){
+		$file = $dir."release";
+		$release = fopen($file, "w");
+		fclose($release);
+	}
+
+	public static function delete_release($dir){
+		$file = $dir."release";
+		if(is_file($file)){
+			return unlink($file);
+		}
+	}
+	
 }
 
 
@@ -49,18 +62,7 @@ function getConfigFileForClass($class){
 	return CLASS_CONFIG_DIR . "/" . $class . ".csv";
 }
 
-function createRelease($dir){
-	$file = $dir."release";
-	$release = fopen($file, "w");
-	fclose($release);
-}
 
-function deleteRelease($dir){
-	$file = $dir."release";
-	if(is_file($file)){
-		return unlink($file);
-	}
-}
 
 /* 
 	* This function returns an array of the accepted file types for a class

@@ -36,9 +36,9 @@
 			
 			if($_POST['action'] == "release"){
 				if($_POST['release'] == "create"){
-					createRelease($dirname);
+					Utilities::create_release($dirname);
 				}else{
-					deleteRelease($dirname);
+					Utilities::delete_release($dirname);
 				}
 			}
 	
