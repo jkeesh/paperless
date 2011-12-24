@@ -8,16 +8,15 @@ class DragDropSubmitHandler extends ToroHandler {
 
 
 	public function post($qid, $class){
+		$this->basic_setup(func_get_args());
+		if($this->role != POSITION_STUDENT){
+			Header("Location: " . ROOT_URL);
+		}
+		
 
 		$assn = $_POST['assignment'];
 
 		$this->smarty->assign("dragdrop", 1);
-
-		$role = Model::getRoleForClass(USERNAME, $class);	
-
-		if($role != POSITION_STUDENT){
-			Header("Location: " . ROOT_URL);
-		}
 
 		$sectionleader = Model::getSectionLeaderForStudent(USERNAME, $class);
 		$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sectionleader . "/" . $assn . "/";
@@ -44,7 +43,7 @@ class DragDropSubmitHandler extends ToroHandler {
 			mkdir($dest_dir, 0777, true);
 		}
 
-		$this->smarty->assign("class", $class);
+		// $this->smarty->assign("class", $class);
 		$this->smarty->assign("name", Model::getDisplayName(USERNAME));
 		$this->smarty->assign("cur_submission", $cur_submission);
 
@@ -59,7 +58,11 @@ class DragDropSubmitHandler extends ToroHandler {
 
 
 	public function get($qid, $class) {
-
+		$this->basic_setup(func_get_args());
+		if($this->role != POSITION_STUDENT){
+			Header("Location: " . ROOT_URL);
+		}
+		
 		// Uncomment this to close the submitter
 		// if(!array_key_exists('open', $_GET)){
 		// 	$this->smarty->assign("message", "The submitter is not yet open for this quarter. Check back soon.");
@@ -67,18 +70,10 @@ class DragDropSubmitHandler extends ToroHandler {
 		// 	return;
 		// }
 
-
-		$role = Model::getRoleForClass(USERNAME, $class);	
-
-		if($role != POSITION_STUDENT){
-			Header("Location: " . ROOT_URL);
-		}
-
 		$sectionleader = Model::getSectionLeaderForStudent(USERNAME, $class);
 		$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sectionleader . "/";
 
-		$assns = PaperlessAssignment::loadForClass($class);
-		//print_r($assns);
+		$assns = PaperlessAssignment::load_for_course($this->course);
 
 		// assign template variables
 		$this->smarty->assign("assignments", $assns);

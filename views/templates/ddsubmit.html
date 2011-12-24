@@ -1,13 +1,13 @@
 {include file="header.html"}
 
-<h2>Submission Page for {$class|upper}</h2>
+<h2>Submission Page for {$course->name|upper}</h2>
 
 
 {if !isset($dragdrop)}
 <div class="padded">Hi, {$name|escape}. Welcome to the drag and drop submitter.</div>
 
 <div class="padded">Select assignment to submit:</div>
-<form  class="padded" action="{$root_url}{$class|lower}/ddsubmit" method="POST"> 
+<form  class="padded" action="{$course->get_link()}/ddsubmit" method="POST"> 
 	<select name="assignment">
 		{foreach from=$assignments item=assignment}
 		<option value="{$assignment.DirectoryName}">{$assignment.Name}</option>
@@ -26,7 +26,7 @@
 <table>
 	<tr>
 		<td>
-<div class="padded link underline"><a href="{$root_url}{$class|lower}/code/{$assndir}">View My Submission</a></div>
+<div class="padded link underline"><a href="{$course->get_link()}/code/{$assndir}">View My Submission</a></div>
 		</td>
 		<td>
 <div class="padded link underline" id="fbpost">
@@ -40,42 +40,9 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-  new uploader('drop', 'status', '{$root_url}{$class|lower}/ddupload', 'list', '{$assndir}');
+  new uploader('drop', 'status', '{$course->get_link()}/ddupload', 'list', '{$assndir}');
 
 });
-
-FB.getLoginStatus(function(response) {
-  if (response.session) {
-	// console.log('logged in');
-
-	$('#fbpost').html('<a href="#">Share on Facebook</a>');
-	$('#fbpost').bind('click', function(){
-		FB.ui({ method: 'feed', 
-		       message: 'Just submitted my {$class} assignment with Paperless!'});
-	});
-
-	
-    // logged in and connected user, someone you know
-  } else {
-	$("#fblogin").css('display', 'block');
-	// console.log('not logged in');
-	//this was tricky. only if they were NOT LOGGED IN, then THE SESSION CHANGES,
-	//then reload. otherwise well just keep reloading forever.
-	FB.Event.subscribe('auth.sessionChange', function(response) {
-	  // do something with response.session
-		// console.log(response);
-		if(response.status == "connected"){
-		  	window.location.reload();
-		}
-
-	});
-
-  }
-});
-
-
-
-
 </script>
 
 <style> 
