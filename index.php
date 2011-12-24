@@ -118,7 +118,6 @@
 	require_once('controllers/sectionleader.php'); // lists the assignments and students for a sectionleader
 	require_once('controllers/admin.php');
 	require_once('controllers/ddsubmit.php');	// drag drop submit
-	require_once('controllers/upload.php');		// upload
 	require_once('controllers/ddupload.php');	// drag drop upload
 	require_once('controllers/setuser.php');
 	require_once('controllers/error.php');
