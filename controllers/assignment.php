@@ -20,17 +20,16 @@
 		 * or delete the release file.
 		 */
 		public function post_xhr($qid, $class, $sectionleader, $assignment){
-			$student = $_POST['student'];
-			
-			$course = Course::from_name_and_quarter_id($class, $qid);
-			Permissions::require_role(POSITION_SECTION_LEADER, $this->user, $course);
+			$this->basic_setup(func_get_args());
+			Permissions::gate(POSITION_SECTION_LEADER, $this->role);
 
+			$student = $_POST['student'];
 			$parts = explode("_", $student); // if it was student_1 just take student
 			$suid = $parts[0];
 			$submission_number = $parts[1];
 
 			$the_student = new Student;
-			$the_student->from_sunetid_and_course($suid, $course);
+			$the_student->from_sunetid_and_course($suid, $this->course);
 			$the_sl = $the_student->get_section_leader();
 
 			$dirname = $the_sl->get_base_directory() . '/' . $assignment . '/' . $student .'/';
