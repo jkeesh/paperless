@@ -176,6 +176,9 @@ class CodeHandler extends ToroHandler {
 		*       to confirm the request succeeded
 		*/
 	public function post_xhr($qid, $class, $assignment, $student) {
+		$this->basic_setup(func_get_args());
+		Permissions::gate(POSITION_SECTION_LEADER, $this->role);		
+		
 		// only section leaders should be able to add comments
 		$quarter = Quarter::current();
 
@@ -185,8 +188,6 @@ class CodeHandler extends ToroHandler {
 		}
 		
 		$course = Course::from_name_and_quarter_id($class, $qid);
-		Permissions::require_role(POSITION_SECTION_LEADER, $this->user, $course);
-		
 
 		$parts = explode("_", $student); // if it was student_1 just take student
 		$suid = $parts[0];
