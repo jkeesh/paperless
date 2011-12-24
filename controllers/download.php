@@ -77,18 +77,19 @@ class DownloadHandler extends ToroHandler {
 	/*
 		* Displays the syntax highlighted code for a student, assignment pair
 		*/
-	public function get($qid, $class, $assignment, $student, $file="GRADE.txt") {	
+	public function get($qid, $class, $assignment, $student, $file="GRADE.txt") {
+		$this->basic_setup(func_get_args());
+		
+			
 		$suid = explode("_", $student); // if it was student_1 just take student
 		$suid = $suid[0];
 
 		// if the username is something other than the owner of these files, require
 		// it to be a SL
 		if($suid != USERNAME) {
-			$role = Permissions::requireRole(POSITION_SECTION_LEADER, $class);
-		}else{
-			$role = Model::getRoleForClass(USERNAME, $class);
+			Permissions::gate(POSITION_SECTION_LEADER, $this->role);
 		}
-
+		
 		header("Content-Type: plain/text");
 		$sl = Model::getSectionLeaderForStudent($suid, $class);
 
