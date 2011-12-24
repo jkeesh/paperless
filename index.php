@@ -124,6 +124,7 @@
 	require_once('controllers/manage.php');
 	require_once('controllers/download.php');
 	require_once('controllers/router.php');
+	require_once('controllers/settings.php');
 
 
 
