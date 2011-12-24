@@ -33,10 +33,6 @@ class Utilities {
 	
 }
 
-function getConfigFileForClass($class){
-	return CLASS_CONFIG_DIR . "/" . $class . ".csv";
-}
-
 
 
 /* 
@@ -44,11 +40,6 @@ function getConfigFileForClass($class){
 	* It gets this information from the class configuration file
 	*/
 function getFileTypesForClass($class){
-	// $config = getConfigFileForClass($class);
-	// $file = fopen($config, "r");
-	// $info = fgetcsv($file);
-	// return $info;
-
 	if($class == "cs106b" || $class == "cs106x" || $class == "cs106l"){
 		return array("cpp","h", "txt", "cc");
 	}
