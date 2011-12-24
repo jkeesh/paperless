@@ -25,6 +25,8 @@
 			$args = func_get_args();
 			$args = $args[0];
 			
+			$this->smarty->assign("current_quarter", Quarter::current());
+			
 			if(count($args) < 2){
 				$this->smarty->assign("role", 0);							
 			}else{
@@ -32,7 +34,8 @@
 				$class = $args[1];
 
 				$this->course = Course::from_name_and_quarter_id($class, $qid);
-				$this->smarty->assign("course", $this->course);			
+				$this->smarty->assign("course", $this->course);		
+				$this->smarty->assign("quarter_id", $qid);	
 				
 				$this->user->set_course($this->course);
 				$this->role = $this->user->get_role();
