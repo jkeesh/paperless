@@ -20,20 +20,25 @@
 			
 			fwrite($file_handle, $data);
         }
-		
-		
-		function getUploadDirectory($class){
-			$sl_id = Model::getSectionLeaderForStudent(USERNAME, $class);
-			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl_id . "/" . $_GET['assndir'];			
-			return $dirname;
+				
+		/*
+		 * Get the upload directory for this course.
+		 */
+		function get_upload_directory(){			
+			$the_student = new Student;
+			$the_student->from_sunetid_and_course(USERNAME, $this->course);				
+			$sl = $the_student->get_section_leader();
+			return $sl->get_base_directory() . "/" . $_GET['assndir'];
 		}
 		
-		function lateDays($class, $dirname){
+		function lateDays($course, $dirname){
 			$late_days_file = $dirname . "/lateDays.txt";
 			$assn_dir = $_GET['assndir'];			
 			$arr = explode("/", $assn_dir);
 			$assn_dir = $arr[0];
-			$assn_date = PaperlessAssignment::getDueDate($class, $assn_dir);
+			
+			$assn_date = PaperlessAssignment::get_due_date($course, $assn_dir);
+			// $assn_date = PaperlessAssignment::getDueDate($class, $assn_dir);
 			$late_days = fopen($late_days_file, "w");
 			
 			$this->write_late_days_file($late_days, $assn_date);
@@ -50,12 +55,13 @@
 		}
 		
 		//public function post_xhr($class) {
-		public function post($class){
-			$dirname = $this->getUploadDirectory($class);
+		public function post($qid, $class){
+			$this->basic_setup(func_get_args());			
+			$dirname = $this->get_upload_directory($this->course);
 			if (!file_exists($dirname)) {
 				mkdir($dirname, 0777, true);
 			}
-						
+			
 			// If the browser supports sendAsBinary () can use the array $ _FILES
 			if(count($_FILES)>0) { 
 				if( move_uploaded_file( $_FILES['upload']['tmp_name'] , $dirname.'/'.$_FILES['upload']['name'] ) ) {
@@ -100,7 +106,7 @@
 				}
 			}
 
-			$this->lateDays($class, $dirname);
+			$this->lateDays($this->course, $dirname);
 			$this->gradeFile($dirname);
 		}
 	}

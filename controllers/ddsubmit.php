@@ -6,6 +6,15 @@ require_once("models/PaperlessAssignment.php");
 class DragDropSubmitHandler extends ToroHandler {
 
 
+	/*
+	 * Get the upload directory for this course.
+	 */
+	function get_assn_dir($assn){			
+		$the_student = new Student;
+		$the_student->from_sunetid_and_course(USERNAME, $this->course);				
+		$sl = $the_student->get_section_leader();
+		return $sl->get_base_directory() . "/" . $assn . '/';
+	}
 
 	public function post($qid, $class){
 		$this->basic_setup(func_get_args());
@@ -13,13 +22,11 @@ class DragDropSubmitHandler extends ToroHandler {
 			Header("Location: " . ROOT_URL);
 		}
 		
-
 		$assn = $_POST['assignment'];
-
 		$this->smarty->assign("dragdrop", 1);
 
-		$sectionleader = Model::getSectionLeaderForStudent(USERNAME, $class);
-		$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sectionleader . "/" . $assn . "/";
+		$dirname = $this->get_assn_dir($assn);
+	
 		$target_dir = $dirname;
 		if (!file_exists($target_dir)) {
 			mkdir($target_dir, 0777, true);
@@ -43,7 +50,6 @@ class DragDropSubmitHandler extends ToroHandler {
 			mkdir($dest_dir, 0777, true);
 		}
 
-		// $this->smarty->assign("class", $class);
 		$this->smarty->assign("name", Model::getDisplayName(USERNAME));
 		$this->smarty->assign("cur_submission", $cur_submission);
 
