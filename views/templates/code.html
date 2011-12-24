@@ -1,5 +1,13 @@
 {include file="header.html"}
 
+{if $role >= $POSITION_SECTION_LEADER}
+<div class="notice">
+	<strong>New SL?</strong> <a href="#">Here are a few tips on using Paperless.</a>
+</div>
+<div style="clear:both"></div>
+{/if}
+
+
 <script type="text/javascript">
 SyntaxHighlighter.all();
 var converter = new Showdown.converter();

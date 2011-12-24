@@ -306,7 +306,7 @@ body {
 #nav {
     font-family: Helvetica;
     font-size: 10pt;
-    padding: 11px 0px 11px 0px;
+    padding: 10px 0px 0px 0px;
     font-weight: bold;
     float: right;
 }
@@ -321,6 +321,7 @@ body {
     font-size: 12pt;
     padding-left: 10px;
     padding-right: 15px;
+    float: left;
 }
 
 .clearfloat {
@@ -571,6 +572,20 @@ select{
 	padding: 20px;
 }
 
+.notice{
+	font-family: Lucida Grande;
+/*  background-color: #FFF9D7;
+    border: 1px solid #E2C822; */
+	padding: 11px;
+/*	margin: 20px 0px; top-bottom l-r */
+	margin: 10px 0px 20px 0px; /* T R B L */
+	font-size: 12px;	
+    background: #e6efc2; 
+    color: #264409; 
+    border: 1px solid #c6d880; 
+/*    font-weight: bold;         */
+}
+
 .message{
 	font-family: Lucida Grande;
 	background-color: #FFF9D7;
@@ -581,14 +596,14 @@ select{
 	font-size: 12px;
 }
 
-.message .title{
+.message .title, .notice .title{
 	font-size: 13px;
 	height: 16px;
 	font-weight: bold;
 	padding: 0px 0px 5px 0px;
 }
 
-.message a{
+.message a, .notice a{
 	text-decoration: underline;
 	font-weight: bold;
 }
@@ -658,4 +673,12 @@ select{
 }
 .coordinator-link a:hover{
     text-decoration: underline;
+}
+
+
+/* Settings Icon */
+#settings_icon{
+    width: 24px;
+    height: 24px;
+    margin-top: -4px;
 }

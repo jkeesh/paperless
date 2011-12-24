@@ -138,6 +138,7 @@
 	 */
 	$site = new ToroApplication(Array(
 		 							  Array('^\/user\/'.$sunet_regex.'\/?$', 'regex', 'SetUser'),
+		 							  Array('^\/settings\/?$', 'regex', 'SettingsHandler'),
 									  Array($course_regex. 'student\/'.$sunet_regex.'\/?$', 'regex', 'StudentHandler'),
 									  Array($course_regex. 'code\/'.$assn_regex.'\/'.$sunet_regex.'(\/print)?$', 'regex', 'CodeHandler'),
 									  Array($course_regex. 'download\/'.$assn_regex.'\/'.$sunet_regex.'\/?(.*)?$', 'regex', 'DownloadHandler'),
