@@ -77,7 +77,7 @@ class DownloadHandler extends ToroHandler {
 	/*
 		* Displays the syntax highlighted code for a student, assignment pair
 		*/
-	public function get($class, $assignment, $student, $file="GRADE.txt") {	
+	public function get($qid, $class, $assignment, $student, $file="GRADE.txt") {	
 		$suid = explode("_", $student); // if it was student_1 just take student
 		$suid = $suid[0];
 
