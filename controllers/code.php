@@ -41,7 +41,7 @@ class CodeHandler extends ToroHandler {
 		$submission_number = $string[1];
 		
 		$last_dir = $the_sl->get_base_directory() . "/". $assignment . "/" . $student_suid;
-		$last_submission = getLastSubmissionNumber($last_dir);
+		$last_submission = Utilities::getLastSubmissionNumber($last_dir);
 		
 		$release = False;
 		while($file = readdir($dir)) {

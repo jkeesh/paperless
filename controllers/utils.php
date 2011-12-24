@@ -1,19 +1,26 @@
 <?php
 
-// Where dir is the path submissions/class/sl/assn/user/
-function getLastSubmissionNumber($dir){
-	$idx = 0;
-	while(true){
-		$idx++;
-		$dest_dir = $dir . "_" . $idx;
-		if(!file_exists($dest_dir)) break;
+
+class Utilities {	
+
+	// Where dir is the path submissions/class/sl/assn/user/
+	public static function getLastSubmissionNumber($dir){
+		$idx = 0;
+		while(true){
+			$idx++;
+			$dest_dir = $dir . "_" . $idx;
+			if(!file_exists($dest_dir)) break;
+		}
+		return $idx - 1;
 	}
-	return $idx - 1;
+	
+	public static function isEmptyDir($dir){ 
+		return (($files = @scandir($dir)) && count($files) <= 2); 
+	}
+	
 }
 
-function isEmptyDir($dir){ 
-	return (($files = @scandir($dir)) && count($files) <= 2); 
-}
+
 
 /*
  * This reads of the assignment configuration information for a class

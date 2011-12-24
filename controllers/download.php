@@ -34,7 +34,7 @@ class DownloadHandler extends ToroHandler {
 		
 		$last_dir = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl . "/". $assignment . "/" . $student_suid; 
 
-		$last_submission = getLastSubmissionNumber($last_dir);
+		$last_submission = Utilities::getLastSubmissionNumber($last_dir);
 		
 		$release = False;
 		while($file = readdir($dir)) {

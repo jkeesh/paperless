@@ -30,7 +30,7 @@ class DragDropSubmitHandler extends ToroHandler {
 		do {
 			$dest_dir = $target_dir . USERNAME . "_" . $idx;
 			$cur_submission = USERNAME . "_" . $idx;
-			if(isEmptyDir($dest_dir)) break;
+			if(Utilities::isEmptyDir($dest_dir)) break;
 			$idx++;
 		} while (file_exists($dest_dir));
 		// echo $dest_dir;
