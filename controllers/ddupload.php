@@ -38,7 +38,6 @@
 			$assn_dir = $arr[0];
 			
 			$assn_date = PaperlessAssignment::get_due_date($course, $assn_dir);
-			// $assn_date = PaperlessAssignment::getDueDate($class, $assn_dir);
 			$late_days = fopen($late_days_file, "w");
 			
 			$this->write_late_days_file($late_days, $assn_date);

@@ -100,25 +100,6 @@ class PaperlessAssignment extends Model {
 		}
 		return null;
 	}
-
-	public static function getDueDate($class, $assn_dir){
-		$instance = new self();	
-		$query = "SELECT DueDate FROM PaperlessAssignments WHERE Class=:Class AND Quarter=:Quarter AND DirectoryName LIKE :Dir";
-		$quarter_id = Model::getQuarterID();
-		$class_id = Model::getClassID($class);
-		try {
-			$sth = $instance->conn->prepare($query);
-			$sth->setFetchMode(PDO::FETCH_ASSOC);
-			$sth->execute(array(":Class" => $class_id, ":Quarter" => $quarter_id, ":Dir" => $assn_dir));
-			if($row = $sth->fetch()) {
-				return $row['DueDate'];
-			}
-		} catch(PDOException $e) {
-			echo $e->getMessage(); // TODO log this error instead of echo
-		}
-		return null;
-	}
-	
 	
 	//PaperlessAssignment::getID($qid, $class, $student);
 	public static function getID($qid, $class, $dir){
