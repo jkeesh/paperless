@@ -16,6 +16,11 @@
 	 */
 	class ManageHandler extends ToroHandler {
 		
+		/*
+		 * This method handles most of the logic for both get and post requests.
+		 * The only difference is that on a POST request we update the relevant
+		 * assignment info.
+		 */
 		private function manage($qid, $class, $handle_post=false){
 			$this->basic_setup(func_get_args());
 			Permissions::gate(POSITION_TEACHING_ASSISTANT, $this->role);		
