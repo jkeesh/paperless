@@ -114,7 +114,6 @@
 	require_once('controllers/assignment.php'); // lists the assignments for a given student
 	require_once('controllers/sectionleader.php'); // lists the assignments and students for a sectionleader
 	require_once('controllers/admin.php');
-	require_once('controllers/submit.php');		// submit 
 	require_once('controllers/ddsubmit.php');	// drag drop submit
 	require_once('controllers/upload.php');		// upload
 	require_once('controllers/ddupload.php');	// drag drop upload
@@ -144,7 +143,6 @@
 									  Array($course_regex. 'sectionleader\/'.$sunet_regex.'\/?$', 'regex', 'SectionLeaderHandler'),
 									  Array($course_regex. 'admin\/?$', 'regex', 'AdminHandler'),
 									  Array($course_regex. 'manage\/?$', 'regex', 'ManageHandler'),
-									  Array($course_regex. 'submit\/?$', 'regex', 'SubmitHandler'),
 									  Array($course_regex. 'ddsubmit\/?$', 'regex', 'DragDropSubmitHandler'),
 									  Array($course_regex. 'upload\/?$', 'regex', 'UploadHandler'),
 									  Array($course_regex. 'ddupload\/?$', 'regex', 'DragDropUploadHandler'),
