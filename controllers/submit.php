@@ -7,9 +7,9 @@
 		public function get($class) {
 			$role = Model::getRoleForClass(USERNAME, $class);	
 					
-			if($role != POSITION_STUDENT){
-				Header("Location: " . ROOT_URL);
-			}
+			// if($role != POSITION_STUDENT){
+			// 	Header("Location: " . ROOT_URL);
+			// }
 						
 			$sectionleader = Model::getSectionLeaderForStudent(USERNAME, $class);
 			$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sectionleader . "/";
