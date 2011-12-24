@@ -146,7 +146,6 @@
 									  Array($course_regex. 'admin\/?$', 'regex', 'AdminHandler'),
 									  Array($course_regex. 'manage\/?$', 'regex', 'ManageHandler'),
 									  Array($course_regex. 'ddsubmit\/?$', 'regex', 'DragDropSubmitHandler'),
-									  Array($course_regex. 'upload\/?$', 'regex', 'UploadHandler'),
 									  Array($course_regex. 'ddupload\/?$', 'regex', 'DragDropUploadHandler'),
 									  Array('(.*)', 'regex', 'RouterHandler'),
 									  // Array('(.*)', 'regex', 'ErrorHandler'),
