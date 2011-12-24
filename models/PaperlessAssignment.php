@@ -120,29 +120,6 @@ class PaperlessAssignment extends Model {
 		return null;
 		
 	}
-
-	/*
-		* Load from an id
-		*/
-	public static function loadForClass($class) {
-		$query = "SELECT * FROM PaperlessAssignments WHERE Class=:Class AND Quarter=:Quarter";
-		$instance = new self();
-		$quarter_id = Model::getQuarterID();
-
-		try {
-			$sth = $instance->conn->prepare($query);
-			$class_id = Model::getClassID($class);
-			$sth->setFetchMode(PDO::FETCH_ASSOC);
-			$sth->execute(array(":Class" => $class_id, ":Quarter" => $quarter_id));
-			if($rows = $sth->fetchAll()) {
-				//print_r($rows);
-				return $rows;
-			}
-		} catch(PDOException $e) {
-			echo $e->getMessage(); // TODO log this error instead of echo
-		}
-		return null;
-	}
 	
 	/*
 	 * Load all of the PaperlessAssignments for a given Course object.
