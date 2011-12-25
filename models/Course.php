@@ -12,6 +12,11 @@ class Course extends Model {
 	public $quarter;
 	public $settings;
 	
+	/* Return an array of the allows file types for this class.*/
+	public function get_file_types(){
+		return explode(',', $this->settings->get_value('file_types'));
+	}
+	
 	public static function from_name_and_quarter_id($name, $qid){
 		$db = Database::getConnection();	
 		$instance = new self();

@@ -26,6 +26,8 @@
 			Permissions::gate(POSITION_TEACHING_ASSISTANT, $this->role);		
 			$quarter = Quarter::current();
 			
+			print_r($this->course->get_file_types());
+			
 			$settings_saved = false;
 			// If it is an old quarter, we do not allow modifications.
 			if($quarter->id != $qid){
