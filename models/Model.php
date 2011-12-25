@@ -219,30 +219,6 @@
 			}
 		}
 		
-		public static function getGradedAssignID($class, $sunetid, $assn) {
-		  $db = Database::getConnection();
-		  
-		  $assnID = self::getAssignID($assn, $db);
-		  $quarterID = self::getQuarterID();
-		  $classID = self::getClassID($class);
-		  $userID = self::getUserID($sunetid);
-		  
-		  $query = "SELECT * FROM GradedAssignments WHERE Criteria = (SELECT ID FROM Criteria" .
-		          " WHERE Class = $classID AND Quarter = $quarterID AND Assignment = $assnID) AND" .
-		          " QUARTER = $quarterID AND Student = $userID;";
-      try {
-				$sth = $db->prepare($query);
-				$sth->execute();
-				$sth->setFetchMode(PDO::FETCH_ASSOC);
-				if($row = $sth->fetch()) {
-				 return $row['ID'];
-				}
-			} catch(PDOException $e) {
-				echo $e->getMessage(); // TODO log this error instead of echoing
-			}
-			return 0; // no id found
-		}
-		
     /*
 		* Gets the assignment id for a given name
 		* Note: we do it this way since we use preg_replace which isn't possible 
