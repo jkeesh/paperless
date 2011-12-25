@@ -122,22 +122,7 @@
 				echo $e->getMessage(); // TODO log this error instead of echoing
 			}
 		}
-		
-		public static function getSectionLeaderForSectionID($section_id) {
-			$db = Database::getConnection();
-			$query = "SELECT SectionLeader FROM Sections WHERE ID = :sectionid";
-			
-			try {
-				$sth = $db->prepare($query);
-				$sth->execute(array(":sectionid" => $section_id));
-				if($row = $sth->fetch()) {
-					return $row['SectionLeader'];
-				}
-			} catch(PDOException $e) {
-				echo $e->getMessage(); // TODO log this error instead of echoing
-			}
-		}
-		
+				
 		public static function getSUID($user_db_id){
 			$db = Database::getConnection();
 			$query = "SELECT SUNetID FROM People WHERE ID = :dbid";
