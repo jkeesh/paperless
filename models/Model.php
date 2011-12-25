@@ -217,23 +217,6 @@
 			}
 		}
 		
-		public static function getLecturerForClass($class){
-			$db = Database::getConnection();
-			
-			$query = "SELECT SUNetID FROM PEOPLE WHERE ID IN 
-					  (SELECT Person FROM CourseRelations WHERE Class = :classID AND Position = :lec)";
-			$classID = Model::getClassID($class);
-			try {
-				$sth = $db->prepare($query);
-				$sth->execute(array(":classID" => $classID, ":lec" => 6));
-				if($row = $sth->fetch()) {
-					return $row['SUNetID'];
-				}
-			} catch(PDOException $e) {
-				echo $e->getMessage(); // TODO log this error instead of echoing
-			}
-			return false;
-		}
 		
 		public static function getSectionLeaderForStudent($student_suid, $class){
 			
