@@ -30,30 +30,6 @@
 			$this->conn = Database::getConnection();
 		}
 		
-		public static function getRoleForClass($user, $class){
-			if($user == "unknown") return POSITION_SECTION_LEADER;
-			
-			$db = Database::getConnection();
-			$query = "SELECT Position FROM CourseRelations INNER JOIN State
-						WHERE 
-							Person IN ( SELECT ID FROM People WHERE SUNetID = :sunetid )
-						AND
-							Class IN ( SELECT ID FROM Courses WHERE Name LIKE :classname )
-						AND
-							Quarter = DefaultQuarter";
-			try {
-				$sth = $db->prepare($query);
-				$sth->execute(array(":sunetid" => $user, ":classname" => $class));
-				if($rows = $sth->fetch()) {
-					return $rows['Position'];      
-				}else{
-					return POSITION_NOT_A_MEMBER;
-				}
-			} catch(PDOException $e) {
-				echo $e->getMessage(); // TODO log this error instead of echoing
-			}
-		}
-		
 		public static function getQuarterID() {
 			$db = Database::getConnection();
 			
