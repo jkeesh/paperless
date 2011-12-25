@@ -158,32 +158,5 @@ class User extends Model {
 		return $this->role;
 	}
 	
-	/*
-	 * Given a course object, return a user's role in that course.
-	 * @param $course, the Course object
-	 * @return $role, the role of the user in the course.
-	 */
-	public function get_role_for_course($course){
-		$db = Database::getConnection();
-		$query = "SELECT Position FROM CourseRelations INNER JOIN State
-					WHERE 
-						Person = :pid
-					AND
-						Class = :cid
-					AND
-						Quarter = :qid";
-		try {
-			$sth = $db->prepare($query);
-			$sth->execute(array(":pid" => $this->id, ":cid" => $course->id, ":qid" => $course->quarter->id));
-			if($rows = $sth->fetch()) {
-				return $rows['Position'];      
-			}else{
-				return POSITION_NOT_A_MEMBER;
-			}
-		} catch(PDOException $e) {
-			echo $e->getMessage(); // TODO log this error instead of echoing
-		}
-	}
-	
 }
 ?>
