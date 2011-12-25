@@ -6,9 +6,7 @@ current_range = null;
 globalSubmitComment = null;
 current_file_id = 0;
 shortcuts_added = false;
-themes = new Array('shCoreDefault.css', 'shCoreMDUltra.css' ,'shCoreMidnight.css', 'shCoreDjango.css', 'shCoreRDark.css', 'shCoreEclipse.css', 'shCoreEmacs.css', 'shCoreFadeToGrey.css');	
-themeColors = new Array('#edeff4', '#428bdd', '#428bdd', '#91bb9e', '#878a85', '#3f5fbf', '#ff7d27', '#696854');
-themeID = 0;
+
 
 shortcutsBase = "<div id='shortcuts' class='blackbox'>"
 				  +	"<div class='keyboardTitle'>Keyboard Shortcuts</div>";
@@ -20,7 +18,6 @@ shortcutsEdit = "<div class='keyboardLine'><span class='keyboardShortcuts'>&lt;T
 					
 				
 shortcutsAll = "<div class='keyboardLine'><span class='keyboardShortcuts'>&lt;Ctrl&gt;+1: </span><span class='keyboardAction'>Toggle Shortcuts</span></div>"
-				  +   "<div class='keyboardLine'><span class='keyboardShortcuts'>&lt;Ctrl&gt;+2: </span><span class='keyboardAction'>Change Theme</span></div>"
 
 
 
@@ -88,18 +85,7 @@ function addShortcuts(){
 											 code_file.last_comment = null;
 											 })
 				 );
-	
-	
-	shortcut.add("ctrl+2", new SafeFunction ( function(){
-											 themeID++;
-											 var themeIndex = themeID % themes.length; 
-											 var newTheme = root_url +'/static/js/syntaxhighlighter/styles/' + themes[themeIndex];
-											 var newColor = themeColors[themeIndex];
-											 $('#syntaxStylesheet').attr('href', newTheme);
-											 $('body').css('background-color', newColor);
-											 })
-				 );
-				
+					
 	shortcut.add("ctrl+3", new SafeFunction ( function(){
 		 									if($("#shortcuts").html() != null){
 		 										$("#shortcuts").remove();
