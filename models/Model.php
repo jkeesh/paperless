@@ -264,24 +264,6 @@
 		}
 		
 
-			
-		public static function isStudent($the_id) {
-			$db = Database::getConnection();
-			$query = "SELECT (SELECT ID FROM People WHERE SUNetID = :sunetid) IN
-			(SELECT Person FROM CourseRelations
-			WHERE Position = 1
-			AND Quarter = (SELECT DefaultQuarter FROM State)) AS IsStudent;";
-			try {
-				$sth = $db->prepare($query);
-				$sth->execute(array(":sunetid" => $the_id));
-				if($row = $sth->fetch()) {
-					return $row['IsStudent'] == 1;
-				}
-			} catch(PDOException $e) {
-				echo $e->getMessage(); // TODO log this error instead of echoing
-			}
-			return false;
-		}
 		
 		public static function getClass($sunetid) {
 			$db = Database::getConnection();
