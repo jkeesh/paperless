@@ -1,0 +1,41 @@
+{if $role >= $POSITION_SECTION_LEADER && $settings->get_value('show_sl_hint') == 'true'}
+<script type="text/javascript">
+AjaxManager.add_ajax_event({
+	url: '{$root_url}ajax',
+	event: 'click',
+	elem: '#x_out_tips',
+	remove: '#sl_tip_box',
+	data: {
+		action: 'settings',
+		key: 'show_sl_hint',
+		val: 'false'
+	}
+});
+function toggle_tips(){
+	$('#sl_tips').toggle();
+}
+$(function(){
+	$('#popup_close').click(toggle_tips);
+	$('#tip_link').click(toggle_tips);
+});
+
+</script>
+<div id="sl_tips" class="blackbox" style="display:none;">
+	Here are a few tips for getting started with Paperless.
+	<ul>
+		<li>Type <strong>ctrl+1</strong> to see some quick keyboard shortcuts. </li>
+		<li>You can easily submit a comment by hitting tab.</li>
+		<li>You can format your comments with Markdown. Read about Markdown <a href="http://daringfireball.net/projects/markdown/">here.</a></li>
+		<li>Click and drag to select lines to leave a comment.</li>
+	</ul>
+	
+	<a style="float:right;" href="#" id="popup_close">Close</a>
+</div>
+
+<div class="notice" id="sl_tip_box">
+	<strong>New SL?</strong> <a href="#" id="tip_link">Here are a few tips on using Paperless.</a>
+	
+	<a style="float: right;" href="#" id="x_out_tips">X</a>
+</div>
+<div style="clear:both"></div>
+{/if}
