@@ -30,8 +30,6 @@ class Course extends Model {
 		}
 		
 		$instance->settings = CourseSettings::get_for_course($instance);
-		print_r($instance->settings);
-		
 		return $instance;
 	}
 	

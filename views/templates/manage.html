@@ -1,6 +1,11 @@
 {include file="header.html"}
 
-<div class="header">{$course->name|upper} Assignment Settings</div>
+<div class="header">{$course->name|upper} Settings</div>
+
+{if $settings_saved}
+<div class="notice">Settings saved.</div>
+{/if}
+
 
 <div>
 	
@@ -58,8 +63,27 @@
 			</tr>
 			
 		{/foreach}
-
+	</table>
 		<!-- end for -->
+	</div>
+	<div style="clear:both;"></div>
+	
+	
+	<div>
+	<div>Course Configuration</div>
+		<form action="{$course->get_link()}/manage" method="post">
+			<div>
+				<label>File Types (comma separated):</label><input type="text"  name="file_types" value="{$course->settings->get_value('file_types')}" />
+			</div>
+			<div>
+				<label>Use Submitter:</label>
+					<input type="radio" name="use_submitter" value="yes"
+					{if $course->settings->get_value('use_submitter') == 'yes'}checked{/if} /> Yes
+					<input type="radio" name="use_submitter" value="no" 
+					{if $course->settings->get_value('use_submitter') == 'no'}checked{/if} /> No
+			</div>
+			<input type="submit" value="Update Configuration" />
+		</form>
 	</div>
 </div>
 

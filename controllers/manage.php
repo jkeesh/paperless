@@ -26,21 +26,32 @@
 			Permissions::gate(POSITION_TEACHING_ASSISTANT, $this->role);		
 			$quarter = Quarter::current();
 			
+			$settings_saved = false;
 			// If it is an old quarter, we do not allow modifications.
 			if($quarter->id != $qid){
 				$this->smarty->assign("old_quarter", true);
 			}else if($handle_post){
-				if($_POST['action'] == "Update"){
-					PaperlessAssignment::update($_POST['id'], $class, $_POST['directory'], $_POST['name'], $_POST['duedate']);
-				}else if($_POST['action'] == "Delete"){
-					PaperlessAssignment::deleteID($_POST['id']);
+				if(array_key_exists('action', $_POST)){
+					if($_POST['action'] == "Update"){
+						PaperlessAssignment::update($_POST['id'], $class, $_POST['directory'], $_POST['name'], $_POST['duedate']);
+					}else if($_POST['action'] == "Delete"){
+						PaperlessAssignment::deleteID($_POST['id']);
+					}else{
+						$assn = PaperlessAssignment::create($class, $_POST['directory'], $_POST['name'], $_POST['duedate']);
+						$assn->save();
+					}
 				}else{
-					$assn = PaperlessAssignment::create($class, $_POST['directory'], $_POST['name'], $_POST['duedate']);
-					$assn->save();
+					foreach($_POST as $key => $val){
+						$this->course->settings->set_value($key, $val);
+					}
+					$this->course->settings->save();
 				}
+				$settings_saved = true;
 			}
 
 			$assns = PaperlessAssignment::load_for_course($this->course);
+			$this->smarty->assign("settings_saved", $settings_saved);			
+			
 			$this->smarty->assign("assignments", $assns);
 			$this->smarty->display('manage.html');
 		}

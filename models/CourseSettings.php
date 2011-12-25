@@ -13,8 +13,22 @@ class CourseSettings{
 	
 	public static $defaults = array(	
 									'use_submitter' => 'yes',
-								 	'file_types' => 'txt'
+								 	'file_types' => 'txt, cpp, java, c'
 								 	);
+
+	/*
+	 * Return the settings value for a user for this key.
+	 */
+	public function get_value($key){
+		return $this->config[$key];
+	}
+
+	/*
+	 * Set the value for the user for this key.
+	 */
+	public function set_value($key, $value){
+		$this->config[$key] = $value;
+	}
 
 	
 	// Save the configuration for a user.
