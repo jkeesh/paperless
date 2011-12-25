@@ -4,7 +4,7 @@ require_once(dirname(dirname(__FILE__)) . "/models/Model.php");
 
 class PaperlessAssignment extends Model {
 
-	private $ID;
+	public $ID;
 	private $Quarter;
 	private $Class;
 	private $DirectoryName;
@@ -119,6 +119,33 @@ class PaperlessAssignment extends Model {
 		}
 		return null;
 		
+	}
+	
+	
+	/*
+	 * This method loads and returns the PaperlessAssignment object for a course for the given assignment
+	 * name.
+	 *
+	 * @param	$course		{Object}	the Course object
+	 * @param	$assignment	{string}	the name of the assignment directory
+	 *
+	 * @return 	the PaperlessAssignment object, or null on an error
+	 *
+	 * @author	Jeremy Keeshin	December 25, 2011
+	 */	
+	public static function from_course_and_assignment($course, $assignment){
+		$instance = new self();	
+		$query = "SELECT * FROM PaperlessAssignments WHERE Class=:Class AND Quarter=:qid AND DirectoryName LIKE :Dir";		
+		try {
+			$sth = $instance->conn->prepare($query);
+			$sth->execute(array(":Class" => $course->id,":Dir" => $assignment, ":qid" => $course->quarter->id));
+			if($row = $sth->fetch()) {
+				$instance->fill($row);
+				return $instance;
+			}
+		} catch(PDOException $e) {
+		}
+		return null;
 	}
 	
 	/*

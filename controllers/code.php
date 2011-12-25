@@ -43,6 +43,8 @@ class CodeHandler extends ToroHandler {
 		$last_dir = $the_sl->get_base_directory() . "/". $assignment . "/" . $student_suid;
 		$last_submission = Utilities::getLastSubmissionNumber($last_dir);
 		
+		echo "STUDENT: ". $student. "\n\n";
+		
 		$release = False;
 		while($file = readdir($dir)) {
 			if($file == "release"){
@@ -78,7 +80,9 @@ class CodeHandler extends ToroHandler {
 			}
 		}
 
-		//print_r($assignment_files);
+		// print_r($files);
+		// print_r($file_contents);
+		// print_r($assignment_files);
 
 		return array($error, $files, $file_contents, $assignment_files, $release);
 	}
@@ -122,7 +126,11 @@ class CodeHandler extends ToroHandler {
 
 		$sl = Model::getSectionLeaderForStudent($suid, $class);
 
+		// public static function get_assignment_files($course, $student, $assignment, $sl, $submission){
+		list($error, $files, $file_contents, $assignment_files, $release) = Utilities::get_assignment_files($this->course, $the_student, $assignment, $the_sl, $student);
+
 		list($error, $files, $file_contents, $assignment_files, $release) = $this->getAssignmentFiles($class, $student, $assignment, $sl, $the_student, $the_sl, $this->course);
+		
 		
 		if($error != null){
 			$this->smarty->assign('errorMsg', $error);

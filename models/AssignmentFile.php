@@ -5,7 +5,7 @@ require_once(dirname(dirname(__FILE__)) . "/models/Quarter.php");
 
 class AssignmentFile extends Model {
 
-	private $ID;
+	public $ID;
 	private $GradedAssignment;
 	private $FilePath;
 	private $AssignmentComments;
@@ -40,16 +40,6 @@ class AssignmentFile extends Model {
 	public function saveFile() {
 		$query = "REPLACE INTO " . ASSIGNMENT_FILE_TABLE . 
 			" VALUES(:ID, :GradedAssignment, :File, :PaperlessAssignment, :Student, :SubmissionNumber);";
-
-		// print_r(array(
-		// 	":ID" => $this->ID,
-		// 	":GradedAssignment" => $this->GradedAssignment,
-		// 	":File" => $this->FilePath,
-		// 	":PaperlessAssignment" => $this->PaperlessAssignment,
-		// 	":Student" => $this->Student,
-		// 	":SubmissionNumber" => $this->SubmissionNumber
-		// 	));
-
 		try {
 			$sth = $this->conn->prepare($query);
 			$rows = $sth->execute(array(
@@ -106,6 +96,54 @@ class AssignmentFile extends Model {
 			} catch(PDOException $e) {
 				echo $e->getMessage(); // TODO log this error instead of echo
 			}
+		}
+		
+		
+		/*
+		 * This loads an AssignmentFile object.
+		 *
+		 * @param	$course		{Object}	the Course object
+		 * @param	$student	{Object}	the Student object
+		 * @param	$assignment	{string}	the name of the assignment
+		 * @param	$file		{string}	the name of the file
+		 * @param	$number		{int}		the submission number for this assignment
+		 *
+		 * @return 	the AssignmentFile object, or null if it is not found
+		 *
+		 * @author	Jeremy Keeshin	December 25, 2011
+		 */ 
+		public static function load_file($course, $student, $assignment, $file, $number){
+			
+			$query = "SELECT * FROM AssignmentFiles 
+						WHERE Student = :Student_ID
+							AND	SubmissionNumber = :Submission_Number
+							AND	PaperlessAssignment = :Assn_ID
+							AND File = :File;";
+							
+			$paperless_assignment = PaperlessAssignment::from_course_and_assignment($course, $assignment);
+			print_r($paperless_assignment);				
+			
+			$arr = array(":Student_ID" => $student->id, ":Submission_Number" => $number, 
+						 ":Assn_ID" => $paperless_assignment->ID, ":File" => $file );
+						
+			$instance = new self();
+			
+			try {
+				$sth = $instance->conn->prepare($query);
+				$sth->execute($arr);
+				$sth->setFetchMode(PDO::FETCH_NUM);
+				if($row = $sth->fetch()) {
+					$instance->fill($row);
+					$instance->loadComments();
+					print_r($instance);
+					return $instance;
+				}else{
+
+				}
+			} catch(PDOException $e) {
+			}
+			
+			return null;				
 		}
 
 
