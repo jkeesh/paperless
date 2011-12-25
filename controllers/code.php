@@ -134,15 +134,12 @@ class CodeHandler extends ToroHandler {
 			$this->smarty->assign("message", "Nothing here yet.");
 		}
 
-		if($this->role == POSITION_SECTION_LEADER){
+		if($this->role >= POSITION_SECTION_LEADER){
 			$this->smarty->assign("interactive", 1);
 			$showComments = True;
 		}
 		if($this->role == POSITION_STUDENT){
 			$showComments = $release;
-		}
-		if($this->role > POSITION_SECTION_LEADER){
-			$showComments = True;
 		}
 
 		// assign template vars
