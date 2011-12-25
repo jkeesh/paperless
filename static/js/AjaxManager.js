@@ -12,15 +12,26 @@ var AjaxManager = {};
  *      remove  (optional) selector of elem to remove on success
  */
 AjaxManager.add_ajax_event = function(options){
-    $(options.elem).bind(options.event, function(){
-        $.ajax({
-            url : options.url,
-            data : options.data,
-            success: function(resp){
-                if(options.remove){
-                    $(options.remove).fadeOut();
+    $(document).ready(function(){
+        $(options.elem).bind(options.event, function(e){
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                dataType: 'JSON',
+                url : options.url,
+                data : options.data,
+                success: function(resp){
+                    D.log(resp);
+                    if(options.remove){
+                        $(options.remove).fadeOut('slow');
+                    }
+                },
+                error: function(jqXHR, status, error){
+                    D.log(jqXHR);
+                    D.log(status);
+                    D.log(error);
                 }
-            }
+            });
         });
     });
 }

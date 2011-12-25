@@ -134,6 +134,7 @@
 	require_once('controllers/download.php');
 	require_once('controllers/router.php');
 	require_once('controllers/settings.php');
+	require_once('controllers/ajax.php');
 
 
 
@@ -148,6 +149,7 @@
 	 */
 	$site = new ToroApplication(Array(
 		 							  Array('^\/user\/'.$sunet_regex.'\/?$', 'regex', 'SetUser'),
+		 							  Array('^\/ajax\/?$', 'regex', 'AjaxHandler'),
 		 							  Array('^\/settings\/?$', 'regex', 'SettingsHandler'),
 									  Array($course_regex. 'student\/'.$sunet_regex.'\/?$', 'regex', 'StudentHandler'),
 									  Array($course_regex. 'code\/'.$assn_regex.'\/'.$sunet_regex.'(\/print)?$', 'regex', 'CodeHandler'),

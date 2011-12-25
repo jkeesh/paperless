@@ -1,8 +1,23 @@
 {include file="header.html"}
 
-{if $role >= $POSITION_SECTION_LEADER}
-<div class="notice">
+{if $role >= $POSITION_SECTION_LEADER && $settings->get_value('show_sl_hint') == 'true'}
+<script type="text/javascript">
+AjaxManager.add_ajax_event({
+	url: '{$root_url}ajax',
+	event: 'click',
+	elem: '#x_out_tips',
+	remove: '#sl_tip_box',
+	data: {
+		action: 'settings',
+		key: 'show_sl_hint',
+		val: 'false'
+	}
+});
+</script>
+<div class="notice" id="sl_tip_box">
 	<strong>New SL?</strong> <a href="#">Here are a few tips on using Paperless.</a>
+	
+	<a style="float: right;" href="#" id="x_out_tips">X</a>
 </div>
 <div style="clear:both"></div>
 {/if}
