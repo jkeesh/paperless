@@ -98,24 +98,7 @@
 				echo $e->getMessage(); // TODO log this error instead of echoing
 			}
 		}
-		
-		public static function getSectionIDForSectionLeader($sl_sunetid) {
-			$db = Database::getConnection();
-			$quarterID = Model::getQuarterID();
-			$sl_db_ID = Model::getUserID($sl_sunetid);
-			$query = "SELECT ID FROM Sections WHERE Quarter = :quarterID AND SectionLeader = :sectionLeaderID";
-		
-			try {
-				$sth = $db->prepare($query);
-				$sth->execute(array(":quarterID" => $quarterID, ":sectionLeaderID" => $sl_db_ID));
-				if($rows = $sth->fetch()) {
-					return $rows['ID'];   
-				}
-			} catch(PDOException $e) {
-				echo $e->getMessage(); // TODO log this error instead of echoing
-			}
-		}
-		
+				
 		public static function getAllStudentsForClass($class){
 			$db = Database::getConnection();	
 			$query = "SELECT ID, DisplayName, SUNetID FROM People WHERE ID IN 
