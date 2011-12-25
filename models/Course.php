@@ -2,12 +2,15 @@
 require_once(dirname(dirname(__FILE__)) . "/config.php");
 require_once(dirname(dirname(__FILE__)) . "/models/Model.php");
 require_once(dirname(dirname(__FILE__)) . "/models/Quarter.php");
+require_once(dirname(dirname(__FILE__)) . "/models/CourseSettings.php");
+
 
 class Course extends Model {
 
 	public $id;
 	public $name;
 	public $quarter;
+	public $settings;
 	
 	public static function from_name_and_quarter_id($name, $qid){
 		$db = Database::getConnection();	
@@ -25,6 +28,10 @@ class Course extends Model {
 		} catch(PDOException $e) {
 			echo $e->getMessage(); // TODO log this error instead of echoing
 		}
+		
+		$instance->settings = CourseSettings::get_for_course($instance);
+		print_r($instance->settings);
+		
 		return $instance;
 	}
 	

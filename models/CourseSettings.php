@@ -4,8 +4,6 @@ class CourseSettings{
 
 	// In the database, course settings have a ID, class, and quarter
 	private $id;
-	private $class;
-	private $quarter;
 	
 	// We keep track of the related course object
 	public $course;
@@ -13,6 +11,11 @@ class CourseSettings{
 	// The configuration array.
 	private $config;
 	
+	public static $defaults = array(	
+									'use_submitter' => 'yes',
+								 	'file_types' => 'txt'
+								 	);
+
 	
 	// Save the configuration for a user.
 	public function save(){
@@ -21,7 +24,7 @@ class CourseSettings{
 		$db = Database::getConnection();
 		try {
 			$sth = $db->prepare($query);
-			$sth->execute(array(':Config' => $encoded, ":qid" => $course->quarter->id, ":class_id" => $course->id));			
+			$sth->execute(array(':Config' => $encoded, ":qid" => $this->course->quarter->id, ":class_id" => $this->course->id));			
 		} catch(PDOException $e) {
 		}	
 	}
@@ -31,20 +34,22 @@ class CourseSettings{
 	 */
 	private static function create($course){
 		$db = Database::getConnection();		
-		$query = "INSERT INTO PaperlessCourseConfig (Quarter, Class) Values (:qid, :class_id)";
+		$query = "INSERT INTO PaperlessCourseConfig (Quarter, Class, Config) Values (:qid, :class_id, :config)";
 		try {
 			$sth = $db->prepare($query);
-			$sth->execute(array(":qid" => $course->quarter->id, ":class_id" => $course->id));
+			$result = $sth->execute(array(":qid" => $course->quarter->id, ":class_id" => $course->id, ":config" => ''));
+
 		} catch(PDOException $e) {
 
 		}				
 	}
 	
+	
 	public static function get_for_course($course){
 		$instance = new self();
 		$instance->course = $course;
 		$db = Database::getConnection();		
-		$query = "SELECT ID, Config FROM PaperlessCourseConfig WHERE Quarter = :qid; AND Class = :class_id";
+		$query = "SELECT ID, Config FROM PaperlessCourseConfig WHERE Quarter = :qid AND Class = :class_id";
 		try {
 			$sth = $db->prepare($query);
 			$sth->execute(array(":qid" => $course->quarter->id, ":class_id" => $course->id));
@@ -53,8 +58,8 @@ class CourseSettings{
 				$instance->id = $row['ID'];
 				$instance->config = json_decode($row['Config'], true); // turn into assoc. array.	
 			}else{
-				$instance->config = CourseSettings::default_settings(); // empty for now
-				CourseSettings::create($user);
+				$instance->config = CourseSettings::$defaults; // empty for now
+				CourseSettings::create($course);
 			}
 		} catch(PDOException $e) {
 
