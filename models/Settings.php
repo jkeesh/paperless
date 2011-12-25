@@ -27,6 +27,18 @@ class Settings{
 	
 	public $user;
 	private $config; //array
+	private $id;
+	
+	/*
+	 * Return an array containing the default settings for a user.
+	 */
+	private static function default_settings(){
+		$defaults = array();
+		foreach(Settings::$options as $setting => $config){
+			$defaults[$setting] = $config['default'];
+		}
+		return $defaults;
+	}
 	
 	/*
 	 * Return all the valid options for a key.
@@ -85,30 +97,48 @@ class Settings{
 	// Save the configuration for a user.
 	public function save(){
 		$encoded = json_encode($this->config);
-		$query = "REPLACE INTO PaperlessProfile VALUES(:User, :Config);";
+		// $query = "REPLACE INTO PaperlessProfile VALUES(:User, :Config);";
+		$query = "UPDATE PaperlessProfile SET Config = :Config WHERE User = :User";
 		$db = Database::getConnection();
 		
 		try {
 			$sth = $db->prepare($query);
-			$rows = $sth->execute(array(":User" => $this->user->id, ':Config' => $encoded));
+			$rows = $sth->execute(array(':Config' => $encoded, ":User" => $this->user->id));
 		} catch(PDOException $e) {
 
 		}	
+	}
+	
+	/*
+	 * Create a new entry in the db for this user.
+	 */
+	private static function create($user){
+		$db = Database::getConnection();		
+		$query = "INSERT INTO PaperlessProfile (User) Values (:uid)";
+		try {
+			$sth = $db->prepare($query);
+			$sth->execute(array(":uid" => $user->id));
+		} catch(PDOException $e) {
+
+		}
+				
 	}
 	
 	public static function get_for_user($user){
 		$instance = new self();
 		$instance->user = $user;
 		$db = Database::getConnection();		
-		$query = "SELECT Config FROM PaperlessProfile WHERE User = :uid;";
+		$query = "SELECT ID, Config FROM PaperlessProfile WHERE User = :uid;";
 		try {
 			$sth = $db->prepare($query);
 			$sth->execute(array(":uid" => $user->id));
 			$sth->setFetchMode(PDO::FETCH_ASSOC);
 			if($row = $sth->fetch()) {
+				$instance->id = $row['ID'];
 				$instance->config = json_decode($row['Config'], true); // turn into assoc. array.	
 			}else{
-				$instance->config = array(); // empty for now
+				$instance->config = Settings::default_settings(); // empty for now
+				Settings::create($user);
 			}
 		} catch(PDOException $e) {
 
