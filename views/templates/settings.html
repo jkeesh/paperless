@@ -2,8 +2,24 @@
 
 <div class="header">My Settings</div>
 
+{if $settings_saved}
+<div class="notice">Settings saved.</div>
+{/if}
+
 <div>
-	
+	<form  class="padded" action="{$root_url}settings" method="POST"> 
+		<label>Theme:</label>
+		<select name="theme">
+			{foreach from=$theme_options item=option}
+				<option value="{$option}"
+				{if $settings->get_value('theme') == $option}
+				selected="selected"
+				{/if}
+				>{$option}</option>
+			{/foreach}
+		</select>
+		<div class="padded-top"><input type="submit" value="Save" /></div>
+	</form>
 </div>
 
 <div class="clearfloat"></div>
