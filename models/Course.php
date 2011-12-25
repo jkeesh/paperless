@@ -12,9 +12,21 @@ class Course extends Model {
 	public $quarter;
 	public $settings;
 	
+	/* Returns if a file name is valid for this class */	
+	public function code_file_is_valid($filename){
+		$ext = pathinfo($filename, PATHINFO_EXTENSION);
+		$ext = strtolower($ext);
+		$allowed = $this->get_file_types();
+		return in_array($ext, $allowed);
+	}
+	
 	/* Return an array of the allows file types for this class.*/
 	public function get_file_types(){
-		return explode(',', $this->settings->get_value('file_types'));
+		$arr = explode(',', $this->settings->get_value('file_types'));
+		$filtered = array_map(function($val){
+			return trim(strtolower($val));
+		}, $arr);
+		return $filtered;
 	}
 	
 	public static function from_name_and_quarter_id($name, $qid){

@@ -28,6 +28,14 @@
 			
 			print_r($this->course->get_file_types());
 			
+			$file = 'Test.cpp';
+			echo $file;
+			if($this->course->code_file_is_valid($file)){
+				echo "Valid!";
+			}else{
+				echo "INVALID";
+			}
+			
 			$settings_saved = false;
 			// If it is an old quarter, we do not allow modifications.
 			if($quarter->id != $qid){
