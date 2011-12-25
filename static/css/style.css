@@ -621,7 +621,13 @@ select{
 	background-color: black; 
 	color: white; 
 	padding: 60px; 
-	opacity:0.8;'
+	opacity:0.8;
+	z-index: 1000;
+}
+
+.blackbox a{
+    color: #ccc;
+    font-weight: bold;
 }
 
 .table-title{
