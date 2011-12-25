@@ -75,8 +75,8 @@ $(document).ready(function(){
 				<a href="{$root_url}">My Classes</a>
                 {if $role == $POSITION_STUDENT}
             	    <a href="{$course->get_link()}/student/{$username}">My Code</a>
-					{if $course->name != "cs106a" and $current_quarter->id == $quarter_id}
-            		<a href="{$course->get_link()}/ddsubmit">Submit</a>
+					{if $course->settings->get_value('use_submitter') == 'yes' and $current_quarter->id == $quarter_id}			
+						<a href="{$course->get_link()}/ddsubmit">Submit</a>
 					{/if}
             	{/if}
 
