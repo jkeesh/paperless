@@ -4,6 +4,13 @@ class Settings{
 
 	/*
 	 * All arguments should be specified as strings
+	 *
+	 * Default settings format:
+	 * 
+	 * <setting_name> => array(
+	 *			'default' => <default_value>,
+	 *			'options' => array(<option1>, <option2>, ... <optionN>)	
+	 *	)
 	 */
 	public static $options = array(	'theme' => 
 										array(	'default' => 'default', 
