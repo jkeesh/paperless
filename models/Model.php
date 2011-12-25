@@ -132,31 +132,7 @@
 				echo $e->getMessage(); // TODO log this error instead of echoing
 			}
 		}
-		
-		public static function getStudentsForSectionLeader($sl_sunetid, $class) {
-			$db = Database::getConnection();
-			
-			if($sl_sunetid == "unknown"){
-				return Model::getAllStudentsForClass($class);
-			}
-			
-			$query = "SELECT ID, DisplayName, SUNetID, FirstName, LastName FROM People WHERE ID IN 
-						(SELECT Person FROM SectionAssignments WHERE Section IN
-							(SELECT ID FROM Sections 
-								WHERE SectionLeader IN
-									(SELECT ID FROM People WHERE SUNetID LIKE :slid )
-								AND Quarter = (SELECT DefaultQuarter FROM State)
-									))";
-			try {
-				$sth = $db->prepare($query);
-				$sth->execute(array(":slid" => $sl_sunetid));
-				if($rows = $sth->fetchAll()) {
-					return $rows;
-				}
-			} catch(PDOException $e) {
-				echo $e->getMessage(); // TODO log this error instead of echoing
-			}
-		}
+
 		
 		public static function getDisplayName($sunetid) {
 			$db = Database::getConnection();
