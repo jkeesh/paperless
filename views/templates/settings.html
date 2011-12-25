@@ -9,7 +9,7 @@
 <div>
 	<form  class="padded" action="{$root_url}settings" method="POST"> 
 		<label>Theme:</label>
-		<select name="theme">
+		<select name="theme" id="settings_theme_picker">
 			{foreach from=$theme_options item=option}
 				<option value="{$option}"
 				{if $settings->get_value('theme') == $option}
@@ -18,6 +18,19 @@
 				>{$option}</option>
 			{/foreach}
 		</select>
+		
+		<div id="settings_code_sample">
+			<pre class="brush: cpp; gutter: false;">
+			/*
+			 * A sample of what this theme looks like
+			 * 
+			 */
+			private int add(int x, int y){
+				return x + y;
+			}
+			</pre>
+		</div>
+		
 		<div class="padded-top"><input type="submit" value="Save" /></div>
 	</form>
 </div>

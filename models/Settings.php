@@ -2,9 +2,6 @@
 
 class Settings{
 
-	// themes = new Array('shCoreDefault.css', 'shCoreMDUltra.css' ,'shCoreMidnight.css', 'shCoreDjango.css', 'shCoreRDark.css', 'shCoreEclipse.css', 'shCoreEmacs.css', 'shCoreFadeToGrey.css');	
-
-
 	/*
 	 * All arguments should be specified as strings
 	 */

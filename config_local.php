@@ -19,6 +19,9 @@
 	define('SUBMISSIONS_PREFIX', 'submission_files');
 	define('SUBMISSIONS_DIR', 'submissions');
 	
+	define('IS_LOCAL', true);
+	
+	
 	define('ROOT_URL', 'http://localhost:8888/paperless/'); 
 	
 	define('CLASS_CONFIG_DIR', 'class_configs');

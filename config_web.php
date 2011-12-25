@@ -17,6 +17,8 @@
 	define('POSITION_LECTURER', 6);
 	define('POSITION_COORDINATOR', 7);
 	
+	define('IS_LOCAL', false);	
+	
 	//we will look for submissions in directories like
 	// SUBMISSIONS_PREFIX/class/SUBMISSIONS_DIR/sl/student/codefiles
 	define('SUBMISSIONS_PREFIX', '/afs/ir/class/archive/cs/');

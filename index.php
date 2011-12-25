@@ -26,7 +26,10 @@
 			$args = $args[0];
 			
 			$this->smarty->assign("current_quarter", Quarter::current());
-			
+
+			$this->settings = Settings::get_for_user($this->user);		
+			$this->smarty->assign("settings", $this->settings);
+	
 			if(count($args) < 2){
 				$this->smarty->assign("role", 0);							
 			}else{
@@ -56,6 +59,12 @@
 			$this->smarty->compile_dir  = BASE_DIR . '/views/templates_c/';
 			$this->smarty->config_dir   = BASE_DIR . '/views/configs/';
 			$this->smarty->cache_dir    = BASE_DIR . '/views/cache/';
+			
+			if(IS_LOCAL){
+				$this->smarty->assign("DEBUG_ON", 'true');				
+			}else{
+				$this->smarty->assign("DEBUG_ON", 'false');								
+			}
 			
 			// assign vars we need on every page
 			$this->smarty->assign("username", USERNAME);
