@@ -246,7 +246,7 @@ CodeFile.mouseEntered = function(event) {
 	range = new LineRange(code_file.selected_range_start, line_no);
 	range.each(function(line_no) {
 			   code_file.hiliteLineNo(line_no);
-			   });
+	});
 	
 	for (var i = old_range.lower; i < range.lower; i++) {
 		code_file.unfLineNo(i);
