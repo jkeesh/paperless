@@ -79,7 +79,6 @@ CodeManager.bind_editing = function(){
     $('.inlineComment').click(function(){
         var comment_id = $(this).attr('data-id');
         var file_id = $(this).attr('data-file');
-        alert('you clicked it!' + comment_id + ' in file ' + file_id);
         
         var file = CodeManager.code_files[file_id];
         var comment = file.get_comment_by_db_id(comment_id);
