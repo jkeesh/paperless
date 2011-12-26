@@ -133,12 +133,7 @@ var interactive = false;
 		// if(!code_files[fileNum].displayed)
 		//    code_files[fileNum].showComments();
 		//     }
-    
-    function edit(fileID, commentRange, commentID){
-    	var file = code_files[fileID];
-		var comment = file.getCommentByRangeAndID(commentRange, commentID);
-		if(comment) comment.edit();
-    }
+
 
 	function release(){
  		var action = "delete";

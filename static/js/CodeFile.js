@@ -177,18 +177,6 @@ function CodeFile(options){
 		//console.log(this.highlights);  
 	}
 	
-	
-	//var comment = file.getCommentByRangeAndID(commentRange, commentID);
-	this.getCommentByRangeAndID = function(commentRange, commentID){
-		for(var i = 0; i < this.comment_list.length; i++) {
-			var cur = this.comment_list[i];
-			
-			if(cur.id == commentID && cur.range.toString() == commentRange)
-				return this.comment_list[i];
-		}
-		return null;
-	}
-	
 	this.getCurrentComment = function(){
 	    this.currentComment.commenter = this.user;
 		return this.currentComment;
