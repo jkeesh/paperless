@@ -91,7 +91,7 @@ CodeManager.bind_editing = function(){
 }
 
 CodeManager.Releaser = {
-    
+    // Setup the releaser. We listen to changes on the release checkbox.
     setup: function(){
         $(':checkbox').change(function() {
     		CodeManager.Releaser.release();
