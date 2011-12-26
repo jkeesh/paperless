@@ -74,7 +74,13 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter, db_id) {
 		$.ajax({
 			   type: 'POST',
 			   url: window.location.pathname, // post to current location url
-			   data: "action="+action+"&text=" + encodeURIComponent(this.text) + "&rangeLower=" + this.range.lower + "&rangeHigher=" + this.range.higher + "&filename=" + this.filename,
+			   data: {
+			       action: action,
+			       text: this.text,
+			       rangeLower: this.range.lower,
+			       rangeHigher: this.range.higher,
+			       filename: this.filename
+			   },
 			   success: function(response) {
 			       D.log(response);
 				    if(response && response.status == "ok"){ 
