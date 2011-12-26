@@ -2,20 +2,25 @@ var CodeManager = {};
 
 CodeManager.is_interactive = true;
 
-/* Hide all of the code files */
-CodeManager.hide_all_files = function(){
-    $('.code_container').hide();
-    $('.selectedFile').removeClass('selectedFile');
-}
+CodeManager.DisplayController = {
+    
+    /* Hide all of the code files */
+    hide_all_files: function(){
+        $('.code_container').hide();
+        $('.selectedFile').removeClass('selectedFile');
+    },
+    
+    /* 
+     * Display an individual file with the given name
+     * @param   file    {string}    the name of the file
+     */
+    display_file: function(id){
+        CodeManager.DisplayController.hide_all_files();
+        $('.code_container[data-id="'+id+'"]').show();
+        $('.filelink[data-id="'+id+'"]').addClass('selectedFile');
+    }
+    
 
-/* 
- * Display an individual file with the given name
- * @param   file    {string}    the name of the file
- */
-CodeManager.display_file = function(id){
-    CodeManager.hide_all_files();
-    $('.code_container[data-id="'+id+'"]').show();
-    $('.filelink[data-id="'+id+'"]').addClass('selectedFile');
 }
 
 /*
@@ -51,10 +56,10 @@ CodeManager.setup_file_selection = function(){
         var id = CodeManager.get_id(elem);
         $(this).click(function(e){
             e.preventDefault();
-            CodeManager.display_file(id);
+            CodeManager.DisplayController.display_file(id);
         });
     });
-    CodeManager.display_file(0); // Display the first file.
+    CodeManager.DisplayController.display_file(0); // Display the first file.
 }
 
 CodeManager.setup_code_files = function(){
