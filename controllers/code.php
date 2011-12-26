@@ -58,24 +58,6 @@ class CodeHandler extends ToroHandler {
 			Permissions::gate(POSITION_STUDENT, $this->role);	
 		}
 
-		// $sl = Model::getSectionLeaderForStudent($suid, $class);
-		// 
-		// // public static function get_assignment_files($course, $student, $assignment, $sl, $submission){
-		// list($error, $files, $file_contents, $assignment_files, $release) = Utilities::get_assignment_files($this->course, $the_student, $assignment, $the_sl, $student);
-		// 
-		// list($error, $files, $file_contents, $assignment_files, $release) = $this->getAssignmentFiles($class, $student, $assignment, $sl, $the_student, $the_sl, $this->course);
-		
-		
-		// if($error != null){
-		// 	$this->smarty->assign('errorMsg', $error);
-		// 	$this->smarty->display('error.html');
-		//             return;
-		// }
-
-		// if(count($files) == 0){
-		// 	$this->smarty->assign("message", "Nothing here yet.");
-		// }
-
 		if($this->role >= POSITION_SECTION_LEADER){
 			$this->smarty->assign("interactive", 1);
 			$showComments = True;
@@ -84,24 +66,8 @@ class CodeHandler extends ToroHandler {
 			$showComments = $release;
 		}
 
-		// assign template vars
-		// $this->smarty->assign("code", true);
-		// 
-		// $string = explode("_", $student); // if it was student_1 just take student
-		// $student_suid = $string[0];
-		// 
-		// $this->smarty->assign("numbered_submission", $student);
-		// $this->smarty->assign("class", htmlentities($class));
-		// $this->smarty->assign("student", htmlentities($student_suid));
 		$this->smarty->assign("assignment", htmlentities($assignment));
-		// $this->smarty->assign("files", $files);
-		// $this->smarty->assign("file_contents", $file_contents);
-		// $this->smarty->assign("assignment_files", $assignment_files);
-		// $this->smarty->assign("sl", $sl);
-		// 
 		$this->smarty->assign("showComments", $showComments);
-
-		// display the template
 		$this->smarty->display("code.html");
 	}
 	
@@ -120,31 +86,30 @@ class CodeHandler extends ToroHandler {
 		}else{
 			Utilities::delete_release($dirname);
 		}
-		echo json_encode(array("status" => "ok"));
+		$this->json_success();
 		return;
 	}
 
 	/*
-		* Handles adding and deleting comments.  Note: when a comment is edited it is
-		* first deleted and then re-added to the database.
-		* TODO: Log / handle an error when we don't have a valid path
-		* TODO: We probably need to filter user input somehow
-		* TODO: This should output (via echo or whatever) some valid JSON that is used
-		*       to confirm the request succeeded
-		*/
+	 * Handles adding and deleting comments.  Note: when a comment is edited it is
+	 * first deleted and then re-added to the database.
+	 */
 	public function post_xhr($qid, $class, $assignment, $student) {
 		$this->basic_setup(func_get_args());
-		// only section leaders should be able to add comments
+		
+		// Only section leaders should be able to add comments
 		Permissions::gate(POSITION_SECTION_LEADER, $this->role);		
 		
+		// We only modifications for the current quarter.
 		$quarter = $this->current_quarter;
 		if($this->current_quarter->id != $qid){
 			return $this->json_failure("You cannot leave comments for earlier quarters.");
 		}		
+		
+		
 		$parts = explode("_", $student); // if it was student_1 just take student
 		$suid = $parts[0];
 		$submission_number = $parts[1];
-		
 		
 		$the_student = new Student;
 		$the_student->from_sunetid_and_course($suid, $this->course);
@@ -154,9 +119,11 @@ class CodeHandler extends ToroHandler {
 		
 		$dirname = $the_sl->get_base_directory() . '/' . $assignment . '/' . $student .'/';
 
+		// Return a failure message if variables are not properly set.
 		if(!isset($_POST['action'])) {
 			return $this->json_failure("The message to the server was not properly formed.");
 		}
+		// Handle the release of an assignment if that is what the action calls for.
 		if($_POST['action'] == "release"){
 			return $this->handle_release($_POST['release'], $dirname);
 		}
