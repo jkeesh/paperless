@@ -70,14 +70,18 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter, db_id) {
 	 * action       the action to be taken on the comment (create, delete)
 	 */
 	this.ajax = function(action){
+	    var self = this;
 		$.ajax({
 			   type: 'POST',
 			   url: window.location.pathname, // post to current location url
 			   data: "action="+action+"&text=" + encodeURIComponent(this.text) + "&rangeLower=" + this.range.lower + "&rangeHigher=" + this.range.higher + "&filename=" + this.filename,
 			   success: function(response) {
+			       D.log(response);
 				    if(response && response.status == "ok"){ 
-				        if(response.action == "create")
-                            self.code_file.addCommentDiv(self.text, self.code_file.user, self.range, true, self.id);
+				        if(response.action == "create"){
+				            self.db_id = response.db_id;
+				            self.code_file.addCommentDiv(self.text, self.code_file.user, self.range, true, self.id, response.db_id);
+				        }
 				    } else {
 				        if(response.why){
 				            alert(response.why);
@@ -90,6 +94,9 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter, db_id) {
 			        alert("There was an error with this comment. Try refreshing the page.");
 			   }
 		});
+		
+		CodeManager.bind_editing();
+		
 	}
 	
 	/*

@@ -165,10 +165,12 @@ class CodeHandler extends ToroHandler {
 		$commenter = Model::getUserID(USERNAME);
 		$student = Model::getUserID($suid);
 
+		$db_id = null;
 		if($_POST['action'] == "create") {
 			$newComment = AssignmentComment::create($curFile->getID(), $_POST['rangeLower'], 
 				$_POST['rangeHigher'], $_POST['text'], $commenter, $student);
 			$newComment->save();
+			$db_id = $newComment->getID();
 		} else if($_POST['action'] == "delete") {
 			// find the comment to delete: 
 			foreach($curFile->getAssignmentComments() as $comment) {
@@ -184,9 +186,10 @@ class CodeHandler extends ToroHandler {
 						// 	break;
 						// }
 			}
+			
 		} 
 	
-		echo json_encode(array("status" => "ok", "action" => $_POST['action']));
+		echo json_encode(array("status" => "ok", "action" => $_POST['action'], 'db_id' => $db_id));
 	}
 }
 		
