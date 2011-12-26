@@ -104,6 +104,25 @@ class CodeHandler extends ToroHandler {
 		// display the template
 		$this->smarty->display("code.html");
 	}
+	
+	
+	private function json_failure($error){
+		echo json_encode(array("status" => "fail", "why" => $error));
+	}
+	
+	private function json_success(){
+		echo json_encode(array("status" => "ok"));
+	}
+	
+	private function handle_release($release_action, $dirname){
+		if($release_action == "create"){
+			Utilities::create_release($dirname);
+		}else{
+			Utilities::delete_release($dirname);
+		}
+		echo json_encode(array("status" => "ok"));
+		return;
+	}
 
 	/*
 		* Handles adding and deleting comments.  Note: when a comment is edited it is
@@ -115,25 +134,20 @@ class CodeHandler extends ToroHandler {
 		*/
 	public function post_xhr($qid, $class, $assignment, $student) {
 		$this->basic_setup(func_get_args());
+		// only section leaders should be able to add comments
 		Permissions::gate(POSITION_SECTION_LEADER, $this->role);		
 		
-		// only section leaders should be able to add comments
-		$quarter = Quarter::current();
-
-		if($quarter->id != $qid){
-			echo json_encode(array("status" => "fail", "why" => "You cannot leave comments for earlier quarters."));
-			return;
-		}
-		
-		$course = Course::from_name_and_quarter_id($class, $qid);
-
+		$quarter = $this->current_quarter;
+		if($this->current_quarter->id != $qid){
+			return $this->json_failure("You cannot leave comments for earlier quarters.");
+		}		
 		$parts = explode("_", $student); // if it was student_1 just take student
 		$suid = $parts[0];
 		$submission_number = $parts[1];
 		
 		
 		$the_student = new Student;
-		$the_student->from_sunetid_and_course($suid, $course);
+		$the_student->from_sunetid_and_course($suid, $this->course);
 		$the_sl = $the_student->get_section_leader();
 		
 		$sl = Model::getSectionLeaderForStudent($suid, $class);
@@ -141,26 +155,17 @@ class CodeHandler extends ToroHandler {
 		$dirname = $the_sl->get_base_directory() . '/' . $assignment . '/' . $student .'/';
 
 		if(!isset($_POST['action'])) {
-			echo json_encode(array("status" => "fail"));
-			return;
+			return $this->json_failure("The message to the server was not properly formed.");
 		}
 		if($_POST['action'] == "release"){
-			// echo $dirname;
-			if($_POST['release'] == "create"){
-				Utilities::create_release($dirname);
-			}else{
-				Utilities::delete_release($dirname);
-			}
-			echo json_encode(array("status" => "ok"));
-			return;
+			return $this->handle_release($_POST['release'], $dirname);
 		}
 				
 		$curFile = AssignmentFile::loadFile($quarter->id, $class, $suid, $assignment, $_POST['filename'], $submission_number);
 				
 		$id = $curFile->getID();
-		if(!isset($id)){ //			echo "no valid assnment found";
-			echo json_encode(array("status" => "fail"));
-			return;
+		if(!isset($id)){ 
+			return $this->json_failure("We could not load the assignment.");
 		}
 		$commenter = Model::getUserID(USERNAME);
 		$student = Model::getUserID($suid);

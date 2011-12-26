@@ -25,7 +25,8 @@
 			$args = func_get_args();
 			$args = $args[0];
 			
-			$this->smarty->assign("current_quarter", Quarter::current());
+			$this->current_quarter = Quarter::current();
+			$this->smarty->assign("current_quarter", $this->current_quarter);
 
 			$this->settings = Settings::get_for_user($this->user);		
 			$this->smarty->assign("settings", $this->settings);
