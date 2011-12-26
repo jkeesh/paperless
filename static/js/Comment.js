@@ -13,6 +13,11 @@ function removeDialog(){
 	current_dialog = null;
 }
 
+Comment.get_comment_element = function(db_id){
+    return $('.inlineComment[data-id="'+db_id+'"]');
+}
+
+
 /*
  * Comment
  * ======================
@@ -138,7 +143,11 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter, db_id) {
 		var commentID = "c" + self.range.toString();
 		this.code_file.unhighlightRange(self.range);
 		this.code_file.removeComment(this);
-		$("." + commentID).remove();
+		
+		D.log("remove: " + this.db_id);
+		D.log(this);
+					
+		Comment.get_comment_element(this.db_id).remove();
 	}
 	
 	/*

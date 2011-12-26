@@ -40,19 +40,15 @@ function CodeFile(options){
 	this.setupComments = function(){
 	    var commentLocation = $('.comments_holder[data-id="'+this.fileID+'"]');
 	    D.log(commentLocation);
-//		var commentLocation = $('#comments'+this.fileID);
 		var children = commentLocation.children();
 		D.log($(children));
 		for(var i = 0; i < children.length; i++){
 			var curComment = children[i];
 			var cur = $(curComment);
 			var rangeString = cur.attr('data-range');
-			D.log(rangeString);			
 			var text = $(".comment", cur).html();
-			D.log(text);
 			var range = LineRange.stringToRange(rangeString);
 			var commenter = $(".commenter", cur).html();
-			D.log(commenter);
 			this.highlightRange(range);
 			
 			// The id of the comment in the database
@@ -66,13 +62,11 @@ function CodeFile(options){
 	}
 	
 	this.showComments = function(){
-	    D.log('showing comments...');
         if(this.displayed) return;
 		for(var i = 0; i < this.comment_list.length; i++){
 			var comment = this.comment_list[i];
 			D.log(comment);
 			this.addCommentDiv(comment.text, comment.commenter, comment.range, this.interactive, comment.id, comment.db_id);
-			D.log('added???');
 		}
 		this.displayed = true;
 	}
@@ -89,10 +83,8 @@ function CodeFile(options){
 	}
 	
 	this.addHandlers = function() {
-	    D.log('adding handlers...');
 		if(!this.interactive) return;
 
-        D.log('continuing to add...');
 		this.highlights.push(0); // just put a zero in index zero-- we want to start from line 1
 		var line_no = 1;
 		do {
@@ -102,8 +94,6 @@ function CodeFile(options){
 			line.bind("mouseenter", {code_file : this}, CodeFile.mouseEntered);
 			line_no++;
 		} while(line.size() != 0);
-		
-		//console.log(this.highlights);
 	}
 	
 	this.getLine = function(line_no) {
@@ -197,7 +187,6 @@ function CodeFile(options){
 	}
 	
 	this.addCommentDiv = function(text, commenter, range, isEditable, commentID, db_id){
-		D.log('adding comment div');
 		if(isEditable == undefined) isEditable = true;
 		var range_text = range.toString();
 		formattedText = converter.makeHtml(text);	
@@ -213,9 +202,7 @@ function CodeFile(options){
             editable: isEditable,
             db_id: db_id
         };
-        //console.log(data);
         var html = $('#commentTemplate').tmpl(data);
-        console.log(html);
 
 		var commentLocation = $('.code_container[data-id="'+this.fileID+'"] .code .number'+range.higher);
 		commentLocation.after(html);	

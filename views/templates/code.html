@@ -10,10 +10,10 @@ var converter = new Showdown.converter();
 
 <script id="commentTemplate" type="text/html">
 {literal}
-<div class="inlineComment e${range_text} comment${commentID}" data-range='${range_text}' data-id='${db_id}' data-file='${fileID}'>
-	<span class="hiddenPlainText htext${range_text}" data-range='${range_text}'>${text}</span>
-		<div class="${range_text} commentbox">
-			<span class="inlineCommentText ctext${range_text}">
+<div class="inlineComment" data-range='${range_text}' data-id='${db_id}' data-file='${fileID}'>
+	<span class="hiddenPlainText" data-range='${range_text}'>${text}</span>
+		<div class="commentbox">
+			<span class="inlineCommentText">
 					{{html formattedText}}
 			</span>
 			<div class="commentauthor">${commenter}</div>
@@ -24,19 +24,19 @@ var converter = new Showdown.converter();
 </script>
 
 <div id="codeheader">
-{if $role >= $POSITION_SECTION_LEADER}
-<span class="link"><a href="{$course->get_link()}/assignment/{$the_sl->sunetid}/{$assignment}">{$assignment}</a></span>
-{else}
-{$assignment}
-{/if}
-:
-<span class="link"><a href="{$the_student->get_link()}">{$the_student->display_name}</a></span>
+	{if $role >= $POSITION_SECTION_LEADER}
+	<span class="link"><a href="{$course->get_link()}/assignment/{$the_sl->sunetid}/{$assignment}">{$assignment}</a></span>
+	{else}
+	{$assignment}
+	{/if}
+	:
+	<span class="link"><a href="{$the_student->get_link()}">{$the_student->display_name}</a></span>
 
-<span class="small-header">Section Leader: {$the_sl->sunetid}</span>
+	<span class="small-header">Section Leader: {$the_sl->sunetid}</span>
 
 
-<!-- <span class="small-header right hover-underline"><a title="Download code and comments as text file" href="{$root_url}{$class}/download/{$assignment}/{$numbered_submission}/{$assignment}_comments.txt">Download</a></span>
-</div> -->
+<!-- <span class="small-header right hover-underline"><a title="Download code and comments as text file" href="{$root_url}{$class}/download/{$assignment}/{$numbered_submission}/{$assignment}_comments.txt">Download</a></span> -->
+</div>
 
 {if !isset($print_view)}
 <div id="filelist">
