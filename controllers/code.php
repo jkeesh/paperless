@@ -10,6 +10,11 @@ require_once("utils.php");
 	* for a student, assignment pair and other ajax actions.
 	*/
 class CodeHandler extends ToroHandler {
+	
+	private function display_error($error){
+		$this->smarty->assign('errorMsg', $error);
+		$this->smarty->display('error.html');
+	}
 
 	/*
 	 * Displays the syntax highlighted code for a student, assignment pair
@@ -23,11 +28,8 @@ class CodeHandler extends ToroHandler {
 		$this->smarty->assign("code_file", $student);
 
 		$suid = explode("_", $student); // if it was student_1 just take student
-		// The code directory was not well formed.
 		if(count($suid) != 2){
-			$this->smarty->assign('errorMsg', "The code directory was not well formed.");
-			$this->smarty->display('error.html');
-            return;
+			return $this->display_error("The code directory was not well formed.");
 		}
 		
 		$submission_number = $suid[1];
@@ -37,9 +39,17 @@ class CodeHandler extends ToroHandler {
 		$the_student->from_sunetid_and_course($suid, $this->course);
 		
 		$the_sl = $the_student->get_section_leader();
+		if(is_null($the_sl)){
+			return $this->display_error("This student does not have a section leader.");
+		}
 
 		$dirname = $the_sl->get_base_directory() . "/". $assignment . "/" . $student . "/"; 
 		$all_files = Utilities::get_all_files($dirname);
+		if(is_null($all_files)){
+			return $this->display_error("This was not a valid directory.");
+		}
+		
+		
 		$code_files = Utilities::get_code_files($this->course, $the_student, $assignment, $dirname, $all_files, $submission_number);
 		$release = Utilities::release_exists($dirname);
 		$this->smarty->assign("release", $release);

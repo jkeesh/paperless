@@ -44,6 +44,7 @@ class Student extends User {
 		} catch(PDOException $e) {
 			echo $e->getMessage(); // TODO log this error instead of echoing
 		}
+		return null;
 	}
 	
 }
