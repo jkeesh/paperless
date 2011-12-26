@@ -73,11 +73,6 @@ CodeManager.interactive = false;
 var interactive = false;
 {/if}
 
-    var files = new Array();
-    {foreach from=$code_files item=info key=file}
-    files.push('{$file}');
-	{/foreach}
-
     // we need to wait for the syntax highlighter to finish before we access the modified dom
     $(document).ready(function(){
        	//setTimeout("setupCodeFiles()", 3000);
