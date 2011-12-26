@@ -71,6 +71,8 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter, db_id) {
 	 */
 	this.ajax = function(action){
 	    var self = this;
+	    D.log("Before... dbid " + this.db_id);
+	    D.log(this.db_id);
 		$.ajax({
 			   type: 'POST',
 			   url: window.location.pathname, // post to current location url
@@ -79,7 +81,8 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter, db_id) {
 			       text: this.text,
 			       rangeLower: this.range.lower,
 			       rangeHigher: this.range.higher,
-			       filename: this.filename
+			       filename: this.filename,
+			       db_id: this.db_id
 			   },
 			   success: function(response) {
 			       D.log(response);

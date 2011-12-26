@@ -144,21 +144,8 @@ class CodeHandler extends ToroHandler {
 			$newComment->save();
 			$db_id = $newComment->getID();
 		} else if($_POST['action'] == "delete") {
-			// find the comment to delete: 
-			foreach($curFile->getAssignmentComments() as $comment) {
-					if(	$comment->getStartLine() == $_POST['rangeLower'] && 
-						$comment->getEndLine() == $_POST['rangeHigher'] && 
-					$comment->getCommentText() == $_POST['text'] ) {
-						$comment->delete();
-						break;
-					}
-					// TODO: Probably a better way to delete comments would be to associate with a unique id
-					// if(	$comment->getID() == $_POST['commentID'] ) {
-						// 	$comment->delete();
-						// 	break;
-						// }
-			}
-			
+			$comment = AssignmentComment::load($_POST['db_id']);
+			$comment->delete();			
 		} 
 	
 		echo json_encode(array("status" => "ok", "action" => $_POST['action'], 'db_id' => $db_id));
