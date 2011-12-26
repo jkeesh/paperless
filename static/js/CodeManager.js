@@ -90,13 +90,13 @@ CodeManager.bind_editing = function(){
     })
 }
 
-CodeManager.setup_release = function(){
-    $(':checkbox').change(function() {
-		CodeManager.Releaser.release();
-	});
-}
-
 CodeManager.Releaser = {
+    
+    setup: function(){
+        $(':checkbox').change(function() {
+    		CodeManager.Releaser.release();
+    	});
+    },
     
     // Handles releasing the code file
     release: function(){
@@ -148,6 +148,6 @@ $(document).bind("status.finishedSyntaxHighlighting", CodeManager.setup_code_fil
 
 $(function(){
    CodeManager.setup_file_selection(); 
-   CodeManager.setup_release();
+   CodeManager.Releaser.setup();
    D.log(CodeManager);
 });
