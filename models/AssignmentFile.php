@@ -92,137 +92,132 @@ class AssignmentFile extends Model {
 		return $instance;
 	}
 
-	// public static function create($GradedAssignment, $FilePath) {
-		// 	$instance = new self();
-		// 	$instance->fill(array(0, $GradedAssignment, $FilePath));
-		// 	return $instance;
-		// }
 
-		public function loadComments() {
-			$query = "SELECT * FROM " . ASSIGNMENT_COMMENT_TABLE . " WHERE AssignmentFile=:AssignmentFile";
-			try {
-				$sth = $this->conn->prepare($query);
-				$sth->execute(array(":AssignmentFile" => $this->ID));
+	public function loadComments() {
+		$query = "SELECT * FROM " . ASSIGNMENT_COMMENT_TABLE . " WHERE AssignmentFile=:AssignmentFile";
+		try {
+			$sth = $this->conn->prepare($query);
+			$sth->execute(array(":AssignmentFile" => $this->ID));
 
-				$sth->setFetchMode(PDO::FETCH_ASSOC);
-				while($row = $sth->fetch()) {
-					$curComment = AssignmentComment::create($row['AssignmentFile'], $row['StartLine'], 
-						$row['EndLine'], $row['CommentText'], $row['Commenter'], $row['Student']);
-					$curComment->setID($row['ID']);
-					$this->AssignmentComments[] = $curComment;
-				}
-			} catch(PDOException $e) {
-				echo $e->getMessage(); // TODO log this error instead of echo
+			$sth->setFetchMode(PDO::FETCH_ASSOC);
+			while($row = $sth->fetch()) {
+				$curComment = AssignmentComment::create($row['AssignmentFile'], $row['StartLine'], 
+					$row['EndLine'], $row['CommentText'], $row['Commenter'], $row['Student']);
+				$curComment->setID($row['ID']);
+				$this->AssignmentComments[] = $curComment;
 			}
+		} catch(PDOException $e) {
+			echo $e->getMessage(); // TODO log this error instead of echo
 		}
-		
-		
-		/*
-		 * This loads an AssignmentFile object.
-		 *
-		 * @param	$student				{Object}	the Student object
-		 * @param	$paperless_assignment	{Object}	the PaperlessAssignment object
-		 * @param	$assignment				{string}	the name of the assignment
-		 * @param	$file					{string}	the name of the file
-		 * @param	$number					{int}		the submission number for this assignment
-		 *
-		 * @return 	the AssignmentFile object, or null if it is not found
-		 *
-		 * @author	Jeremy Keeshin	December 25, 2011
-		 */ 
-		public static function load_file($student, $paperless_assignment, $file, $number){
-			echo "paperless assignment...\n";
-			
-			if(is_null($paperless_assignment)){
-				
-				echo "bad assignment";
-				return null;
-			}else{
-				echo "good!";
-			}
-			print_r($paperless_assignment);
-			$query = "SELECT * FROM AssignmentFiles 
-						WHERE Student = :Student_ID
-							AND	SubmissionNumber = :Submission_Number
-							AND	PaperlessAssignment = :Assn_ID
-							AND File = :File;";
-							
-			$arr = array(":Student_ID" => $student->id, ":Submission_Number" => $number, 
-						 ":Assn_ID" => $paperless_assignment->ID, ":File" => $file );
-						
-			$instance = new self();
-			
-			try {
-				$sth = $instance->conn->prepare($query);
-				$sth->execute($arr);
-				$sth->setFetchMode(PDO::FETCH_NUM);
-				if($row = $sth->fetch()) {
-					print_r($row);
-					$instance->fill($row);
-					$instance->loadComments();
-					return $instance;
-				}else{
-					echo "here";
-				}
-			} catch(PDOException $e) {
-			}
-			
-			return null;				
-		}
-
-
-		//	$assignmentFile = AssignmentFile::loadFile($class, $student, $assignment, $file);
-		public static function loadFile($qid, $class, $student, $dir, $file, $number = 0){
-			$paperless_assignment_id = PaperlessAssignment::getID($qid, $class, $dir);	
-			
-			$sunetid = explode("_", $student);
-			$sunetid = $sunetid[0];
-
-			$student_id = Model::getUserID($sunetid);
-			$query = "SELECT * FROM " . ASSIGNMENT_FILE_TABLE . " WHERE Student=:Student AND PaperlessAssignment=:AssnID AND File=:File AND SubmissionNumber=:Number;";
-			$arr = array(":Student" => $student_id, ":AssnID" => $paperless_assignment_id, ":File" => $file, ":Number" => $number);
-			$instance = new self();
-
-			try {
-				$sth = $instance->conn->prepare($query);
-				$sth->execute($arr);
-				$sth->setFetchMode(PDO::FETCH_NUM);
-				if($row = $sth->fetch()) {
-					$instance->fill($row);
-					$instance->loadComments();
-					return $instance;
-				}else{
-
-				}
-			} catch(PDOException $e) {
-				echo $e->getMessage(); // TODO log this error instead of echo
-			}
-			return null;
-		}
-
-		/*
-			* Getters and Setters
-			*/
-		public function fill(array $row) { 
-			$this->ID = $row[0];
-			$this->GradedAssignment = $row[1];
-			$this->FilePath = $row[2];
-			$this->PaperlessAssignment = $row[3];
-			$this->Student = $row[4];
-			$this->SubmissionNumber = $row[5];
-		}
-
-		public function setID($ID) { $this->ID = $ID; }
-		public function getID() { return $this->ID; }
-
-		public function setGradedAssignment($GradedAssignment) { $this->GradedAssignment = $GradedAssignment; }
-		public function getGradedAssignment() { return $this->GradedAssignment; }
-
-		public function setFilePath($FilePath) { $this->FilePath = $FilePath; }
-		public function getFilePath() { return $this->FilePath; }
-
-		public function getAssignmentComments() { return $this->AssignmentComments; }
-
-		public function setSubmissionNumber($num){ $this->SubmissionNumber = $num; }
 	}
-	?>
+	
+		
+	/*
+	 * This loads an AssignmentFile object.
+	 *
+	 * @param	$student				{Object}	the Student object
+	 * @param	$paperless_assignment	{Object}	the PaperlessAssignment object
+	 * @param	$assignment				{string}	the name of the assignment
+	 * @param	$file					{string}	the name of the file
+	 * @param	$number					{int}		the submission number for this assignment
+	 *
+	 * @return 	the AssignmentFile object, or null if it is not found
+	 *
+	 * @author	Jeremy Keeshin	December 25, 2011
+	 */ 
+	public static function load_file($student, $paperless_assignment, $file, $number){
+		echo "paperless assignment...\n";
+		
+		if(is_null($paperless_assignment)){
+			
+			echo "bad assignment";
+			return null;
+		}else{
+			echo "good!";
+		}
+		print_r($paperless_assignment);
+		$query = "SELECT * FROM AssignmentFiles 
+					WHERE Student = :Student_ID
+						AND	SubmissionNumber = :Submission_Number
+						AND	PaperlessAssignment = :Assn_ID
+						AND File = :File;";
+						
+		$arr = array(":Student_ID" => $student->id, ":Submission_Number" => $number, 
+					 ":Assn_ID" => $paperless_assignment->ID, ":File" => $file );
+					
+		$instance = new self();
+		
+		try {
+			$sth = $instance->conn->prepare($query);
+			$sth->execute($arr);
+			$sth->setFetchMode(PDO::FETCH_NUM);
+			if($row = $sth->fetch()) {
+				print_r($row);
+				$instance->fill($row);
+				$instance->loadComments();
+				return $instance;
+			}else{
+				echo "here";
+			}
+		} catch(PDOException $e) {
+		}
+		
+		return null;				
+	}
+
+
+	//	$assignmentFile = AssignmentFile::loadFile($class, $student, $assignment, $file);
+	public static function loadFile($qid, $class, $student, $dir, $file, $number = 0){
+		$paperless_assignment_id = PaperlessAssignment::getID($qid, $class, $dir);	
+		
+		$sunetid = explode("_", $student);
+		$sunetid = $sunetid[0];
+
+		$student_id = Model::getUserID($sunetid);
+		$query = "SELECT * FROM " . ASSIGNMENT_FILE_TABLE . " WHERE Student=:Student AND PaperlessAssignment=:AssnID AND File=:File AND SubmissionNumber=:Number;";
+		$arr = array(":Student" => $student_id, ":AssnID" => $paperless_assignment_id, ":File" => $file, ":Number" => $number);
+		$instance = new self();
+
+		try {
+			$sth = $instance->conn->prepare($query);
+			$sth->execute($arr);
+			$sth->setFetchMode(PDO::FETCH_NUM);
+			if($row = $sth->fetch()) {
+				$instance->fill($row);
+				$instance->loadComments();
+				return $instance;
+			}else{
+
+			}
+		} catch(PDOException $e) {
+			echo $e->getMessage(); // TODO log this error instead of echo
+		}
+		return null;
+	}
+
+	/*
+	 * Getters and Setters
+	 */
+	public function fill(array $row) { 
+		$this->ID = $row[0];
+		$this->GradedAssignment = $row[1];
+		$this->FilePath = $row[2];
+		$this->PaperlessAssignment = $row[3];
+		$this->Student = $row[4];
+		$this->SubmissionNumber = $row[5];
+	}
+
+	public function setID($ID) { $this->ID = $ID; }
+	public function getID() { return $this->ID; }
+
+	public function setGradedAssignment($GradedAssignment) { $this->GradedAssignment = $GradedAssignment; }
+	public function getGradedAssignment() { return $this->GradedAssignment; }
+
+	public function setFilePath($FilePath) { $this->FilePath = $FilePath; }
+	public function getFilePath() { return $this->FilePath; }
+
+	public function getAssignmentComments() { return $this->AssignmentComments; }
+
+	public function setSubmissionNumber($num){ $this->SubmissionNumber = $num; }
+}
+?>
