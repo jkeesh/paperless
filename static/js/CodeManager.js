@@ -92,36 +92,62 @@ CodeManager.bind_editing = function(){
 
 CodeManager.setup_release = function(){
     $(':checkbox').change(function() {
-		CodeManager.release();
+		CodeManager.Releaser.release();
 	});
 }
 
-CodeManager.release = function(){
-	var action = "delete";
-	var val = $('input:checkbox:checked').val(); 
-	if(val != undefined){
-	 	action = "create";
-	}
-	$.ajax({
-	   	type: 'POST',
-	   	url: window.location.pathname, // post to current location url
-	   	data: "action=release&release=" + action,
-	   	success: function(response) {
-    		if(response && response.status == "ok"){
-    			showSaved();
-    		}else{
-    			alert("There was an error in releasing the comments.");
-    		}
-	   	},
-	   	error: function(XMLHttpRequest, textStatus, errorThrown) {
-		    alert("There was an error in releasing the comments.");
-   	    }
-	});
-}
+CodeManager.Releaser = {
+    
+    // Handles releasing the code file
+    release: function(){
+    	var action = "delete";
+    	var val = $('input:checkbox:checked').val(); 
+    	if(val != undefined){
+    	 	action = "create";
+    	}
+    	$.ajax({
+    	   	type: 'POST',
+    	   	url: window.location.pathname, // post to current location url
+    	   	data: "action=release&release=" + action,
+    	   	success: function(response) {
+        		if(response && response.status == "ok"){
+        			CodeManager.Releaser.transitions.showSaved();
+        		}else{
+        			alert("There was an error in releasing the comments.");
+        		}
+    	   	},
+    	   	error: function(XMLHttpRequest, textStatus, errorThrown) {
+    		    alert("There was an error in releasing the comments.");
+       	    }
+    	});
+    },
+    
+    // Handle releaser transitions
+    transitions: {
+        // Resets save message to hidden.
+        resetSaved: function(){
+        		$("#saved").addClass("hidden");
+        },
+        
+        // Fades out the message
+        fade: function(){	
+        		$("#saved").fadeOut(400);
+        		setTimeout(CodeManager.Releaser.transitions.resetSaved, 500);
+        },
+        
+        // Show the saved message.
+        showSaved: function(){
+        		$("#saved").removeClass("hidden");
+        		$("#saved").css("display", "block");
+        		setTimeout(CodeManager.Releaser.transitions.fade, 700);
+        }
+    }
+};
 
 $(document).bind("status.finishedSyntaxHighlighting", CodeManager.setup_code_files);
 
 $(function(){
    CodeManager.setup_file_selection(); 
    CodeManager.setup_release();
+   D.log(CodeManager);
 });

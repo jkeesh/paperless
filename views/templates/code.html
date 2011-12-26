@@ -80,21 +80,6 @@ var interactive = false;
         $('.inlineComment').show();
     }
 
-
-
-	function resetSaved(){
-			$("#saved").addClass("hidden");
-
-	}
-	function fade(){	
-			$("#saved").fadeOut(400);
-			setTimeout("resetSaved()", 500);
-	}
-	function showSaved(){
-			$("#saved").removeClass("hidden");
-			$("#saved").css("display", "block");
-			setTimeout("fade()", 700);
-	}	
 </script>
 
 {foreach from=$code_files item=info key=file name=codeloop}
