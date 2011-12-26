@@ -22,11 +22,6 @@ class CodeHandler extends ToroHandler {
 	public function get($qid, $class, $assignment, $student, $print=False) {
 		$this->basic_setup(func_get_args());
 				
-		if($print){
-			$this->smarty->assign("print_view", $print);
-		}
-		$this->smarty->assign("code_file", $student);
-
 		$suid = explode("_", $student); // if it was student_1 just take student
 		if(count($suid) != 2){
 			return $this->display_error("The code directory was not well formed.");
