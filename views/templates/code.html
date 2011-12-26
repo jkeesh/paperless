@@ -41,8 +41,8 @@ var converter = new Showdown.converter();
 <span class="small-header">Section Leader: {$the_sl->sunetid}</span>
 
 
-<span class="small-header right hover-underline"><a title="Download code and comments as text file" href="{$root_url}{$class}/download/{$assignment}/{$numbered_submission}/{$assignment}_comments.txt">Download</a></span>
-</div>
+<!-- <span class="small-header right hover-underline"><a title="Download code and comments as text file" href="{$root_url}{$class}/download/{$assignment}/{$numbered_submission}/{$assignment}_comments.txt">Download</a></span>
+</div> -->
 
 {if !isset($print_view)}
 <div id="filelist">
@@ -72,20 +72,21 @@ var converter = new Showdown.converter();
 
 <script type="text/javascript">
 {if $role >= $POSITION_SECTION_LEADER and !isset($print_view)}
+CodeManager.interactive = true;
 var interactive = true;
 {else}
+CodeManager.interactive = false;
 var interactive = false;
 {/if}
 
     var files = new Array();
-	{counter start=0}
     {foreach from=$code_files item=info key=file}
-    files[{counter}] = '{$file}';
-    {/foreach}
+    files.push('{$file}');
+	{/foreach}
     
-    $(document).bind("status.finishedSyntaxHighlighting", function() {
-        setupCodeFiles();
-    });
+    // $(document).bind("status.finishedSyntaxHighlighting", function() {
+    //      setupCodeFiles();
+    //  });
     
     // we need to wait for the syntax highlighter to finish before we access the modified dom
     $(document).ready(function(){
@@ -96,27 +97,20 @@ var interactive = false;
     });
     
     function setupCodeFiles(){
-		var i = {counter start=0};
-        {foreach from=$code_files item=info key=file}
-		var cur_file = new CodeFile('{$file}', {counter}, interactive, '{$display_name|escape}');
-		code_files.push(cur_file);
-		cur_file.setupComments();
-    	{/foreach}
-		{if isset($print_view)}
-			displayAll();
-		{else}
-			display(0);
-		{/if}
+		// var i = {counter start=0};
+		//         {foreach from=$code_files item=info key=file}
+		// var cur_file = new CodeFile('{$file}', {counter}, interactive, '{$display_name|escape}');
+		// code_files.push(cur_file);
+		// cur_file.setupComments();
+		//     	{/foreach}
+		// {if isset($print_view)}
+		// 	displayAll();
+		// {else}
+		// 	display(0);
+		// {/if}
 		
     }
-    
-    function hideall(){
-    	 for(var i = 0; i < files.length; i++){	 
-    		 document.getElementById("file" + i).className = "hidden";
-    		 document.getElementById("comments" + i).className = "hidden";
- 			$('#fileList'+i).removeClass('selectedFile');
-    	 }
-    }
+
 
     function hideAllComments() {
         $('.inlineComment').hide();
@@ -126,25 +120,25 @@ var interactive = false;
         $('.inlineComment').show();
     }
 
-    function displayAll(){
-		for(var i = 0; i < code_files.length; i++){
-			display(i, false);
-		}
-    }
+		//     function displayAll(){
+		// for(var i = 0; i < code_files.length; i++){
+		// 	display(i, false);
+		// }
+		//     }
 
-    function display(fileNum, hide){
-		 if(hide == undefined) hide = true;
-	
-		 current_file_id = fileNum; //so we know what is currently being viewed
-    	 if(hide)
-			hideall();
-    	 document.getElementById("file" + fileNum).className = "visible";	 
-    	 document.getElementById("comments" + fileNum).className = "visible";
-		 $('#fileList'+fileNum).addClass('selectedFile');
-		 //console.log(code_files[fileNum]);
-		if(!code_files[fileNum].displayed)
-		   code_files[fileNum].showComments();
-    }
+		//     function display(fileNum, hide){
+		//  if(hide == undefined) hide = true;
+		// 	
+		//  current_file_id = fileNum; //so we know what is currently being viewed
+		//     	 if(hide)
+		// 	hideall();
+		//     	 document.getElementById("file" + fileNum).className = "visible";	 
+		//     	 document.getElementById("comments" + fileNum).className = "visible";
+		//  $('#fileList'+fileNum).addClass('selectedFile');
+		//  //console.log(code_files[fileNum]);
+		// if(!code_files[fileNum].displayed)
+		//    code_files[fileNum].showComments();
+		//     }
     
     function edit(fileID, commentRange, commentID){
     	var file = code_files[fileID];
@@ -190,12 +184,11 @@ var interactive = false;
 	}	
 </script>
 
-{foreach from=$code_files item=info key=name}
-<div id="comments">
-	
+{foreach from=$code_files item=info key=file name=codeloop}
+<div class="comments_holder" data-id='{$smarty.foreach.codeloop.index}'>
 {if $showComments}
-{foreach from=$info.assn->getAssignmentComments() item=comment}
-<div id="etop{$comment->getStartLine()}-{$comment->getEndLine()}" class="inlineComment">
+{foreach from=$info['assn']->getAssignmentComments() item=comment}
+<div id="etop{$comment->getStartLine()}-{$comment->getEndLine()}" class="inlineComment" data-range="{$comment->getStartLine()}-{$comment->getEndLine()}">
 <span class="comment hiddenPlainText">{$comment->getCommentText()|stripslashes}</span>
 <span class="commenter hiddenPlainText">{$comment->getCommenter()}</span>
 </div>

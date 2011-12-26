@@ -67,6 +67,8 @@ class AssignmentFile extends Model {
 		$instance->PaperlessAssignment = $paperless_assignment->ID;
 		$instance->Student = $student->id;
 		$instance->SubmissionNumber = $submission_number;
+		
+		print_r($instance);
 		return $instance;
 	}
 	
@@ -142,12 +144,12 @@ class AssignmentFile extends Model {
 				$sth->execute($arr);
 				$sth->setFetchMode(PDO::FETCH_NUM);
 				if($row = $sth->fetch()) {
+					print_r($row);
 					$instance->fill($row);
 					$instance->loadComments();
-					print_r($instance);
 					return $instance;
 				}else{
-
+					echo "here";
 				}
 			} catch(PDOException $e) {
 			}

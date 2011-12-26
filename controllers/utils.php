@@ -89,7 +89,11 @@ class Utilities {
 		foreach($files as $file){
 			if($course->code_file_is_valid($file)){
 				$assn = AssignmentFile::load_file($student, $paperless_assignment, $file, $submission_number);
-				if(!is_null($assn)){
+				//echo "loaded file...\n";
+				//print_r($assn);
+				
+				if(is_null($assn)){
+					echo "no assn";
 					$assn = AssignmentFile::create_file($course, $paperless_assignment, $student, $file, $submission_number);
 					$assn->saveFile();					
 				}					
@@ -98,6 +102,7 @@ class Utilities {
 				
 			}
 		}
+		//print_r($file_info);
 		return $file_info;
 	}
 	

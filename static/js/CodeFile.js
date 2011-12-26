@@ -1,6 +1,9 @@
-function /* class */ CodeFile(filename, id_number, interactive, user) {
-	this.interactive = interactive;
-	this.editable = interactive;
+
+
+function CodeFile(options){
+//function /* class */ CodeFile(filename, id_number, interactive, user) {
+	this.interactive = options.interactive;
+	this.editable = options.interactive;
 	this.displayed = false;
 	//alert("interactive: " + this.interactive);
 	
@@ -8,14 +11,14 @@ function /* class */ CodeFile(filename, id_number, interactive, user) {
     //  addShortcuts();
 	
 	this.comment_list = new Array(); // TODO make this hold a list of Comment objects
-	this.filename = filename;
-	this.fileID = id_number;
+	this.filename = options.filename;
+	this.fileID = options.id_number;
 	
 	this.selected_range_start;
 	this.selected_range_end;
 	this.selected_ranges = [];
 	this.last_comment = null;
-	this.user = user;
+	this.user = options.user;
 	
 	this.highlights = new Array();
 	
@@ -26,25 +29,38 @@ function /* class */ CodeFile(filename, id_number, interactive, user) {
 	this.commentID = 0;
 	
 	this.setupComments = function(){
-		var commentLocation = $('#comments'+this.fileID);
+	    var commentLocation = $('.comments_holder[data-id="'+this.fileID+'"]');
+	    D.log(commentLocation);
+//		var commentLocation = $('#comments'+this.fileID);
 		var children = commentLocation.children();
+		D.log($(children));
 		for(var i = 0; i < children.length; i++){
 			var curComment = children[i];
 			var cur = $(curComment);
-			var rangeString = cur.attr('id');			
+			var rangeString = cur.attr('data-range');
+			D.log(rangeString);			
 			var text = $(".comment", cur).html();
+			D.log(text);
 			var range = LineRange.stringToRange(rangeString);
 			var commenter = $(".commenter", cur).html();
+			D.log(commenter);
 			this.highlightRange(range);
+			
 			var newComment = new Comment(text, range, this, this.commentID, commenter);
 			this.addComment(newComment);
+			
 		}
+		D.log(this);
 	}
 	
 	this.showComments = function(){
+	    D.log('showing comments...');
+        if(this.displayed) return;
 		for(var i = 0; i < this.comment_list.length; i++){
 			var comment = this.comment_list[i];
+			D.log(comment);
 			this.addCommentDiv(comment.text, comment.commenter, comment.range, this.interactive, comment.id);
+			D.log('added???');
 		}
 		this.displayed = true;
 	}
@@ -175,7 +191,7 @@ function /* class */ CodeFile(filename, id_number, interactive, user) {
 	}
 	
 	this.addCommentDiv = function(text, commenter, range, isEditable, commentID){
-		
+		D.log('adding comment div');
 		if(isEditable == undefined) isEditable = true;
 		var range_text = range.toString();
 		formattedText = converter.makeHtml(text);	
@@ -192,9 +208,9 @@ function /* class */ CodeFile(filename, id_number, interactive, user) {
         };
         //console.log(data);
         var html = $('#commentTemplate').tmpl(data);
-        //console.log(html);
+        console.log(html);
 
-		var commentLocation = $('#file'+ this.fileID + ' .code .number'+range.higher);
+		var commentLocation = $('.code_container[data-id="'+this.fileID+'"] .code .number'+range.higher);
 		commentLocation.after(html);		
 	}
 	
