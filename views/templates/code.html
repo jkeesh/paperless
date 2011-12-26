@@ -83,19 +83,18 @@ var interactive = false;
 </script>
 
 {foreach from=$code_files item=info key=file name=codeloop}
-<div class="comments_holder" data-id='{$smarty.foreach.codeloop.index}'>
-{if $showComments}
-{foreach from=$info['assn']->getAssignmentComments() item=comment}
-<div id="etop{$comment->getStartLine()}-{$comment->getEndLine()}" class="inlineComment" data-range="{$comment->getStartLine()}-{$comment->getEndLine()}"
-data-id="{$comment->getID()}">
-<span class="comment hiddenPlainText">{$comment->getCommentText()|stripslashes}</span>
-<span class="commenter hiddenPlainText">{$comment->getCommenter()}</span>
-</div>
-{/foreach}
-{/if}
-
-	
-</div>
+	<div class="comments_holder" data-id='{$smarty.foreach.codeloop.index}'>
+	{if $showComments}
+		{foreach from=$info['assn']->getAssignmentComments() item=comment}
+			<div id="etop{$comment->getStartLine()}-{$comment->getEndLine()}" class="inlineComment" 
+				data-range="{$comment->getStartLine()}-{$comment->getEndLine()}"
+				data-id="{$comment->getID()}">
+				<span class="comment hiddenPlainText">{$comment->getCommentText()|stripslashes}</span>
+				<span class="commenter hiddenPlainText">{$comment->getCommenter()}</span>
+			</div>
+		{/foreach}
+	{/if}
+	</div>
 {/foreach}
 
 {if !isset($print_view)}

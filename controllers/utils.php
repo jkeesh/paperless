@@ -83,26 +83,21 @@ class Utilities {
 	 * @author	Jeremy Keeshin	December 25, 2011
 	 */
 	public static function get_code_files($course, $student, $assignment, $dirname, $files, $submission_number){
-		$paperless_assignment = PaperlessAssignment::from_course_and_assignment($course, $assignment);
-		
+		$paperless_assignment = PaperlessAssignment::from_course_and_assignment($course, $assignment);	
 		$file_info = array();
+		
 		foreach($files as $file){
 			if($course->code_file_is_valid($file)){
 				$assn = AssignmentFile::load_file($student, $paperless_assignment, $file, $submission_number);
-				//echo "loaded file...\n";
-				//print_r($assn);
 				
 				if(is_null($assn)){
-					echo "no assn";
 					$assn = AssignmentFile::create_file($course, $paperless_assignment, $student, $file, $submission_number);
 					$assn->saveFile();					
 				}					
 				$file_info[$file] = array('contents' => htmlentities(file_get_contents($dirname . $file)),
-										  'assn' => $assn);
-				
+										  'assn' => $assn);				
 			}
 		}
-		//print_r($file_info);
 		return $file_info;
 	}
 	

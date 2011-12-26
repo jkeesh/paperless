@@ -64,7 +64,11 @@ class AssignmentFile extends Model {
 		$instance->ID = 0;
 		$instance->GradedAssignment = 0;
 		$instance->FilePath = $file;
-		$instance->PaperlessAssignment = $paperless_assignment->ID;
+		if(is_null($paperless_assignment)){
+			$instance->PaperlessAssignment = 0;
+		}else{
+			$instance->PaperlessAssignment = $paperless_assignment->ID;
+		}
 		$instance->Student = $student->id;
 		$instance->SubmissionNumber = $submission_number;
 		
@@ -127,7 +131,16 @@ class AssignmentFile extends Model {
 		 * @author	Jeremy Keeshin	December 25, 2011
 		 */ 
 		public static function load_file($student, $paperless_assignment, $file, $number){
+			echo "paperless assignment...\n";
 			
+			if(is_null($paperless_assignment)){
+				
+				echo "bad assignment";
+				return null;
+			}else{
+				echo "good!";
+			}
+			print_r($paperless_assignment);
 			$query = "SELECT * FROM AssignmentFiles 
 						WHERE Student = :Student_ID
 							AND	SubmissionNumber = :Submission_Number
