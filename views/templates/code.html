@@ -226,10 +226,10 @@ var interactive = false;
 </div>
 {/if}
 
-{foreach from=$files item=file key=i}
-<div id="file{$i}" class="hidden">
-    <pre class="brush: cpp; gutter: false;">
-{$file_contents[$i]}
-    </pre>
+{foreach from=$code_files item=info key=file}
+<div id="file" data-name="{$file}" data-id="">
+	<pre class="brush: cpp; gutter: false;">
+{$info.contents}
+	</pre>
 </div>
 {/foreach}

@@ -58,6 +58,18 @@ class AssignmentFile extends Model {
 			echo $e->getMessage(); // TODO log this error instead of echo
 		}
 	}
+	
+	public static function create_file($course, $paperless_assignment, $student, $file, $submission_number){
+		$instance = new self();
+		$instance->ID = 0;
+		$instance->GradedAssignment = 0;
+		$instance->FilePath = $file;
+		$instance->PaperlessAssignment = $paperless_assignment->ID;
+		$instance->Student = $student->id;
+		$instance->SubmissionNumber = $submission_number;
+		return $instance;
+	}
+	
 
 	public static function createFile($class, $assignment, $student, $file, $submission_number){
 		$qid = Quarter::current()->id;

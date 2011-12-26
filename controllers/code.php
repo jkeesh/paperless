@@ -106,7 +106,7 @@ class CodeHandler extends ToroHandler {
             return;
 		}
 		
-
+		$submission_number = $suid[1];
 		$suid = $suid[0];
 		
 		$the_student = new Student;
@@ -114,9 +114,14 @@ class CodeHandler extends ToroHandler {
 		
 		$the_sl = $the_student->get_section_leader();
 
-		$all_files = Utilities::get_all_files($the_sl, $assignment, $student);
-		print_r($all_files);
-
+		$dirname = $the_sl->get_base_directory() . "/". $assignment . "/" . $student . "/"; 
+		$all_files = Utilities::get_all_files($dirname);
+		$code_files = Utilities::get_code_files($this->course, $the_student, $assignment, $dirname, $all_files, $submission_number);
+		$release = Utilities::release_exists($dirname);
+		$this->smarty->assign("release", $release);
+		
+		$this->smarty->assign("code_files", $code_files);
+		
 		$this->smarty->assign("the_student", $the_student);
 		$this->smarty->assign("the_sl", $the_sl);
 
@@ -129,19 +134,19 @@ class CodeHandler extends ToroHandler {
 			Permissions::gate(POSITION_STUDENT, $this->role);	
 		}
 
-		$sl = Model::getSectionLeaderForStudent($suid, $class);
-
-		// public static function get_assignment_files($course, $student, $assignment, $sl, $submission){
-		list($error, $files, $file_contents, $assignment_files, $release) = Utilities::get_assignment_files($this->course, $the_student, $assignment, $the_sl, $student);
-
-		list($error, $files, $file_contents, $assignment_files, $release) = $this->getAssignmentFiles($class, $student, $assignment, $sl, $the_student, $the_sl, $this->course);
+		// $sl = Model::getSectionLeaderForStudent($suid, $class);
+		// 
+		// // public static function get_assignment_files($course, $student, $assignment, $sl, $submission){
+		// list($error, $files, $file_contents, $assignment_files, $release) = Utilities::get_assignment_files($this->course, $the_student, $assignment, $the_sl, $student);
+		// 
+		// list($error, $files, $file_contents, $assignment_files, $release) = $this->getAssignmentFiles($class, $student, $assignment, $sl, $the_student, $the_sl, $this->course);
 		
 		
-		if($error != null){
-			$this->smarty->assign('errorMsg', $error);
-			$this->smarty->display('error.html');
-            return;
-		}
+		// if($error != null){
+		// 	$this->smarty->assign('errorMsg', $error);
+		// 	$this->smarty->display('error.html');
+		//             return;
+		// }
 
 		if(count($files) == 0){
 			$this->smarty->assign("message", "Nothing here yet.");
@@ -156,22 +161,21 @@ class CodeHandler extends ToroHandler {
 		}
 
 		// assign template vars
-		$this->smarty->assign("code", true);
-
-		$string = explode("_", $student); // if it was student_1 just take student
-		$student_suid = $string[0];
-
-		$this->smarty->assign("numbered_submission", $student);
-		$this->smarty->assign("class", htmlentities($class));
-		$this->smarty->assign("student", htmlentities($student_suid));
-		$this->smarty->assign("assignment", htmlentities($assignment));
-		$this->smarty->assign("files", $files);
-		$this->smarty->assign("file_contents", $file_contents);
-		$this->smarty->assign("assignment_files", $assignment_files);
-		$this->smarty->assign("sl", $sl);
-
-		$this->smarty->assign("release", $release);
-		$this->smarty->assign("showComments", $showComments);
+		// $this->smarty->assign("code", true);
+		// 
+		// $string = explode("_", $student); // if it was student_1 just take student
+		// $student_suid = $string[0];
+		// 
+		// $this->smarty->assign("numbered_submission", $student);
+		// $this->smarty->assign("class", htmlentities($class));
+		// $this->smarty->assign("student", htmlentities($student_suid));
+		// $this->smarty->assign("assignment", htmlentities($assignment));
+		// $this->smarty->assign("files", $files);
+		// $this->smarty->assign("file_contents", $file_contents);
+		// $this->smarty->assign("assignment_files", $assignment_files);
+		// $this->smarty->assign("sl", $sl);
+		// 
+		// $this->smarty->assign("showComments", $showComments);
 
 		// display the template
 		$this->smarty->display("code.html");
