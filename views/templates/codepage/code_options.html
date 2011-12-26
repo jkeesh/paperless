@@ -1,0 +1,21 @@
+<div id="rightside">
+<!-- <div id="printlink">
+	<div class="link smaller"><a href="{$code_file}/print" target="_blank">Print</a></div>
+</div> -->
+
+{if $role >= $POSITION_SECTION_LEADER}
+	<div id="release">
+		<form class="link smaller">
+		<input type="checkbox" name="release" value="" {if $release}checked{/if} />Release<br />
+	    <p><a href="javascript: hideAllComments()">Hide comments</a></p>
+	    <p><a href="javascript: displayAllComments()">Show comments</a></p>
+	    <p><a href="javascript: showOnlyComments()">Only comments</a></p>
+		</form>
+	</div>
+
+	<div id="saved" class="hidden">
+		Saved.
+	</div>
+
+{/if}
+</div>

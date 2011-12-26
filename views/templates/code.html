@@ -7,55 +7,16 @@ SyntaxHighlighter.all();
 var converter = new Showdown.converter();
 </script>
 
-<script id="commentTemplate" type="text/html">
-{literal}
-<div class="inlineComment" data-range='${range_text}' data-id='${db_id}' data-file='${fileID}'>
-	<span class="hiddenPlainText" data-range='${range_text}'>${text}</span>
-		<div class="commentbox">
-			<span class="inlineCommentText">
-					{{html formattedText}}
-			</span>
-			<div class="commentauthor">${commenter}</div>
-			<div style="clear:both"></div>
-		</div>
-</div>
-{/literal}
-</script>
+{include file="codepage/comment_template.html"}
 
-<div id="codeheader">
-	{if $role >= $POSITION_SECTION_LEADER}
-	<span class="link"><a href="{$course->get_link()}/assignment/{$the_sl->sunetid}/{$assignment}">{$assignment}</a></span>
-	{else}
-	{$assignment}
-	{/if}
-	:
-	<span class="link"><a href="{$the_student->get_link()}">{$the_student->display_name}</a></span>
+{include file="codepage/code_header.html"}
 
-	<span class="small-header">Section Leader: {$the_sl->sunetid}</span>
-
-<!-- <span class="small-header right hover-underline"><a title="Download code and comments as text file" href="downloadlink_comments.txt">Download</a></span> -->
-</div>
-
-{if !isset($print_view)}
-<div id="filelist">
-    {foreach from=$code_files item=info key=file name=codeloop}
-    <span class="filelink" data-id='{$smarty.foreach.codeloop.index}'>
-	<a href="#" data-name="{$file}" data-id='{$smarty.foreach.codeloop.index}'>
-		{$file}
-	</a>
-	</span>
-    {/foreach}
-
-	<div style="clear:both"></div>
-</div>
-
-<div style="clear:both"></div>
-
-{/if}
+{include file="codepage/code_filelist.html"}
 
 <script type="text/javascript">
-{if $role >= $POSITION_SECTION_LEADER and !isset($print_view)}
+{if $role >= $POSITION_SECTION_LEADER}
 CodeManager.interactive = true;
+CodeManager.commenting_user = '{$user->display_name}';
 var interactive = true;
 {else}
 CodeManager.interactive = false;
@@ -71,35 +32,8 @@ var interactive = false;
 
 </script>
 
-{include file="codepage/codecomments.html"}
+{include file="codepage/code_comments.html"}
 
-{if !isset($print_view)}
+{include file="codepage/code_options.html"}
 
-
-<div id="rightside">
-<!-- <div id="printlink">
-	<div class="link smaller"><a href="{$code_file}/print" target="_blank">Print</a></div>
-</div> -->
-
-{if $role >= $POSITION_SECTION_LEADER}
-<div id="release">
-	<form class="link smaller">
-	<input type="checkbox" name="release" value="" {if $release}checked{/if} />Release<br />
-    <p><a href="javascript: hideAllComments()">Hide comments</a></p>
-    <p><a href="javascript: displayAllComments()">Show comments</a></p>
-    <p><a href="javascript: showOnlyComments()">Only comments</a></p>
-	</form>
-</div>
-
-<div id="saved" class="hidden">
-	Saved.
-</div>
-
-{/if}
-</div>
-{/if}
-
-{include file="codepage/codefiles.html"}
-
-
-
+{include file="codepage/code_files.html"}

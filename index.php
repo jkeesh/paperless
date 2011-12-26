@@ -55,6 +55,8 @@
 			$this->user->from_sunetid(USERNAME);
 			
 			$this->smarty = new Smarty();
+			$this->smarty->assign("user", $this->user);
+			
 			
 			$this->smarty->template_dir = BASE_DIR . '/views/templates/';
 			$this->smarty->compile_dir  = BASE_DIR . '/views/templates_c/';

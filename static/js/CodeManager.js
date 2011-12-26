@@ -74,7 +74,7 @@ CodeManager.setup_code_files = function(){
             filename: CodeManager.get_name(elem),
             id_number: CodeManager.get_id(elem),
             interactive: CodeManager.is_interactive,
-            user: 'XXXXX'
+            user: CodeManager.commenting_user
         });
         code_file.setupComments();
         code_file.showComments();

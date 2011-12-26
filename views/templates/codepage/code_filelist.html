@@ -1,0 +1,12 @@
+<div id="filelist">
+    {foreach from=$code_files item=info key=file name=codeloop}
+    <span class="filelink" data-id='{$smarty.foreach.codeloop.index}'>
+	<a href="#" data-name="{$file}" data-id='{$smarty.foreach.codeloop.index}'>
+		{$file}
+	</a>
+	</span>
+    {/foreach}
+
+	<div style="clear:both"></div>
+</div>
+<div style="clear:both"></div>

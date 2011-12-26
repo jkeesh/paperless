@@ -1,0 +1,13 @@
+<div id="codeheader">
+	{if $role >= $POSITION_SECTION_LEADER}
+	<span class="link"><a href="{$course->get_link()}/assignment/{$the_sl->sunetid}/{$assignment}">{$assignment}</a></span>
+	{else}
+	{$assignment}
+	{/if}
+	:
+	<span class="link"><a href="{$the_student->get_link()}">{$the_student->display_name}</a></span>
+
+	<span class="small-header">Section Leader: {$the_sl->sunetid}</span>
+
+<!-- <span class="small-header right hover-underline"><a title="Download code and comments as text file" href="downloadlink_comments.txt">Download</a></span> -->
+</div>

@@ -1,0 +1,14 @@
+<script id="commentTemplate" type="text/html">
+{literal}
+<div class="inlineComment" data-range='${range_text}' data-id='${db_id}' data-file='${fileID}'>
+	<span class="hiddenPlainText" data-range='${range_text}'>${text}</span>
+		<div class="commentbox">
+			<span class="inlineCommentText">
+					{{html formattedText}}
+			</span>
+			<div class="commentauthor">${commenter}</div>
+			<div style="clear:both"></div>
+		</div>
+</div>
+{/literal}
+</script>
