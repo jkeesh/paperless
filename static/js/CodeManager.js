@@ -90,17 +90,38 @@ CodeManager.bind_editing = function(){
     })
 }
 
-$(document).bind("status.finishedSyntaxHighlighting", CodeManager.setup_code_files);
-// 
-// // we need to wait for the syntax highlighter to finish before we access the modified dom
-// $(document).ready(function(){
-//      //setTimeout("setupCodeFiles()", 3000);
-//      $(':checkbox').change(function() {
-//      release();
-//  });
-// });
+CodeManager.setup_release = function(){
+    $(':checkbox').change(function() {
+		CodeManager.release();
+	});
+}
 
+CodeManager.release = function(){
+	var action = "delete";
+	var val = $('input:checkbox:checked').val(); 
+	if(val != undefined){
+	 	action = "create";
+	}
+	$.ajax({
+	   	type: 'POST',
+	   	url: window.location.pathname, // post to current location url
+	   	data: "action=release&release=" + action,
+	   	success: function(response) {
+    		if(response && response.status == "ok"){
+    			showSaved();
+    		}else{
+    			alert("There was an error in releasing the comments.");
+    		}
+	   	},
+	   	error: function(XMLHttpRequest, textStatus, errorThrown) {
+		    alert("There was an error in releasing the comments.");
+   	    }
+	});
+}
+
+$(document).bind("status.finishedSyntaxHighlighting", CodeManager.setup_code_files);
 
 $(function(){
    CodeManager.setup_file_selection(); 
+   CodeManager.setup_release();
 });
