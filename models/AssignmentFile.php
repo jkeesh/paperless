@@ -70,9 +70,7 @@ class AssignmentFile extends Model {
 			$instance->PaperlessAssignment = $paperless_assignment->ID;
 		}
 		$instance->Student = $student->id;
-		$instance->SubmissionNumber = $submission_number;
-		
-		print_r($instance);
+		$instance->SubmissionNumber = $submission_number;		
 		return $instance;
 	}
 	
@@ -126,16 +124,10 @@ class AssignmentFile extends Model {
 	 * @author	Jeremy Keeshin	December 25, 2011
 	 */ 
 	public static function load_file($student, $paperless_assignment, $file, $number){
-		echo "paperless assignment...\n";
-		
 		if(is_null($paperless_assignment)){
-			
-			echo "bad assignment";
 			return null;
-		}else{
-			echo "good!";
 		}
-		print_r($paperless_assignment);
+
 		$query = "SELECT * FROM AssignmentFiles 
 					WHERE Student = :Student_ID
 						AND	SubmissionNumber = :Submission_Number
@@ -152,12 +144,9 @@ class AssignmentFile extends Model {
 			$sth->execute($arr);
 			$sth->setFetchMode(PDO::FETCH_NUM);
 			if($row = $sth->fetch()) {
-				print_r($row);
 				$instance->fill($row);
 				$instance->loadComments();
 				return $instance;
-			}else{
-				echo "here";
 			}
 		} catch(PDOException $e) {
 		}
