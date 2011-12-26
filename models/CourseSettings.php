@@ -13,7 +13,7 @@ class CourseSettings{
 	
 	public static $defaults = array(	
 									'use_submitter' => 'yes',
-								 	'file_types' => 'txt, cpp, java, c'
+								 	'file_types' => 'txt, cpp, java, c, cc'
 								 	);
 
 	/*
