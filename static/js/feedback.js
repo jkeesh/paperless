@@ -1,5 +1,4 @@
 commentOpen = false;
-code_files = [];
 dragging_in_file = null;
 current_dialog = null; // we will only have one dialog at a time
 current_range = null;
@@ -115,16 +114,16 @@ function addShortcuts(){
 }
 
 $(document).mouseup(function() {
-					if (dragging_in_file == null) {
-					return;
-					}
-					
-					var range = new LineRange(dragging_in_file.selected_range_start, dragging_in_file.selected_range_end);
-					var comment = new Comment("", range, dragging_in_file);
-					comment.get();
-					
-					dragging_in_file.comment_list.push(comment);
-					dragging_in_file.selected_ranges.push(range);
-					
-					dragging_in_file = null;
-					});
+	if (dragging_in_file == null) {
+	    return;
+	}
+	
+	var range = new LineRange(dragging_in_file.selected_range_start, dragging_in_file.selected_range_end);
+	var comment = new Comment("", range, dragging_in_file);
+	comment.get();
+	
+	dragging_in_file.comment_list.push(comment);
+	dragging_in_file.selected_ranges.push(range);
+	
+	dragging_in_file = null;
+});
