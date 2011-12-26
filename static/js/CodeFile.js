@@ -4,8 +4,8 @@ function /* class */ CodeFile(filename, id_number, interactive, user) {
 	this.displayed = false;
 	//alert("interactive: " + this.interactive);
 	
-	if(!shortcuts_added)
-		addShortcuts();
+    // if(!shortcuts_added)
+    //  addShortcuts();
 	
 	this.comment_list = new Array(); // TODO make this hold a list of Comment objects
 	this.filename = filename;

@@ -148,9 +148,9 @@ class CodeHandler extends ToroHandler {
 		//             return;
 		// }
 
-		if(count($files) == 0){
-			$this->smarty->assign("message", "Nothing here yet.");
-		}
+		// if(count($files) == 0){
+		// 	$this->smarty->assign("message", "Nothing here yet.");
+		// }
 
 		if($this->role >= POSITION_SECTION_LEADER){
 			$this->smarty->assign("interactive", 1);
@@ -169,13 +169,13 @@ class CodeHandler extends ToroHandler {
 		// $this->smarty->assign("numbered_submission", $student);
 		// $this->smarty->assign("class", htmlentities($class));
 		// $this->smarty->assign("student", htmlentities($student_suid));
-		// $this->smarty->assign("assignment", htmlentities($assignment));
+		$this->smarty->assign("assignment", htmlentities($assignment));
 		// $this->smarty->assign("files", $files);
 		// $this->smarty->assign("file_contents", $file_contents);
 		// $this->smarty->assign("assignment_files", $assignment_files);
 		// $this->smarty->assign("sl", $sl);
 		// 
-		// $this->smarty->assign("showComments", $showComments);
+		$this->smarty->assign("showComments", $showComments);
 
 		// display the template
 		$this->smarty->display("code.html");

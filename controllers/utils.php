@@ -94,7 +94,7 @@ class Utilities {
 					$assn->saveFile();					
 				}					
 				$file_info[$file] = array('contents' => htmlentities(file_get_contents($dirname . $file)),
-										  'assn_file' => $assn);
+										  'assn' => $assn);
 				
 			}
 		}
