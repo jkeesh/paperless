@@ -102,17 +102,17 @@ class AssignmentFile extends Model {
 		/*
 		 * This loads an AssignmentFile object.
 		 *
-		 * @param	$course		{Object}	the Course object
-		 * @param	$student	{Object}	the Student object
-		 * @param	$assignment	{string}	the name of the assignment
-		 * @param	$file		{string}	the name of the file
-		 * @param	$number		{int}		the submission number for this assignment
+		 * @param	$student				{Object}	the Student object
+		 * @param	$paperless_assignment	{Object}	the PaperlessAssignment object
+		 * @param	$assignment				{string}	the name of the assignment
+		 * @param	$file					{string}	the name of the file
+		 * @param	$number					{int}		the submission number for this assignment
 		 *
 		 * @return 	the AssignmentFile object, or null if it is not found
 		 *
 		 * @author	Jeremy Keeshin	December 25, 2011
 		 */ 
-		public static function load_file($course, $student, $assignment, $file, $number){
+		public static function load_file($student, $paperless_assignment, $file, $number){
 			
 			$query = "SELECT * FROM AssignmentFiles 
 						WHERE Student = :Student_ID
@@ -120,9 +120,6 @@ class AssignmentFile extends Model {
 							AND	PaperlessAssignment = :Assn_ID
 							AND File = :File;";
 							
-			$paperless_assignment = PaperlessAssignment::from_course_and_assignment($course, $assignment);
-			print_r($paperless_assignment);				
-			
 			$arr = array(":Student_ID" => $student->id, ":Submission_Number" => $number, 
 						 ":Assn_ID" => $paperless_assignment->ID, ":File" => $file );
 						

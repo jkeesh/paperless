@@ -105,6 +105,7 @@ class CodeHandler extends ToroHandler {
 			$this->smarty->display('error.html');
             return;
 		}
+		
 
 		$suid = $suid[0];
 		
@@ -112,6 +113,10 @@ class CodeHandler extends ToroHandler {
 		$the_student->from_sunetid_and_course($suid, $this->course);
 		
 		$the_sl = $the_student->get_section_leader();
+
+		$all_files = Utilities::get_all_files($the_sl, $assignment, $student);
+		print_r($all_files);
+
 		$this->smarty->assign("the_student", $the_student);
 		$this->smarty->assign("the_sl", $the_sl);
 

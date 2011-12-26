@@ -31,6 +31,33 @@ class Utilities {
 		}
 	}
 	
+	/*
+	 * This method returns all of the files in this submission folder for a student.
+	 * We are given the sl and assignment and submission name. We only return files
+	 * that are not directories, not hidden, and not the paperless release file
+	 *
+	 * @param	$sl				{Object}	the SectionLeader object
+	 * @param	$assignment		{string}	the string name of the assignment
+	 * @param	$submission		{string}	the submission directory, which is of the form
+	 *										<sunetid>_<submission#>
+	 *
+	 * @return 	an array of the files in this directory
+	 */
+	public static function get_all_files($sl, $assignment, $submission){
+		$dirname = $sl->get_base_directory() . "/". $assignment . "/" . $submission . "/"; 
+		if(!is_dir($dirname)){
+			return null;
+		}
+		$files = array();
+		$dir = opendir($dirname);
+		while($file = readdir($dir)) {
+			if(!is_dir($dirname.$file) && $file[0] != '.' && $file != 'release'){
+				$files []= $file;
+			}
+		}
+		return $files;
+	}
+	
 	
 	
 	// list($error, $files, $file_contents, $assignment_files, $release) = $this->getAssignmentFiles($class, $student, $assignment, $sl, $the_student, $the_sl, $this->course);
@@ -45,14 +72,14 @@ class Utilities {
 		}
 		$dir = opendir($dirname);
 		
+		$paperless_assignment = PaperlessAssignment::from_course_and_assignment($course, $assignment);
+	
 		$file_info = array();
 		
 		$string = explode("_", $submission); // if it was student_1 just take student
 		$student_suid = $string[0];
 		$submission_number = $string[1];
 		
-		$last_dir = $sl->get_base_directory() . "/". $assignment . "/" . $student_suid;
-		$last_submission = Utilities::getLastSubmissionNumber($last_dir);		
 		$class = $course->name;
 		
 		$release = False;
@@ -61,35 +88,15 @@ class Utilities {
 				$release = True;
 			}else if($course->code_file_is_valid($file)) {
 				//public static function load_file($course, $student, $assignment, $file, $number){
-				$assn = AssignmentFile::load_file($course, $student, $assignment, $file, $submission_number);
+				$assn = AssignmentFile::load_file($student, $paperless_assignment, $file, $submission_number);
 				
-//				$assn = AssignmentFile::loadFile($course->quarter->id, $class, $submission, $assignment, $file, $submission_number);
 				// If we could load it by submission number, we are done
 				if(is_null($assn)){
-					$assn = AssignmentFile::loadFile($course->quarter->id, $class, $submission, $assignment, $file);
-					// Now we try to load and see if an old file was there.
-				
-					if(is_null($assn)){
-						//It wasn't so create a new one.
-						$assn = AssignmentFile::createFile($class, $assignment, $student_suid, $file, $submission_number);
-						$assn->saveFile();
-					}else{
-						//If it was, update the old one.
-						if($submission_number == $last_submission){
-							//echo "set submission number";
-							$assn->setSubmissionNumber($submission_number);
-							//print_r($assn);
-						}else{
-							$assn = AssignmentFile::createFile($class, $assignment, $student_suid, $file, $submission_number);
-							//echo "created new file";
-						}
-						$assn->saveFile();					
-					}
-
+					//It wasn't so create a new one.
+					$assn = AssignmentFile::createFile($class, $assignment, $student_suid, $file, $submission_number);
+					$assn->saveFile();
 				}
 				
-				$path = $dirname.$file;
-				echo $path . "\n";
 				$file_info[$file] = array('contents' => htmlentities(file_get_contents($dirname . $file)),
 										  'assn_file' => $assn);
 				$assignment_files[] = $assn;
