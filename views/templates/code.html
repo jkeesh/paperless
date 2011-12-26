@@ -77,11 +77,7 @@ var interactive = false;
     {foreach from=$code_files item=info key=file}
     files.push('{$file}');
 	{/foreach}
-    
-    // $(document).bind("status.finishedSyntaxHighlighting", function() {
-    //      setupCodeFiles();
-    //  });
-    
+
     // we need to wait for the syntax highlighter to finish before we access the modified dom
     $(document).ready(function(){
        	//setTimeout("setupCodeFiles()", 3000);
@@ -89,22 +85,6 @@ var interactive = false;
 			release();
 		});
     });
-    
-    function setupCodeFiles(){
-		// var i = {counter start=0};
-		//         {foreach from=$code_files item=info key=file}
-		// var cur_file = new CodeFile('{$file}', {counter}, interactive, '{$display_name|escape}');
-		// code_files.push(cur_file);
-		// cur_file.setupComments();
-		//     	{/foreach}
-		// {if isset($print_view)}
-		// 	displayAll();
-		// {else}
-		// 	display(0);
-		// {/if}
-		
-    }
-
 
     function hideAllComments() {
         $('.inlineComment').hide();
