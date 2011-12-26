@@ -53,7 +53,6 @@ var converter = new Showdown.converter();
 
 <div style="clear:both"></div>
 
-
 {/if}
 
 <script type="text/javascript">
@@ -78,9 +77,9 @@ var interactive = false;
 	<div class="comments_holder" data-id='{$smarty.foreach.codeloop.index}'>
 	{if $showComments}
 		{foreach from=$info['assn']->getAssignmentComments() item=comment}
-			<div id="etop{$comment->getStartLine()}-{$comment->getEndLine()}" class="inlineComment" 
-				data-range="{$comment->getStartLine()}-{$comment->getEndLine()}"
-				data-id="{$comment->getID()}">
+			<div class="inlineComment" 
+					data-range="{$comment->getStartLine()}-{$comment->getEndLine()}"
+					data-id="{$comment->getID()}">
 				<span class="comment hiddenPlainText">{$comment->getCommentText()|stripslashes}</span>
 				<span class="commenter hiddenPlainText">{$comment->getCommenter()}</span>
 			</div>
