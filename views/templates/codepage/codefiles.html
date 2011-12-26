@@ -1,0 +1,7 @@
+{foreach from=$code_files item=info key=file name=codeloop}
+<div class="code_container" data-name="{$file}" data-id='{$smarty.foreach.codeloop.index}'>
+	<pre class="brush: cpp; gutter: false;">
+{$info.contents}
+	</pre>
+</div>
+{/foreach}
