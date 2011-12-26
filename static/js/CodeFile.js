@@ -89,8 +89,10 @@ function CodeFile(options){
 	}
 	
 	this.addHandlers = function() {
+	    D.log('adding handlers...');
 		if(!this.interactive) return;
 
+        D.log('continuing to add...');
 		this.highlights.push(0); // just put a zero in index zero-- we want to start from line 1
 		var line_no = 1;
 		do {
@@ -105,9 +107,11 @@ function CodeFile(options){
 	}
 	
 	this.getLine = function(line_no) {
-		var id = "#file" + this.fileID;
+	    var file_selector = '.code_container[data-id="'+this.fileID+'"]';
+	    
+        // var id = "#file" + this.fileID;
 		var theclass = '.number' + line_no;
-		return $(theclass, id);
+		return $(theclass, file_selector);
 	}
 	
 	this.getLineNumber = function(line) {
@@ -118,15 +122,17 @@ function CodeFile(options){
 	}
 	
 	this.hiliteLineNo = function(line_no) {
-		var id = "#file" + this.fileID;
-		var theclass = '.number' + line_no;		
-		$(theclass, id).addClass('highlighted');
+        // var id = "#file" + this.fileID;
+        // var theclass = '.number' + line_no;   
+        var line = this.getLine(line_no); 
+		$(line).addClass('highlighted');
 	}
 	
 	this.unhiliteLineNo = function(line_no) {
-		var id = "#file" + this.fileID;
-		var theclass = '.number' + line_no;
-		$(theclass, id).removeClass('highlighted');
+        // var id = "#file" + this.fileID;
+        // var theclass = '.number' + line_no;
+        var line = this.getLine(line_no); 
+		$(line).removeClass('highlighted');
 	}
 	
 	this.hiliteLine = function (line) {
