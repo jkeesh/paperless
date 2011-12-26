@@ -140,13 +140,9 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter, db_id) {
 		removeDialog();
 		
 		// remove comment highlighting and div
-		var commentID = "c" + self.range.toString();
 		this.code_file.unhighlightRange(self.range);
 		this.code_file.removeComment(this);
 		
-		D.log("remove: " + this.db_id);
-		D.log(this);
-					
 		Comment.get_comment_element(this.db_id).remove();
 	}
 	
@@ -204,11 +200,8 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter, db_id) {
 			return;
 		}
 		text = this.text;
-		var commentID = ".comment"+self.id;
-		var elem = ".e"+self.range.toString();
-		var thisCommentBox = $(elem+commentID);
-      // remove the comment
-		$(thisCommentBox).remove(); 
+		
+		Comment.get_comment_element(this.db_id).remove();
 		
 		// delete this comment server-side
 		this.ajax("delete");
@@ -218,7 +211,7 @@ function /* class */ Comment(ctext, crange, code_file, id, commenter, db_id) {
 		
 		// setup the new dialog with the text of the current comement
 		current_dialog = $('<div></div>')
-		.html('<textarea>' + text +'</textarea><div class="modalMessage">Comments are formatted using' +
+		.html('<textarea>' + text +'</textarea><div class="modalMessage">Comments are formatted using ' +
 	         '<a target="_blank" href="http://daringfireball.net/projects/markdown/syntax">Markdown.</a><br/>' +
 	          'Ctrl+3 For simple markdown reference.</div>')
 		.dialog({
