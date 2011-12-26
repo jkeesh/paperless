@@ -47,8 +47,13 @@ var converter = new Showdown.converter();
 {if !isset($print_view)}
 <div id="filelist">
     {foreach from=$code_files item=info key=file}
-    <span id="fileListX" class="filelink"><a href="javascript:display('0')">{$file}</a></span>
+    <span class="filelink">
+	<a href="#" data-name="{$file}">
+		{$file}
+	</a>
+	</span>
     {/foreach}
+
 	<div style="clear:both"></div>
 
 
@@ -229,7 +234,7 @@ var interactive = false;
 {/if}
 
 {foreach from=$code_files item=info key=file}
-<div id="file" data-name="{$file}" data-id="">
+<div class="code_container" data-name="{$file}" data-id="">
 	<pre class="brush: cpp; gutter: false;">
 {$info.contents}
 	</pre>
