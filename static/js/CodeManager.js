@@ -2,6 +2,10 @@ var CodeManager = {};
 
 CodeManager.is_interactive = true;
 
+/*
+ * The DisplayController manages the aspects relating to the display of code files.
+ * We can hide all the files from the display, or display an individual file.
+ */
 CodeManager.DisplayController = {
     
     /* Hide all of the code files */

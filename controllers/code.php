@@ -12,84 +12,8 @@ require_once("utils.php");
 class CodeHandler extends ToroHandler {
 
 	/*
-		* Gets the file contents, file names, and appropriate AssignmentFile model objects
-		* corresponding to a given student, assignment pair.
-		* TODO: Don't use a hardcoded path / we need to allow multiple base search paths
-		* TODO: Handle error when a pathname is not found
-		*/
-
-	// $the_student		the Student object
-	// $the_sl			the SectionLeader object
-	// $course			the Course object
-	private function getAssignmentFiles($class, $student, $assignment, $sl, $the_student, $the_sl, $course) {
-		$dirname = $the_sl->get_base_directory() . "/". $assignment . "/" . $student . "/"; 
-
-		$error = null;
-
-		if(!is_dir($dirname)){
-			$error = "This was not a valid directory.";
-			return array($error);
-		}
-
-		$dir = opendir($dirname);
-		$files = array();
-		$file_contents = array();
-		$assignment_files = array();
-
-		$string = explode("_", $student); // if it was student_1 just take student
-		$student_suid = $string[0];
-		$submission_number = $string[1];
-		
-		$last_dir = $the_sl->get_base_directory() . "/". $assignment . "/" . $student_suid;
-		$last_submission = Utilities::getLastSubmissionNumber($last_dir);
-		
-		echo "STUDENT: ". $student. "\n\n";
-		
-		$release = False;
-		while($file = readdir($dir)) {
-			if($file == "release"){
-				$release = True;
-			}else if(isCodeFileForClass($file, $class) && valid_size($dirname, $file)) {
-				$assn = AssignmentFile::loadFile($course->quarter->id, $class, $student, $assignment, $file, $submission_number);
-				// If we could load it by submission number, we are done
-				if(is_null($assn)){
-					$assn = AssignmentFile::loadFile($course->quarter->id, $class, $student, $assignment, $file);
-					// Now we try to load and see if an old file was there.
-				
-					if(is_null($assn)){
-						//It wasn't so create a new one.
-						$assn = AssignmentFile::createFile($class, $assignment, $student_suid, $file, $submission_number);
-						$assn->saveFile();
-					}else{
-						//If it was, update the old one.
-						if($submission_number == $last_submission){
-							//echo "set submission number";
-							$assn->setSubmissionNumber($submission_number);
-							//print_r($assn);
-						}else{
-							$assn = AssignmentFile::createFile($class, $assignment, $student_suid, $file, $submission_number);
-							//echo "created new file";
-						}
-						$assn->saveFile();					
-					}
-
-				}
-				$assignment_files[] = $assn;
-				$files[] = $file;
-				$file_contents[] = htmlentities(file_get_contents($dirname . $file));
-			}
-		}
-
-		// print_r($files);
-		// print_r($file_contents);
-		// print_r($assignment_files);
-
-		return array($error, $files, $file_contents, $assignment_files, $release);
-	}
-
-	/*
-		* Displays the syntax highlighted code for a student, assignment pair
-		*/
+	 * Displays the syntax highlighted code for a student, assignment pair
+	 */
 	public function get($qid, $class, $assignment, $student, $print=False) {
 		$this->basic_setup(func_get_args());
 				
