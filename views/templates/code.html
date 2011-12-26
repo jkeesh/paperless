@@ -10,11 +10,8 @@ var converter = new Showdown.converter();
 
 <script id="commentTemplate" type="text/html">
 {literal}
-<div class="inlineComment e${range_text} comment${commentID}" data-range='${range_text}'>
+<div class="inlineComment e${range_text} comment${commentID}" data-range='${range_text}' data-id='${db_id}' data-file='${fileID}'>
 	<span class="hiddenPlainText htext${range_text}" data-range='${range_text}'>${text}</span>
-	{{if editable}}
-	<a href="javascript:edit(${fileID},'${range_text}',${commentID})"> 
-	{{/if}}
 		<div class="${range_text} commentbox">
 			<span class="inlineCommentText ctext${range_text}">
 					{{html formattedText}}
@@ -22,9 +19,6 @@ var converter = new Showdown.converter();
 			<div class="commentauthor">${commenter}</div>
 			<div style="clear:both"></div>
 		</div>
-	{{if editable}}
-	</a>
-	{{/if}}
 </div>
 {/literal}
 </script>
@@ -188,7 +182,8 @@ var interactive = false;
 <div class="comments_holder" data-id='{$smarty.foreach.codeloop.index}'>
 {if $showComments}
 {foreach from=$info['assn']->getAssignmentComments() item=comment}
-<div id="etop{$comment->getStartLine()}-{$comment->getEndLine()}" class="inlineComment" data-range="{$comment->getStartLine()}-{$comment->getEndLine()}">
+<div id="etop{$comment->getStartLine()}-{$comment->getEndLine()}" class="inlineComment" data-range="{$comment->getStartLine()}-{$comment->getEndLine()}"
+data-id="{$comment->getID()}">
 <span class="comment hiddenPlainText">{$comment->getCommentText()|stripslashes}</span>
 <span class="commenter hiddenPlainText">{$comment->getCommenter()}</span>
 </div>

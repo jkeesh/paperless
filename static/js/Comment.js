@@ -32,7 +32,9 @@ function removeDialog(){
  * id           the id of the comment within the code file
  * commenter    the person who created this comment
  */
-function /* class */ Comment(ctext, crange, code_file, id, commenter) {
+function /* class */ Comment(ctext, crange, code_file, id, commenter, db_id) {
+    this.db_id = db_id; // the database id of the comment
+    
 	this.range = crange;
 	this.text = ctext;
 	this.code_file = code_file;

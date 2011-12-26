@@ -28,6 +28,15 @@ function CodeFile(options){
 	
 	this.commentID = 0;
 	
+	this.get_comment_by_db_id = function(id){
+	    for(var i = 0; i < this.comment_list.length; i++){
+	        if(this.comment_list[i].db_id == id){
+	            return this.comment_list[i];
+	        }
+	    }
+	    return null;
+	}
+	
 	this.setupComments = function(){
 	    var commentLocation = $('.comments_holder[data-id="'+this.fileID+'"]');
 	    D.log(commentLocation);
@@ -46,7 +55,10 @@ function CodeFile(options){
 			D.log(commenter);
 			this.highlightRange(range);
 			
-			var newComment = new Comment(text, range, this, this.commentID, commenter);
+			// The id of the comment in the database
+			var db_id = cur.attr('data-id');
+			
+			var newComment = new Comment(text, range, this, this.commentID, commenter, db_id);
 			this.addComment(newComment);
 			
 		}
@@ -59,7 +71,7 @@ function CodeFile(options){
 		for(var i = 0; i < this.comment_list.length; i++){
 			var comment = this.comment_list[i];
 			D.log(comment);
-			this.addCommentDiv(comment.text, comment.commenter, comment.range, this.interactive, comment.id);
+			this.addCommentDiv(comment.text, comment.commenter, comment.range, this.interactive, comment.id, comment.db_id);
 			D.log('added???');
 		}
 		this.displayed = true;
@@ -190,7 +202,7 @@ function CodeFile(options){
 		this.commentID++;
 	}
 	
-	this.addCommentDiv = function(text, commenter, range, isEditable, commentID){
+	this.addCommentDiv = function(text, commenter, range, isEditable, commentID, db_id){
 		D.log('adding comment div');
 		if(isEditable == undefined) isEditable = true;
 		var range_text = range.toString();
@@ -204,14 +216,17 @@ function CodeFile(options){
             text: text,
             formattedText: formattedText,
             commenter: commenter,
-            editable: isEditable
+            editable: isEditable,
+            db_id: db_id
         };
         //console.log(data);
         var html = $('#commentTemplate').tmpl(data);
         console.log(html);
 
 		var commentLocation = $('.code_container[data-id="'+this.fileID+'"] .code .number'+range.higher);
-		commentLocation.after(html);		
+		commentLocation.after(html);	
+		
+		CodeManager.bind_editing();	
 	}
 	
 	this.addHandlers();

@@ -1,5 +1,7 @@
 var CodeManager = {};
 
+CodeManager.is_interactive = true;
+
 /* Hide all of the code files */
 CodeManager.hide_all_files = function(){
     $('.code_container').hide();
@@ -62,13 +64,31 @@ CodeManager.setup_code_files = function(){
         var code_file = new CodeFile({
             filename: CodeManager.get_name(elem),
             id_number: CodeManager.get_id(elem),
-            interactive: true,
+            interactive: CodeManager.is_interactive,
             user: 'XXXXX'
         });
         code_file.setupComments();
         code_file.showComments();
         CodeManager.code_files.push(code_file);
     });
+    CodeManager.bind_editing();
+}
+
+CodeManager.bind_editing = function(){
+    $('.inlineComment').unbind();
+    $('.inlineComment').click(function(){
+        var comment_id = $(this).attr('data-id');
+        var file_id = $(this).attr('data-file');
+        alert('you clicked it!' + comment_id + ' in file ' + file_id);
+        
+        var file = CodeManager.code_files[file_id];
+        var comment = file.get_comment_by_db_id(comment_id);
+        D.log(file);
+        D.log(comment);
+        if(comment){
+            comment.edit();
+        }
+    })
 }
 
 $(document).bind("status.finishedSyntaxHighlighting", CodeManager.setup_code_files);
@@ -80,14 +100,6 @@ $(document).bind("status.finishedSyntaxHighlighting", CodeManager.setup_code_fil
 //      release();
 //  });
 // });
-// 
-// function setupCodeFiles(){
-//  var i = {counter start=0};
-//     {foreach from=$code_files item=info key=file}
-//  var cur_file = new CodeFile('{$file}', {counter}, interactive, '{$display_name|escape}');
-//  code_files.push(cur_file);
-//  cur_file.setupComments();
-//  {/foreach}
 
 
 $(function(){
