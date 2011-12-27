@@ -68,8 +68,6 @@ function Comment(options){
 	 */
 	this.ajax = function(action){
 	    var self = this;
-	    D.log("Before... dbid " + this.db_id);
-	    D.log(this.db_id);
 		$.ajax({
 			   type: 'POST',
 			   url: window.location.pathname, // post to current location url
@@ -82,7 +80,6 @@ function Comment(options){
 			       db_id: this.db_id
 			   },
 			   success: function(response) {
-			       D.log(response);
 				    if(response && response.status == "ok"){ 
 				        if(response.action == "create"){
 				            self.db_id = response.db_id;
@@ -127,11 +124,9 @@ function Comment(options){
 		} else {
 		   // set state for this comment object
 			this.text = commentText;
-			this.id = this.code_file.commentID;
 			
 			// add this comment to the code file object
 			this.code_file.highlightRange(self.range);
-			this.code_file.commentID++;
 			this.code_file.last_comment = self;
 			
 			// save this comment to database

@@ -1,7 +1,4 @@
-
-
 function CodeFile(options){
-//function /* class */ CodeFile(filename, id_number, interactive, user) {
 	this.interactive = options.interactive;
 	this.editable = options.interactive;
 	this.displayed = false;
@@ -9,7 +6,7 @@ function CodeFile(options){
     // if(!shortcuts_added)
     //  addShortcuts();
 	
-	this.comment_list = new Array(); // TODO make this hold a list of Comment objects
+	this.comment_list = new Array();
 	this.filename = options.filename;
 	this.fileID = options.id_number;
 	
@@ -24,9 +21,7 @@ function CodeFile(options){
 	this.currentComment = null;
 	
 	var self = this;
-	
-	this.commentID = 0;
-	
+		
 	this.get_comment_by_db_id = function(id){
 	    for(var i = 0; i < this.comment_list.length; i++){
 	        if(this.comment_list[i].db_id == id){
@@ -55,7 +50,6 @@ function CodeFile(options){
                 ctext:      text,
                 crange:     range,
                 code_file:  this,
-                id:         this.commentID,
                 commenter:  commenter,
                 db_id:      db_id
             });
@@ -68,7 +62,6 @@ function CodeFile(options){
         if(this.displayed) return;
 		for(var i = 0; i < this.comment_list.length; i++){
 			var comment = this.comment_list[i];
-			D.log(comment);
 			this.addCommentDiv(comment.text, comment.commenter, comment.range, this.interactive, comment.id, comment.db_id);
 		}
 		this.displayed = true;
@@ -101,8 +94,6 @@ function CodeFile(options){
 	
 	this.getLine = function(line_no) {
 	    var file_selector = '.code_container[data-id="'+this.fileID+'"]';
-	    
-        // var id = "#file" + this.fileID;
 		var theclass = '.number' + line_no;
 		return $(theclass, file_selector);
 	}
@@ -115,21 +106,16 @@ function CodeFile(options){
 	}
 	
 	this.hiliteLineNo = function(line_no) {
-        // var id = "#file" + this.fileID;
-        // var theclass = '.number' + line_no;   
         var line = this.getLine(line_no); 
 		$(line).addClass('highlighted');
 	}
 	
 	this.unhiliteLineNo = function(line_no) {
-        // var id = "#file" + this.fileID;
-        // var theclass = '.number' + line_no;
         var line = this.getLine(line_no); 
 		$(line).removeClass('highlighted');
 	}
 	
 	this.hiliteLine = function (line) {
-		var line_no = this.getLineNumber(line);
 		$(line).addClass("highlighted");
 	}
 	
@@ -137,37 +123,27 @@ function CodeFile(options){
 		$(line).removeClass("highlighted");
 	}
 	
-	this.highlightRange = function(range){
-		//console.log("highlight " + range);
-		
+	this.highlightRange = function(range){		
 		for (var i = range.lower; i <= range.higher; i++) {
 			this.hiliteLineNo(i);
 			this.highlights[i]++;
 		}  
-		//console.log(this.highlights);
 	}
 	
 	/* Unhighlights the range passed in as a parameter */
-	this.unhighlightRange = function(range){
-		//console.log("unlighlighting " + range);
-		//console.log(this.highlights);
-		
+	this.unhighlightRange = function(range){		
 		for (var i = range.lower; i <= range.higher; i++) {
 			
 			if(this.highlights[i] > 0){
 				this.highlights[i]--;
 			}
 
-
 			//only unhighlight if the highlight count is zero. otherwise
 			//there are possibly multiple comments on this line
 			if(this.highlights[i] == 0){
 				this.unhiliteLineNo(i);
-			}
-			
+			}			
 		}
-		
-		//console.log(this.highlights);  
 	}
 	
 	this.getCurrentComment = function(){
@@ -186,7 +162,6 @@ function CodeFile(options){
 	
 	this.addComment = function(comment) {
 		this.comment_list.push(comment);
-		this.commentID++;
 	}
 	
 	this.addCommentDiv = function(text, commenter, range, isEditable, commentID, db_id){
@@ -197,7 +172,6 @@ function CodeFile(options){
 		
 		var data = {
             range_text: range_text,
-            commentID: commentID,
             fileID: this.fileID,
             text: text,
             formattedText: formattedText,
