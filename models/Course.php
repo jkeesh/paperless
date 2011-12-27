@@ -20,12 +20,14 @@ class Course extends Model {
 		return in_array($ext, $allowed);
 	}
 	
+	public static function format_file_type($val){
+		return trim(strtolower($val));
+	}
+	
 	/* Return an array of the allows file types for this class.*/
 	public function get_file_types(){
 		$arr = explode(',', $this->settings->get_value('file_types'));
-		$filtered = array_map(function($val){
-			return trim(strtolower($val));
-		}, $arr);
+		$filtered = array_map('Course::format_file_type', $arr);
 		return $filtered;
 	}
 	
