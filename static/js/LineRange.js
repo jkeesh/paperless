@@ -65,7 +65,7 @@ LineRange.prototype.equals = function(other){
  *
  * @param   str     {string}      the string representation of the LineRage to be parsed
  */
-LineRange.stringToRange = function(str){
+LineRange.string_to_range = function(str){
 	var pattern = /(\d+)-(\d+)/;
 	var result = pattern.exec(str);
 	var start = parseInt(result[1]);

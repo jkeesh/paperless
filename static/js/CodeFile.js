@@ -39,7 +39,7 @@ function CodeFile(options){
 			var cur = $(curComment);
 			var rangeString = cur.attr('data-range');
 			var text = $(".comment", cur).html();
-			var range = LineRange.stringToRange(rangeString);
+			var range = LineRange.string_to_range(rangeString);
 			var commenter = $(".commenter", cur).html();
 			this.highlightRange(range);
 			
