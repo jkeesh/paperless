@@ -252,15 +252,17 @@ function Comment(options){
 		
 		$("textarea").focus();		
 	}
+
+}
+
 	
-	/*
-	* this.cancel
-	* =====================
-	* Cancel the addition of a new comment
-	*/
-	this.cancel = function(range){
-		commentOpen = false;
-		this.code_file.unhighlightRange(this.range);
-		removeDialog();
-	}
+/*
+* Comment.prototype.cancel
+* =====================
+* Cancel the addition of a new comment
+*/
+Comment.prototype.cancel = function(range){
+	commentOpen = false;
+	this.code_file.unhighlightRange(this.range);
+	removeDialog();
 }
