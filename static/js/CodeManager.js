@@ -4,10 +4,19 @@ CodeManager.is_interactive = true;
 
 /*
  * The DisplayController manages the aspects relating to the display of code files.
- * We can hide all the files from the display, or display an individual file.
+ * We can hide all the files from the display, or display an individual file. We also
+ * provide functionality to alter display settings on the comments, and also to show
+ * all of the files.
+ *
+ * @author  Jeremy Keeshin  December 26, 2011
  */
 CodeManager.DisplayController = {
     
+    /*
+     * This sets up the display controller. We give the user options to determine
+     * visibility settings on all of the code, comments, or all of the files. We
+     * dispatch off to the correct method on clicks to certain buttons.
+     */
     setup: function(){
         $('#option_hide_comments').click(function(e){
             e.preventDefault();
@@ -35,10 +44,12 @@ CodeManager.DisplayController = {
         });
     },
     
+    // Hide all of the lines of code
     hide_code_lines: function(){
         $('.line').hide();
     },
     
+    // Show all of the lines of code
     show_code_lines: function(){
         $('.line').show();
     },
