@@ -8,6 +8,41 @@ CodeManager.is_interactive = true;
  */
 CodeManager.DisplayController = {
     
+    setup: function(){
+        $('#option_hide_comments').click(function(e){
+            e.preventDefault();
+            CodeManager.DisplayController.hide_all_comments();
+        });
+
+        $('#option_show_comments').click(function(e){
+            e.preventDefault();
+            CodeManager.DisplayController.show_all_comments();
+        });
+        
+        $('#option_all_files').click(function(e){
+            e.preventDefault();
+            CodeManager.DisplayController.show_all_files();
+        });
+        
+        $('#option_hide_code').click(function(e){
+            e.preventDefault();
+            CodeManager.DisplayController.hide_code_lines();
+        });
+        
+        $('#option_show_code').click(function(e){
+            e.preventDefault();
+            CodeManager.DisplayController.show_code_lines();
+        });
+    },
+    
+    hide_code_lines: function(){
+        $('.line').hide();
+    },
+    
+    show_code_lines: function(){
+        $('.line').show();
+    },
+    
     /* Hide all of the code files */
     hide_all_files: function(){
         $('.code_container').hide();
@@ -22,9 +57,23 @@ CodeManager.DisplayController = {
         CodeManager.DisplayController.hide_all_files();
         $('.code_container[data-id="'+id+'"]').show();
         $('.filelink[data-id="'+id+'"]').addClass('selectedFile');
-    }
+    },
     
-
+    /* Show all the files in this assignment */
+    show_all_files: function(){
+        $('.code_container').show();
+        $('.selectedFile').removeClass('selectedFile');
+    },
+    
+    /* Hide all of the comments */
+    hide_all_comments: function(){
+        $('.inlineComment').hide();
+    },
+    
+    /* Show all of the comments */
+    show_all_comments: function(){
+        $('.inlineComment').show();
+    }
 }
 
 /*
@@ -158,5 +207,6 @@ $(document).bind("status.finishedSyntaxHighlighting", CodeManager.setup_code_fil
 $(function(){
    CodeManager.setup_file_selection(); 
    CodeManager.Releaser.setup();
+   CodeManager.DisplayController.setup();
    D.log(CodeManager);
 });
