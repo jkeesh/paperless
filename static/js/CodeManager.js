@@ -177,7 +177,6 @@ CodeManager.Releaser = {
     	$.ajax({
     	   	type: 'POST',
     	   	url: window.location.pathname, // post to current location url
-    	   	//data: "action=release&release=" + action,
     	   	data: {
     	   	    action: 'release',
     	   	    release: action,
