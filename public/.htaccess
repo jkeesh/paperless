@@ -1,0 +1,5 @@
+## Comment
+AuthType None
+#Order Deny, Allow
+#Allow from All
+satisfy any
