@@ -2,6 +2,7 @@ var CodeManager = {};
 
 CodeManager.is_interactive = true;
 CodeManager.current_file = null;
+CodeManager.dragging_in_file = null;
 
 /*
  * The DisplayController manages the aspects relating to the display of code files.

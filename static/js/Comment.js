@@ -37,16 +37,29 @@ Comment.get_comment_element = function(db_id){
  * id           the id of the comment within the code file
  * commenter    the person who created this comment
  */
-function /* class */ Comment(ctext, crange, code_file, id, commenter, db_id) {
-    this.db_id = db_id; // the database id of the comment
+//function /* class */ Comment(ctext, crange, code_file, id, commenter, db_id) {
+
+
+/*
+ * @param   options {Object}    the options object
+ *  -   ctext       {string}    the comment text
+ *  -   crange      {Object}    the LineRange object
+ *  -   code_file   {Object}    the CodeFile object this comment belongs to
+ *  -   id          {int}       the id of the comment within the code file
+ *  -   db_id       {int}       the id of the comment in the database
+ *  -   commenter   {string}    the display name of the user who created the comment
+ */
+function Comment(options){
+
+    this.db_id = options.db_id; // the database id of the comment
     
-	this.range = crange;
-	this.text = ctext;
-	this.code_file = code_file;
-	this.filename = code_file.filename;
+	this.range = options.crange;
+	this.text = options.ctext;
+	this.code_file = options.code_file;
+	this.filename = options.code_file.filename;
 	var self = this;
-	this.id = id;
-	this.commenter = commenter;
+	this.id = options.id;
+	this.commenter = options.commenter;
 	
 	this.filter = function(text){
 		text = text.replace(/&/g, '&amp;');		

@@ -1,5 +1,4 @@
 commentOpen = false;
-dragging_in_file = null;
 current_dialog = null; // we will only have one dialog at a time
 current_range = null;
 current_file_id = 0;
@@ -117,16 +116,19 @@ $(document).mouseup(function() {
         return;
     }
     
-	if (dragging_in_file == null) {
+	if (CodeManager.dragging_in_file == null) {
 	    return;
 	}
 
-	var range = new LineRange(dragging_in_file.selected_range_start, dragging_in_file.selected_range_end);
-	var comment = new Comment("", range, dragging_in_file);
+	var range = new LineRange(CodeManager.dragging_in_file.selected_range_start, CodeManager.dragging_in_file.selected_range_end);
+	var comment = new Comment({
+	    ctext:      '',
+	    crange:     range,
+	    code_file:  CodeManager.dragging_in_file
+	});
 	comment.get();
 
-	dragging_in_file.comment_list.push(comment);
-	dragging_in_file.selected_ranges.push(range);
-
-	dragging_in_file = null;
+	CodeManager.dragging_in_file.comment_list.push(comment);
+	CodeManager.dragging_in_file.selected_ranges.push(range);
+	CodeManager.dragging_in_file = null;
 });    

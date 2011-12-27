@@ -5,7 +5,6 @@ function CodeFile(options){
 	this.interactive = options.interactive;
 	this.editable = options.interactive;
 	this.displayed = false;
-	//alert("interactive: " + this.interactive);
 	
     // if(!shortcuts_added)
     //  addShortcuts();
@@ -39,9 +38,7 @@ function CodeFile(options){
 	
 	this.setupComments = function(){
 	    var commentLocation = $('.comments_holder[data-id="'+this.fileID+'"]');
-	    D.log(commentLocation);
 		var children = commentLocation.children();
-		D.log($(children));
 		for(var i = 0; i < children.length; i++){
 			var curComment = children[i];
 			var cur = $(curComment);
@@ -54,11 +51,17 @@ function CodeFile(options){
 			// The id of the comment in the database
 			var db_id = cur.attr('data-id');
 			
-			var newComment = new Comment(text, range, this, this.commentID, commenter, db_id);
-			this.addComment(newComment);
+            var newComment = new Comment({
+                ctext:      text,
+                crange:     range,
+                code_file:  this,
+                id:         this.commentID,
+                commenter:  commenter,
+                db_id:      db_id
+            });
 			
+			this.addComment(newComment);			
 		}
-		D.log(this);
 	}
 	
 	this.showComments = function(){
@@ -221,13 +224,13 @@ CodeFile.mousePressed = function(event) {
 	if(commentOpen) return;
 	
 	code_file = event.data.code_file;
-	if (dragging_in_file != null && dragging_in_file != code_file) {
+	if (CodeManager.dragging_in_file != null && CodeManager.dragging_in_file != code_file) {
 		return false;
 	}
 	
 	var line_no = code_file.getLineNumber(this);
 	
-	dragging_in_file = code_file;
+	CodeManager.dragging_in_file = code_file;
 	code_file.selected_range_start = code_file.selected_range_end = line_no;
 	code_file.hiliteLine(this);
 	event.data.code_file.dragging = true;
@@ -236,7 +239,7 @@ CodeFile.mousePressed = function(event) {
 
 CodeFile.mouseEntered = function(event) {
 	code_file = event.data.code_file;
-	if (dragging_in_file != code_file) {
+	if (CodeManager.dragging_in_file != code_file) {
 		return;
 	}
 	
