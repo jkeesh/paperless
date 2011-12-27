@@ -144,15 +144,17 @@ CodeManager.setup_code_files = function(){
 }
 
 CodeManager.bind_editing = function(){
+    if(!CodeManager.interactive) {
+        D.log('not interactive');
+        return;
+    }
+    
     $('.inlineComment').unbind();
     $('.inlineComment').click(function(){
         var comment_id = $(this).attr('data-id');
-        var file_id = $(this).attr('data-file');
-        
+        var file_id = $(this).attr('data-file');        
         var file = CodeManager.code_files[file_id];
         var comment = file.get_comment_by_db_id(comment_id);
-        D.log(file);
-        D.log(comment);
         if(comment){
             comment.edit();
         }

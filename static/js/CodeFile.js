@@ -210,7 +210,11 @@ function CodeFile(options){
 		CodeManager.bind_editing();	
 	}
 	
-	this.addHandlers();
+	D.log('is interactive?');
+	if(CodeManager.interactive){
+	    D.log('interactive');
+	    this.addHandlers();
+	}
 }
 
 CodeFile.mousePressed = function(event) {

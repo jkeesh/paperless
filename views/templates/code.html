@@ -5,6 +5,13 @@
 <script type="text/javascript">
 SyntaxHighlighter.all();
 var converter = new Showdown.converter();
+
+{if $role >= $POSITION_SECTION_LEADER}
+CodeManager.interactive = true;
+CodeManager.commenting_user = '{$user->display_name}';
+{else}
+CodeManager.interactive = false;
+{/if}
 </script>
 
 {include file="codepage/comment_template.html"}
@@ -12,17 +19,6 @@ var converter = new Showdown.converter();
 {include file="codepage/code_header.html"}
 
 {include file="codepage/code_filelist.html"}
-
-<script type="text/javascript">
-{if $role >= $POSITION_SECTION_LEADER}
-CodeManager.interactive = true;
-CodeManager.commenting_user = '{$user->display_name}';
-var interactive = true;
-{else}
-CodeManager.interactive = false;
-var interactive = false;
-{/if}
-</script>
 
 {include file="codepage/code_comments.html"}
 
