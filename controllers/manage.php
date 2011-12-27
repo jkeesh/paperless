@@ -25,17 +25,7 @@
 			$this->basic_setup(func_get_args());
 			Permissions::gate(POSITION_TEACHING_ASSISTANT, $this->role);		
 			$quarter = Quarter::current();
-			
-			print_r($this->course->get_file_types());
-			
-			$file = 'Test.cpp';
-			echo $file;
-			if($this->course->code_file_is_valid($file)){
-				echo "Valid!";
-			}else{
-				echo "INVALID";
-			}
-			
+						
 			$settings_saved = false;
 			// If it is an old quarter, we do not allow modifications.
 			if($quarter->id != $qid){

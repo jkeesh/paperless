@@ -54,9 +54,7 @@ class DownloadHandler extends ToroHandler {
 					}else{
 						//If it was, update the old one.
 						if($submission_number == $last_submission){
-							//echo "set submission number";
 							$assn->setSubmissionNumber($submission_number);
-							//print_r($assn);
 						}else{
 							$assn = AssignmentFile::createFile($class, $assignment, $student_suid, $file, $submission_number);
 							//echo "created new file";
