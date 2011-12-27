@@ -42,8 +42,8 @@ Comment.get_comment_element = function(db_id){
  * @author  Jeremy Keeshin  December 26, 2011
  */
 function Comment(options){
-
-    this.db_id = options.db_id; // the database id of the comment
+    // the database id of the comment
+    this.db_id = options.db_id; 
     
 	this.range = options.crange;
 	this.text = options.ctext;
@@ -53,15 +53,7 @@ function Comment(options){
 	this.id = options.id;
 	this.commenter = options.commenter;
 	
-	this.filter = function(text){
-		text = text.replace(/&/g, '&amp;');		
-		text = text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-		return text;
-	}
-	
-	this.unfilter = function(text){
-		return text;
-	}
+
 	
 	
 	/* 
@@ -255,6 +247,21 @@ function Comment(options){
 
 }
 
+/*
+ * Comment.prototype.filter
+ * =====================
+ * Replace all of the text with ampersands and angle brackets with their
+ * HTML entity equivalents.
+ *
+ * @param   text    {string}    the text to filter
+ *
+ * @author  Jeremy Keeshin  December 26, 2011
+ */
+Comment.prototype.filter = function(text){
+	text = text.replace(/&/g, '&amp;');		
+	text = text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+	return text;
+}
 	
 /*
 * Comment.prototype.cancel
