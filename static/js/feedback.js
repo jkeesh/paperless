@@ -2,7 +2,6 @@ commentOpen = false;
 dragging_in_file = null;
 current_dialog = null; // we will only have one dialog at a time
 current_range = null;
-globalSubmitComment = null;
 current_file_id = 0;
 shortcuts_added = false;
 
