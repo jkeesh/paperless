@@ -260,6 +260,10 @@ function Comment(options){
 * Comment.prototype.cancel
 * =====================
 * Cancel the addition of a new comment
+*
+* @param    range   {Object}    the LineRange object that the user was going to comment on, but 
+*                               decided to cancel
+* @author   Jeremy Keeshin  December 26, 2011
 */
 Comment.prototype.cancel = function(range){
 	commentOpen = false;
