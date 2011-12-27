@@ -1,3 +1,5 @@
+// The CodeManager object. This manages how the code is displayed,
+// interacted with, and commented on.
 var CodeManager = {};
 
 CodeManager.is_interactive = true;

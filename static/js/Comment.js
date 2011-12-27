@@ -13,11 +13,6 @@ function removeDialog(){
 	current_dialog = null;
 }
 
-Comment.get_comment_element = function(db_id){
-    return $('.inlineComment[data-id="'+db_id+'"]');
-}
-
-
 /*
  * Comment
  * ======================
@@ -151,7 +146,7 @@ function Comment(options){
 		this.code_file.unhighlightRange(self.range);
 		this.code_file.removeComment(this);
 		
-		Comment.get_comment_element(this.db_id).remove();
+		this.get_comment_element().remove();
 	}
 	
 	/*
@@ -209,7 +204,7 @@ function Comment(options){
 		}
 		text = this.text;
 		
-		Comment.get_comment_element(this.db_id).remove();
+		this.get_comment_element().remove();
 		
 		// delete this comment server-side
 		this.ajax("delete");
@@ -240,6 +235,18 @@ function Comment(options){
 		$("textarea").focus();		
 	}
 
+}
+
+
+/*
+ * Return the jQuery elemnt associated with this comment.
+ * We fetch it through its data-id attribute, which contains
+ * its ID in the database.
+ *
+ * @author  Jeremy Keeshin  December 26, 2011
+ */
+Comment.prototype.get_comment_element = function(){
+    return $('.inlineComment[data-id="'+this.db_id+'"]');
 }
 
 /*
