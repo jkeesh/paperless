@@ -27,20 +27,10 @@ Comment.get_comment_element = function(db_id){
  * edit a comment, delete a comment, or cancel the changes you make to a comment. 
  * These all generally correspond to the functions available in the comment class,
  * with a few utility functions as well as a general ajax function which allows
- * for comment modification requests with different actions
+ * for comment modification requests with different actions 
  *
+ * A comment is created with an options parameter object.
  *
- * Parameters
- * ctext        the text of the comment
- * crange       the range of the comment
- * code_file    the code_file object that this comment belongs to
- * id           the id of the comment within the code file
- * commenter    the person who created this comment
- */
-//function /* class */ Comment(ctext, crange, code_file, id, commenter, db_id) {
-
-
-/*
  * @param   options {Object}    the options object
  *  -   ctext       {string}    the comment text
  *  -   crange      {Object}    the LineRange object
@@ -48,6 +38,8 @@ Comment.get_comment_element = function(db_id){
  *  -   id          {int}       the id of the comment within the code file
  *  -   db_id       {int}       the id of the comment in the database
  *  -   commenter   {string}    the display name of the user who created the comment
+ *
+ * @author  Jeremy Keeshin  December 26, 2011
  */
 function Comment(options){
 
