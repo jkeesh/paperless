@@ -688,3 +688,35 @@ select{
     height: 24px;
     margin-top: -4px;
 }
+
+
+/* Manage Page */
+#config_wrapper{
+    margin-top: 15px;
+}
+
+#config_title{
+    font-size: 19px;
+    margin-bottom: 5px;
+    border-top: 1px dashed #ccc;
+    padding-top: 7px;
+}
+
+#config_wrapper label{
+    margin: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    width: 254px;
+    display: inline-block;
+}
+
+.config_option{
+    margin: 10px;
+}
+
+input[type=text]{
+    padding: 4px;
+    width: 159px;
+    margin: 2px 3px 2px 0;
+    font-size: 11px;
+}

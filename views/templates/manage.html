@@ -69,13 +69,13 @@
 	<div style="clear:both;"></div>
 	
 	
-	<div>
-	<div>Course Configuration</div>
+	<div id="config_wrapper">
+		<div id="config_title">Course Configuration</div>
 		<form action="{$course->get_link()}/manage" method="post">
-			<div>
+			<div class="config_option">
 				<label>File Types (comma separated):</label><input type="text"  name="file_types" value="{$course->settings->get_value('file_types')}" />
 			</div>
-			<div>
+			<div class="config_option">
 				<label>Use Submitter:</label>
 					<input type="radio" name="use_submitter" value="yes"
 					{if $course->settings->get_value('use_submitter') == 'yes'}checked{/if} /> Yes
