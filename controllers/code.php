@@ -132,8 +132,9 @@ class CodeHandler extends ToroHandler {
 		if($_POST['action'] == "release"){
 			return $this->handle_release($_POST['release'], $dirname);
 		}
-				
-		$curFile = AssignmentFile::loadFile($quarter->id, $class, $suid, $assignment, $_POST['filename'], $submission_number);
+					
+		$paperless_assignment = PaperlessAssignment::from_course_and_assignment($this->course, $assignment);	
+		$curFile = AssignmentFile::load_file($the_student, $paperless_assignment, $_POST['filename'], $submission_number);
 				
 		$id = $curFile->getID();
 		if(!isset($id)){ 

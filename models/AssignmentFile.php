@@ -154,36 +154,6 @@ class AssignmentFile extends Model {
 		return null;				
 	}
 
-
-	//	$assignmentFile = AssignmentFile::loadFile($class, $student, $assignment, $file);
-	public static function loadFile($qid, $class, $student, $dir, $file, $number = 0){
-		$paperless_assignment_id = PaperlessAssignment::getID($qid, $class, $dir);	
-		
-		$sunetid = explode("_", $student);
-		$sunetid = $sunetid[0];
-
-		$student_id = Model::getUserID($sunetid);
-		$query = "SELECT * FROM " . ASSIGNMENT_FILE_TABLE . " WHERE Student=:Student AND PaperlessAssignment=:AssnID AND File=:File AND SubmissionNumber=:Number;";
-		$arr = array(":Student" => $student_id, ":AssnID" => $paperless_assignment_id, ":File" => $file, ":Number" => $number);
-		$instance = new self();
-
-		try {
-			$sth = $instance->conn->prepare($query);
-			$sth->execute($arr);
-			$sth->setFetchMode(PDO::FETCH_NUM);
-			if($row = $sth->fetch()) {
-				$instance->fill($row);
-				$instance->loadComments();
-				return $instance;
-			}else{
-
-			}
-		} catch(PDOException $e) {
-			echo $e->getMessage(); // TODO log this error instead of echo
-		}
-		return null;
-	}
-
 	/*
 	 * Getters and Setters
 	 */
