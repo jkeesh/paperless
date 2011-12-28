@@ -192,6 +192,8 @@ function CodeFile(options){
 }
 
 CodeFile.mousePressed = function(event) {
+    if(!CodeManager.is_interactive) return;
+    
 	if(commentOpen) return;
 	
 	code_file = event.data.code_file;
@@ -209,6 +211,9 @@ CodeFile.mousePressed = function(event) {
 }
 
 CodeFile.mouseEntered = function(event) {
+    if(!CodeManager.is_interactive) return;
+    
+    
 	code_file = event.data.code_file;
 	if (CodeManager.dragging_in_file != code_file) {
 		return;

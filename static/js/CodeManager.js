@@ -46,6 +46,16 @@ CodeManager.DisplayController = {
             e.preventDefault();
             CodeManager.DisplayController.show_code_lines();
         });
+        
+        $('#option_toggle_view_only').click(function(e){
+            e.preventDefault();
+            if(CodeManager.is_interactive){
+                $(this).html('Make interactive');
+            }else{
+                $(this).html('Read only');
+            } 
+            CodeManager.is_interactive= !CodeManager.is_interactive;
+        });
     },
     
     // Hide all of the lines of code
@@ -148,13 +158,16 @@ CodeManager.setup_code_files = function(){
 }
 
 CodeManager.bind_editing = function(){
-    if(!CodeManager.interactive) {
+    if(!CodeManager.is_interactive) {
         D.log('not interactive');
         return;
     }
     
     $('.inlineComment').unbind();
     $('.inlineComment').click(function(){
+        if(!CodeManager.is_interactive){
+            return;
+        }
         var comment_id = $(this).attr('data-id');
         var file_id = $(this).attr('data-file');        
         var file = CodeManager.code_files[file_id];
