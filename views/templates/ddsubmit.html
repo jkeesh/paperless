@@ -19,7 +19,11 @@
 
 <div class="italic">submitting {$assndir}</div>
 
-<div class="padded">Drag and drop the <span style="font-weight: bold;">files (not directories!)</span> you want to include onto blue box. These are generally the source files which you modified ({$sourcelist}). 
+<div class="padded">Drag and drop the <span style="font-weight: bold;">files (not directories!)</span> you want to include onto blue box. These are generally the source files which you modified (
+{foreach from=$filetypes item=type name=source}	
+.{$type}{if not $smarty.foreach.source.last},{/if}
+{/foreach}
+). 
 	
 	</div>
 

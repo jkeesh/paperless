@@ -39,13 +39,9 @@ class DragDropSubmitHandler extends ToroHandler {
 			if(Utilities::isEmptyDir($dest_dir)) break;
 			$idx++;
 		} while (file_exists($dest_dir));
-		// echo $dest_dir;
 		$assn_dir = $assn . "/". $cur_submission;
-		// echo "<br/>".$assn_dir."<br/>";
 		$this->smarty->assign("assndir", $assn_dir);
 
-
-		// echo $cur_submission;
 		if (!file_exists($dest_dir)) {
 			mkdir($dest_dir, 0777, true);
 		}
@@ -53,12 +49,10 @@ class DragDropSubmitHandler extends ToroHandler {
 		$this->smarty->assign("name", Model::getDisplayName(USERNAME));
 		$this->smarty->assign("cur_submission", $cur_submission);
 
-		$sourcelist = ".java";
-		if($class == "cs106x" || $class == "cs106b" || $class == "cs106l") $sourcelist = ".cpp or .h";
-		if($class == "cs109l") $sourcelist = ".r";
-		$this->smarty->assign("sourcelist", $sourcelist);
+		$filetypes = $this->course->get_file_types();
+		$this->smarty->assign("filetypes", $filetypes);
+//		$this->smarty->assign("sourcelist", $sourcelist);
 
-		// display the template
 		$this->smarty->display('ddsubmit.html');
 	}
 
