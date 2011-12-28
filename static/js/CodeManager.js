@@ -38,6 +38,8 @@ CodeManager.DisplayController = {
      * dispatch off to the correct method on clicks to certain buttons.
      */
     setup: function(){
+        if($('#code_options_box').length == 0) return;
+        
         CodeManager.DisplayController.register_click_function('#option_hide_comments', CodeManager.DisplayController.hide_all_comments);
         CodeManager.DisplayController.register_click_function('#option_show_comments', CodeManager.DisplayController.show_all_comments);
         CodeManager.DisplayController.register_click_function('#option_all_files', CodeManager.DisplayController.show_all_files);
@@ -64,7 +66,6 @@ CodeManager.DisplayController = {
             
             // We have scrolled down. Fix the position.
             if(offset <= scroll_pos){
-                D.log('fix the position');
                 fixed = true;
                 $('#code_options_box').css({
                     'position': 'fixed',
