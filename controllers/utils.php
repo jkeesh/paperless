@@ -91,29 +91,6 @@ class Utilities {
 	}
 }
 
-
-
-/* 
-	* This function returns an array of the accepted file types for a class
-	* It gets this information from the class configuration file
-	*/
-function getFileTypesForClass($class){
-	if($class == "cs106b" || $class == "cs106x" || $class == "cs106l"){
-		return array("cpp","h", "txt", "cc");
-	}
-	if($class == "cs106a"){
-		return array("java", "txt");
-	}
-
-	if($class == "cs109l"){
-		return array("r", "txt");
-	}
-
-	if($class == "cs143"){
-		return array("cpp","h", "hh", "cc", "c", "l", "y", "txt", "final");		
-	}
-}
-
 function getBlacklist(){
 	return array("HangmanLexicon.txt", "ShorterLexicon.txt");
 }
