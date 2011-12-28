@@ -155,18 +155,6 @@ function special_accept($fname, $ext, $class){
 	return false;
 }
 
-function isCodeFileForClass($filename, $class){
-	$ext = pathinfo($filename, PATHINFO_EXTENSION);
-	$ext = strtolower($ext);
-	
-	$fname = pathinfo($filename, PATHINFO_FILENAME);
-	
-	$filetypes = getFileTypesForClass($class);
-	if(special_accept($fname, $ext, $class)) return true;
-	
-	return in_array($ext, $filetypes) && !in_array($filename, getBlacklist());
-}
-
 function usingIE(){
 	$u_agent = $_SERVER['HTTP_USER_AGENT']; 
 	$ub = False; 
