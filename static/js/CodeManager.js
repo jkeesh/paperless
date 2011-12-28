@@ -53,6 +53,7 @@ CodeManager.DisplayController = {
         });
     },
     
+    // Toggle whether the code can be commented on or not
     toggle_interactivity: function(elem){
         if(CodeManager.is_interactive){
             $(elem).html('Make interactive');
