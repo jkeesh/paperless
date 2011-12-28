@@ -501,7 +501,7 @@ textarea {
 
 #code_options_box{
 /*    position: fixed;*/
-
+    margin-bottom: 11px;
     font-size: 12px;
     font-family: Helvetica;
 	z-index: 100;
