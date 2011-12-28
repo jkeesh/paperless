@@ -48,6 +48,13 @@ CodeManager.DisplayController = {
         CodeManager.DisplayController.monitor_options_bar();
     },
     
+    /*
+     * This function monitors the top options bar. This means it starts in a relative position
+     * in line with the code, but if we scroll down, we fix it at the top of the page
+     * to keep it visible. However, if we scroll back up again, we unfix it and put it into place
+     *
+     * @author  Jeremy Keeshin  December 28, 2011
+     */
     monitor_options_bar: function(){
         var fixed = false;
         var offset = $('#code_options_box').offset().top;
@@ -251,8 +258,8 @@ CodeManager.Releaser = {
         
         // Fades out the message
         fade: function(){	
-        		$("#saved").fadeOut(400);
-        		setTimeout(CodeManager.Releaser.transitions.resetSaved, 500);
+        		$("#saved").fadeOut(800);
+        		setTimeout(CodeManager.Releaser.transitions.resetSaved, 700);
         },
         
         // Show the saved message.
