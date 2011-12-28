@@ -51,8 +51,6 @@ class DragDropSubmitHandler extends ToroHandler {
 
 		$filetypes = $this->course->get_file_types();
 		$this->smarty->assign("filetypes", $filetypes);
-//		$this->smarty->assign("sourcelist", $sourcelist);
-
 		$this->smarty->display('ddsubmit.html');
 	}
 
