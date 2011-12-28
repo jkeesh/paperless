@@ -206,12 +206,6 @@ a{
 	border: 1px solid #bddff3; 
 }
 
-#rightside{
-	position: fixed;
-	top: 90px;
-	right: 30px;
-}
-
 #printlink{
 	margin-top: 20px;
 	z-index: 100;
@@ -505,9 +499,11 @@ textarea {
 	text-decoration: underline;
 }
 
-#release{
-    position: relative;
-	margin-top: 40px;
+#code_options_box{
+/*    position: fixed;*/
+
+    font-size: 12px;
+    font-family: Helvetica;
 	z-index: 100;
 	background-color: white;
 	padding: 8px;

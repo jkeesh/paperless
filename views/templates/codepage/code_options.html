@@ -1,24 +1,15 @@
-<div id="rightside">
-<!-- <div id="printlink">
-	<div class="link smaller"><a href="#/print" target="_blank">Print</a></div>
-</div> -->
-
 {if $role >= $POSITION_SECTION_LEADER}
-	<div id="release">
-		<form class="link smaller">
-		<input type="checkbox" name="release" value="" {if $release}checked{/if} />Release<br />
-	    <p><a href="#" id="option_hide_comments">Hide comments</a></p>
-	    <p><a href="#" id="option_show_comments">Show comments</a></p>
-	    <p><a href="#" id="option_hide_code">Hide code</a></p>
-	    <p><a href="#" id="option_show_code">Show code</a></p>
-	    <p><a href="#" id="option_toggle_view_only">Read only</a></p>
-	    <p><a href="#" id="option_all_files">All files</a></p>
-		</form>
+	<div id="code_options_box" class="link">
+		<input type="checkbox" name="release" value="" {if $release}checked{/if} />Release
+	    <a href="#" id="option_hide_comments">Hide comments</a>
+	    <a href="#" id="option_show_comments">Show comments</a>
+	    <a href="#" id="option_hide_code">Hide code</a>
+	    <a href="#" id="option_show_code">Show code</a>
+	    <a href="#" id="option_toggle_view_only">Read only</a>
+	    <a href="#" id="option_all_files">All files</a>
 	</div>
 
 	<div id="saved" class="hidden">
 		Saved.
 	</div>
-
 {/if}
-</div>
