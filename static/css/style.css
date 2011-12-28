@@ -726,3 +726,18 @@ input[type=text]{
     margin: 2px 3px 2px 0;
     font-size: 11px;
 }
+
+
+/* Inline Comment Color Styling */
+.inlineComment.redColor{
+    color: red;
+}
+.inlineComment.greenColor{
+    color: green;
+}
+.inlineComment.blueColor{
+    color: blue;
+}
+.inlineComment.yellowColor{
+    color: yellow;
+}

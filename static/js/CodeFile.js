@@ -164,10 +164,40 @@ function CodeFile(options){
 		this.comment_list.push(comment);
 	}
 	
+	/*
+	 * See if this comment should have a color. To specify a color,
+	 * you start the comment with 
+	 * !color, where color is one of red,green,blue,yellow
+	 * If we find that color patter, we take it out of the text.
+	 *
+	 * @param   text    {string}    the comment text
+	 * @return  {Object}            containing the color, and updated text if necessary.
+	 * @author  Jeremy Keeshin  December 28, 2011
+	 */
+	this.getColor = function(text){
+	    var color = null;
+	    var colors = ['red', 'green', 'blue', 'yellow'];
+	    for(var i = 0; i < colors.length; i++){
+	        if(text.match(new RegExp('^!'+colors[i] + ' '))){
+    	        color = colors[i];
+    	        text = text.substring(colors[i].length + 1);
+    	        break;
+    	    }
+	    }
+	    return {
+	        color: color,
+	        text: text
+	    }
+	}
+	
 	this.addCommentDiv = function(text, commenter, range, isEditable, commentID, db_id){
 		if(isEditable == undefined) isEditable = true;
 		var range_text = range.toString();
-		formattedText = converter.makeHtml(text);	
+		
+		D.log(text);
+		var result = this.getColor(text);
+		D.log(result.color);
+		formattedText = converter.makeHtml(result.text);	
 		formattedText = formattedText.replace(/&amp;/g, '&');		
 		
 		var data = {
@@ -179,6 +209,10 @@ function CodeFile(options){
             db_id: db_id
         };
         var html = $('#commentTemplate').tmpl(data);
+        if(result.color){
+            html = $(html).addClass(result.color + 'Color');
+        }    
+        D.log(html);
 
 		var commentLocation = $('.code_container[data-id="'+this.fileID+'"] .code .number'+range.higher);
 		commentLocation.after(html);	
