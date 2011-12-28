@@ -17,39 +17,63 @@ CodeManager.dragging_in_file = null;
 CodeManager.DisplayController = {
     
     /*
+     * This method registers a function to be called on clicking an element. We pass in the selector
+     * and the callback method. The callback is called when this element is clicked, and we pass
+     * the element as a parameter which can be used optionally.
+     *
+     * @param   selector    {string}    the jQuery selector string for the element
+     * @param   callback    {fn}        the callback function
+     * @author  Jeremy Keeshin  December 28, 2011
+     */
+    register_click_function: function(selector, callback){
+        $(selector).click(function(e){
+            e.preventDefault();
+            callback(this);
+        });
+    },
+        
+    /*
      * This sets up the display controller. We give the user options to determine
      * visibility settings on all of the code, comments, or all of the files. We
      * dispatch off to the correct method on clicks to certain buttons.
      */
     setup: function(){
-        $('#option_hide_comments').click(function(e){
-            e.preventDefault();
-            CodeManager.DisplayController.hide_all_comments();
-        });
+        CodeManager.DisplayController.register_click_function('#option_hide_comments', CodeManager.DisplayController.hide_all_comments);
+        CodeManager.DisplayController.register_click_function('#option_show_comments', CodeManager.DisplayController.show_all_comments);
+        CodeManager.DisplayController.register_click_function('#option_all_files', CodeManager.DisplayController.show_all_files);
+        CodeManager.DisplayController.register_click_function('#option_hide_code', CodeManager.DisplayController.hide_code_lines);
+        CodeManager.DisplayController.register_click_function('#option_show_code', CodeManager.DisplayController.show_code_lines);
+        CodeManager.DisplayController.register_click_function('#option_toggle_view_only', CodeManager.DisplayController.toggle_interactivity);
+        
+        CodeManager.DisplayController.monitor_options_bar();
+    },
+    
+    monitor_options_bar: function(){
+        var fixed = false;
+        var offset = $('#code_options_box').offset().top;
 
-        $('#option_show_comments').click(function(e){
-            e.preventDefault();
-            CodeManager.DisplayController.show_all_comments();
-        });
-        
-        $('#option_all_files').click(function(e){
-            e.preventDefault();
-            CodeManager.DisplayController.show_all_files();
-        });
-        
-        $('#option_hide_code').click(function(e){
-            e.preventDefault();
-            CodeManager.DisplayController.hide_code_lines();
-        });
-        
-        $('#option_show_code').click(function(e){
-            e.preventDefault();
-            CodeManager.DisplayController.show_code_lines();
-        });
-        
-        $('#option_toggle_view_only').click(function(e){
-            e.preventDefault();
-            CodeManager.DisplayController.toggle_interactivity(this);
+        $(document).scroll(function(){
+            var scroll_pos = $(document).scrollTop();
+            
+            // We have scrolled down. Fix the position.
+            if(offset <= scroll_pos){
+                D.log('fix the position');
+                fixed = true;
+                $('#code_options_box').css({
+                    'position': 'fixed',
+                    'top': '0px',
+                    'width': '893px'
+                });
+            
+            // We were already fixed, and we have scrolled back up. Reset.
+            }else if(fixed){                 
+                $('#code_options_box').css({
+                    'position': 'relative',
+                    'top': '',
+                    'width': ''
+                });
+                fixed = false;
+            }
         });
     },
     
