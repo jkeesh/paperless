@@ -43,18 +43,18 @@ $(document).ready(function(){
 			{if isset($course)}
 			<div id="classname">{$course->short()} ({$role_string})</div>
 			{/if}
-            <div id="name">{$display_name|escape}</div>
+            <div id="name">{$user->display_name|escape}</div>
             <div id="nav">	
                 {if $role >= $POSITION_TEACHING_ASSISTANT}
                 <a href="{$course->get_link()}/admin">Admin</a>
                 <a href="{$course->get_link()}/manage">Manage</a>
                 {/if}
                 {if $role == $POSITION_SECTION_LEADER}
-                <a href="{$course->get_link()}/sectionleader/{$username}">My Section</a>
+                <a href="{$course->get_link()}/sectionleader/{$user->sunetid}">My Section</a>
                 {/if}
 				<a href="{$root_url}">My Classes</a>
                 {if $role == $POSITION_STUDENT}
-            	    <a href="{$course->get_link()}/student/{$username}">My Code</a>
+            	    <a href="{$course->get_link()}/student/{$user->sunetid}">My Code</a>
 					{if $course->settings->get_value('use_submitter') == 'yes' and $current_quarter->id == $quarter_id}			
 						<a href="{$course->get_link()}/ddsubmit">Submit</a>
 					{/if}
