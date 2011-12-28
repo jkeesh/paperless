@@ -23,6 +23,11 @@
 	}
 	
 	
+	/*
+	 * *** NOTE ****
+	 * I am working on phasing out most of the static methods from the Model class into the respective
+	 * objects.
+	 */
 	class Model {
 		public $conn;
 		
