@@ -46,7 +46,6 @@ class DragDropSubmitHandler extends ToroHandler {
 			mkdir($dest_dir, 0777, true);
 		}
 
-		$this->smarty->assign("name", Model::getDisplayName(USERNAME));
 		$this->smarty->assign("cur_submission", $cur_submission);
 
 		$filetypes = $this->course->get_file_types();
@@ -76,12 +75,6 @@ class DragDropSubmitHandler extends ToroHandler {
 		// assign template variables
 		$this->smarty->assign("assignments", $assns);
 		$this->smarty->assign("class", $class);
-		$this->smarty->assign("name", Model::getDisplayName(USERNAME));
-
-		$sourcelist = ".java";
-		if($class == "cs106x" || $class == "cs106b" || $class == "cs106l") $sourcelist = ".cpp or .h";
-		if($class == "cs109l") $sourcelist = ".r";
-		$this->smarty->assign("sourcelist", $sourcelist);
 
 		// display the template
 		$this->smarty->display('ddsubmit.html');
