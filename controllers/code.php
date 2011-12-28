@@ -142,12 +142,11 @@ class CodeHandler extends ToroHandler {
 		if(!isset($id)){ 
 			return $this->json_failure("We could not load the assignment.");
 		}
-		$student = Model::getUserID($suid);
 
 		$db_id = null;
 		if($_POST['action'] == "create") {
 			$newComment = AssignmentComment::create($curFile->getID(), $_POST['rangeLower'], 
-				$_POST['rangeHigher'], $_POST['text'], $this->user->id, $student);
+				$_POST['rangeHigher'], $_POST['text'], $this->user->id, $the_student->id);
 			$newComment->save();
 			$db_id = $newComment->getID();
 			
