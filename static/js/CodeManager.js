@@ -49,13 +49,17 @@ CodeManager.DisplayController = {
         
         $('#option_toggle_view_only').click(function(e){
             e.preventDefault();
-            if(CodeManager.is_interactive){
-                $(this).html('Make interactive');
-            }else{
-                $(this).html('Read only');
-            } 
-            CodeManager.is_interactive= !CodeManager.is_interactive;
+            CodeManager.DisplayController.toggle_interactivity(this);
         });
+    },
+    
+    toggle_interactivity: function(elem){
+        if(CodeManager.is_interactive){
+            $(elem).html('Make interactive');
+        }else{
+            $(elem).html('Read only');
+        } 
+        CodeManager.is_interactive= !CodeManager.is_interactive;
     },
     
     // Hide all of the lines of code
