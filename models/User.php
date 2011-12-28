@@ -7,14 +7,19 @@ require_once(dirname(dirname(__FILE__)) . "/models/Relationship.php");
  * A user represents a person on the site. A user has a sunetid, first and last name,
  * a full display name, and an ID in the database.
  * 
- * We only provide factory methods to construct a user in different ways; from their 
- * database id, or from their SUNetID.
+ * Since there are multiple ways to request user information, you first create a new
+ * User object, and choose the proper load function. This is instead of static factory
+ * methods or funky multiple constructors.
+ * 
+ * For example,
+ *		$user = new User;
+ * 		$user->from_sunetid($sunetid);
  * 
  * We can ask a user for their role in a certain course, or all of their historical 
  * relationships. User does not provide any more specific methods when we know their
  * role, as those are delegated to the SectionLeader, Student, etc. subclasses.
  *
- * @author	Jeremy Keeshin	December 20, 2011
+ * @author	Jeremy Keeshin	December 28, 2011
  */
 class User extends Model {
 
