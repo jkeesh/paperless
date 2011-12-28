@@ -131,18 +131,6 @@ function valid_size($dir, $filename){
 	return filesize($dir.$filename) < 100000;
 }
 
-/*
- * We will accept files called README or files with
- * no extension that have a file name length longer 
- * than 2
- */
-function special_accept($fname, $ext, $class){
-	if(strtolower($fname) == "readme") return true;
-
-	if(strlen($ext) == 0 and strlen($fname) > 2) return true;
-	
-	return false;
-}
 
 function usingIE(){
 	$u_agent = $_SERVER['HTTP_USER_AGENT']; 
