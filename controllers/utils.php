@@ -95,16 +95,10 @@ function getBlacklist(){
 	return array("HangmanLexicon.txt", "ShorterLexicon.txt");
 }
 
-function valid_size($dir, $filename){
-	// echo $dir.$filename;
-	// echo filesize($dir.$filename);
-	
+function valid_size($dir, $filename){	
 	if( filesize($dir.$filename) >= 100000 ){
 		echo "A file was too large and hidden from this assignment view.<br/>";
 	}
-	
-	// echo "<br/>";
-	// must be smaller than 100 kb
 	return filesize($dir.$filename) < 100000;
 }
 
