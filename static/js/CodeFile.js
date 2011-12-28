@@ -194,9 +194,7 @@ function CodeFile(options){
 		if(isEditable == undefined) isEditable = true;
 		var range_text = range.toString();
 		
-		D.log(text);
 		var result = this.getColor(text);
-		D.log(result.color);
 		formattedText = converter.makeHtml(result.text);	
 		formattedText = formattedText.replace(/&amp;/g, '&');		
 		
@@ -212,7 +210,6 @@ function CodeFile(options){
         if(result.color){
             html = $(html).addClass(result.color + 'Color');
         }    
-        D.log(html);
 
 		var commentLocation = $('.code_container[data-id="'+this.fileID+'"] .code .number'+range.higher);
 		commentLocation.after(html);	
