@@ -127,12 +127,12 @@ class AssignmentFile extends Model {
 		if(is_null($paperless_assignment)){
 			return null;
 		}
-
+		
 		$query = "SELECT * FROM AssignmentFiles 
 					WHERE Student = :Student_ID
 						AND	SubmissionNumber = :Submission_Number
 						AND	PaperlessAssignment = :Assn_ID
-						AND File = :File;";
+						AND File LIKE :File;";
 						
 		$arr = array(":Student_ID" => $student->id, ":Submission_Number" => $number, 
 					 ":Assn_ID" => $paperless_assignment->ID, ":File" => $file );

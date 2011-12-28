@@ -44,8 +44,9 @@ class CodeHandler extends ToroHandler {
 			return $this->display_error("This was not a valid directory.");
 		}
 		
-		
 		$code_files = Utilities::get_code_files($this->course, $the_student, $assignment, $dirname, $all_files, $submission_number);
+		
+		
 		$release = Utilities::release_exists($dirname);
 		$this->smarty->assign("release", $release);
 		
@@ -135,6 +136,7 @@ class CodeHandler extends ToroHandler {
 					
 		$paperless_assignment = PaperlessAssignment::from_course_and_assignment($this->course, $assignment);	
 		$curFile = AssignmentFile::load_file($the_student, $paperless_assignment, $_POST['filename'], $submission_number);
+		
 				
 		$id = $curFile->getID();
 		if(!isset($id)){ 
@@ -149,6 +151,7 @@ class CodeHandler extends ToroHandler {
 				$_POST['rangeHigher'], $_POST['text'], $commenter, $student);
 			$newComment->save();
 			$db_id = $newComment->getID();
+			
 		} else if($_POST['action'] == "delete") {
 			$comment = AssignmentComment::load($_POST['db_id']);
 			$comment->delete();			
