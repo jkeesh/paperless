@@ -208,26 +208,4 @@
 				echo $e->getMessage(); // TODO log this error instead of echoing
 			}
 		}
-		
-    /*
-		* Gets the assignment id for a given name
-		* Note: we do it this way since we use preg_replace which isn't possible 
-		* with SQL.
-		*/
-		private static function getAssignID($assn, $db) {
-		  $query = "SELECT ID,Title FROM Assignments;";
-		  $assn = strtolower(preg_replace('/\W/', '', $assn));
-		  try {
-				$sth = $db->prepare($query);
-				$sth->execute();
-				$sth->setFetchMode(PDO::FETCH_ASSOC);
-				while($row = $sth->fetch()) {
-				  $curAssn = strtolower(preg_replace('/\W/', '', $row['Title']));
-				  if($curAssn == $assn)
-				    return $row['ID'];
-				}
-			} catch(PDOException $e) {
-				echo $e->getMessage(); // TODO log this error instead of echoing
-			}
-		}
 	}
