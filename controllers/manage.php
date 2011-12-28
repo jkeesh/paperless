@@ -32,12 +32,14 @@
 				$this->smarty->assign("old_quarter", true);
 			}else if($handle_post){
 				if(array_key_exists('action', $_POST)){
+					$safe_directory = preg_replace('/[^a-zA-Z0-9]/', '', $_POST['directory']);
+					
 					if($_POST['action'] == "Update"){
-						PaperlessAssignment::update($_POST['id'], $class, $_POST['directory'], $_POST['name'], $_POST['duedate']);
+						PaperlessAssignment::update($_POST['id'], $class, $safe_directory, $_POST['name'], $_POST['duedate']);
 					}else if($_POST['action'] == "Delete"){
 						PaperlessAssignment::deleteID($_POST['id']);
 					}else{
-						$assn = PaperlessAssignment::create($class, $_POST['directory'], $_POST['name'], $_POST['duedate']);
+						$assn = PaperlessAssignment::create($class, $safe_directory, $_POST['name'], $_POST['duedate']);
 						$assn->save();
 					}
 				}else{
