@@ -14,6 +14,23 @@
 *	IE 6+
 */
 
+// Setup a simple uploader, and give us a reference to the upload function  
+function setup_simple_uploader(upload){
+    
+    $("#simple_title").click(function(){
+        $("#full_simple_upload").show();
+    });
+    
+    // https://developer.mozilla.org/en/DOM/FileList
+    $("#uploadbutton").click(function(){
+        var elem = document.getElementById('simpleupload');
+        var files = elem.files;
+        for(var i = 0; i < files.length; i++){
+            // let system respond
+            setTimeout(upload, 2000*i, files[i]);
+        }
+    });
+}
 
 function delete_code_file(e){
     var elem = $(this);
@@ -71,6 +88,7 @@ function show_result_and_allow_removal(options){
 
 	D.log(result);
 }
+
 
 function uploader(place, status, targetPHP, show, assndir) {
 	
@@ -231,6 +249,9 @@ function uploader(place, status, targetPHP, show, assndir) {
 		}				
 	}
 
+
+
+
 	// Function drop file
 	this.drop = function(event) {
 		event.preventDefault();
@@ -243,6 +264,7 @@ function uploader(place, status, targetPHP, show, assndir) {
 		//console.log("num files " + files.length);
 	 	for (var i = 0; i<files.length; i++) {
 			var file = files[i];
+			D.log(file);
 			//pass the parameters to upload as the final arguments of setTimeout
 			//we will wait 2 seconds between calls to the let the system respond.
 	 		setTimeout(upload, 2000*i, file);
@@ -261,7 +283,8 @@ function uploader(place, status, targetPHP, show, assndir) {
 	}, true);
 
 	this.uploadPlace.addEventListener("drop", this.drop, false); 
-
+	
+    setup_simple_uploader(upload);
 }
 
 	
