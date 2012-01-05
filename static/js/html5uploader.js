@@ -221,9 +221,12 @@ function uploader(place, status, targetPHP, show, assndir) {
 				document.getElementById(status).innerHTML = 'Loaded : 100%';
 			}
 			if (show) {
-				var newFile  = document.createElement('div');
-				newFile.innerHTML = 'Loaded : '+file.name+' size '+file.size+' B';
-				document.getElementById(show).appendChild(newFile);
+			    // added by jeremy				
+				show_result_and_allow_removal({
+				    show: show,
+				    file: file,
+				    assn: assndir
+				});
 			}	
 		}				
 	}
