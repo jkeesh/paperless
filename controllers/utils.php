@@ -2,6 +2,35 @@
 
 
 class Utilities {	
+
+	/*
+	 * Deletes a code file from a submission.
+	 * @param	$assn {string}	name of the assignment with the directory name and student and submission number
+	 * 							e.g		life/jdoe_15
+	 * @param	$file {string}	name of file to be deleted 
+	 * 							e.g. 	life.cpp
+	 * @param	$that {Object}	the information for the current request (normally $this from the AjaxHandler)
+	 *							we keep this for easy reference to user information
+	 * 
+	 * We assume you can only delete for the current quarter
+	 *
+	 */
+	public static function delete_code_file($assn, $file, $that){
+		$user = $that->user;
+		$course = $that->course;
+		
+		$the_student = new Student;
+		$the_student->from_sunetid_and_course($user->sunetid, $course);
+		$the_sl = $the_student->get_section_leader();
+		$file_to_delete = $the_sl->get_base_directory() . '/' . $assn .'/' . $file;
+		if(is_file($file_to_delete)){
+			unlink($file_to_delete);
+			return true;
+		}
+		return false;
+	}
+	
+	
 	
 	public static function isEmptyDir($dir){ 
 		return (($files = @scandir($dir)) && count($files) <= 2); 

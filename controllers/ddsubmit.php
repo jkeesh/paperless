@@ -5,6 +5,19 @@ require_once("models/PaperlessAssignment.php");
 
 class DragDropSubmitHandler extends ToroHandler {
 
+	// Delete a file
+	public function post_xhr() {
+		$this->basic_setup(func_get_args());
+
+		/* If the action was delete_file, delete the file from the submission */
+		if(array_key_exists('action', $_POST) && $_POST['action'] == 'delete_file'){
+			$success = Utilities::delete_code_file($_POST['assn'], $_POST['file'], $this);
+			echo json_encode(array('status' => 'ok', 'remove' => $success));
+			return;
+		}
+
+		echo json_encode(array('status' => 'ok'));
+	}
 
 	/*
 	 * Get the upload directory for this course.

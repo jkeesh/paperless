@@ -741,3 +741,8 @@ input[type=text]{
 .inlineComment.yellowColor{
     color: yellow;
 }
+
+/* Remove link on submit page */
+a.remove_file{
+    color: blue;
+}

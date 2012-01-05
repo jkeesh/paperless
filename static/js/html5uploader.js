@@ -14,6 +14,64 @@
 *	IE 6+
 */
 
+
+function delete_code_file(e){
+    var elem = $(this);
+    e.preventDefault();
+    D.log(e);
+    D.log($(this));
+    var file_to_delete = $(this).attr('data-filename');
+    var assn = $(this).attr('data-assn');
+    D.log(assn);
+    D.log(file_to_delete);
+    
+    $.ajax({
+        type: 'POST',
+        dataType: 'JSON',
+        data : {
+            file: file_to_delete,
+            assn: assn,
+            action: 'delete_file'
+        },
+        success: function(resp){
+            D.log(resp);
+            if(resp.status == 'ok' && resp.remove){
+                D.log("removing");
+                D.log($(elem));
+                $(elem).parent().fadeOut();
+            }
+        },
+        error: function(jqXHR, status, error){
+            D.log(jqXHR);
+            D.log(status);
+            D.log(error);
+        }
+    });
+}
+
+/*
+ * Show the result of upload, and bind allowing this file to be deleted.
+ *
+ * Jeremy Keeshin Jan 5, 2012
+ * @param   options optiosn object
+ *      - show  location to add this
+ *      - file  file information
+ */
+function show_result_and_allow_removal(options){
+    // Create removal link    	
+    D.log(options);			
+	var remove = $('<a href="#" class="remove_file">').html("Remove");
+	$(remove).attr('data-filename', options.file.name);
+	$(remove).attr('data-assn', options.assn);
+
+	$(remove).click(delete_code_file)
+
+	var result = $('<div>').html("Loaded " + options.file.name + " ").append(remove);
+	$('#'+options.show).append(result);
+
+	D.log(result);
+}
+
 function uploader(place, status, targetPHP, show, assndir) {
 	
 	// Upload image files
@@ -47,9 +105,13 @@ function uploader(place, status, targetPHP, show, assndir) {
 					xhr.send(window.btoa(bin));
 				}
 				if (show) {
-					var newFile  = document.createElement('div');
-					newFile.innerHTML = 'Loaded : '+file.name+' size '+file.size+' B';
-					document.getElementById(show).appendChild(newFile);				
+				    // Added by Jeremy
+					show_result_and_allow_removal({
+					    show: show,
+					    file: file,
+					    assn: assndir
+					});
+	
 				}
 				if (status) {
 					document.getElementById(status).innerHTML = 'Loaded : 100%<br/>Next file ...';
