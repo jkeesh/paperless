@@ -168,7 +168,7 @@ class PaperlessAssignment extends Model {
 		} catch(PDOException $e) {
 			echo $e->getMessage(); 
 		}
-		return null;
+		return array();
 	}
 	
 	
