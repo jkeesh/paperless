@@ -45,14 +45,14 @@
 			}
 						
 			$sl = $the_student->get_section_leader();
-		
-			if($sl == "unknown"){
+			
+			if($sl->sunetid == "unknown"){
 				$this->smarty->assign("nosl", 1);
 			}
 			
 			$this->smarty->assign("sl", $sl);
 			
-			$dirname = $sl->get_base_directory();	
+			$dirname = $sl->get_base_directory();
 			$assns = $this->getDirEntries($dirname);
 			
 			

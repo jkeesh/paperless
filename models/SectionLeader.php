@@ -5,6 +5,14 @@ require_once(dirname(dirname(__FILE__)) . "/models/Student.php");
 class SectionLeader extends User {
 	
 	public $section_id;
+	
+	/*
+	 * Return an object that represnts the unknown section leader
+	 */
+	public function unknown($course){
+		$this->course = $course;
+		$this->sunetid = "unknown";
+	}
 
 	/*
 	 * Static factory constructor to make a SectionLeader from a sunetid

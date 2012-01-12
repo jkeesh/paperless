@@ -25,6 +25,8 @@ class Student extends User {
 	}
 	
 	public function get_section_leader(){
+		$sl = new SectionLeader;
+		
 		$query = "(SELECT SectionLeader FROM Sections 
 					WHERE ID IN 
 					(SELECT Section FROM SectionAssignments WHERE Person = :uid)
@@ -35,16 +37,15 @@ class Student extends User {
 			$sth = $this->conn->prepare($query);
 			$sth->execute(array(":uid" => $this->id, ":class" => $this->course->id, ":quarter" => $this->course->quarter->id));
 			if($row = $sth->fetch()) {
-				$sl = new SectionLeader;
 				$sl->from_id_and_course($row['SectionLeader'], $this->course);
 				return $sl;
-			}else{
-//				return "unknown";
 			}
 		} catch(PDOException $e) {
 			echo $e->getMessage(); // TODO log this error instead of echoing
 		}
-		return null;
+		
+		$sl->unknown($this->course);
+		return $sl;
 	}
 	
 }
