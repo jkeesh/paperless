@@ -74,11 +74,11 @@ class DragDropSubmitHandler extends ToroHandler {
 		}
 		
 		// Uncomment this to close the submitter
-		// if(!array_key_exists('open', $_GET)){
-		// 	$this->smarty->assign("message", "The submitter is not yet open for this quarter. Check back soon.");
-		// 	$this->smarty->display("message.html");
-		// 	return;
-		// }
+		if(!array_key_exists('open', $_GET)){
+			$this->smarty->assign("message", "The submitter is not yet open for this quarter. Check back soon.");
+			$this->smarty->display("message.html");
+			return;
+		}
 
 		$sectionleader = Model::getSectionLeaderForStudent(USERNAME, $class);
 		$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sectionleader . "/";
