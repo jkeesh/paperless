@@ -13,35 +13,41 @@ CodeManager.Shortcuts = {
     all: {
         "tab" : function(){
             D.log("tab");
+            
+            var cur_file = CodeManager.current_file;
+            var comment = cur_file.getCurrentComment();
+            if(comment){
+                comment.submit();
+            }
+            
+            D.log(cur_file);
+            D.log(comment);
         },
 
+        // Show the keyboard shortucts available to this user on ctrl+1
         "ctrl+1" : function(){
              if($("#shortcuts").html() != null){
 			     $("#shortcuts").remove();
 			 }else{
 				 var display = shortcutsBase;
 				 display += shortcutsAll;
-                 if(CodeManager.interactive){
+                 if(CodeManager.is_interactive){
 				     display += shortcutsEdit;
                  }
 			 }
 			 $("body").append(display);
         },
 
-        "ctrl+2" : function(){
-            D.log("ctrl 2");
-            
-        },
-
+        // Display a markdown quick reference on ctrl+3
         "ctrl+3" : function(){
-            D.log("ctrl 3");
-            
+            if(!CodeManager.is_interactive) return;
+            if($("#shortcuts").html() != null){
+        		 $("#shortcuts").remove();
+        	}else{
+        	    var display = markdownBase + markdownRef;
+        		$("body").append(display);
+        	}            
         },
-
-        "ctrl+z" : function(){
-            D.log("ctrl z");
-            
-        }
     },
     
     // Set up all of the shortcuts
@@ -167,6 +173,11 @@ CodeManager.DisplayController = {
         CodeManager.DisplayController.hide_all_files();
         $('.code_container[data-id="'+id+'"]').show();
         $('.filelink[data-id="'+id+'"]').addClass('selectedFile');
+        
+        // Set as current file
+        if(CodeManager.code_files){
+            CodeManager.current_file = CodeManager.code_files[id];
+        }
     },
     
     /* Show all the files in this assignment */
@@ -240,6 +251,8 @@ CodeManager.setup_code_files = function(){
         CodeManager.code_files.push(code_file);
     });
     CodeManager.bind_editing();
+    
+    CodeManager.current_file = CodeManager.code_files[0]; // set the first file
 }
 
 CodeManager.bind_editing = function(){

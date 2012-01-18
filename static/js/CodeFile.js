@@ -147,7 +147,9 @@ function CodeFile(options){
 	}
 	
 	this.getCurrentComment = function(){
-	    this.currentComment.commenter = this.user;
+	    if(this.currentComment){
+	        this.currentComment.commenter = this.user;
+	    }
 		return this.currentComment;
 	}
 	
@@ -217,7 +219,7 @@ function CodeFile(options){
 		CodeManager.bind_editing();	
 	}
 	
-	if(CodeManager.interactive){
+	if(CodeManager.is_interactive){
 	    this.addHandlers();
 	}
 }

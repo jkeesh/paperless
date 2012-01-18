@@ -8,7 +8,6 @@ shortcuts_added = false;
 shortcutsBase = "<div id='shortcuts' class='blackbox'>"
 				  +	"<div class='keyboardTitle'>Keyboard Shortcuts</div>";
 shortcutsEdit = "<div class='keyboardLine'><span class='keyboardShortcuts'>&lt;Tab&gt;: </span><span class='keyboardAction'>Submit</span></div>"
-				  +   "<div class='keyboardLine'><span class='keyboardShortcuts'>&lt;Ctrl&gt;+z:</span><span class='keyboardAction'> Edit Last Comment</span></div>"
 				  +   "<div class='keyboardLine'><span class='keyboardShortcuts'>&lt;Ctrl&gt;+3:</span><span class='keyboardAction'> Show Markdown</span></div>"
 				  +	"</div>";
 					
@@ -56,7 +55,7 @@ function SafeFunction(func){
 
 
 $(document).mouseup(function() {
-    if(!CodeManager.interactive){
+    if(!CodeManager.is_interactive){
         return;
     }
     

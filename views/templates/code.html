@@ -10,10 +10,10 @@ SyntaxHighlighter.all();
 var converter = new Showdown.converter();
 CodeManager.is_code_page = true;
 {if $role >= $POSITION_SECTION_LEADER}
-CodeManager.interactive = true;
+CodeManager.is_interactive = true;
 CodeManager.commenting_user = '{$user->display_name}';
 {else}
-CodeManager.interactive = false;
+CodeManager.is_interactive = false;
 {/if}
 </script>
 
