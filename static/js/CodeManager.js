@@ -11,17 +11,13 @@ CodeManager.Shortcuts = {
     
     
     all: {
+        // Tab lets you submit a comment
         "tab" : function(){
-            D.log("tab");
-            
             var cur_file = CodeManager.current_file;
             var comment = cur_file.getCurrentComment();
             if(comment){
                 comment.submit();
             }
-            
-            D.log(cur_file);
-            D.log(comment);
         },
 
         // Show the keyboard shortucts available to this user on ctrl+1
