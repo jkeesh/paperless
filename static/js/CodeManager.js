@@ -5,6 +5,59 @@ var CodeManager = {};
 CodeManager.is_interactive = true;
 CodeManager.current_file = null;
 CodeManager.dragging_in_file = null;
+CodeManager.is_code_page = false; // overridden on code page
+
+CodeManager.Shortcuts = {
+    
+    
+    all: {
+        "tab" : function(){
+            D.log("tab");
+        },
+        
+        "ctrl+0" : function(){
+            D.log("ctrl 0");
+            
+        },
+
+        "ctrl+1" : function(){
+             if($("#shortcuts").html() != null){
+			     $("#shortcuts").remove();
+			 }else{
+				 var display = shortcutsBase;
+				 display += shortcutsAll;
+                 if(CodeManager.interactive){
+				     display += shortcutsEdit;
+                 }
+			 }
+			 $("body").append(display);
+        },
+
+        "ctrl+2" : function(){
+            D.log("ctrl 2");
+            
+        },
+
+        "ctrl+3" : function(){
+            D.log("ctrl 3");
+            
+        },
+
+        "ctrl+z" : function(){
+            D.log("ctrl z");
+            
+        }
+    },
+    
+    // Set up all of the shortcuts
+    setup: function(){
+        if(!CodeManager.is_code_page) return;
+        for(var command in CodeManager.Shortcuts.all){
+            var fn = CodeManager.Shortcuts.all[command];
+            shortcut.add(command, new SafeFunction(fn));
+        }
+    }
+}
 
 /*
  * The DisplayController manages the aspects relating to the display of code files.
@@ -278,5 +331,6 @@ $(function(){
    CodeManager.setup_file_selection(); 
    CodeManager.Releaser.setup();
    CodeManager.DisplayController.setup();
+   CodeManager.Shortcuts.setup();
    D.log(CodeManager);
 });

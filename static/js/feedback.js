@@ -54,62 +54,7 @@ function SafeFunction(func){
 	}
 }
 
-function addShortcuts(){
-        
-	shortcut.add("tab", new SafeFunction ( function() {
-										  var code_file = code_files[current_file_id];
-										  if(!code_file.editable) return;
-										  var comment = code_file.getCurrentComment();
-										  comment.submit();
-										  })
-				 );
-	
-	shortcut.add("ctrl+0", new SafeFunction ( function(){
-											  var code_file = code_files[current_file_id];
-											  if(!code_file.editable) return;
-											  if(current_range && current_dialog) {
-											  var comment = code_file.getCurrentComment();
-											  comment.remove();
-											  }
-											  })
-				 );
-	
-	shortcut.add("ctrl+z", new SafeFunction ( function(){
-											 var code_file = code_files[current_file_id];
-											 if(!code_file.editable) return;
-											 if(code_file.last_comment == null) return;
-											 code_file.last_comment.edit();
-											 code_file.last_comment = null;
-											 })
-				 );
-					
-	shortcut.add("ctrl+3", new SafeFunction ( function(){
-		 									if($("#shortcuts").html() != null){
-		 										$("#shortcuts").remove();
-		 									}else{
-												var display = markdownBase + markdownRef;
-		 										$("body").append(display);
-		 										}
-														 })
-											);
-	
-	
-	shortcut.add("ctrl+1", new SafeFunction ( function(){
-											 if($("#shortcuts").html() != null){
-											 $("#shortcuts").remove();
-											 }else{
-													var code_file = code_files[current_file_id];
-												 	var display = shortcutsBase;
-													display += shortcutsAll;
-											 		if(code_file.editable){
-														display += shortcutsEdit;
-											 		}
-											  
-											 $("body").append(display);
-											 }
-											 } )
-				 );
-}
+
 
 $(document).mouseup(function() {
     if(!CodeManager.interactive){

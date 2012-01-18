@@ -8,7 +8,7 @@
 <script type="text/javascript">
 SyntaxHighlighter.all();
 var converter = new Showdown.converter();
-
+CodeManager.is_code_page = true;
 {if $role >= $POSITION_SECTION_LEADER}
 CodeManager.interactive = true;
 CodeManager.commenting_user = '{$user->display_name}';
