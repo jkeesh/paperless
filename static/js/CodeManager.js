@@ -14,11 +14,6 @@ CodeManager.Shortcuts = {
         "tab" : function(){
             D.log("tab");
         },
-        
-        "ctrl+0" : function(){
-            D.log("ctrl 0");
-            
-        },
 
         "ctrl+1" : function(){
              if($("#shortcuts").html() != null){
