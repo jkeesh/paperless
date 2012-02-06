@@ -23,6 +23,7 @@
 			$this->basic_setup(func_get_args());
 			Permissions::gate(POSITION_SECTION_LEADER, $this->role);
 
+			//print_r($_POST);
 			$student = $_POST['student'];
 			$parts = explode("_", $student); // if it was student_1 just take student
 			$suid = $parts[0];
@@ -42,7 +43,7 @@
 				}
 			}
 	
-			//echo json_encode("success"); //This is not needed. But remember to echo a result in JSON format.
+			echo json_encode(array("status" => "ok")); //This is not needed. But remember to echo a result in JSON format.
 		}
 		
 		public function get($qid, $class, $sectionleader, $assignment) {

@@ -276,32 +276,38 @@ CodeManager.Releaser = {
     // Setup the releaser. We listen to changes on the release checkbox.
     setup: function(){
         $(':checkbox').change(function() {
-    		CodeManager.Releaser.release();
+    		CodeManager.Releaser.release(this);
     	});
     },
     
     // Handles releasing the code file
-    release: function(){
+    release: function(elem){
     	var action = "delete";
     	var val = $('input:checkbox:checked').val(); 
     	if(val != undefined){
     	 	action = "create";
     	}
+    	
+    	var student = $(elem).attr('student');
+    	
     	$.ajax({
     	   	type: 'POST',
     	   	url: window.location.pathname, // post to current location url
     	   	data: {
     	   	    action: 'release',
     	   	    release: action,
+    	   	    student: student
     	   	},
+    	   	dataType: 'JSON',
     	   	success: function(response) {
         		if(response && response.status == "ok"){
         			CodeManager.Releaser.transitions.showSaved();
+        			$('#'+student).toggleClass('bold');
         		}else{
-        			alert("There was an error in releasing the comments.");
+        			alert("Bad message sent in releasing the comments.");
         		}
     	   	},
-    	   	error: function(XMLHttpRequest, textStatus, errorThrown) {
+    	   	error: function(x, textStatus, errorThrown) {
     		    alert("There was an error in releasing the comments.");
        	    }
     	});
