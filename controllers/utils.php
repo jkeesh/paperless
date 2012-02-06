@@ -86,6 +86,17 @@ class Utilities {
 		return file_exists($dirname.'release');
 	}
 	
+	
+	/*
+	 * Determine whether the file is a valid size
+	 * 
+	 * @author	Jeremy Keeshin	February 5, 2012
+	 */
+	public static function valid_size($file){
+		return filesize($file) < 100000;
+	}
+
+	
 	/*
 	 * Get all of the code files and related information for a given (student, assignment, submission).
 	 *
@@ -98,14 +109,16 @@ class Utilities {
 	 *
 	 * @return 	{array}, an associative array mapping from the filename to an array of all of the file contents 
 	 *			and AssignmentFile objects for each valid code file.
+	 *
 	 * @author	Jeremy Keeshin	December 25, 2011
+	 * @updated	Jeremy Keeshin	February 5, 2012	make sure files are valid size
 	 */
 	public static function get_code_files($course, $student, $assignment, $dirname, $files, $submission_number){
 		$paperless_assignment = PaperlessAssignment::from_course_and_assignment($course, $assignment);	
 		$file_info = array();
 		
 		foreach($files as $file){
-			if($course->code_file_is_valid($file)){
+			if($course->code_file_is_valid($file) && Utilities::valid_size($dirname . $file)){
 				$assn = AssignmentFile::load_file($student, $paperless_assignment, $file, $submission_number);
 				
 				if(is_null($assn)){
@@ -122,13 +135,6 @@ class Utilities {
 
 function getBlacklist(){
 	return array("HangmanLexicon.txt", "ShorterLexicon.txt");
-}
-
-function valid_size($dir, $filename){	
-	if( filesize($dir.$filename) >= 100000 ){
-		echo "A file was too large and hidden from this assignment view.<br/>";
-	}
-	return filesize($dir.$filename) < 100000;
 }
 
 
