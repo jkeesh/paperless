@@ -111,13 +111,6 @@ body{
 	padding-top: 10px;
 }
 
-
-#footer{
-	position: absolute;
-	left: 0px;
-	bottom: 0px;
-}
-
 #studentList{
 	background-color: red;
 	width: 200px;
@@ -485,14 +478,14 @@ textarea {
 }
 
 #footer{
-	position: absolute;
-	top: 20px;
+    margin-top: 40px;
 }
 
 .footer-item{
 	padding-left: 10px;
 	padding-top: 4px;
 	width: 50px;
+	float: left;
 }
 
 .footer-item a:hover{
