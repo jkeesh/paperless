@@ -39,6 +39,50 @@ class User extends Model {
 	}
 	
 	
+	// Perform a search for this query. We will check sunetids, first names and last names
+	public static function search($q){
+		$db = Database::getConnection();
+		$q = "%".$q."%";
+		
+		$query = "SELECT FirstName, LastName, DisplayName, SUNetID FROM People WHERE LastName LIKE :q";
+		
+		$results = array();
+		try {
+			$sth = $db->prepare($query);
+			$sth->execute(array(":q" => $q));
+			if($rows = $sth->fetchAll()) {
+				$results = array_merge($results, $rows);
+			}
+		} catch(PDOException $e) {
+			echo $e->getMessage(); // TODO log this error instead of echoing
+		}
+		
+		$query = "SELECT FirstName, LastName, DisplayName, SUNetID FROM People WHERE FirstName LIKE :q";		
+		try {
+			$sth = $db->prepare($query);
+			$sth->execute(array(":q" => $q));
+			if($rows = $sth->fetchAll()) {
+				$results = array_merge($results, $rows);
+			}
+		} catch(PDOException $e) {
+			echo $e->getMessage(); // TODO log this error instead of echoing
+		}
+		
+		$query = "SELECT FirstName, LastName, DisplayName, SUNetID FROM People WHERE SUNetID LIKE :q";		
+		try {
+			$sth = $db->prepare($query);
+			$sth->execute(array(":q" => $q));
+			if($rows = $sth->fetchAll()) {
+				$results = array_merge($results, $rows);
+			}
+		} catch(PDOException $e) {
+			echo $e->getMessage(); // TODO log this error instead of echoing
+		}
+		
+		return $results;
+	}
+	
+	
 	public function from_id($id){
 		$this->id = $id;
 		$db = Database::getConnection();

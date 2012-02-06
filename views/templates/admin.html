@@ -22,12 +22,34 @@
 				</td>
 			</tr>
 		</table>
+		
+		<div>
+			<form method="get" action="./admin">
+				<input type="text" placeholder="Search" name="q" />
+				<input type="submit" value="Go!" />
+			</form>
+		</div>
+		
+		{foreach from=$search item=result}
+			<div>
+				<a href="./student/{$result.SUNetID}">{$result.DisplayName}</a>
+			</div>
+		{/foreach}
+		
 	</div>
 {else}
 	<div class="header">
 		No SLs found.
 	</div>
+	
+	<div>
+		<form>
+			<input type="text" placeholder="Search" />
+			<input type="submit" value="Go!" />
+		</form>
+	</div>
 {/if}
+
 
 
 <div class="clearfloat"></div>

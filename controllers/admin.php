@@ -20,6 +20,14 @@
 			if($sls){
 				sort($sls);
 			}
+			
+			// Handle a search
+			$results = array();
+			if(array_key_exists('q', $_GET)){
+				$query = $_GET['q'];
+				$results = User::search($query);
+			}
+			$this->smarty->assign("search", $results);
 				
 			// assign template variables
 			$this->smarty->assign("sls", $sls);
