@@ -187,8 +187,9 @@ class User extends Model {
 		try {
 			$sth = $db->prepare($query);
 			$sth->execute(array(":pid" => $this->id, ":cid" => $this->course->id, ":qid" => $this->course->quarter->id));
-			if($rows = $sth->fetch()) {
-				$this->role = $rows['Position'];
+			if($rows = $sth->fetchAll()) {
+				$max_pos = max($rows); // If they have multiple roles in this class, for example TA and SL, choose the max.
+				$this->role = $max_pos['Position'];
 			}else{
 				$this->role = POSITION_NOT_A_MEMBER;
 			}
