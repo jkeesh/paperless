@@ -4,7 +4,7 @@
 class Utilities {	
 	
 	/*
-	 * Based on: http://snippets.dzone.com/posts/show/155, but modified
+	 * Based on: http://snippets.dzone.com/posts/show/155, but significantly modified
 	 * 
 	 * @param 	$directory {string} 	directory to search through
 	 * @param	$recursive {boolean} 	whether or not to be recursive
@@ -15,7 +15,8 @@ class Utilities {
 		$array_items = array();
 		if ($handle = opendir($directory)) {
 			while (false !== ($file = readdir($handle))) {
-				if ($file != "." && $file != "..") {
+				// Ignore the '.' and '..' directory entries and also invisible files
+				if ($file != "." && $file != ".." && $file[0] != ".") {
 					if (is_dir($directory. "/" . $file)) {
 						if($recursive) {
 							$array_items = array_merge($array_items, 
