@@ -81,7 +81,7 @@
 				$this->smarty->assign("ie", 1);
 			}
 			
-			$this->smarty->assign("version", "1.2.0.3");	// May 21, 2011, 3:50pm
+			$this->smarty->assign("version", "1.2.0.4");	// April 25, 2012, 2:10am
 		}
 		
 		public function __call($name, $arguments) {			

@@ -39,6 +39,12 @@ class CodeHandler extends ToroHandler {
 		}
 
 		$dirname = $the_sl->get_base_directory() . "/". $assignment . "/" . $student . "/"; 
+
+		/* Get the full recursive directory listing */
+		$full_tree = Utilities::directory_to_array($dirname, true, strlen($dirname));
+		$this->smarty->assign("full_tree", $full_tree);
+		
+		
 		$all_files = Utilities::get_all_files($dirname);
 		if(is_null($all_files)){
 			return $this->display_error("This was not a valid directory.");

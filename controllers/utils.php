@@ -2,6 +2,38 @@
 
 
 class Utilities {	
+	
+	/*
+	 * Based on: http://snippets.dzone.com/posts/show/155, but modified
+	 * 
+	 * @param 	$directory {string} 	directory to search through
+	 * @param	$recursive {boolean} 	whether or not to be recursive
+	 * @param	$prefix_len {int}		length of the starting directory path so it can be chopped
+	 *										off and we can print relative paths, and not recompute every time
+	 */
+	public static function directory_to_array($directory, $recursive, $prefix_len) {		
+		$array_items = array();
+		if ($handle = opendir($directory)) {
+			while (false !== ($file = readdir($handle))) {
+				if ($file != "." && $file != "..") {
+					if (is_dir($directory. "/" . $file)) {
+						if($recursive) {
+							$array_items = array_merge($array_items, 
+								Utilities::directory_to_array($directory. "/" . $file, $recursive, $prefix_len));
+						}
+					}else{
+						$file = $directory . "/" . $file;
+						$relative = substr($file, $prefix_len + 1);
+						$array_items[] = $relative;
+					}
+					
+				}
+			}
+			closedir($handle);
+		}
+		return $array_items;
+	}
+	
 
 	/*
 	 * Deletes a code file from a submission.

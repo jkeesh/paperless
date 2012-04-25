@@ -96,6 +96,9 @@ CodeManager.DisplayController = {
         CodeManager.DisplayController.register_click_function('#option_hide_code', CodeManager.DisplayController.hide_code_lines);
         CodeManager.DisplayController.register_click_function('#option_show_code', CodeManager.DisplayController.show_code_lines);
         CodeManager.DisplayController.register_click_function('#option_toggle_view_only', CodeManager.DisplayController.toggle_interactivity);
+        CodeManager.DisplayController.register_click_function('#option_full_tree', CodeManager.DisplayController.toggle_full_tree);
+
+        
         
         CodeManager.DisplayController.monitor_options_bar();
     },
@@ -190,6 +193,11 @@ CodeManager.DisplayController = {
     /* Show all of the comments */
     show_all_comments: function(){
         $('.inlineComment').show();
+    },
+    
+    /* Display the full tree of files */
+    toggle_full_tree: function(){
+        $('#fulltree').toggle();
     }
 }
 

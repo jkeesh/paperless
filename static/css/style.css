@@ -453,6 +453,11 @@ textarea {
 	background-color: yellow;
 }
 
+.full_tree_listing{
+    padding: 10px;
+    font-size: 14px;
+}
+
 
 /* Inline Comment CSS */
 .content .code .inlineComment{
