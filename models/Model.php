@@ -106,7 +106,11 @@
 				$sth = $db->prepare($query);
 				$sth->execute(array(":sunetid" => $sunetid));
 				if($row = $sth->fetch()) {
-					return $row['DisplayName']; // form NAME (SUID)
+					$result = $row['DisplayName']; // form NAME (SUID)
+					if(strlen($result) == 0){
+						return $sunetid;
+					}
+					return $result;
 				}
 			} catch(PDOException $e) {
 				echo $e->getMessage(); // TODO log this error instead of echoing

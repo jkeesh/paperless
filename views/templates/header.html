@@ -43,7 +43,7 @@ $(document).ready(function(){
 			{if isset($course)}
 			<div id="classname">{$course->short()} ({$role_string})</div>
 			{/if}
-            <div id="name">{$user->display_name|escape}</div>
+            <div id="name">{$user->get_display_name()|escape}</div>
             <div id="nav">	
                 {if $role >= $POSITION_TEACHING_ASSISTANT}
                 <a href="{$course->get_link()}/admin">Admin</a>

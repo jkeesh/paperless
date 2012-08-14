@@ -21,7 +21,7 @@ $(document).ready(function(){
 <div class="list">
     <div class="header">Students</div>
         {foreach from=$students item=student}
-        <div class="link"><a href="{$student->get_link()}">{$student->display_name}</a></div>
+        <div class="link"><a href="{$student->get_link()}">{$student->get_display_name()}</a></div>
         {/foreach}
 </div>
 

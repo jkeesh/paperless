@@ -11,7 +11,7 @@ var converter = new Showdown.converter();
 CodeManager.is_code_page = true;
 {if $role >= $POSITION_SECTION_LEADER}
 CodeManager.is_interactive = true;
-CodeManager.commenting_user = '{$user->display_name}';
+CodeManager.commenting_user = '{$user->get_display_name()}';
 {else}
 CodeManager.is_interactive = false;
 {/if}

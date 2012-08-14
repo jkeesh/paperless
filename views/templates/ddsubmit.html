@@ -4,7 +4,7 @@
 
 
 {if !isset($dragdrop)}
-<div class="padded">Hi, {$user->display_name|escape}. Welcome to the drag and drop submitter.</div>
+<div class="padded">Hi, {$user->get_display_name()|escape}. Welcome to the drag and drop submitter.</div>
 
 <div class="padded">Select assignment to submit:</div>
 <form  class="padded" action="{$course->get_link()}/ddsubmit" method="POST"> 

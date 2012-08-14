@@ -33,6 +33,19 @@ class User extends Model {
 	// The subclasses SectionLeader and Student must have a course.
 	public $course;
 	private $role;
+
+
+	// The issue is that sometimes the display name is blank. Use this method as a better
+	// way to get the display name. If we see that there is no display name, fall back on the
+	// sunetid.
+	// @author Jeremy Keeshin	August 14, 2012
+	public function get_display_name(){
+		if(strlen($this->display_name) == 0){
+			return $this->sunetid;
+		}
+		return $this->display_name;
+	}
+
 	
 	public function set_course($course){
 		$this->course = $course;
