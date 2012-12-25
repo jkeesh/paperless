@@ -31,9 +31,8 @@
 
 			$the_student = new Student;
 			$the_student->from_sunetid_and_course($suid, $this->course);
-			$the_sl = $the_student->get_section_leader();
 
-			$dirname = $the_sl->get_base_directory() . '/' . $assignment . '/' . $student .'/';
+			$dirname = $this->course->get_base_directory() . '/' . $assignment . '/' . $student .'/';
 			
 			if($_POST['action'] == "release"){
 				if($_POST['release'] == "create"){
@@ -46,6 +45,10 @@
 			echo json_encode(array("status" => "ok")); //This is not needed. But remember to echo a result in JSON format.
 		}
 		
+		function get_id($student){
+			return $student->sunetid;
+		}
+		
 		public function get($qid, $class, $sectionleader, $assignment) {
 			$this->basic_setup(func_get_args());
 			Permissions::gate(POSITION_SECTION_LEADER, $this->role);
@@ -54,18 +57,31 @@
 			$sl = new SectionLeader;
 			$sl->from_sunetid_and_course($sectionleader, $this->course);
 			
-			$dirname = $sl->get_base_directory() .'/' . $assignment;
-						
-			$students = $this->getDirEntries($dirname);
+			$assn = new PaperlessAssignment;
+			$assn->from_course_and_assignment($this->course, $assignment);
 
+			
+			$dirname = $this->course->get_base_directory() .'/' . $assignment;
+						
+			$all_students = $this->getDirEntries($dirname);
+			
+			$student_ids = array_map("get_id", $sl->get_students_for_assignment($assn));
+			
+			$student_dirs = array();
+			foreach($all_students as $student){
+				$split = splitDirectory($student);
+				if(in_array($split[0], $student_ids)){
+					$student_dirs []= $student;
+				}
+			}
+						
+			sort($student_dirs);
+			
 			$info = array();
-			
-			sort($students);
-			
 			$greatest = array(); // an array mapping from student => greatest submission number (most recent)
 			
 			$i = 0;
-			foreach($students as $student){
+			foreach($student_dirs as $student){
 				$info[$i]['dirname'] = $student;
 				$releaseCheck = $dirname . "/" .$student."/release";
 				$info[$i]['release'] = 0;

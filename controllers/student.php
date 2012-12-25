@@ -52,7 +52,7 @@
 			
 			$this->smarty->assign("sl", $sl);
 			
-			$dirname = $sl->get_base_directory();
+			$dirname = $this->course->get_base_directory();
 			$assns = $this->getDirEntries($dirname);
 			
 			

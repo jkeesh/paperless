@@ -87,6 +87,25 @@ class Course extends Model {
 		return $instance;
 	}
 	
+	public function get_sl_sunetids(){
+		$db = Database::getConnection();
+		
+		$query = "SELECT DISTINCT SUNetID FROM CourseRelations INNER JOIN People
+							ON CourseRelations.Person = People.ID
+							WHERE Class = :id AND (Position >=3 AND Position <= 4)";
+		$sls = array();
+		try {
+			$sth = $db->prepare($query);
+			$sth-.>execute(array(":id" => $id));
+			while($row = $sth->fetch()){
+				$sls []= $row["SUNetID"];
+			}
+		} catch(PDOException $e) {
+			echo $e->getMessage();
+		}
+		return $sls;
+	}
+	
 	/*
 	 * Return the base link for this class
 	 */

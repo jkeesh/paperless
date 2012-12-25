@@ -15,8 +15,7 @@
 			$this->basic_setup(func_get_args());
 			Permissions::gate(POSITION_TEACHING_ASSISTANT, $this->role);			
 			
-			$dirname = $this->course->get_base_directory();
-			$sls = $this->getDirEntries($dirname);
+			$sls = $this->course->get_sl_sunetids();
 			if($sls){
 				sort($sls);
 			}
