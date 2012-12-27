@@ -27,8 +27,7 @@
 		function get_upload_directory(){			
 			$the_student = new Student;
 			$the_student->from_sunetid_and_course(USERNAME, $this->course);				
-			$sl = $the_student->get_section_leader();
-			return $sl->get_base_directory() . "/" . $_GET['assndir'];
+			return $this->course->get_base_directory() . "/" . $_GET['assndir'];
 		}
 		
 		function lateDays($course, $dirname){
