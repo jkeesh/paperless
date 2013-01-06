@@ -12,12 +12,12 @@
    * sunetid_#.
    */
   class DownloadAssignmentHandler extends ToroHandler {
-    
-    public function get($qid, $class, $sectionleader, $assignment) {
+        
+    public function get($qid, $class, $sectionleader, $assignment, $student) {
       $this->basic_setup(func_get_args());
       Permissions::gate(POSITION_SECTION_LEADER, $this->role);
       Permissions::verify(POSITION_SECTION_LEADER, $sectionleader, $this->course);
-      
+
       $sl = new SectionLeader;
       $sl->from_sunetid_and_course($sectionleader, $this->course);
       
@@ -26,23 +26,34 @@
       $dirname = $this->course->get_base_directory() .'/' . $assignment;
                   
       $all_students = $this->getDirEntries($dirname);
-      
-      $func = function($student){
-          return $student->sunetid;
-      };
-      $student_ids = array_map($func, $sl->get_students_for_assignment($assn));
             
-      $zip = new ZipStream($assignment . ".zip");
-      foreach($all_students as $student){
-        $split = splitDirectory($student);
-        if(in_array($split[0], $student_ids)){
-          $files = Utilities::get_all_files($dirname . '/' . $student);
-          foreach($files as $file){
-            $zip->add_file_from_path($assignment . '/' . $student . '/' . $file, $dirname . '/' . $student . '/' . $file);
+      if (is_null($student)){
+        //Download all student's assignments.
+        $zip = new ZipStream($assignment . ".zip");
+        
+        $func = function($student){
+          return $student->sunetid;
+        };
+        $student_ids = array_map($func, $sl->get_students_for_assignment($assn));
+        foreach($all_students as $student){
+          $split = splitDirectory($student);
+          if(in_array($split[0], $student_ids)){
+            $files = Utilities::get_all_files($dirname . '/' . $student);
+            foreach($files as $file){
+              $zip->add_file_from_path($assignment . '/' . $student . '/' . $file, $dirname . '/' . $student . '/' . $file);
+            }
           }
         }
+        $zip->finish();
+      } else {
+        //Download single assignment.
+        $zip = new ZipStream($assignment . "-" . $student . ".zip");
+        $files = Utilities::get_all_files($dirname . '/' . $student);
+        foreach($files as $file){
+          $zip->add_file_from_path($assignment . '/' . $student . '/' . $file, $dirname . '/' . $student . '/' . $file);
+        }
+        $zip->finish();
       }
-      $zip->finish();      
     }  
   }
 ?>

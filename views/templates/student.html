@@ -13,7 +13,7 @@
 			</div>
 			
 			{foreach from=$assignment.all item=assn key=i}
-			<div class="studentAdditional"><a href="{$course->get_link()}/code/{$assignment.assignment}/{$assn}">submission {$i + 1}</a></div>
+			<div class="studentAdditional"><a href="{$course->get_link()}/code/{$assignment.assignment}/{$assn}">submission {$i + 1}</a><a href="{$course->get_link()}/downloadassignment/{$sl->sunetid}/{$assignment.assignment}/{$assn}"><img src="{$root_url}static/images/download.png" width="18px" height="18px" alt="Download Assignment"></img></a></div>
 			{/foreach}
 			
 		</div>
