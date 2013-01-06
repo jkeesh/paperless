@@ -23,7 +23,7 @@ class DragDropSubmitHandler extends ToroHandler {
 	 * Get the upload directory for this course.
 	 */
 	function get_assn_dir($assn){				
-		return  $assn . '/';
+		return  $this->course->get_base_directory() . '/'. $assn . '/';
 	}
 
 	public function post($qid, $class){
@@ -76,9 +76,6 @@ class DragDropSubmitHandler extends ToroHandler {
 		// 	$this->smarty->display("message.html");
 		// 	return;
 		// }
-
-		$sectionleader = Model::getSectionLeaderForStudent(USERNAME, $class);
-		$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sectionleader . "/";
 
 		$assns = PaperlessAssignment::load_for_course($this->course);
 

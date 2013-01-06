@@ -94,9 +94,9 @@ class SectionLeader extends User {
 		} catch(PDOException $e) {
 			echo $e->getMessage(); // TODO log this error instead of echoing
 		}
-
 		$sql_arr[':assnID'] = $assn->ID;
 		$sql_arr[':slID'] = $this->id;
+
 		// Students that a person is a grader for should also appear in paperless.
 		$query = "SELECT DISTINCT People.ID AS ID, 
 										 People.DisplayName AS DisplayName, 

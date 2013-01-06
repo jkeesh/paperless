@@ -26,7 +26,7 @@
 		 */
 		function get_upload_directory(){			
 			$the_student = new Student;
-			$the_student->from_sunetid_and_course(USERNAME, $this->course);				
+			$the_student->from_sunetid_and_course(USERNAME, $this->course);
 			return $this->course->get_base_directory() . "/" . $_GET['assndir'];
 		}
 		
