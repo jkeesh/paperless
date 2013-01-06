@@ -136,6 +136,7 @@
 	require_once('controllers/router.php');
 	require_once('controllers/settings.php');
 	require_once('controllers/ajax.php');
+	require_once('controllers/downloadassignment.php');
 
 
 
@@ -154,13 +155,14 @@
 		 							  Array('^\/settings\/?$', 'regex', 'SettingsHandler'),
 									  Array($course_regex. 'student\/'.$sunet_regex.'\/?$', 'regex', 'StudentHandler'),
 									  Array($course_regex. 'code\/'.$assn_regex.'\/'.$sunet_regex.'(\/print)?$', 'regex', 'CodeHandler'),
-									  Array($course_regex. 'download\/'.$assn_regex.'\/'.$sunet_regex.'\/?(.*)?$', 'regex', 'DownloadHandler'),
+									  Array($course_regex. 'download\/'.$assn_regex.'\/'.$sunet_regex.'\/(.*)?$', 'regex', 'DownloadHandler'),
 									  Array($course_regex. 'assignment\/'.$sunet_regex.'\/'.$assn_regex.'\/?$', 'regex', 'AssignmentHandler'),
 									  Array($course_regex. 'sectionleader\/'.$sunet_regex.'\/?$', 'regex', 'SectionLeaderHandler'),
 									  Array($course_regex. 'admin\/?$', 'regex', 'AdminHandler'),
 									  Array($course_regex. 'manage\/?$', 'regex', 'ManageHandler'),
 									  Array($course_regex. 'ddsubmit\/?$', 'regex', 'DragDropSubmitHandler'),
 									  Array($course_regex. 'ddupload\/?$', 'regex', 'DragDropUploadHandler'),
+									  Array($course_regex. 'downloadassignment\/'.$sunet_regex.'\/' . $assn_regex. '\/?('.$sunet_regex.')?\/?$', 'regex', 'DownloadAssignmentHandler'),
 									  Array('(.*)', 'regex', 'RouterHandler'),
 									  // Array('(.*)', 'regex', 'ErrorHandler'),
 									  ));

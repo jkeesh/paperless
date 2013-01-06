@@ -55,13 +55,7 @@ class SectionLeader extends User {
 		$this->load_section_leader($course);
 	}
 	
-	/*
-	 * Get the students for this SL. Since they may have multiple sections, we build up 
-	 * an array to include in the query
-	 *
-	 * @author	Jeremy Keeshin	February 7, 2012
-	 */
-	public function get_students(){
+	public function get_students_for_assignment($assn){
 		$db = Database::getConnection();
 
 		// Since a section leader may have more than one section in the same class (weird, right?)
@@ -77,8 +71,7 @@ class SectionLeader extends User {
 			$sql_arr[':'.$counter] = $id;
 			$counter++;
 		}
-		
-		
+				
 		// Then the query string becomes
 		// ... WHERE Section IN ( :0, :1 ...)
 		$inQuery = implode(',', array_keys($sql_arr));
@@ -101,13 +94,79 @@ class SectionLeader extends User {
 		} catch(PDOException $e) {
 			echo $e->getMessage(); // TODO log this error instead of echoing
 		}
+		$sql_arr[':assnID'] = $assn->ID;
+		$sql_arr[':slID'] = $this->id;
+
+		// Students that a person is a grader for should also appear in paperless.
+		$query = "SELECT DISTINCT People.ID AS ID, 
+										 People.DisplayName AS DisplayName, 
+										 People.SUNetID AS SUNetID, 
+										 People.FirstName AS FirstName, 
+										 People.LastName AS LastName
+							FROM GradedAssignments 
+							INNER JOIN People ON Student = People.ID
+							INNER JOIN Criteria ON GradedAssignments.Criteria = Criteria.ID
+							WHERE Grader = :slID 
+							AND PaperlessAssignment = :assnID
+							AND People.ID NOT IN (
+										SELECT Person FROM SectionAssignments WHERE Section IN (" . $inQuery . ") )";
+		
+		try {
+			$sth = $db->prepare($query);
+			$sth->execute($sql_arr);
+			while($row = $sth->fetch()){
+				$student = Student::from_row($row);
+				$student->set_course($this->course);
+				$students []= $student;
+			}
+		} catch(PDOException $e) {
+			echo $e->getMessage(); // TODO log this error instead of echoing
+		}
+		
 		return $students;
 	}	
 	
-	// The section leader's base directory is the course base directory + the SL name
-	public function get_base_directory(){
-		return $this->course->get_base_directory() . '/' . $this->sunetid;
+	public function get_students(){
+		$db = Database::getConnection();
+
+		// Since a section leader may have more than one section in the same class (weird, right?)
+		// We need to construct an array and custom string query that may have multiple sections.
+		//
+		// The format is
+		//     :0 => <SECTION_ID_0>
+		//	   :1 => <SECTION_ID_1> ..
+		//
+		$sql_arr = array();
+		$counter = 0;
+		foreach($this->section_id as $id){
+			$sql_arr[':'.$counter] = $id;
+			$counter++;
+		}
+				
+		// Then the query string becomes
+		// ... WHERE Section IN ( :0, :1 ...)
+		$inQuery = implode(',', array_keys($sql_arr));
+
+		$query = "SELECT ID, DisplayName, SUNetID, FirstName, LastName FROM People WHERE ID IN 
+					(SELECT Person FROM SectionAssignments WHERE Section IN 
+						(". $inQuery . ")
+					)";
+
+		$students = array();
+		try {
+			$sth = $db->prepare($query);
+
+			$sth->execute($sql_arr);
+			while($row = $sth->fetch()){
+				$student = Student::from_row($row);
+				$student->set_course($this->course);
+				$students []= $student;
+			}
+		} catch(PDOException $e) {
+			echo $e->getMessage(); // TODO log this error instead of echoing
+		}
+		
+		return $students;
 	}
-	
 }
 ?>

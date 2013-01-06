@@ -34,11 +34,8 @@ class CodeHandler extends ToroHandler {
 		$the_student->from_sunetid_and_course($suid, $this->course);
 		
 		$the_sl = $the_student->get_section_leader();
-		if(is_null($the_sl)){
-			return $this->display_error("This student does not have a section leader.");
-		}
 
-		$dirname = $the_sl->get_base_directory() . "/". $assignment . "/" . $student . "/"; 
+		$dirname = $this->course->get_base_directory() . "/". $assignment . "/" . $student . "/"; 
 
 		/* Get the full recursive directory listing */
 		$full_tree = Utilities::directory_to_array($dirname, true, strlen($dirname));
@@ -59,7 +56,9 @@ class CodeHandler extends ToroHandler {
 		$this->smarty->assign("code_files", $code_files);
 		
 		$this->smarty->assign("the_student", $the_student);
-		$this->smarty->assign("the_sl", $the_sl);
+		if(!is_null($the_sl)){
+			$this->smarty->assign("the_sl", $the_sl);
+		}
 
 		// if the username is something other than the owner of these files, require
 		// it to be a SL
@@ -129,7 +128,7 @@ class CodeHandler extends ToroHandler {
 		
 		$sl = Model::getSectionLeaderForStudent($suid, $class);
 		
-		$dirname = $the_sl->get_base_directory() . '/' . $assignment . '/' . $student .'/';
+		$dirname = $this->course->get_base_directory() . '/' . $assignment . '/' . $student .'/';
 
 		// Return a failure message if variables are not properly set.
 		if(!isset($_POST['action'])) {

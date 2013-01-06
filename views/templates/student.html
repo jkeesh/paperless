@@ -6,9 +6,6 @@
 		{if isset($nofiles)}
 		<div>No Assignment Files Yet!</div>
 		{/if}
-		{if isset($nosl) and $class|lower != "cs109l"}
-		<div style="padding: 10px; font-weight: bold;">It appears that you do not have a section leader. Please contact the TA.</div>
-		{/if}
         {foreach from=$information item=assignment}
         <div class="link">
 			<div class="studentAssignment">
@@ -16,7 +13,7 @@
 			</div>
 			
 			{foreach from=$assignment.all item=assn key=i}
-			<div class="studentAdditional"><a href="{$course->get_link()}/code/{$assignment.assignment}/{$assn}">submission {$i + 1}</a></div>
+			<div class="studentAdditional"><a href="{$course->get_link()}/code/{$assignment.assignment}/{$assn}">submission {$i + 1}</a><a href="{$course->get_link()}/downloadassignment/{$sl->sunetid}/{$assignment.assignment}/{$assn}"><img src="{$root_url}static/images/download.png" width="18px" height="18px" alt="Download Assignment"></img></a></div>
 			{/foreach}
 			
 		</div>

@@ -31,9 +31,8 @@
 
 			$the_student = new Student;
 			$the_student->from_sunetid_and_course($suid, $this->course);
-			$the_sl = $the_student->get_section_leader();
 
-			$dirname = $the_sl->get_base_directory() . '/' . $assignment . '/' . $student .'/';
+			$dirname = $this->course->get_base_directory() . '/' . $assignment . '/' . $student .'/';
 			
 			if($_POST['action'] == "release"){
 				if($_POST['release'] == "create"){
@@ -54,18 +53,33 @@
 			$sl = new SectionLeader;
 			$sl->from_sunetid_and_course($sectionleader, $this->course);
 			
-			$dirname = $sl->get_base_directory() .'/' . $assignment;
-						
-			$students = $this->getDirEntries($dirname);
+			$assn = PaperlessAssignment::from_course_and_assignment($this->course, $assignment);
 
+			$dirname = $this->course->get_base_directory() .'/' . $assignment;
+						
+			$all_students = $this->getDirEntries($dirname);
+			
+			$func = function($student){
+				return $student->sunetid;
+			};
+			$student_ids = array_map($func, $sl->get_students_for_assignment($assn));
+
+			$student_dirs = array();
+			foreach($all_students as $student){
+				$split = splitDirectory($student);
+				if(in_array($split[0], $student_ids)){
+					$student_dirs []= $student;
+					error_log($student);
+				}
+			}
+						
+			sort($student_dirs);
+			
 			$info = array();
-			
-			sort($students);
-			
 			$greatest = array(); // an array mapping from student => greatest submission number (most recent)
 			
 			$i = 0;
-			foreach($students as $student){
+			foreach($student_dirs as $student){
 				$info[$i]['dirname'] = $student;
 				$releaseCheck = $dirname . "/" .$student."/release";
 				$info[$i]['release'] = 0;
@@ -87,13 +101,14 @@
 				$i++;
 			}
 						
-			if(count($students[0]) > 0){
+			if(count($student_dirs) > 0){
 				$this->smarty->assign("info", $info);
 				$this->smarty->assign("greatest", $greatest);
 			}else{
 				$this->smarty->assign("nothing", 1);
 			}
-				
+			
+			$this->smarty->assign("sl", $sl->sunetid);	
 			$this->smarty->assign("assignment", $assignment);
 			$this->smarty->assign("class", $class);
 			

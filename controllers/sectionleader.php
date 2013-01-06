@@ -24,10 +24,8 @@ require_once('models/SectionLeader.php');
 			$the_SL = new SectionLeader;
 			$the_SL->from_sunetid_and_course($sectionleader, $this->course);						
 			$course_base = $this->course->get_base_directory();
-			$sls = $this->sortAll($this->getDirEntries($course_base));
+			$assns = $this->sortAll($this->getDirEntries($course_base));
 
-			$sl_base = $the_SL->get_base_directory();						
-			$assns = $this->getDirEntries($sl_base);
 			if(empty($assns) || strlen($assns[0]) == 0){
 				$this->smarty->assign("no_assns", 1);
 			}

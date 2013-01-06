@@ -1,6 +1,7 @@
 {include file="header.html"}
 
-<h2>Assignment: {$assignment}</h2>
+<h2>Assignment: {$assignment} <div class="link" style="float:right"><a href="{$course->get_link()}/downloadassignment/{$sl}/{$assignment}" id="download_assignment">Download All</a></div></h2>
+
 
 {if isset($nothing)}
 <div style="padding: 10px; font-weight: bold;">No submissions here yet.</div>
@@ -51,7 +52,7 @@ function release(obj){
 			name="release" value="" {if $student.release}checked{/if} />
     <a {if $student.release}class='bold'{/if} 
 		href="{$course->get_link()}/code/{$assignment}/{$student.dirname}" 
-		id="{$student.dirname}">{$assignment} by {$student.dirname}</a>
+		id="{$student.dirname}">{$assignment} by {$student.dirname}</a><a href="{$course->get_link()}/downloadassignment/{$sl}/{$assignment}/{$student.dirname}"><img src="{$root_url}static/images/download.png" width="18px" height="18px" alt="Download Assignment"></img></a>
 </div>
 {/foreach}
 

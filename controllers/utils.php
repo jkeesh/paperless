@@ -52,10 +52,7 @@ class Utilities {
 		$user = $that->user;
 		$course = $that->course;
 		
-		$the_student = new Student;
-		$the_student->from_sunetid_and_course($user->sunetid, $course);
-		$the_sl = $the_student->get_section_leader();
-		$file_to_delete = $the_sl->get_base_directory() . '/' . $assn .'/' . $file;
+		$file_to_delete = $course->get_base_directory() . '/' . $assn .'/' . $file;
 		if(is_file($file_to_delete)){
 			unlink($file_to_delete);
 			return true;
