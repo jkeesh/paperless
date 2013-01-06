@@ -1,6 +1,7 @@
 {include file="header.html"}
 
-<h2>Assignment: {$assignment}</h2>
+<h2>Assignment: {$assignment} <div class="link" style="float:right"><a href="{$course->get_link()}/downloadassignment/{$sl}/{$assignment}" id="download_assignment">Download All</a></div></h2>
+
 
 {if isset($nothing)}
 <div style="padding: 10px; font-weight: bold;">No submissions here yet.</div>

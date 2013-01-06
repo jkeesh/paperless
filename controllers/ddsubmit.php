@@ -22,11 +22,8 @@ class DragDropSubmitHandler extends ToroHandler {
 	/*
 	 * Get the upload directory for this course.
 	 */
-	function get_assn_dir($assn){			
-		$the_student = new Student;
-		$the_student->from_sunetid_and_course(USERNAME, $this->course);				
-		$sl = $the_student->get_section_leader();
-		return $sl->get_base_directory() . "/" . $assn . '/';
+	function get_assn_dir($assn){				
+		return  $assn . '/';
 	}
 
 	public function post($qid, $class){

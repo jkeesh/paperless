@@ -8,7 +8,7 @@ class PaperlessAssignment extends Model {
 	private $Quarter;
 	private $Class;
 	private $DirectoryName;
-	private $Name;
+	public $Name;
 	private $DueDate;
 
 	public function __construct() {

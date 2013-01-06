@@ -20,7 +20,7 @@ class DownloadHandler extends ToroHandler {
 
 	private function getAssignmentFiles($class, $student, $assignment, $sl) {
 
-		$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl . "/". $assignment . "/" . $student . "/"; 
+		$dirname = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/". $assignment . "/" . $student . "/"; 
 		if(!is_dir($dirname)) return null; // TODO handle error
 
 		$dir = opendir($dirname);
@@ -32,7 +32,7 @@ class DownloadHandler extends ToroHandler {
 		$student_suid = $string[0];
 		$submission_number = $string[1];
 		
-		$last_dir = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $sl . "/". $assignment . "/" . $student_suid; 
+		$last_dir = SUBMISSIONS_PREFIX . "/" . $class . "/" . SUBMISSIONS_DIR . "/" . $assignment . "/" . $student_suid; 
 
 		$last_submission = Utilities::getLastSubmissionNumber($last_dir);
 		

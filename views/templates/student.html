@@ -6,9 +6,6 @@
 		{if isset($nofiles)}
 		<div>No Assignment Files Yet!</div>
 		{/if}
-		{if isset($nosl) and $class|lower != "cs109l"}
-		<div style="padding: 10px; font-weight: bold;">It appears that you do not have a section leader. Please contact the TA.</div>
-		{/if}
         {foreach from=$information item=assignment}
         <div class="link">
 			<div class="studentAssignment">
